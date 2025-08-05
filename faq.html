@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guide to Japan Medical Research FAQ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Slide transition effect */
+        .slide {
+            transition: opacity 0.5s ease-in-out;
+            width: 100%;
+        }
+        .slide.hidden {
+            display: none;
+        }
+        .slide.active {
+            display: block;
+        }
+        /* Custom scrollbar style */
+        .slide-content::-webkit-scrollbar {
+            width: 8px;
+        }
+        .slide-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        .slide-content::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+        .slide-content::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div class="w-full max-w-4xl mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col my-8">
+        <!-- Header -->
+        <header class="bg-blue-700 text-white p-4 flex justify-between items-center shadow-md sticky top-0 z-10">
+            <h1 class="text-xl md:text-2xl font-bold">Guide to Japan Medical Research FAQ</h1>
+            <div id="slide-counter" class="text-sm font-semibold bg-white text-blue-700 px-3 py-1 rounded-full"></div>
+        </header>
+
+        <!-- Slides Container -->
+        <main id="slides-container" class="flex-grow relative p-4 md:p-8">
+            <!-- Slides will be generated here by JavaScript -->
+        </main>
+
+        <!-- Footer / Navigation -->
+        <footer class="bg-gray-50 border-t border-gray-200 p-4 flex justify-between items-center sticky bottom-0 z-10">
+            <button id="prev-btn" class="px-6 py-2 bg-gray-300 text-gray-700 font-semibold rounded-lg shadow-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">Prev</button>
+            <button id="home-btn" class="px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+            </button>
+            <button id="next-btn" class="px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">Next</button>
+        </footer>
+    </div>
+
+    <script>
+        const slidesData = [
+            // Slide 0: Title
+            {
+                type: 'title',
+                title: 'Guide to Japan Medical Research',
+                subtitle: 'Frequently Asked Questions',
+                date: 'August 1, 2025'
+            },
+            // Slide 1-3: Contents
+            {
+                type: 'contents',
+                title: 'Contents (1/3)',
+                items: [
+                    { q: 1, text: 'Is every citizen in Japan covered by health insurance?' },
+                    { q: 2, text: 'What percentage of medical expenses do patients typically pay out of pocket in Japan?' },
+                    { q: 3, text: 'Is there an upper limit to out-of-pocket payments for medical expenses in Japan?' },
+                    { q: 4, text: 'Does the design of the healthcare payment system influence behaviors in clinical practice?' },
+                    { q: 5, text: 'Is access to healthcare providers in Japan open and flexible?' },
+                    { q: 6, text: 'What challenges are associated with a system where anyone can freely access large hospitals or specialists?' },
+                    { q: 7, text: 'Does Japan have a primary care physician system?' },
+                    { q: 8, text: 'Are there any restrictions on physicians\' clinical practices or referral pathways in Japan?' },
+                    { q: 9, text: 'Are Japan’s health insurance systems operated by private companies?' },
+                    { q: 10, text: 'How are health insurance premiums determined in Japan?' },
+                    { q: 11, text: 'Is there a role for private health insurance in Japan?' },
+                    { q: 12, text: 'What is the role of physicians and their influence on purchasing decisions in Japan?' },
+                    { q: 13, text: 'How is the health checkup system implemented in Japan?' },
+                    { q: 14, text: 'What types of tests are included in health checkups in Japan?' },
+                    { q: 15, text: 'What follow-up system is in place if abnormalities are found during a health checkup in Japan?' },
+                    { q: 16, text: 'What are the characteristics of price revisions for medical services and pharmaceuticals in Japan?' },
+                    { q: 17, text: 'What types of medical institutions exist in Japan?' },
+                ]
+            },
+            {
+                type: 'contents',
+                title: 'Contents (2/3)',
+                items: [
+                    { q: 18, text: 'How do patients in Japan choose medical institutions?' },
+                    { q: 19, text: 'What is the number of hospital beds and the availability of medical equipment (such as MRI machines) in Japan?' },
+                    { q: 20, text: 'Is there a formal system for general practitioners (GPs) or general medicine physicians in Japan?' },
+                    { q: 21, text: 'How are medical specialties categorized in Japan?' },
+                    { q: 22, text: 'Are there any distinctive features in the Japanese system for medical licensing and board certification?' },
+                    { q: 23, text: 'Do physicians in Japan see a high number of patients or handle a large number of consultations per doctor?' },
+                    { q: 24, text: 'Do patients in Japan visit medical institutions frequently?' },
+                    { q: 25, text: 'Are consultation times for doctors in Japan short? If so, why?' },
+                    { q: 26, text: 'Are there differences in workload, such as working hours, between hospital-based physicians and clinic-based (private practice) physicians in Japan?' },
+                    { q: 27, text: 'Which physicians are responsible for treating cancer patients in Japan?' },
+                    { q: 28, text: 'What is the current situation regarding the number and role of medical oncologists in Japan?' },
+                    { q: 29, text: 'Which hospitals or medical institutions play a central role in cancer care in Japan?' },
+                    { q: 30, text: 'What is the process and what are the characteristics of the adoption and dissemination of new cancer drugs in Japan?' },
+                    { q: 31, text: 'How much importance do Japanese physicians place on clinical guidelines?' },
+                    { q: 32, text: 'Are physicians in Japan generally willing to participate in research or surveys?' },
+                ]
+            },
+            {
+                type: 'contents',
+                title: 'Contents (3/3)',
+                items: [
+                    { q: 33, text: 'How should the survey duration and format be designed?' },
+                    { q: 34, text: 'Is localization of the survey content and language necessary for Japanese participants?' },
+                    { q: 35, text: 'Is it culturally acceptable for physicians in Japan to receive honoraria for participating in research?' },
+                    { q: 36, text: 'What is the typical range of honoraria for physician participation in research in Japan?' },
+                    { q: 37, text: 'Are there any specific characteristics or preferences regarding payment methods in Japan?' },
+                    { q: 38, text: 'What manners and cultural considerations should be observed when interviewing or meeting with physicians in Japan?' },
+                    { q: 39, text: 'Are patients in Japan generally reluctant to participate in surveys?' },
+                    { q: 40, text: 'How should highly sensitive or privacy-related questions be handled in surveys?' },
+                    { q: 41, text: 'What age groups are most commonly represented in patient surveys in Japan?' },
+                    { q: 42, text: 'What considerations or adaptations should be made when conducting surveys with elderly patients in Japan?' },
+                    { q: 43, text: 'Are there any other considerations when conducting patient surveys in Japan?' },
+                    { q: 44, text: 'What are the main channels used for patient recruitment in Japan?' },
+                    { q: 45, text: 'What roles do pharmacists play in the Japanese healthcare system?' },
+                    { q: 46, text: 'From what perspectives should pharmacists be asked for their opinions in research?' },
+                    { q: 47, text: 'What are the differences between hospital pharmacists and community (dispensing) pharmacists in Japan?' },
+                    { q: 48, text: 'Are honorarium settings and considerations the same as for physicians?' },
+                    { q: 49, text: 'Can nurses be considered as valid target respondents for research in Japan?' },
+                    { q: 50, text: 'Can caregivers also be included as research participants?' },
+                    { q: 51, text: 'What aspects tend to make Japanese research participants feel anxious or doubtful?' },
+                    { q: 52, text: 'Why is localization particularly important in the Japanese market?' },
+                    { q: 53, text: 'What should we be careful about when translating into Japanese?' },
+                    { q: 54, text: 'What is an appropriate survey length for healthcare professionals and patients in Japan?' },
+                    { q: 55, text: 'What are the typical response patterns of Japanese participants to open-ended questions?' },
+                    { q: 56, text: 'Why is an In-Country Review necessary?' },
+                    { q: 57, text: 'Why is qualitative research often perceived as difficult to conduct in Japan?' },
+                    { q: 58, text: 'Why do Japanese participants tend to be hesitant in sharing their opinions, and how can we effectively draw out their honest thoughts?' },
+                    { q: 59, text: 'Japanese participants tend to speak less during interviews. If responses are limited, does it mean the research cannot be considered valid? How should we address this issue?' },
+                    { q: 60, text: 'What should we be mindful of to ensure that participants feel comfortable sharing their thoughts during a group interview in Japan?' },
+                    { q: 61, text: 'What considerations or precautions should overseas clients keep in mind when observing interviews or focus groups conducted in Japan?' },
+                    { q: 62, text: 'What legal and ethical considerations are necessary when conducting market research in the healthcare field in Japan?' },
+                    { q: 63, text: 'What should be considered regarding the handling of personal information when conducting healthcare-related market research in Japan?' },
+                    { q: 64, text: 'When requesting participation from healthcare professionals or patients in Japan, how should informed consent be obtained, and what key points should be explained to them?' },
+                    { q: 65, text: 'Is it acceptable to provide honoraria to physicians and patients for participating in market research in Japan? What criteria should be used to determine appropriate compensation?' },
+                    { q: 66, text: 'Are there any considerations to keep in mind when setting the schedule for a research project commissioned to a Japanese research agency?' },
+                    { q: 67, text: 'How can the expertise of analysts and Key Opinion Leader (KOL) networks within Japanese research agencies be effectively utilized in healthcare research?' },
+                    { q: 68, text: 'In Japan, is it possible to recruit physicians from a target list?' },
+                ]
+            },
+            // Slide 4-71: Q&A
+            { type: 'qa', q: 1, question: 'Is every citizen in Japan covered by health insurance?', answer: 'Yes, Japan has implemented a universal health insurance system since 1961, ensuring that all citizens are enrolled in some form of public health insurance. The system comprises various schemes, including: Employees‘ Health Insurance: Designed for company employees. National Health Insurance: Aimed at self-employed individuals, pensioners, and others not covered by employment-based insurance. Medical Care System for the Elderly Aged 75 and Over: Specifically for individuals aged 75 and above.' },
+            { type: 'qa', q: 2, question: 'What percentage of medical expenses do patients typically pay out of pocket in Japan?', answer: 'Public health insurance in Japan covers approximately 70% of medical costs, and patients are generally responsible for the remaining 30%. (For children and the elderly, the co-payment rate varies between 10% and 30%.) Thanks to this system, people in Japan can access medical services at a relatively low cost. Reimbursement rates for medical services and drug prices are determined by the Central Social Insurance Medical Council (Chuikyo), which operates under the Ministry of Health, Labour and Welfare. Chuikyo consists not only of healthcare professionals but also experts from various fields, ensuring that decisions are made from a broader social perspective—not solely based on market principles. When conducting market research, it is essential to be mindful of these unique decision-making hurdles.' },
+            { type: 'qa', q: 3, question: 'Is there an upper limit to out-of-pocket payments for medical expenses in Japan?', answer: 'Yes, Japan has a “High-Cost Medical Expense Benefit” system, which sets a monthly upper limit (determined by income level) on out-of-pocket payments at each medical institution. Any amount exceeding this limit is reimbursed later. This system reduces the risk that patients will forgo treatment for serious illnesses or costly therapies due to financial reasons. As a result, financial barriers are relatively low. Therefore, it is important in research design to focus on non-economic burdens (such as time, family support, etc.). Additionally, since patients can easily use multiple medical institutions, it is crucial to anticipate patterns of care that involve multiple points of contact, rather than assuming a linear, single-institution pathway.' },
+            { type: 'qa', q: 4, question: 'Does the design of the healthcare payment system influence behaviors in clinical practice?', answer: 'Yes. For example, mechanisms such as additional reimbursement points for home healthcare or limits on the number of inpatient days can significantly influence clinical practice styles and the level of cooperation between medical institutions. In market research and clinical study design, whether a particular service is reimbursed (i.e., covered by the payment system) often serves as an important motivator.' },
+            { type: 'qa', q: 5, question: 'Is access to healthcare providers in Japan open and flexible?', answer: 'Yes. In Japan, patients can visit specialists and large hospitals freely without a referral. This “free access system” is a distinctive feature of Japan’s healthcare, and there are often fewer restrictions.' },
+            { type: 'qa', q: 6, question: 'What challenges are associated with a system where anyone can freely access large hospitals or specialists?', answer: 'While free access allows anyone to visit large hospitals or specialists, it also leads to overcrowded outpatient departments at major hospitals, as well as duplication of consultations and tests, resulting in inefficient use of medical resources. When considering patient pathways and market entry strategies, it is important to carefully select which level of medical institution (clinic, mid-sized hospital, or large hospital) to target.' },
+            { type: 'qa', q: 7, question: 'Does Japan have a primary care physician system?', answer: 'There is no system in Japan equivalent to the US GP (General Practitioner) or PCP (Primary Care Physician); initial consultations are also provided by specialists in each department. Patients can visit university hospitals or large hospitals directly without a referral letter, although additional fees may apply if no referral is presented. It is important to be mindful of these institutional differences with other countries and to carefully define inclusion criteria for research subjects.' },
+            { type: 'qa', q: 8, question: 'Are there any restrictions on physicians\' clinical practices or referral pathways in Japan?', answer: 'There are generally no strict restrictions, and referrals and diagnoses are made at the discretion of the physician. However, for some large medical institutions such as university hospitals, a referral letter is sometimes recommended.' },
+            { type: 'qa', q: 9, question: 'Are Japan’s health insurance systems operated by private companies?', answer: 'No, in Japan, the health insurance system is not operated by private insurance companies, but by public entities such as the government and local municipalities.' },
+            { type: 'qa', q: 10, question: 'How are health insurance premiums determined in Japan?', answer: 'Insurance premiums are determined based on individual income and age. Health insurance premiums may be deducted from salaries through employers or paid individually based on billing from local governments. The amount and method of payment vary depending on one’s occupation and age.' },
+            { type: 'qa', q: 11, question: 'Is there a role for private health insurance in Japan?', answer: 'Yes, but it serves a supplementary role to the public health insurance system. Private health insurance is utilized to cover aspects not included in public insurance, such as advanced medical treatments and additional charges for private hospital rooms during hospitalization. There is no need to conduct interviews with private insurers. The “Chuikyo” (Central Social Insurance Medical Council), which effectively oversees reimbursement and price setting in Japan, consists of about 30 committee members. These Chuikyo members are essentially the only group who can truly be considered “Japan’s payers,” but interviewing them is extremely difficult and does not fit within the framework of standard research recruiting.' },
+            { type: 'qa', q: 12, question: 'What is the role of physicians and their influence on purchasing decisions in Japan?', answer: 'Physicians in Japan are not only responsible for treating patients, but also play a significant role in the selection and adoption of medical devices and pharmaceuticals. In many cases, they are deeply involved in product selection in collaboration with hospital management and procurement departments. In market research, it is necessary to understand the perspectives of both physicians and hospital administration departments.' },
+            { type: 'qa', q: 13, question: 'How is the health checkup system implemented in Japan?', answer: 'In Japan, the Industrial Safety and Health Act requires employers to provide annual health checkups for their employees. In addition, it is common for individuals to voluntarily undergo more comprehensive health examinations (known as “Ningen Dock”) at their own expense.' },
+            { type: 'qa', q: 14, question: 'What types of tests are included in health checkups in Japan?', answer: 'Basic health checkups in Japan typically include measurements of height, weight, abdominal circumference, blood pressure, vision and hearing tests, blood tests (liver function, kidney function, blood glucose, lipids, etc.), urinalysis, chest X-ray, and electrocardiogram (ECG). Depending on the municipality or workplace, additional cancer screenings may also be provided.' },
+            { type: 'qa', q: 15, question: 'What follow-up system is in place if abnormalities are found during a health checkup in Japan?', answer: 'After a health checkup, if any abnormalities are found, an occupational physician or public health nurse will recommend follow-up and encourage the individual to undergo detailed examinations or consult a specialist medical institution. In many companies, proactive follow-up systems are also well established.' },
+            { type: 'qa', q: 16, question: 'What are the characteristics of price revisions for medical services and pharmaceuticals in Japan?', answer: 'Reimbursement fees for medical services and drug prices are reviewed every two years (and will be revised annually in the future), with a strong emphasis on cost containment. Even if a new drug is launched at a relatively high price, it is often subject to early price reductions (special price cuts), so it is important to take this into account when planning for long-term revenue.' },
+            { type: 'qa', q: 17, question: 'What types of medical institutions exist in Japan?', answer: 'In Japan, the healthcare system is primarily structured around a two-tier model consisting of hospitals (70%) and clinics (30%, also referred to as “shinryojo”). Hospitals: These are relatively large-scale medical institutions with inpatient facilities of 20 beds or more. Clinics/Shinryojo: These have fewer than 20 beds and are often privately operated by individual physicians. They are commonly found in local neighborhoods and provide primary care and routine medical services. Unlike countries such as the United States or Germany, Japan has fewer mid-sized regional medical centers and a higher number of small-scale facilities. This decentralized distribution of medical functions across facilities is a unique characteristic of Japan\'s system, but it also presents challenges in terms of integrated healthcare management.' },
+            { type: 'qa', q: 18, question: 'How do patients in Japan choose medical institutions?', answer: 'Patients in Japan have the freedom to choose hospitals and clinics and can consult them directly without a referral letter. Clinics primarily handle primary care (initial consultations), but patients can also directly access hospitals for more serious conditions based on their own judgment. In some regions, university hospitals and similar institutions offer outpatient services, and many patients seek direct consultations with highly specialized physicians. Unlike in Western countries, Japan does not have a formal "gatekeeper system" where patients must sequentially consult a family doctor, then a specialist, and finally a large hospital.' },
+            { type: 'qa', q: 19, question: 'What is the number of hospital beds and the availability of medical equipment (such as MRI machines) in Japan?', answer: 'Japan has an exceptionally high number of hospital beds per capita—more than four times that of the United States. The number of installed MRI machines and the frequency of MRI examinations are also remarkable: approximately eight times higher than in the UK and 1.3 times higher than in the US, making Japan one of the world leaders in both the prevalence and utilization of medical equipment. When conducting research, factors such as hospital size (number of beds) and the availability of medical equipment may serve as important criteria in study design.' },
+            { type: 'qa', q: 20, question: 'Is there a formal system for general practitioners (GPs) or general medicine physicians in Japan?', answer: 'The system is gradually being developed, but compared to Western countries, it is still in an early stage. In recent years, a board certification system for general medicine has been introduced, and it is becoming more common in some urban hospitals. However, medical practice in Japan remains highly specialized by field (e.g., internal medicine, orthopaedics), and physicians who provide comprehensive primary care across multiple domains are still relatively few.' },
+            { type: 'qa', q: 21, question: 'How are medical specialties categorized in Japan?', answer: 'Physicians in Japan are classified into specific medical specialties based on the 19 categories defined by the Ministry of Health, Labour and Welfare. Medical specialties in Japan include: internal medicine, surgery, pediatrics, obstetrics and gynecology, psychiatry, dermatology, ophthalmology, otolaryngology, urology, orthopedics, neurosurgery, plastic surgery, emergency medicine, anesthesiology, radiology, rehabilitation, pathology, clinical laboratory medicine, and general medicine. Other targetable specialties include: respiratory medicine, gastroenterology, endocrinology/diabetology, nephrology, hematology, neurology, collagen disease/rheumatology, psychosomatic medicine, cardiovascular surgery, thoracic surgery, gastrointestinal surgery, pediatric surgery, oral surgery, other surgical specialties, cardiology, allergy, rheumatology, geriatrics, breast surgery, palliative care, venereology, proctology, and basic medical sciences. Practical note: When recruiting respondents or designing surveys, it is essential to verify whether a specialty name designated by an overseas client actually exists in the Japanese system. (For example, "Pain Medicine" is not officially recognized as a standalone specialty in Japan.)' },
+            { type: 'qa', q: 22, question: 'Are there any distinctive features in the Japanese system for medical licensing and board certification?', answer: 'In Japan, as long as a physician holds a medical license, they can claim any specialty regardless of formal training in that field. Board certification is optional, so it is possible to practice in a specialty even without such certification. Unlike in some other countries, it is not always feasible to recruit only board-certified specialists for research, so it is important to confirm qualification requirements during study design.' },
+            { type: 'qa', q: 23, question: 'Do physicians in Japan see a high number of patients or handle a large number of consultations per doctor?', answer: 'Yes, the number is high even by international standards. In Japan, physicians typically handle a wide range of tasks themselves—including consultations, paperwork, meetings, teaching, and emergency care—without task specialization. This creates an environment where the workload tends to be highly concentrated. Annual number of outpatient visits per physician: Japan: approx. 5,333 cases/physician, USA: approx. 1,538 cases/physician (Source: pmc.ncbi.nlm.nih.gov). Note: Japanese physicians often operate in a system where they must see many patients simultaneously. As a result, they often have limited availability to participate in research, so flexibility in scheduling is essential when engaging them in interviews or surveys.' },
+            { type: 'qa', q: 24, question: 'Do patients in Japan visit medical institutions frequently?', answer: 'Yes. In Japan, the average number of outpatient visits per person is about 11 to 14 times per year, roughly twice the OECD average. This is due to factors such as short prescription durations (typically less than 30 days) and a healthcare system that allows easy access to medical institutions. When designing research or recruiting patients, it is important to assume that patients commonly visit multiple institutions and have multiple visits.' },
+            { type: 'qa', q: 25, question: 'Are consultation times for doctors in Japan short? If so, why?', answer: 'Yes. The consultation time per outpatient in Japan is generally very short—typically around 3 to 5 minutes. The main reason for this is the fee-for-service reimbursement system, which incentivizes seeing more patients in order to secure revenue. Therefore, it is essential to design product explanations and surveys in a way that conveys the core message efficiently within a short timeframe.' },
+            { type: 'qa', q: 26, question: 'Are there differences in workload, such as working hours, between hospital-based physicians and clinic-based (private practice) physicians in Japan?', answer: 'Hospital-based physicians tend to have longer working hours and heavier responsibilities, such as team-based care and night shifts. On the other hand, clinic-based physicians (private practitioners) often have greater autonomy in managing their schedules, which may allow for more flexibility. Reference for selecting interview targets: Hospital physicians: High level of specialization, but scheduling interviews can be challenging. Clinic-based physicians: Generally more flexible in availability, but their specialization may be limited depending on the conditions they treat.' },
+            { type: 'qa', q: 27, question: 'Which physicians are responsible for treating cancer patients in Japan?', answer: 'In Japan, there are relatively few medical oncologists. Instead, organ-specific surgeons (such as breast surgeons, gastrointestinal surgeons, or urologists) are often responsible for the entire treatment process, from surgery to chemotherapy. As a result, patients usually receive continuous care from the same specialist throughout their treatment, which is regarded as enhancing continuity of care and providing patients with a greater sense of reassurance.' },
+            { type: 'qa', q: 28, question: 'What is the current situation regarding the number and role of medical oncologists in Japan?', answer: 'Certification for medical oncologists began in 2006, but as of 2020 there are only about 1,455 specialists nationwide, and many hospitals still do not have them. As a result, medical oncologists in Japan mainly handle new therapies (such as immunotherapy and molecular targeted agents) and complex cases.' },
+            { type: 'qa', q: 29, question: 'Which hospitals or medical institutions play a central role in cancer care in Japan?', answer: 'Cancer care in Japan is centered around “Designated Cancer Care Hospitals” specified by the Ministry of Health, Labour and Welfare, as well as university hospitals and the National Cancer Center. There are 393 such facilities nationwide, providing advanced and specialized cancer care, and they also function as hubs for clinical trials and the introduction of new therapies.' },
+            { type: 'qa', q: 30, question: 'What is the process and what are the characteristics of the adoption and dissemination of new cancer drugs in Japan?', answer: 'After approval by the PMDA (Pharmaceuticals and Medical Devices Agency), new drugs undergo an approximately six-month post-marketing surveillance period (EPPV: Early Post-marketing Phase Vigilance) before being widely adopted. Japanese physicians tend to be cautious about introducing new drugs, often waiting until they are reflected in clinical guidelines and until there is proven experience at major hospitals before broadly adopting them.' },
+            { type: 'qa', q: 31, question: 'How much importance do Japanese physicians place on clinical guidelines?', answer: 'Japanese physicians place great importance on clinical guidelines. In Japan, clinical guidelines are widely accepted as the standard for treatment, and therapies or off-label drug use outside the guidelines are rarely practiced. The main reason is that, under the national health insurance system, only treatments in accordance with the guidelines are eligible for reimbursement.' },
+            { type: 'qa', q: 32, question: 'Are physicians in Japan generally willing to participate in research or surveys?', answer: 'Yes, physicians in Japan are generally open to participating in research. However, it must be clearly positioned as a study conducted for purely research purposes. To avoid being misunderstood as a sales or promotional activity, it is essential to clearly state that it is “a market research study,” “data will be anonymized,” and “the purpose is to understand actual clinical practices.” Even in studies sponsored by pharmaceutical companies, clearly separating the research from promotional activities is key to gaining physician trust.' },
+            { type: 'qa', q: 33, question: 'How should the survey duration and format be designed?', answer: 'To minimize the burden on physicians, short and concise formats are preferred. Online surveys: Recommended to be completed within 20-30 minutes. Interviews: Should be limited to 60–90 minutes (long interviews are often avoided). Online formats (e.g., Zoom, Teams): These are well-received as they eliminate travel time and are easier for physicians to attend.' },
+            { type: 'qa', q: 34, question: 'Is localization of the survey content and language necessary for Japanese participants?', answer: 'Yes, localization is essential. Even for physicians, English-language surveys are generally not acceptable in Japan. Questionnaires and instructions must be written in natural Japanese. Drug names: Use the Japanese generic or brand names commonly recognized domestically. Disease names and terminology: Prefer commonly used Japanese terms and abbreviations (e.g., RA, HbA1c). Units: Match the standards used in Japan (e.g., mg/dL).' },
+            { type: 'qa', q: 35, question: 'Is it culturally acceptable for physicians in Japan to receive honoraria for participating in research?', answer: 'Yes, physicians in Japan are accustomed to receiving compensation for participating in research, and this practice is considered ethically acceptable. Providing honoraria is a common way to fairly compensate them for their expertise and time. Within Japan, the provision of honoraria is a standard practice in both the research and pharmaceutical industries.' },
+            { type: 'qa', q: 36, question: 'What is the typical range of honoraria for physician participation in research in Japan?', answer: 'Honoraria vary depending on the survey format and required time, but for interviews, the general rate is “several tens of thousands of yen per hour.” Examples: 30-minute interview: JPY 10,000–15,000; 60-minute interview: Around JPY 20,000–30,000; Quantitative surveys: Several thousand yen, depending on the time required to complete.' },
+            { type: 'qa', q: 37, question: 'Are there any specific characteristics or preferences regarding payment methods in Japan?', answer: 'Yes. In Japan, honoraria are typically provided via gift certificates such as Amazon gift cards, cash or bank transfer; checks are not commonly used. It is important to confirm in advance whether a receipt or payment statement will be required after the payment. Additionally, providing a clear explanation (written or in advance) of how the honorarium will be delivered is highly appreciated in Japan, as it helps establish trust.' },
+            { type: 'qa', q: 38, question: 'What manners and cultural considerations should be observed when interviewing or meeting with physicians in Japan?', answer: 'Physicians are regarded as highly respected professionals in Japanese society, rather than simply as service providers. It is essential to maintain a polite attitude and use respectful language (such as addressing them as “sensei”) during interviews, regardless of whether an honorarium is provided. It is also important to avoid canceling appointments whenever possible and to be punctual, as high levels of respect and time discipline are expected at all times, regardless of compensation.' },
+            { type: 'qa', q: 39, question: 'Are patients in Japan generally reluctant to participate in surveys?', answer: 'Yes, Japanese patients tend to be particularly sensitive about how their personal information is handled. They are cautious about providing sensitive data such as medical history or health conditions. Due to past large-scale data breaches in Japan, concerns about privacy remain strong. Key considerations for survey design: It is crucial to clearly state, from the recruitment stage: “Responses will be anonymous.” “No personally identifiable information will be collected.” “Data will be used for statistical purposes only.” These assurances are essential for earning trust and encouraging participation.' },
+            { type: 'qa', q: 40, question: 'How should highly sensitive or privacy-related questions be handled in surveys?', answer: 'Avoid asking highly sensitive questions unless absolutely necessary, or clearly indicate that such questions are optional. Examples: Questions regarding household income, education background, or family structure may lead to refusals or dropouts if made mandatory. If you must ask them, include options like “This question is optional” or “I don’’t know / Prefer not to answer.” Key point: Japanese respondents tend to choose answers that avoid causing discomfort to others, so forcing sensitive questions may result in inaccurate or unreliable data.' },
+            { type: 'qa', q: 41, question: 'What age groups are most commonly represented in patient surveys in Japan?', answer: 'In surveys related to lifestyle-related or chronic diseases, the primary respondents are typically elderly patients aged 60 to 70 and above. This is especially true in areas such as diabetes, hypertension, COPD, and cardiovascular diseases, where older adults are the main target group. When conducting research with elderly patients, it is essential to consider readability, comprehension, and response burden.' },
+            { type: 'qa', q: 42, question: 'What considerations or adaptations should be made when conducting surveys with elderly patients in Japan?', answer: 'It is important to design survey formats with special consideration for elderly participants. Use larger font sizes and simplify questions. Recommend UI designs optimized for large screens, such as on desktop or laptop computers. Since some elderly individuals may struggle with smartphones, consider paper-based or telephone surveys as viable alternatives. For senior participants, support or consent from family members or caregivers may be necessary in some cases.' },
+            { type: 'qa', q: 43, question: 'Are there any other considerations when conducting patient surveys in Japan?', answer: 'In Japan, financial barriers to healthcare are relatively low, so non-economic factors such as “time burden,” “crowded medical facilities,” and “the need for family accompaniment” can become major obstacles to treatment. When designing survey questions or analyzing patient journeys, it is important to focus on these lifestyle and environmental aspects to accurately reflect the realities faced by patients. In addition, because patients generally feel secure knowing that treatments are covered by insurance, non-economic values and lifestyle support—such as “treatment safety and efficacy,” “daily life considerations,” and “cooperation with family”—are often more important than direct financial benefits.' },
+            { type: 'qa', q: 44, question: 'What are the main channels used for patient recruitment in Japan?', answer: 'The following two channels are primarily used: 1. Online Patient Panels: These are pre-registered panels managed by research agencies. Recruitment can be tailored to specific disease criteria. They enable access to a wide range of patients, but ensuring accurate screening is critical. 2. Social Media: A method of recruiting participants through disease-related hashtags, patient influencers, and patient community groups (e.g., X [formerly Twitter], Instagram, Facebook, etc.). In some cases, collaboration with “patient influencers” can rapidly accelerate recruitment efforts that have been challenging. Points to Note: If social media posts are considered advertising or solicitation, it is necessary to use expressions that do not violate the “false or exaggerated advertising” provisions of the Pharmaceuticals and Medical Devices Act (PMD Act), and to ensure thorough protection of personal information and privacy.' },
+            { type: 'qa', q: 45, question: 'What roles do pharmacists play in the Japanese healthcare system?', answer: 'Pharmacists in Japan are specialized professionals who support patients with medication guidance and adherence, but prescribing rights are reserved for physicians. With the progression of the separation of prescribing and dispensing (i.e., role differentiation between doctors and pharmacists), pharmacists\' patient-facing responsibilities have expanded. At dispensing pharmacies, pharmacists frequently interact directly with patients and contribute to medication compliance, side effect management, and OTC product recommendations. Differences from Western countries: In the US, Canada, and the UK, pharmacists may have prescribing authority under certain conditions. However, in Japan, pharmacists do not have legal authority to modify prescriptions or intervene in treatment decisions, so it is important to take this into consideration during recruitment.' },
+            { type: 'qa', q: 46, question: 'From what perspectives should pharmacists be asked for their opinions in research?', answer: 'Since pharmacists in Japan are not involved in prescription decisions, it is appropriate to seek their opinions from the following perspectives in research: Patient interaction and medication behavior observation (e.g., reports of side effects, medication discontinuation, changes made by patient judgment); Knowledge of inventory, procurement, and storage (e.g., considerations when introducing new drugs, distribution challenges); Inquiries about OTC and generic drugs(e.g., patients’ perceptions and comparisons with branded products). Practical note: Avoid asking about topics such as “reasons for drug selection” or “treatment algorithms”, as these fall outside their professional scope. Instead, pharmacists are well-suited for providing indirect insights, such as “What kinds of questions do patients ask you?”' },
+            { type: 'qa', q: 47, question: 'What are the differences between hospital pharmacists and community (dispensing) pharmacists in Japan?', answer: 'The roles and working environments of hospital pharmacists and community (dispensing) pharmacists differ significantly. 1. Hospital Pharmacists: Main duties: Dispensing, preparing injections and IVs, making in-house preparations, ward duties, emergency response, and clinical trials. 2. Community (Dispensing) Pharmacists: Main duties: Mainly dispensing prescriptions and providing medication guidance, as well as providing over-the-counter medications and consultation services.' },
+            { type: 'qa', q: 48, question: 'Are honorarium settings and considerations the same as for physicians?', answer: 'The honorarium does not need to be as high as that offered to physicians, but providing an appropriate gift card or similar token is recommended.' },
+            { type: 'qa', q: 49, question: 'Can nurses be considered as valid target respondents for research in Japan?', answer: 'Yes, nurses are extremely valuable research targets for gaining insights into patient care in clinical settings. Difference from physicians: Although nurses work under the direction of doctors, they are responsible for on-site tasks such as patient observation, direct care, and interactions with patients\' families. Information that can be obtained: Real-world insights into medication adherence, challenges in patient care, and feedback on the use of medical devices. Note: Unlike in the US and some other countries, nurses in Japan do not have the authority to diagnose, determine treatment plans, or prescribe medications, so special attention is needed in this regard. In countries such as the US, nurses can obtain specific qualifications (e.g., Nurse Practitioner (NP)— which allows them to independently perform certain medical acts such as examinations and prescribing within a defined scope. In contrast, in Japan, there is no system that permits nurses to independently perform medical procedures, so they do not substitute for physicians. Their primary role is to provide patient care under the direction of a physician.' },
+            { type: 'qa', q: 50, question: 'Can caregivers also be included as research participants?', answer: 'Yes. In Japan’s super-aging society, caregivers often serve as key proxies and valuable information sources—especially for patients with dementia or chronic conditions. Target participants may include: Family members (e.g., spouses, children), Nursing home staff, Home care workers. Appropriate research topics: Medication management, Support for clinic visits, Challenges in care continuity, Emotional or physical burden of caregiving. Design considerations: Be particularly mindful of emotional burden and privacy concerns. For sensitive questions (e.g., “Have you ever felt caregiving was emotionally difficult?”), use indirect phrasing or multiple-choice formats.' },
+            { type: 'qa', q: 51, question: 'What aspects tend to make Japanese research participants feel anxious or doubtful?', answer: 'Japanese participants are often particularly concerned about questions like: “Why was I selected?” “What is the purpose of this survey?” Especially in healthcare-related research, participants frequently worry about: “How will my personal information be handled?” “Is this for commercial gain?” If there is any doubt, it may lead to participant withdrawal or non-response. Therefore, when creating recruitment messages or cooperation requests, it is important to clearly state the following in Japanese: Items that should be explicitly stated in Japanese (examples): Purpose of the survey (e.g., “A market research study to understand actual conditions in medical settings”); Sponsor or client (e.g., “A study commissioned by XX pharmaceutical company”); Estimated time and format (e.g., “30 minutes via online interview”); Privacy protection and handling of personal information (e.g., “Responses will be statistically processed only,” “No third-party sharing”); Explanation that there is no risk to participation (e.g., “This will not affect any medical treatment”).' },
+            { type: 'qa', q: 52, question: 'Why is localization particularly important in the Japanese market?', answer: 'Due to differences in healthcare systems, culture, and language, using a global design without localization often leads to misunderstandings or mismatches. There are many job roles or concepts that are common in the U.S. or Europe but simply do not exist in Japan—meaning that some questions may not be applicable or there may be no relevant respondents. In addition, if the wording is not adapted to Japanese response tendencies or communication style, it may affect participants’ trust and willingness to cooperate.' },
+            { type: 'qa', q: 53, question: 'What should we be careful about when translating into Japanese?', answer: 'Technical terms, healthcare professions, and system-related terminology must always be translated in a way that reflects the actual situation in Japan. Nurse Practitioner (NP): ❌ Do not use “Nurse Practitioner(NP)”. ✅ Recommended translation: “Exclude from target” or replace with “nurse”. Reason: For professions or specialties such as “NP,” “Pain Specialist,” or “PCP,” which do not exist in Japan’s official medical department classifications, it is also necessary to localize, exclude, or provide alternatives as appropriate.' },
+            { type: 'qa', q: 54, question: 'What is an appropriate survey length for healthcare professionals and patients in Japan?', answer: 'The recommended survey length is within 20–30 minutes. Exceeding this duration increases the risk of dropouts and reduced response quality. HCPs such as physicians, pharmacists, and nurses have limited free time during the day, so the survey should be short enough not to feel burdensome during off-hours. Patients and caregivers typically respond in between medical visits, household tasks, or caregiving duties, so surveys must be simple and quick to complete. Suggested Measures: Ideally structure the questionnaire to be completed within 20 minutes. If the number of questions is high: Designate some sections as optional; Offer incentive upgrades for those who complete the full survey.' },
+            { type: 'qa', q: 55, question: 'What are the typical response patterns of Japanese participants to open-ended questions?', answer: 'Japanese respondents tend to prefer concise answers and are generally reluctant to provide long-form responses in open-ended questions. Cultural background: It is considered polite to refrain from assertiveness and to communicate succinctly, focusing on key points. Technical background: Typing in mixed kanji and kana takes time, and many find it inconvenient to input long text—especially on mobile devices. As a result: Short or blank responses are common. To obtain deeper insights, in-depth interviews are often more effective than open-ended survey questions alone.' },
+            { type: 'qa', q: 56, question: 'Why is an In-Country Review necessary?', answer: 'An In-Country Review is essential because the initial Japanese translation must be checked from a local perspective—particularly in terms of healthcare systems, linguistic conventions, and tonal appropriateness. Japanese translations face unique challenges, requiring alignment not only with medical and cultural norms but also with the natural flow of the language. While translators focus on linguistic accuracy, that alone does not guarantee consistency with pharmaceutical terminology or brand tone guidelines. Conducting an In-Country Review ensures the final deliverable is locally acceptable and meets the quality expectations of Japanese stakeholders. Key areas typically reviewed include: Consistent use of product names and abbreviations; Appropriate tone and sentence endings (e.g., polite vs. assertive forms); Standard survey phrases frequently used in Japanese (e.g., “Please select the one that applies most to you.”).' },
+            { type: 'qa', q: 57, question: 'Why is qualitative research often perceived as difficult to conduct in Japan?', answer: 'There is a common misconception that Japan is not well-suited for qualitative research due to cultural tendencies such as “not expressing true feelings” or “not stating opinions clearly.” In reality, it is not that Japanese respondents lack opinions, but rather that they tend to speak with caution out of consideration for the context and social atmosphere. With proper environmental setup, skilled moderation, and clear pre-session briefing, it is entirely possible to obtain rich and valuable insights.' },
+            { type: 'qa', q: 58, question: 'Why do Japanese participants tend to be hesitant in sharing their opinions, and how can we effectively draw out their honest thoughts?', answer: 'In Japan, people tend to be cautious about expressing their own thoughts in front of others. However, with the right setting and appropriate questioning, it is possible to elicit constructive and sincere opinions. Cultural Background and Common Tendencies: A culture of “reading the room” (kuuki wo yomu): harmony is often prioritized over self-assertion. In initial encounters, participants may hold back, viewing negative comments as potentially impolite. Speaking behavior changes depending on the perceived relationship: The key is to create an environment where participants feel, “I can speak honestly to this person.”' },
+            { type: 'qa', q: 59, question: 'Japanese participants tend to speak less during interviews. If responses are limited, does it mean the research cannot be considered valid? How should we address this issue?', answer: 'In Japan, unspoken moments—such as silences or facial expressions—often convey participants’ true feelings. Silence can be a form of reflection, not necessarily a negative sign. It is essential to observe not only verbal responses but also nonverbal signals to fully understand participant input. Cultural Background and Characteristics: Japanese culture values introspection and cautious expression, resulting in less immediate or assertive responses compared to Western norms. Silence is not necessarily a sign of refusal or disengagement—it often indicates that the participant is thinking or carefully choosing their words. Subtle changes in facial expression, tone of voice, and hesitation before speaking can provide valuable insights. Practical Advice: Inexperienced moderators from outside Japan often struggle to interpret “the space between words.” Whenever possible, it is recommended to engage experienced Japanese moderators. A moderator’s ability to derive meaning from what is not said can greatly impact the depth and quality of qualitative findings.' },
+            { type: 'qa', q: 60, question: 'What should we be mindful of to ensure that participants feel comfortable sharing their thoughts during a group interview in Japan?', answer: 'In Japan, even among physicians or patients, individuals are often highly conscious of social hierarchy and how they are perceived by others. Therefore, group composition and privacy considerations are critical to creating an environment where participants feel safe to speak openly. The way the group is structured and how questions are asked can significantly impact participants’ willingness to share their honest opinions. When interviewing physicians: Sensitivity to hierarchy: In the medical community, distinctions in seniority and job title are taken seriously. When a higher-ranking physician is present, more junior physicians may hesitate to express their opinions. Recommendation: Group participants by similar age and job position (e.g., only department heads from the same specialty). Consider switching to in-depth individual interviews (IDIs) if group settings are likely to inhibit open discussion. When interviewing patients: Ensuring privacy and using indirect sharing methods. Patients are often reluctant to openly discuss their illness experiences or lifestyle with strangers, especially in face-to-face group settings. Recommendation: Use anonymous methods for sensitive questions, such as asking participants to write their answers on slips of paper or sticky notes rather than sharing aloud. The moderator can then read the responses anonymously, providing a sense of psychological safety by allowing participants to contribute without speaking directly. Cultural Insight: Japanese participants tend to avoid situations where their individual statements may be clearly attributed to them. However, if a system is in place that enables opinion sharing without personal exposure, they are more likely to express their honest thoughts.' },
+            { type: 'qa', q: 61, question: 'What considerations or precautions should overseas clients keep in mind when observing interviews or focus groups conducted in Japan?', answer: 'In Japan, participants tend to be highly sensitive to the atmosphere of the group ("ba no kuuki"). When overseas clients speak directly or stand out too much during a session, it can make participants feel tense and less inclined to share their honest thoughts. For this reason, it is ideal for clients to remain in the background and communicate through the interpreter and moderator to maintain a comfortable environment for participants. Importance of Post-Session Debriefing: Helps ensure accurate reporting by avoiding misinterpretation of nuanced meanings during translation. Enhances the depth of insights that clients can obtain from the session.' },
+            { type: 'qa', q: 62, question: 'What legal and ethical considerations are necessary when conducting market research in the healthcare field in Japan?', answer: 'In Japan, market research must be conducted solely for research purposes and must be clearly distinguished from any form of promotional or advertising activity. Additionally, strict compliance with personal data protection regulations is required, and researchers must handle personal information with the utmost care.' },
+            { type: 'qa', q: 63, question: 'What should be considered regarding the handling of personal information when conducting healthcare-related market research in Japan?', answer: 'In Japan, the Act on the Protection of Personal Information (APPI) requires that any personal data collected through research—such as names, contact details, and medical histories—must be handled with strict care. Medical information, in particular, is classified as “sensitive personal information”, and therefore requires: Clear disclosure of the purpose of use; Obtaining informed consent from the individual; Proper anonymization of data; Secure disposal and data handling procedures. These measures are essential to ensure compliance with Japanese privacy laws and ethical standards in healthcare-related research.' },
+            { type: 'qa', q: 64, question: 'When requesting participation from healthcare professionals or patients in Japan, how should informed consent be obtained, and what key points should be explained to them?', answer: 'Participation in research must be entirely voluntary, and it is essential to provide a clear explanation of the study\'s purpose and confidentiality obligations in advance. Explicit consent should be obtained either in writing or through an on-screen agreement, depending on the research format. In particular, when engaging patients or members of the general public, a transparent and reassuring consent process is key to gaining their trust and ensuring successful participation.' },
+            { type: 'qa', q: 65, question: 'Is it acceptable to provide honoraria to physicians and patients for participating in market research in Japan? What criteria should be used to determine appropriate compensation?', answer: 'In Japan, providing honoraria for participation in healthcare-related market research is a common practice. However, structuring honoraria inappropriately may raise concerns about potential inducement or conflicts of interest. Therefore, it is crucial to determine compensation amounts and formats carefully, taking into account the participant\'s role and affiliation. Furthermore, it is important to clearly communicate to participants that the research is conducted solely for informational purposes and will not influence prescribing behaviors or treatment decisions. This transparency helps build trust and ensures ethical compliance.' },
+            { type: 'qa', q: 66, question: 'Are there any considerations to keep in mind when setting the schedule for a research project commissioned to a Japanese research agency?', answer: 'In Japan, there are periods during national holidays and extended seasonal breaks—particularly Golden Week (late April to early May), Obon (mid-August), and the New Year holidays (late December to early January)—when business operations come to a complete halt. Even if operations continue as usual overseas during these times, Japanese companies may be on holiday. Therefore, it\'s crucial to consider the Japanese calendar in advance when setting schedules. As a result, it\'s beneficial for clients to proactively consider national holidays, set generous timelines, and foster an open atmosphere for discussion. This approach helps balance trust and quality assurance.' },
+            { type: 'qa', q: 67, question: 'How can the expertise of analysts and Key Opinion Leader (KOL) networks within Japanese research agencies be effectively utilized in healthcare research?', answer: 'Some Japanese research agencies possess specialized analysts and proprietary networks of Key Opinion Leaders (KOLs) with deep expertise in specific therapeutic areas such as oncology, immunology, and rare diseases. Leveraging these resources can significantly enhance the precision of study design and data interpretation. While engaging such experts may increase initial costs, the benefits of bridging gaps between research objectives and clinical realities are substantial. This investment is particularly valuable for high-impact studies where nuanced insights are critical. To effectively utilize these capabilities, it\'s important to confirm their availability early in the planning process. Clearly outlining your requirements and expectations will facilitate smoother collaboration and maximize the value derived from these specialized networks.' },
+            { type: 'qa', q: 68, question: 'In Japan, is it possible to recruit physicians from a target list?', answer: 'Recruitment of physician panels in Japan is principally conducted through anonymized matching using "DCF codes," to ensure privacy protection and compliance with personal information laws. Matching based directly on personal information is generally prohibited but only permitted as an exception, requiring strict anonymized management, absolute confidentiality, and prior consultation. What is a DCF Code, and why is it necessary? A DCF (Doctor Contact File code) code is an anonymized ID assigned to each physician in Japan, necessary for managing and verifying recruitment targets without identifying individual doctors, thus safeguarding personal data. General Process of Panel Matching: A list containing DCF codes is matched with the panel physicians. Recruitment is conducted exclusively for matched physicians, and matching results are managed internally and never disclosed externally. Legal and Ethical Considerations: Japan\'s Personal Information Protection Law and industry guidelines strictly prohibit using personal information without explicit consent. Ethically, transparent operations are essential to protect physicians\' privacy and maintain public trust.' },
+        ];
+
+        let currentSlide = 0;
+        const slidesContainer = document.getElementById('slides-container');
+        const slideCounter = document.getElementById('slide-counter');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const homeBtn = document.getElementById('home-btn');
+
+        // Function to create a single slide element
+        function createSlide(slideData, index) {
+            const slideEl = document.createElement('div');
+            slideEl.className = 'slide';
+            slideEl.dataset.index = index;
+
+            let contentHTML = '';
+
+            if (slideData.type === 'title') {
+                contentHTML = `
+                    <div class="flex flex-col items-center justify-center h-full text-center py-16">
+                        <h2 class="text-4xl md:text-5xl font-bold text-blue-800 mb-4">${slideData.title}</h2>
+                        <p class="text-xl md:text-2xl text-gray-600 mb-8">${slideData.subtitle}</p>
+                        <p class="text-lg text-gray-500">${slideData.date}</p>
+                    </div>
+                `;
+            } else if (slideData.type === 'contents') {
+                contentHTML = `
+                    <div class="h-full flex flex-col py-8">
+                        <h3 class="text-2xl md:text-3xl font-bold mb-6 text-center text-blue-700">${slideData.title}</h3>
+                        <div class="slide-content">
+                            <ul class="space-y-3">
+                                ${slideData.items.map(item => {
+                                    const targetIndex = slidesData.findIndex(s => s.q === item.q);
+                                    return `
+                                    <li class="flex items-start">
+                                        <span class="bg-blue-600 text-white font-bold rounded-full w-8 h-8 flex items-center justify-center mr-4 flex-shrink-0">${item.q}</span>
+                                        <a href="#" class="text-blue-600 hover:underline text-lg" data-goto="${targetIndex}">${item.text}</a>
+                                    </li>
+                                `}).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                `;
+            } else if (slideData.type === 'qa') {
+                contentHTML = `
+                    <div class="h-full flex flex-col py-8">
+                        <div class="mb-6 flex items-start">
+                            <span class="bg-blue-600 text-white font-bold text-2xl rounded-full w-12 h-12 flex items-center justify-center mr-4 flex-shrink-0">Q${slideData.q}</span>
+                            <h3 class="text-xl md:text-2xl font-bold text-blue-800 pt-2">${slideData.question}</h3>
+                        </div>
+                        <div class="slide-content pl-16">
+                            <p class="text-lg leading-relaxed">${slideData.answer.replace(/\n/g, '<br>')}</p>
+                        </div>
+                    </div>
+                `;
+            }
+
+            slideEl.innerHTML = contentHTML;
+            return slideEl;
+        }
+
+        // Initialize all slides
+        slidesData.forEach((data, index) => {
+            const slide = createSlide(data, index);
+            slidesContainer.appendChild(slide);
+        });
+
+        const allSlides = document.querySelectorAll('.slide');
+
+        function showSlide(index) {
+            if (index < 0 || index >= allSlides.length) return;
+            
+            // Scroll to the top of the container when changing slides
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            currentSlide = index;
+
+            allSlides.forEach((slide, i) => {
+                slide.classList.toggle('hidden', i !== index);
+                slide.classList.toggle('active', i === index);
+            });
+
+            updateUI();
+        }
+
+        function updateUI() {
+            slideCounter.textContent = `${currentSlide + 1} / ${allSlides.length}`;
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === allSlides.length - 1;
+        }
+
+        prevBtn.addEventListener('click', () => showSlide(currentSlide - 1));
+        nextBtn.addEventListener('click', () => showSlide(currentSlide + 1));
+        homeBtn.addEventListener('click', () => showSlide(0));
+
+        slidesContainer.addEventListener('click', (e) => {
+            if (e.target.tagName === 'A' && e.target.dataset.goto) {
+                e.preventDefault();
+                const slideIndex = parseInt(e.target.dataset.goto, 10);
+                if (!isNaN(slideIndex)) {
+                    showSlide(slideIndex);
+                }
+            }
+        });
+
+        // Initial load
+        showSlide(0);
+
+    </script>
+</body>
+</html>
