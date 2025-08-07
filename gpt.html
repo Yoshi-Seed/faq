@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatGPTカスタム活用術 インフォグラフィック</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: #FDF0D5;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .flowchart-step {
+            position: relative;
+            padding-left: 2.5rem;
+        }
+        .flowchart-step:not(:last-child)::before {
+            content: '';
+            position: absolute;
+            left: 1.25rem;
+            top: 2.5rem;
+            width: 2px;
+            height: calc(100% + 1rem);
+            background-color: #0582CA;
+        }
+        .flowchart-number {
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-5xl">
+
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-[#006494] mb-2">ChatGPTカスタム活用術</h1>
+            <p class="text-lg text-[#0582CA]">基本から応用まで、その全貌を解き明かす</p>
+        </header>
+
+        <section id="intro" class="mb-16">
+            <h2 class="text-2xl font-bold text-center mb-8 text-[#006494]">ChatGPTの「カスタマイズ」は2種類ある</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white rounded-xl shadow-lg p-6 text-center border-t-4 border-[#00A6FB]">
+                    <div class="text-5xl mb-4">🔧</div>
+                    <h3 class="text-xl font-bold mb-2 text-[#006494]">A. カスタマイズ指示</h3>
+                    <p class="text-gray-600">普段のChatGPTを、あなたの**「自分好み」**に調整する手軽な方法。話し方や専門性を少しだけ変えたい時に最適です。</p>
+                </div>
+                <div class="bg-white rounded-xl shadow-lg p-6 text-center border-t-4 border-[#F9C80E]">
+                    <div class="text-5xl mb-4">🤖</div>
+                    <h3 class="text-xl font-bold mb-2 text-[#006494]">B. カスタムGPT (GPTs)</h3>
+                    <p class="text-gray-600">特定の目的のために、**「新しいAIツールそのもの」**を作成する方法。チームや会社で使う専用AIを開発できます。</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="comparison" class="mb-16">
+            <h2 class="text-2xl font-bold text-center mb-8 text-[#006494]">決定的な違いと利点</h2>
+            <div class="bg-white rounded-xl shadow-lg p-6 md:p-8">
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-8 items-center">
+                    <div class="md:col-span-2 text-center">
+                        <h3 class="text-2xl font-bold text-[#00A6FB] mb-2">カスタマイズ指示</h3>
+                        <p class="text-6xl mb-4">👓</p>
+                        <p class="text-lg font-bold text-[#006494]">普段のAIにかける「メガネ」</p>
+                        <p class="text-gray-600">自分の視点を少し変える感覚で、手軽にパーソナライズ。</p>
+                    </div>
+                    <div class="md:col-span-1 text-center font-bold text-3xl text-gray-400">VS</div>
+                    <div class="md:col-span-2 text-center">
+                        <h3 class="text-2xl font-bold text-[#F9C80E] mb-2">カスタムGPT</h3>
+                        <p class="text-6xl mb-4">👔</p>
+                        <p class="text-lg font-bold text-[#006494]">AIを仕立てる「オーダーメイドスーツ」</p>
+                        <p class="text-gray-600">チームや会社の公式ツールとして、ゼロから設計。</p>
+                    </div>
+                </div>
+                <div class="mt-8">
+                    <p class="text-center text-gray-700 mb-4">それぞれの特性を比較すると、その違いは一目瞭然です。カスタムGPTは、拡張性や専門性において圧倒的な能力を発揮します。</p>
+                    <div class="chart-container h-64 md:h-80">
+                        <canvas id="comparisonChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="creation-flow" class="mb-16">
+            <h2 class="text-2xl font-bold text-center mb-8 text-[#006494]">【実践】カスタムGPT作成の3ステップ</h2>
+            <div class="bg-white rounded-xl shadow-lg p-6 md:p-8">
+                <div class="relative">
+                    <div class="flowchart-step mb-8">
+                        <div class="flowchart-number bg-[#00A6FB] text-white">1</div>
+                        <div class="ml-4">
+                            <h3 class="text-xl font-bold text-[#006494]">ゴールを明確にする</h3>
+                            <p class="text-gray-600">「どんな仕事・課題をAIでラクにしたいか？」を具体的に洗い出します。定型業務や、面倒な繰り返し作業がヒントになります。</p>
+                        </div>
+                    </div>
+                    <div class="flowchart-step mb-8">
+                        <div class="flowchart-number bg-[#0582CA] text-white">2</div>
+                        <div class="ml-4">
+                            <h3 class="text-xl font-bold text-[#006494]">AIへの指示を設計する</h3>
+                            <p class="text-gray-600">良いAIには「良い指示」が不可欠です。「役割」「制約条件」「出力例」の3点を盛り込むのが成功の鍵です。</p>
+                        </div>
+                    </div>
+                    <div class="flowchart-step">
+                        <div class="flowchart-number bg-[#006494] text-white">3</div>
+                        <div class="ml-4">
+                            <h3 class="text-xl font-bold text-[#006494]">作成・共有・改善する</h3>
+                            <p class="text-gray-600">GPTsの作成画面から指示を入力し、必要なら知識ファイルをアップロード。チームで試しながら、継続的にアップデートしていきましょう。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="ideas" class="mb-16">
+            <h2 class="text-2xl font-bold text-center mb-8 text-[#006494]">すぐに使える！カスタムGPTのアイデア例</h2>
+            <div class="bg-white rounded-xl shadow-lg p-6 md:p-8">
+                <p class="text-center text-gray-700 mb-4">カスタムGPTは様々な業務領域で応用可能です。特に情報整理や定型業務の自動化で大きな効果を発揮します。</p>
+                <div class="chart-container h-80 md:h-96">
+                    <canvas id="ideasChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section id="tips" class="mb-16">
+            <h2 class="text-2xl font-bold text-center mb-8 text-[#006494]">よくある“つまづきポイント”と解決策</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white rounded-xl shadow p-6">
+                    <p class="font-bold text-lg text-[#0582CA] mb-2">💡 完璧じゃなくてOK</p>
+                    <p class="text-gray-600">プロンプトは一度で完璧にせず、対話しながら少しずつ「育てていく」感覚が大切です。</p>
+                </div>
+                <div class="bg-white rounded-xl shadow p-6">
+                    <p class="font-bold text-lg text-[#0582CA] mb-2">🚀 真似から始めよう</p>
+                    <p class="text-gray-600">他部署や他社の優れたカスタムGPTを参考にし、自分たちの業務に合わせてカスタマイズするのも近道です。</p>
+                </div>
+                <div class="bg-white rounded-xl shadow p-6">
+                    <p class="font-bold text-lg text-[#0582CA] mb-2">🎯 目的を見失わない</p>
+                    <p class="text-gray-600">「何を自動化したいのか？」という本来の目的がブレないように、常にゴールを意識しましょう。</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-center pt-8 border-t border-gray-300">
+            <p class="text-lg font-bold text-[#006494]">業務に最適なAIを作りましょう！</p>
+            <p class="text-gray-600 mt-2">まずは「面倒な繰り返し作業」をメモに書き出すことから、アイデア探してください。</p>
+        </footer>
+
+    </div>
+
+    <script>
+        const FONT_COLOR = '#374151';
+        const GRID_COLOR = '#E5E7EB';
+        const PALETTE = {
+            brightBlue: '#00A6FB',
+            darkerBlue: '#0582CA',
+            deepBlue: '#006494',
+            yellowGold: '#F9C80E',
+            offWhite: '#FDF0D5'
+        };
+
+        const tooltipTitleCallback = (tooltipItems) => {
+            const item = tooltipItems[0];
+            let label = item.chart.data.labels[item.dataIndex];
+            if (Array.isArray(label)) {
+                return label.join(' ');
+            }
+            return label;
+        };
+
+        const wrapLabel = (label) => {
+            const maxLength = 16;
+            if (label.length <= maxLength) return label;
+            
+            const words = label.split(' ');
+            const lines = [];
+            let currentLine = '';
+            
+            words.forEach(word => {
+                if ((currentLine + word).length > maxLength) {
+                    lines.push(currentLine.trim());
+                    currentLine = '';
+                }
+                currentLine += word + ' ';
+            });
+            lines.push(currentLine.trim());
+            return lines;
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const comparisonCtx = document.getElementById('comparisonChart').getContext('2d');
+            new Chart(comparisonCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['手軽さ', '専門性', '拡張性', '共有のしやすさ'],
+                    datasets: [{
+                        label: 'カスタマイズ指示',
+                        data: [9, 3, 2, 4],
+                        backgroundColor: PALETTE.brightBlue,
+                        borderColor: PALETTE.brightBlue,
+                        borderWidth: 1
+                    }, {
+                        label: 'カスタムGPT',
+                        data: [6, 9, 9, 8],
+                        backgroundColor: PALETTE.yellowGold,
+                        borderColor: PALETTE.yellowGold,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            max: 10,
+                            grid: { color: GRID_COLOR },
+                            ticks: { color: FONT_COLOR }
+                        },
+                        y: {
+                            grid: { display: false },
+                            ticks: { color: FONT_COLOR }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: { color: FONT_COLOR }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                title: tooltipTitleCallback
+                            }
+                        }
+                    }
+                }
+            });
+
+            const ideasCtx = document.getElementById('ideasChart').getContext('2d');
+            new Chart(ideasCtx, {
+                type: 'radar',
+                data: {
+                    labels: [
+                        'リサーチ・情報整理', 
+                        '社内情報共有', 
+                        'プロジェクト管理', 
+                        'クライアント対応', 
+                        '定型業務の効率化'
+                    ].map(wrapLabel),
+                    datasets: [{
+                        label: 'カスタムGPTの応用ポテンシャル',
+                        data: [9, 8, 7, 7, 9],
+                        fill: true,
+                        backgroundColor: 'rgba(5, 130, 202, 0.2)',
+                        borderColor: PALETTE.darkerBlue,
+                        pointBackgroundColor: PALETTE.darkerBlue,
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: PALETTE.darkerBlue
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: { color: GRID_COLOR },
+                            grid: { color: GRID_COLOR },
+                            pointLabels: { 
+                                color: FONT_COLOR,
+                                font: { size: 12 }
+                            },
+                            ticks: {
+                                backdropColor: PALETTE.offWhite,
+                                color: FONT_COLOR
+                            },
+                            min: 0,
+                            max: 10
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: { color: FONT_COLOR }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                title: tooltipTitleCallback
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
