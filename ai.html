@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生成AI & 自動書き起こしツール利用ガイドライン</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            background-color: #f0f2f5;
+        }
+        .gradient-text {
+            background: linear-gradient(to right, #3b82f6, #1e40af);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .card {
+            background-color: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .icon-box {
+            width: 4rem;
+            height: 4rem;
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body class="antialiased text-gray-800">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-7xl">
+
+        <!-- Header -->
+        <header class="text-center mb-8">
+            <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight gradient-text mb-2">AIツール利用ガイドライン</h1>
+            <p class="text-lg text-gray-600">業務効率化のための重要ルールサマリー</p>
+        </header>
+
+        <!-- Information Box -->
+        <div class="mb-8 p-4 bg-blue-50 border-l-4 border-blue-500 rounded-r-lg">
+            <div class="flex">
+                <div class="flex-shrink-0">
+                    <svg class="h-5 w-5 text-blue-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                    </svg>
+                </div>
+                <div class="ml-3">
+                    <p class="text-sm text-blue-700">
+                        シード・プランニングは、生成AIの利用を推奨し、情報共有体制を構築していきます。<br>
+                        ChatGPTに関する研修資料等を、<strong>Googleドライブ＞共有アイテム＞その他資料＞ChatGPT</strong>に公開しています。
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+            <!-- Section 1: Generative AI -->
+            <div class="card flex flex-col space-y-6">
+                <div class="flex items-center space-x-4">
+                    <div class="icon-box bg-blue-100 text-blue-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+                    </div>
+                    <h2 class="text-3xl font-bold text-gray-900">生成AI</h2>
+                </div>
+                
+                <!-- Recommended Tools Section -->
+                <div class="p-4 bg-gray-50 rounded-lg border flex-grow">
+                    <h3 class="font-bold text-xl text-gray-800 mb-4">会社推奨ツール</h3>
+                    <div class="space-y-4">
+                        <!-- Sub-section: No Application Required -->
+                        <div>
+                            <h4 class="font-semibold text-lg text-green-600 mb-2 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                申請不要
+                            </h4>
+                            <div class="grid sm:grid-cols-2 gap-3">
+                                <div class="p-3 bg-green-50 border border-green-200 rounded-lg">
+                                    <p class="font-bold text-green-800">Microsoft Copilot</p>
+                                    <p class="text-sm text-green-700">Teams, Office統合済み</p>
+                                </div>
+                                <div class="p-3 bg-green-50 border border-green-200 rounded-lg">
+                                    <p class="font-bold text-green-800">Google Gemini</p>
+                                    <p class="text-sm text-green-700">Googleサービス統合済み</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Sub-section: Application Required -->
+                        <div>
+                            <h4 class="font-semibold text-lg text-blue-600 mb-2 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" viewBox="0 0 20 20" fill="currentColor"><path d="M4 3a2 2 0 100 4h12a2 2 0 100-4H4z" /><path fill-rule="evenodd" d="M3 8h14v7a2 2 0 01-2 2H5a2 2 0 01-2-2V8zm5 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" clip-rule="evenodd" /></svg>
+                                要申請 (有料版)
+                            </h4>
+                            <div class="p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                                <p class="font-bold text-blue-800">ChatGPT</p>
+                                <p class="text-sm text-blue-700">柔軟な指示対応、カスタマイズ性が高い</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Other Tools -->
+                <div>
+                    <h3 class="font-semibold text-xl text-yellow-600 mb-3 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.5L15.232 5.232z" /></svg>
+                        その他のAIツール (要申請)
+                    </h3>
+                    <div class="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                        <p class="font-bold text-yellow-800">Perplexity, Claude など</p>
+                        <p class="text-sm text-yellow-700">会社推奨以外のツールは個別に申請・承認が必要です</p>
+                    </div>
+                </div>
+                
+                <!-- Prohibited -->
+                <div>
+                    <h3 class="font-semibold text-xl text-red-600 mb-3 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" /></svg>
+                        利用不可
+                    </h3>
+                    <div class="p-4 bg-red-50 border border-red-200 rounded-lg">
+                        <p class="font-bold text-red-800">DeepSeekなど</p>
+                        <p class="text-sm text-red-700">セキュリティ面で非推奨のツール</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 2: Transcription Tools -->
+            <div class="card flex flex-col space-y-6">
+                 <div class="flex items-center space-x-4">
+                    <div class="icon-box bg-indigo-100 text-indigo-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
+                    </div>
+                    <h2 class="text-3xl font-bold text-gray-900">自動書き起こしツール</h2>
+                </div>
+
+                <!-- Core Rule -->
+                <div class="p-6 bg-red-600 text-white rounded-lg text-center">
+                    <h3 class="text-2xl font-black">会社推奨の2ツール以外は利用禁止</h3>
+                    <p class="opacity-90 mt-1">無料版や未承認ツールの業務利用はできません</p>
+                </div>
+
+                <!-- Recommended Tools -->
+                <div class="flex-grow flex flex-col">
+                    <h3 class="font-semibold text-xl text-blue-600 my-3 flex items-center">
+                       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745A3.066 3.066 0 016.267 3.455zM8.5 6a.5.5 0 00-.5.5v3h-3a.5.5 0 000 1h3v3a.5.5 0 001 0v-3h3a.5.5 0 000-1h-3v-3a.5.5 0 00-.5-.5z" clip-rule="evenodd" /></svg>
+                        利用可能なツール (要申請・有料版のみ)
+                    </h3>
+                    <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="p-4 bg-blue-50 border border-blue-200 rounded-lg flex flex-col">
+                            <div>
+                                <p class="font-bold text-blue-800">AI ノート (旧CLOVA Note)</p>
+                                <p class="text-sm text-blue-700">法人プランを利用</p>
+                            </div>
+                            <div class="mt-3">
+                                <p class="text-xs font-semibold text-blue-600">【強み】</p>
+                                <ul class="mt-1 text-sm text-blue-700 list-disc list-inside space-y-1">
+                                    <li>話者の識別・ラベル付け</li>
+                                    <li>日本語の最高レベルの精度</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="p-4 bg-blue-50 border border-blue-200 rounded-lg flex flex-col">
+                           <div>
+                                <p class="font-bold text-blue-800">PLAUD NOTE</p>
+                                <p class="text-sm text-blue-700">有料サブスクリプションを利用</p>
+                           </div>
+                            <div class="mt-3">
+                                <p class="text-xs font-semibold text-blue-600">【強み】</p>
+                                <ul class="mt-1 text-sm text-blue-700 list-disc list-inside space-y-1">
+                                    <li>日英ともに高精度</li>
+                                    <li>専門用語に強い</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4 p-3 bg-gray-100 border border-gray-200 rounded-lg">
+                         <p class="font-semibold text-gray-700">申請方法:</p>
+                         <p class="text-sm text-gray-600 mt-1">楽楽精算から: 「ワークフロー」→「システム依頼書」→依頼内容／カテゴリで「17.その他相談」を選択</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Common Rules -->
+        <div class="mt-10 card bg-gray-800 text-white">
+            <h2 class="text-2xl font-bold mb-4 text-center text-yellow-300">全ツール共通の最重要ルール</h2>
+            <ul class="space-y-4 text-lg">
+                <li class="flex items-start">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                    <span><strong class="font-bold text-red-300">【入力禁止】</strong> 個人情報・機密情報・NDA対象情報は絶対に入力しない。</span>
+                </li>
+                <li class="flex items-start">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" /></svg>
+                    <span><strong class="font-bold text-yellow-300">【事前申請】</strong> 会社が指定したツール以外は、利用前に必ずワークフローで申請・承認を得る。</span>
+                </li>
+                <li class="flex items-start">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 mt-1 flex-shrink-0 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.085a2 2 0 00-1.736.97l-1.9 3.8a2 2 0 00.382 2.275l.543.543m7-10a2 2 0 00-2-2h-2.085a2 2 0 00-1.736.97l-1.9 3.8a2 2 0 00.382 2.275l.543.543m0 0L9 12m0 0H5a2 2 0 00-2 2v3a2 2 0 002 2h1.737l.21.42a2 2 0 001.736 1.03h4.017c.163 0 .326-.02.485-.06" /></svg>
+                    <span><strong class="font-bold text-green-300">【成果物】</strong> AIの出力は「たたき台」。必ず人間が内容の正確性を確認・修正し、責任を持つ。</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</body>
+</html>
