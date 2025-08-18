@@ -1,232 +1,213 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Japan Medical Research FAQ</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-        summary::-webkit-details-marker { display: none; }
-        details[open] summary { color: #2563eb; font-weight: bold; }
-        details {
-            border-radius: 1.25rem;
-            background: #fff;
-            box-shadow: 0 2px 16px 0 rgba(0,0,0,0.05);
-            margin-bottom: 1.5rem;
-            border: 1px solid #e5e7eb;
-        }
-        summary {
-            padding: 1.25rem 2rem 1.25rem 2.5rem;
-            font-size: 1.15rem;
-            cursor: pointer;
-            outline: none;
-            transition: color 0.2s;
-            position: relative;
-        }
-        summary::before {
-            content: '+';
-            position: absolute;
-            left: 1.2rem;
-            top: 1.3rem;
-            font-weight: bold;
-            color: #2563eb;
-            font-size: 1.4rem;
-            transition: 0.2s;
-        }
-        details[open] summary::before {
-            content: '-';
-            color: #7c3aed;
-        }
-        .faq-answer { padding: 0 2.5rem 1.2rem 2.5rem; font-size: 1.05rem; color: #444; }
-        @media (max-width: 640px) {
-            summary, .faq-answer { padding-left: 1rem; padding-right: 1rem; }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Japan Medical Research FAQ</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    summary::-webkit-details-marker { display: none; }
+    details[open] summary { color: #2563eb; font-weight: bold; }
+    details {
+      border-radius: 1.25rem;
+      background: #fff;
+      box-shadow: 0 2px 16px 0 rgba(0,0,0,0.05);
+      margin-bottom: 1.5rem;
+      border: 1px solid #e5e7eb;
+    }
+    summary {
+      padding: 1.25rem 2rem 1.25rem 2.5rem;
+      font-size: 1.15rem;
+      cursor: pointer;
+      outline: none;
+      transition: color 0.2s;
+      position: relative;
+    }
+    summary::before {
+      content: '+';
+      position: absolute;
+      left: 1.2rem;
+      top: 1.3rem;
+      font-weight: bold;
+      color: #2563eb;
+      font-size: 1.4rem;
+      transition: 0.2s;
+    }
+    details[open] summary::before { content: '-'; color: #7c3aed; }
+    .faq-answer { padding: 0 2.5rem 1.2rem 2.5rem; font-size: 1.05rem; color: #444; }
+    @media (max-width: 640px) { summary, .faq-answer { padding-left: 1rem; padding-right: 1rem; } }
+    mark { background: #fef08a; }
+  </style>
 </head>
 <body class="bg-gray-100 min-h-screen flex flex-col items-center">
-    <div class="w-full max-w-2xl mx-auto mt-8 mb-16">
-        <header class="mb-8 text-center">
-            <h1 class="text-3xl sm:text-4xl font-bold text-blue-800 mb-2">Japan Medical Research FAQ</h1>
-            <p class="text-base text-gray-600 mb-6">日本の医療リサーチよくある質問（サンプル by ウェインツ君）</p>
-            <!-- 検索ボックス -->
-            <div class="flex justify-center mb-4">
-                <input id="search-input" type="text" placeholder="キーワード検索（英語/日本語）..." class="w-full max-w-md px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-400 focus:outline-none shadow" />
-            </div>
-            <!-- 検索結果 -->
-            <div id="search-results" class="mt-2"></div>
-        </header>
-        <section id="faq-list">
-            <!-- FAQアコーディオンがここに入る -->
-        </section>
-        <footer class="mt-12 text-center text-gray-400 text-sm">Sample created by ウェインツ君 &copy; 2025</footer>
-    </div>
-    <script>
-    // Q&Aデータ（サンプル10問）
+  <div class="w-full max-w-3xl mx-auto mt-8 mb-16">
+    <header class="mb-8 text-center">
+      <h1 class="text-3xl sm:text-4xl font-bold text-blue-800 mb-2">Japan Medical Research FAQ</h1>
+      <p class="text-base text-gray-600 mb-6">日本の医療リサーチよくある質問（Q1–Q68）</p>
+      <!-- Search box -->
+      <div class="flex justify-center gap-2 mb-4">
+        <input id="search-input" type="text" placeholder="キーワード検索（英語/日本語）..." class="w-full max-w-xl px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-400 focus:outline-none shadow" />
+        <button id="clear-btn" class="px-4 py-2 rounded-xl bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold">Clear</button>
+      </div>
+      <!-- Search results -->
+      <div id="search-results" class="mt-2"></div>
+    </header>
+
+    <section id="faq-list"></section>
+
+    <footer class="mt-12 text-center text-gray-400 text-sm">Sample created by ウェインツ君 &copy; 2025</footer>
+  </div>
+
+  <script>
+    // === Full Q&A data (Q1–Q68) ===
     const faqData = [
-      {
-        q: "Q1. Is every citizen in Japan covered by health insurance?",
-        a: "Yes, Japan has implemented a universal health insurance system since 1961, ensuring that all citizens are enrolled in some form of public health insurance. The system comprises various schemes, including: Employees‘ Health Insurance (company employees), National Health Insurance (self-employed, pensioners, etc.), and Medical Care System for the Elderly Aged 75 and Over."
-      },
-      {
-        q: "Q2. What percentage of medical expenses do patients typically pay out of pocket in Japan?",
-        a: "Public health insurance covers about 70% of costs, patients usually pay the remaining 30%. For children and the elderly, the co-payment rate can be 10–30%. Reimbursement rates are set by the Central Social Insurance Medical Council (Chuikyo)."
-      },
-      {
-        q: "Q3. Is there an upper limit to out-of-pocket payments for medical expenses in Japan?",
-        a: "Yes, the High-Cost Medical Expense Benefit system sets a monthly cap (based on income) on out-of-pocket payments. Anything above this is reimbursed, reducing financial barriers for serious illnesses."
-      },
-      {
-        q: "Q4. Does the design of the healthcare payment system influence behaviors in clinical practice?",
-        a: "Yes, additional reimbursement points (like for home healthcare) or limits on inpatient days can influence practice styles and inter-institutional cooperation. Whether a service is reimbursed often drives physician behavior."
-      },
-      {
-        q: "Q5. Is access to healthcare providers in Japan open and flexible?",
-        a: "Yes. Patients can visit specialists or large hospitals freely without a referral. This “free access system” is a unique aspect of Japanese healthcare."
-      },
-      {
-        q: "Q6. Does Japan have a primary care physician system?",
-        a: "There is no exact US-style GP/PCP system in Japan. Initial consultations are usually handled by specialists in each department, and patients can go to university or large hospitals directly."
-      },
-      {
-        q: "Q7. Are Japan’s health insurance systems operated by private companies?",
-        a: "No, the health insurance system is operated by public entities (government, municipalities), not private insurers."
-      },
-      {
-        q: "Q8. What types of medical institutions exist in Japan?",
-        a: "Hospitals (20+ beds, about 70%) and clinics (“shinryojo”, fewer than 20 beds, about 30%). Clinics are often private and neighborhood-based, focusing on primary/routine care."
-      },
-      {
-        q: "Q9. What is the number of hospital beds and the availability of medical equipment (such as MRI machines) in Japan?",
-        a: "Japan has one of the highest number of hospital beds per capita in the world, over 4x the US. MRI machine prevalence is also among the world’s highest."
-      },
-      {
-        q: "Q10. Are consultation times for doctors in Japan short? If so, why?",
-        a: "Yes, typically just 3–5 minutes per patient. Fee-for-service reimbursement encourages short, high-volume consultations, so survey designs must deliver the core message efficiently."
-      }
+      { q: "Q1. Is every citizen in Japan covered by health insurance?", a: "Yes, Japan has implemented a universal health insurance system since 1961, ensuring that all citizens are enrolled in some form of public health insurance. The system comprises various schemes, including: • Employees‘ Health Insurance: Designed for company employees. • National Health Insurance: Aimed at self-employed individuals, pensioners, and others not covered by employment-based insurance. • Medical Care System for the Elderly Aged 75 and Over: Specifically for individuals aged 75 and above." },
+      { q: "Q2. What percentage of medical expenses do patients typically pay out of pocket in Japan?", a: "Public health insurance in Japan covers approximately 70% of medical costs, and patients are generally responsible for the remaining 30%. (For children and the elderly, the co-payment rate varies between 10% and 30%.) Reimbursement rates for medical services and drug prices are determined by the Central Social Insurance Medical Council (Chuikyo), under the Ministry of Health, Labour and Welfare. Chuikyo includes experts beyond HCPs, so decisions reflect broader social perspectives." },
+      { q: "Q3. Is there an upper limit to out-of-pocket payments for medical expenses in Japan?", a: "Yes. The High-Cost Medical Expense Benefit sets a monthly upper limit (based on income) for out-of-pocket payments per institution; amounts above the limit are reimbursed. This lowers financial barriers, so study designs should also consider non-economic burdens (time, family support). Because patients can easily use multiple institutions, anticipate multi-touchpoint care paths rather than a linear pathway." },
+      { q: "Q4. Does the design of the healthcare payment system influence behaviors in clinical practice?", a: "Yes. Examples include additional reimbursement points for home healthcare and limits on inpatient days, which shape clinical practice and inter-facility cooperation. Whether a service is reimbursed often acts as a strong motivator in care and research adoption." },
+      { q: "Q5. Is access to healthcare providers in Japan open and flexible?", a: "Yes. Patients can visit specialists and large hospitals freely without a referral. This \"free access system\" is a distinctive feature of Japanese healthcare with fewer restrictions than many countries." },
+      { q: "Q6. What challenges arise when anyone can freely access large hospitals or specialists?", a: "Free access leads to crowded outpatient departments at major hospitals and duplication of consultations/tests, wasting resources. For pathways and market entry, select carefully which level to target (clinic, mid-sized hospital, large hospital)." },
+      { q: "Q7. Does Japan have a primary care physician system?", a: "There is no direct US-style GP/PCP system. Initial consultations are also handled by specialists. Patients may visit university/large hospitals without a referral (extra fees may apply). Be mindful of institutional differences and define inclusion criteria carefully." },
+      { q: "Q8. Are there restrictions on physicians' clinical practices or referral pathways in Japan?", a: "Generally no strict restrictions; referrals and diagnoses are at the physician’s discretion. Some large institutions (e.g., university hospitals) recommend referral letters." },
+      { q: "Q9. Are Japan’s health insurance systems operated by private companies?", a: "No. The health insurance system is operated by public entities such as the government and local municipalities, not private insurers." },
+      { q: "Q10. How are health insurance premiums determined in Japan?", a: "Premiums are based on income and age. They may be deducted from salaries via employers or paid individually per local government billing. Amount/methods vary by occupation and age." },
+      { q: "Q11. Is there a role for private health insurance in Japan?", a: "Yes, as a supplement to public insurance (e.g., advanced medical care, private-room surcharges). Interviews with private insurers are generally unnecessary. Practical note: Japan’s de facto \"payers\" are the ~30 members of Chuikyo; interviewing them is extremely difficult and outside standard recruiting." },
+      { q: "Q12. What is the role of physicians and their influence on purchasing decisions in Japan?", a: "Physicians not only treat patients but significantly influence selection/adoption of devices and pharmaceuticals, often collaborating with hospital management and procurement. Research should capture both physician and admin perspectives." },
+      { q: "Q13. How is the health checkup system implemented in Japan?", a: "Employers must provide annual health checkups under the Industrial Safety and Health Act. Many individuals also undergo comprehensive \"Ningen Dock\" exams at personal expense." },
+      { q: "Q14. What tests are included in health checkups in Japan?", a: "Typically: height, weight, abdominal circumference, blood pressure, vision/hearing, blood tests (liver, kidney, glucose, lipids), urinalysis, chest X-ray, ECG. Municipalities/workplaces may add cancer screenings." },
+      { q: "Q15. What follow-up system is in place if abnormalities are found during a health checkup?", a: "Occupational physicians or public health nurses recommend follow-up and encourage detailed exams or specialist visits. Many companies maintain proactive follow-up systems." },
+      { q: "Q16. What characterizes price revisions for services and pharmaceuticals in Japan?", a: "Fees and drug prices are reviewed every two years (moving toward annual), with strong cost-containment. Even high launch prices often face early special cuts—important for long-term revenue planning." },
+      { q: "Q17. What types of medical institutions exist in Japan?", a: "Two-tier model: Hospitals (~70%) with 20+ beds; Clinics/Shinryojo (~30%) with <20 beds, often private and neighborhood-based. Japan has fewer mid-sized centers and many small facilities, complicating integrated management." },
+      { q: "Q18. How do patients in Japan choose medical institutions?", a: "Patients freely choose clinics or hospitals without referrals; severe cases may go directly to hospitals or university hospitals to see specialists. Japan lacks a strict \"gatekeeper\" sequence common in Western systems." },
+      { q: "Q19. Hospital beds and medical equipment availability (e.g., MRI) in Japan?", a: "Beds per capita are exceptionally high—over 4× the US. MRI installations/usage are ~8× the UK and ~1.3× the US. Hospital size and equipment availability are important sampling criteria." },
+      { q: "Q20. Is there a formal GP/general medicine system?", a: "Developing but early-stage versus the West. A general medicine board certification exists and is growing in urban hospitals, but practice remains highly specialty-based; comprehensive primary care physicians are still relatively few." },
+      { q: "Q21. How are medical specialties categorized?", a: "19 base categories (MHLW): internal medicine, surgery, pediatrics, OB/GYN, psychiatry, dermatology, ophthalmology, otolaryngology, urology, orthopedics, neurosurgery, plastic surgery, emergency medicine, anesthesiology, radiology, rehabilitation, pathology, clinical laboratory medicine, general medicine. Other targetable areas include respiratory, gastroenterology, endocrinology/diabetology, nephrology, hematology, neurology, rheumatology, etc. Verify specialty names used overseas actually exist in Japan (e.g., \"Pain Medicine\" is not a standalone specialty)." },
+      { q: "Q22. Distinctive features of licensing and board certification?", a: "With a medical license, physicians can claim any specialty; board certification is optional. Recruiting only board-certified specialists is not always feasible—confirm qualification needs during design." },
+      { q: "Q23. Do physicians in Japan handle many consultations?", a: "Yes. Doctors self-handle broad tasks (consults, paperwork, meetings, teaching, emergencies), concentrating workload. Outpatient visits per physician: Japan ~5,333 vs US ~1,538. Expect limited availability; be flexible in scheduling." },
+      { q: "Q24. Do patients visit medical institutions frequently?", a: "Yes. Average 11–14 outpatient visits/year per person (~2× OECD average), driven by shorter prescriptions (<30 days) and easy access. Assume multi-institution, multi-visit behaviors in design." },
+      { q: "Q25. Are consultation times short? Why?", a: "Typically 3–5 minutes per outpatient. Fee-for-service incentivizes volume. Messages/surveys must convey essentials quickly." },
+      { q: "Q26. Workload differences: hospital vs clinic physicians?", a: "Hospital physicians: longer hours, team care, night shifts; harder to schedule but highly specialized. Clinic physicians: more schedule autonomy and flexibility, though specialty scope may be limited by case mix." },
+      { q: "Q27. Which physicians treat cancer patients?", a: "Medical oncologists are relatively few; organ-specific surgeons (e.g., breast, GI, urology) often manage from surgery through chemotherapy, supporting continuity of care and patient reassurance." },
+      { q: "Q28. Number/role of medical oncologists?", a: "Certification began in 2006; as of 2020 about 1,455 specialists, with many hospitals lacking them. They mainly handle new therapies (immunotherapy/targeted agents) and complex cases." },
+      { q: "Q29. Central institutions for cancer care?", a: "Designated Cancer Care Hospitals (MHLW), university hospitals, and the National Cancer Center (~393 facilities) serve as hubs for advanced care, clinical trials, and new therapy introduction." },
+      { q: "Q30. Adoption/dissemination of new cancer drugs?", a: "After PMDA approval, ~6-month Early Post-marketing Phase Vigilance (EPPV) precedes wider adoption. Physicians are cautious, often awaiting guideline inclusion and experience at major hospitals before broad use." },
+      { q: "Q31. Importance of clinical guidelines?", a: "Very high. Guidelines are the standard; off-guideline/off-label use is rare. Under national insurance, only guideline-concordant treatments are reimbursed." },
+      { q: "Q32. Are physicians willing to participate in research?", a: "Generally yes—if clearly \"for research only.\" Emphasize that it’s market research, data are anonymized, and the aim is to understand real practice. Separate research from promotion to gain trust." },
+      { q: "Q33. How to design duration/format?", a: "Keep burden low. Online surveys: 20–30 minutes. Interviews: 60–90 minutes max. Online (Zoom/Teams) is preferred due to no travel time." },
+      { q: "Q34. Is localization necessary?", a: "Yes. Use natural Japanese. Use domestic generic/brand drug names; common Japanese disease terms/abbreviations (e.g., RA, HbA1c); use Japan-standard units (mg/dL)." },
+      { q: "Q35. Is honoraria culturally acceptable for physicians?", a: "Yes. It’s standard and considered ethical to fairly compensate time/expertise; common in research and pharma industries in Japan." },
+      { q: "Q36. Typical honoraria ranges for physicians?", a: "Interviews: several tens of thousands of JPY per hour. Examples—30 min: JPY 10,000–15,000; 60 min: ~JPY 20,000–30,000. Quant surveys: several thousand JPY depending on time." },
+      { q: "Q37. Payment method preferences?", a: "Common: Amazon gift cards, cash, or bank transfer; checks are uncommon. Confirm need for receipts/statements. Explain clearly how honoraria are delivered to build trust." },
+      { q: "Q38. Manners/cultural points when meeting physicians?", a: "Treat physicians as respected professionals; use polite forms (e.g., \"sensei\"). Avoid cancellations and be punctual—expected regardless of compensation." },
+      { q: "Q39. Are patients reluctant to participate?", a: "Many are privacy-sensitive (history of large data breaches). From recruitment, clearly state anonymity, no PII collection, and statistical use only, to earn trust." },
+      { q: "Q40. Handling sensitive/privacy-related questions?", a: "Avoid unless necessary, or mark optional. Examples: income, education, family structure—forcing them causes refusals/dropouts and unreliable data. Provide \"Prefer not to answer\" options." },
+      { q: "Q41. Common age groups in patient surveys?", a: "Older adults (60–70+) dominate chronic disease surveys (diabetes, hypertension, COPD, cardiovascular). Ensure readability, comprehension, and low burden." },
+      { q: "Q42. Adapting surveys for elderly patients?", a: "Use larger fonts and simplified questions; favor desktop/laptop UI; consider paper/telephone options; sometimes need family/caregiver support or consent." },
+      { q: "Q43. Other considerations for patient surveys?", a: "Non-economic burdens (time, congestion, need for accompaniment) can be major obstacles. Emphasize safety/efficacy, daily life considerations, and family cooperation—often valued more than direct financial benefits." },
+      { q: "Q44. Main patient recruitment channels?", a: "(1) Online patient panels—broad reach, but accurate screening is critical. (2) Social media—hashtags, patient influencers, communities (X, Instagram, Facebook). Ensure compliance with PMD Act ad/solicitation rules and strong privacy protection." },
+      { q: "Q45. Roles of pharmacists?", a: "Pharmacists support guidance/adherence; prescribing rights remain with physicians. With prescribing–dispensing separation, pharmacists’ patient-facing roles expanded—medication compliance, side-effect management, OTC advice. Unlike some Western countries, no prescribing authority—keep in mind during recruiting." },
+      { q: "Q46. What to ask pharmacists in research?", a: "Focus on: (a) patient interactions & observed behaviors (side effects, discontinuation, self-changes), (b) inventory/procurement/storage (new drug intro, distribution challenges), (c) OTC/generics insights. Avoid therapy selection algorithms (outside scope)." },
+      { q: "Q47. Hospital vs community pharmacists—differences?", a: "Hospital: dispensing, IV prep, in-house preparations, ward duties, emergency response, clinical trials. Community/dispensing: dispensing, medication guidance, OTC provision and consultations." },
+      { q: "Q48. Are honoraria considerations same as physicians (for pharmacists)?", a: "Lower amounts are acceptable; an appropriate gift card or similar token is recommended." },
+      { q: "Q49. Can nurses be research targets?", a: "Yes—valuable for bedside insights. Nurses operate under physician direction (no diagnosis/treatment/prescribing authority in Japan). Provide real-world input on adherence, care challenges, device use. Unlike US NPs, Japan has no system enabling independent medical acts." },
+      { q: "Q50. Can caregivers be included?", a: "Yes—key proxies in a super-aging society, especially for dementia/chronic conditions. Targets: family members, nursing home staff, home care workers. Topics: medication management, visit support, care continuity, emotional/physical burdens. Mind privacy and emotional load; use indirect phrasing for sensitive items." },
+      { q: "Q51. What makes Japanese participants anxious or doubtful?", a: "Questions like \"Why me?\" and \"What’s the purpose?\" plus concerns over personal data and commercial motives. In invitations, clearly state purpose, sponsor, time/format, privacy protections, and \"no treatment impact\" to prevent withdrawals/non-response." },
+      { q: "Q52. Why is localization crucial in Japan?", a: "Healthcare systems, culture, and language differ; global designs without localization cause mismatches. Some roles (e.g., NP, PCP) don’t exist, yielding non-applicable questions or no respondents. Tone/wording must match Japanese tendencies to maintain trust/cooperation." },
+      { q: "Q53. Translation cautions into Japanese?", a: "Translate technical terms and system terminology to reflect Japan’s reality. Do not use \"Nurse Practitioner (NP)\"; instead exclude from target or replace with \"nurse.\" Similarly localize titles like \"Pain Specialist\" or \"PCP\" if not official in Japan." },
+      { q: "Q54. Appropriate survey length for HCPs/patients?", a: "Aim for 20–30 minutes; longer risks dropouts and quality decline. HCPs have limited free time; patients/caregivers answer between visits and duties. If long, mark some sections optional and consider incentive upgrades for full completion." },
+      { q: "Q55. Typical open-ended response patterns?", a: "Concise answers are preferred; long free text is uncommon. Cultural: modesty and succinctness. Technical: mixed kanji–kana typing takes time, esp. on mobile. Use IDIs to obtain depth beyond open ends." },
+      { q: "Q56. Why is an In-Country Review necessary?", a: "Local review ensures alignment with healthcare system norms, linguistic conventions, and tone. Translational accuracy alone doesn’t ensure pharma terminology/brand tone consistency. Review names/abbreviations, tone/politeness, and standard Japanese survey phrasing." },
+      { q: "Q57. Why is qualitative research perceived as difficult?", a: "Myth stems from \"not expressing true feelings.\" In reality, respondents speak cautiously considering context. With the right environment, skilled moderation, and clear pre-briefs, rich insights are achievable." },
+      { q: "Q58. Why are participants hesitant, and how to draw honest thoughts?", a: "Harmony-first culture (\"reading the room\"); initial politeness dampens negatives. Speaking changes with relationship perception. Create an environment where they feel safe to be candid; use appropriate questioning." },
+      { q: "Q59. If interview responses are limited, is research invalid?", a: "Silence can signal reflection, not refusal. Attend to nonverbal cues (facial expression, tone, hesitation). Engage experienced Japanese moderators who can read \"the space between words\" to deepen findings." },
+      { q: "Q60. How to make group interviews comfortable in Japan?", a: "Mind hierarchy and public self-consciousness. For physicians, group by similar seniority; consider IDIs when hierarchy inhibits. For patients, protect privacy and use indirect methods (anonymous written responses) so opinions aren’t personally attributed." },
+      { q: "Q61. Precautions for overseas clients observing sessions in Japan?", a: "Participants are sensitive to group atmosphere; prominent client intervention can tense the room. Remain in background and communicate via interpreter/moderator. Post-session debriefs prevent nuance loss and deepen insights." },
+      { q: "Q62. Legal/ethical considerations in Japan?", a: "Research must be purely for research—not promotion/advertising. Strictly comply with personal data regulations; handle personal information with utmost care." },
+      { q: "Q63. Handling personal information (APPI)?", a: "APPI requires strict handling of personal data (names, contacts, histories). Medical information is \"sensitive personal information\": disclose purpose, obtain consent, anonymize properly, and dispose/store securely to meet legal/ethical standards." },
+      { q: "Q64. Informed consent—how and what to explain?", a: "Participation must be voluntary. Explain study purpose and confidentiality up front; obtain explicit written/on-screen consent per format. Especially with patients/general public, a transparent, reassuring process is key to trust and success." },
+      { q: "Q65. Is honoraria acceptable for HCPs/patients and how to set?", a: "Yes, but structure carefully to avoid inducement/COI concerns. Set amounts/formats by role/affiliation. Clarify that research is informational only and won’t influence prescribing/treatment to ensure ethical compliance and trust." },
+      { q: "Q66. Scheduling with Japanese research agencies—what to note?", a: "National holidays/long breaks—Golden Week (late Apr–early May), Obon (mid-Aug), New Year (late Dec–early Jan)—can halt operations. Plan around the Japanese calendar, allow generous timelines, and foster open discussion." },
+      { q: "Q67. Leveraging analysts and KOL networks in Japan?", a: "Some agencies have specialty analysts and proprietary KOL networks in oncology, immunology, rare diseases, etc. Though costlier, they bridge objectives and clinical realities—valuable for high-impact studies. Confirm availability early and specify needs to maximize value." },
+      { q: "Q68. Can physicians be recruited from a target list in Japan?", a: "Recruitment is principally via anonymized matching using DCF (Doctor Contact File) codes to protect privacy and comply with law. Direct matching on personal info is generally prohibited except rare, tightly controlled cases. DCF list is matched to panel physicians; recruitment targets remain internal and undisclosed. Follow APPI and industry guidelines with transparent operations to maintain trust." }
     ];
 
-    // アコーディオン生成
+    // Render accordion list
     function renderFAQ(list = faqData) {
-        const faqList = document.getElementById('faq-list');
-        faqList.innerHTML = "";
-        list.forEach((item, idx) => {
-            const details = document.createElement('details');
-            details.className = "faq-item";
-            details.dataset.idx = idx;
-            const summary = document.createElement('summary');
-            summary.textContent = item.q;
-            const answer = document.createElement('div');
-            answer.className = "faq-answer";
-            answer.textContent = item.a;
-            details.appendChild(summary);
-            details.appendChild(answer);
-            faqList.appendChild(details);
-        });
+      const el = document.getElementById('faq-list');
+      el.innerHTML = '';
+      list.forEach((item, idx) => {
+        const details = document.createElement('details');
+        details.className = 'faq-item';
+        details.dataset.idx = idx;
+        const summary = document.createElement('summary');
+        summary.textContent = item.q;
+        const answer = document.createElement('div');
+        answer.className = 'faq-answer';
+        answer.textContent = item.a;
+        details.appendChild(summary);
+        details.appendChild(answer);
+        el.appendChild(details);
+      });
     }
 
-    // 初期表示
     renderFAQ();
 
-    // 検索ロジック
+    // Search logic with highlighting
     const searchInput = document.getElementById('search-input');
+    const clearBtn = document.getElementById('clear-btn');
     const searchResults = document.getElementById('search-results');
-    const faqList = document.getElementById('faq-list');
-    let faqItems;
 
+    function escapeRegExp(string) { return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
     function highlight(text, keyword) {
-        if (!keyword) return text;
-        return text.replace(new RegExp(`(${keyword})`, "gi"), `<mark>$1</mark>`);
+      if (!keyword) return text;
+      const re = new RegExp(`(${escapeRegExp(keyword)})`, 'gi');
+      return text.replace(re, '<mark>$1</mark>');
     }
 
-    searchInput.addEventListener('input', function() {
-        const keyword = this.value.trim().toLowerCase();
-        searchResults.innerHTML = "";
-        if (!keyword) {
-            renderFAQ(); // 全FAQ表示
-            return;
-        }
-        // Q&Aから部分一致検索
-        const filtered = faqData
-            .map((item, idx) => ({...item, idx}))
-            .filter(item =>
-                item.q.toLowerCase().includes(keyword) ||
-                item.a.toLowerCase().includes(keyword)
-            );
-        if (filtered.length === 0) {
-            searchResults.innerHTML = "<div class='text-red-400 font-bold mt-3'>No results found</div>";
-            faqList.innerHTML = "";
-            return;
-        }
-        // 検索結果リストを表示
-        const ul = document.createElement('ul');
-        ul.className = "text-left";
-        filtered.forEach(res => {
-            const li = document.createElement('li');
-            li.className = "mb-2";
-            li.innerHTML = `<a href="#" class="text-blue-600 hover:underline font-semibold" data-idx="${res.idx}">${highlight(res.q, keyword)}</a>
-                <div class="text-gray-600 text-sm truncate">${highlight(res.a, keyword)}</div>`;
-            ul.appendChild(li);
-        });
-        searchResults.appendChild(ul);
-        faqList.innerHTML = ""; // FAQアコーディオン一時非表示
-    });
+    function doSearch(term) {
+      const keyword = term.trim();
+      searchResults.innerHTML = '';
+      if (!keyword) { renderFAQ(); return; }
+      const lower = keyword.toLowerCase();
+      const filtered = faqData.map((it, idx) => ({...it, idx}))
+        .filter(it => it.q.toLowerCase().includes(lower) || it.a.toLowerCase().includes(lower));
+      if (filtered.length === 0) {
+        document.getElementById('faq-list').innerHTML = '';
+        searchResults.innerHTML = "<div class='text-red-400 font-bold mt-3'>No results found</div>";
+        return;
+      }
+      const ul = document.createElement('ul');
+      ul.className = 'text-left';
+      filtered.forEach(res => {
+        const li = document.createElement('li');
+        li.className = 'mb-3';
+        li.innerHTML = `<a href="#" class="text-blue-600 hover:underline font-semibold" data-idx="${res.idx}">${highlight(res.q, keyword)}</a>
+          <div class="text-gray-600 text-sm">${highlight(res.a.slice(0, 180), keyword)}...</div>`;
+        ul.appendChild(li);
+      });
+      searchResults.appendChild(ul);
+      document.getElementById('faq-list').innerHTML = '';
+    }
 
-    // 検索結果クリック→該当アコーディオンを開く
-    searchResults.addEventListener('click', function(e) {
-        if (e.target.tagName.toLowerCase() === 'a' && e.target.dataset.idx) {
-            e.preventDefault();
-            const idx = Number(e.target.dataset.idx);
-            renderFAQ(faqData); // 全FAQを再表示
-            setTimeout(() => {
-                // 指定アコーディオンを開いてジャンプ
-                const allDetails = document.querySelectorAll('.faq-item');
-                if (allDetails[idx]) {
-                    allDetails[idx].open = true;
-                    allDetails[idx].scrollIntoView({behavior: 'smooth', block: 'start'});
-                }
-            }, 10);
-            searchResults.innerHTML = ""; // 検索リセット
-            searchInput.value = "";
-        }
-    });
-    </script>
-<!-- 以下、body内の最後に追加 -->
-<!-- フローティングボタン -->
-<div id="floating-btns" style="position:fixed;right:2vw;bottom:3vh;z-index:50;display:flex;flex-direction:column;gap:1rem;">
-  <button onclick="scrollToTop()" title="Topへ" class="rounded-full shadow-lg bg-blue-700 hover:bg-blue-900 text-white p-3 transition duration-200 focus:outline-none">
-    ▲<span class="hidden sm:inline">&nbsp;Top</span>
-  </button>
-  <button onclick="focusSearch()" title="検索に戻る" class="rounded-full shadow-lg bg-purple-600 hover:bg-purple-800 text-white p-3 transition duration-200 focus:outline-none">
-    🔍<span class="hidden sm:inline">&nbsp;Search</span>
-  </button>
-</div>
+    searchInput.addEventListener('input', () => doSearch(searchInput.value));
+    clearBtn.addEventListener('click', () => { searchInput.value=''; searchResults.innerHTML=''; renderFAQ(); window.scrollTo({top:0, behavior:'smooth'}); });
 
-<script>
-  // Topへ戻る
-  function scrollToTop() {
-      window.scrollTo({top: 0, behavior: 'smooth'});
-  }
-  // 検索ボックスにフォーカス
-  function focusSearch() {
-      scrollToTop();
+    // Click a search result -> open accordion and jump
+    searchResults.addEventListener('click', (e) => {
+      const a = e.target.closest('a[data-idx]');
+      if (!a) return;
+      e.preventDefault();
+      const idx = Number(a.dataset.idx);
+      renderFAQ(faqData);
       setTimeout(() => {
-          document.getElementById('search-input').focus();
-      }, 400);
-  }
-  // スクロールでボタンを目立たせる
-  window.addEventListener('scroll', () => {
-    const btns = document.getElementById('floating-btns');
-    if(window.scrollY > 120){
-      btns.style.opacity = '1';
-      btns.style.pointerEvents = 'all';
-    }else{
-      btns.style.opacity = '0.5';
-      btns.style.pointerEvents = 'none';
-    }
-  });
-</script>
-
+        const all = document.querySelectorAll('.faq-item');
+        if (all[idx]) { all[idx].open = true; all[idx].scrollIntoView({ behavior:'smooth', block:'start' }); }
+      }, 10);
+      searchResults.innerHTML='';
+      searchInput.value='';
+    });
+  </script>
 </body>
 </html>
