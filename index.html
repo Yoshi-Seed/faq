@@ -155,7 +155,7 @@ const FAQS = [
     answer:"Zoom is common; Teams also accepted for enterprise clients. Always run pre-checks for audio, recording permission, and stimulus compatibility (fonts, Japanese input).",
     categories:["Operations","Fieldwork","Compliance"], primary:"Operations" },
   { id:"time1", question:"Typical timeline for 20 HCP IDIs in a specialized area?",
-    answer:"Screening 1–2 weeks, fieldwork 2 weeks, and 1 week for synthesis—~4–5 weeks total. Add buffer for approvals and materials translation.",
+    answer:"Screening 3–4 weeks, fieldwork 2 weeks, and 1 week for synthesis—~5–6 weeks total. Add buffer for approvals and materials translation.",
     categories:["Timeline","HCP","Operations"], primary:"Timeline" },
   { id:"sys2", question:"Can we mix facility types in one quota?",
     answer:"Yes, but analyze separately. University hospitals, clinics, and cancer centers have distinct roles. Quotas should reflect real-world patient flow.",
@@ -163,12 +163,7 @@ const FAQS = [
   { id:"cmp2", question:"How do we handle PII under Japanese regulations?",
     answer:"Minimize collection, store securely, and use anonymized IDs. Share only aggregated insights. When in doubt, treat as sensitive and restrict access.",
     categories:["Compliance","Operations"], primary:"Compliance" },
-  { id:"ops2", question:"Do we need Japanese translations for all stimuli?",
-    answer:"Yes for patients. For HCPs, English may be acceptable in some contexts, but Japanese improves clarity and pace. Always localize regulatory terms.",
-    categories:["Operations","Fieldwork","HCP","Patients"], primary:"Operations" }
 ];
-
-const SECTIONS = ["Patients","HCP","System","Compliance","Fieldwork","Operations","Timeline"];
 
 /* ============= Helpers =============*/
 function escapeHTML(str){ return String(str||"").replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
