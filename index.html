@@ -99,27 +99,82 @@
 <!-- Load data FIRST -->
 <script src="data/faqs.js"></script>
 
+<!-- Load data FIRST -->
+<script src="data/faqs.js"></script>
+
 <script>
-/* ====== Safe loader (supports window.FAQS or const FAQS) ====== */
-function getAllFAQs(){
+/* ========= Safety Loader v2 ========= */
+/* 1) どんな定義でも拾う: window.FAQS / const FAQS / JSON風  */
+function getAllFAQs() {
   try { if (Array.isArray(window.FAQS) && window.FAQS.length) return window.FAQS; } catch(e){}
   try { if (typeof FAQS !== 'undefined' && Array.isArray(FAQS) && FAQS.length) return FAQS; } catch(e){}
+  // もし faqs.js が window.FAQS = [ ... ] 代入だった場合
+  try { if (typeof window.FAQS !== 'undefined' && typeof window.FAQS.length === 'number') return window.FAQS; } catch(e){}
   return [];
 }
 
-/* ====== UI logic (no external deps) ====== */
-const SECTIONS = ["Patients","HCP","System","Compliance","Fieldwork","Operations","Timeline"];
-const ALL = getAllFAQs(); // ←ここが肝
-// de-dup by id, keep last
-const byId = new Map(); for (const it of ALL) { byId.set(it.id, it); }
-const FAQS = [...byId.values()];
+/* 2) カテゴリ正規化（表記ゆれを吸収: "Patient" "patients " など） */
+const CANON = ["Patients","HCP","System","Compliance","Fieldwork","Operations","Timeline"];
+const CANON_MAP = {
+  patients:"Patients", patient:"Patients", "pt":"Patients",
+  hcp:"HCP", physician:"HCP", doctor:"HCP",
+  system:"System", healthcare:"System",
+  compliance:"Compliance", legal:"Compliance", privacy:"Compliance",
+  fieldwork:"Fieldwork", moderation:"Fieldwork", interview:"Fieldwork",
+  operations:"Operations", ops:"Operations",
+  timeline:"Timeline", schedule:"Timeline", timing:"Timeline"
+};
+function normOne(c){
+  if(!c) return null;
+  const k = String(c).trim().toLowerCase();
+  return CANON_MAP[k] || CANON.find(x => x.toLowerCase() === k) || null;
+}
+function deriveCats(item){
+  // データ側が categories / category / section / sections など、何でも拾う
+  let raw = item.categories ?? item.category ?? item.section ?? item.sections ?? [];
+  if (typeof raw === 'string') raw = raw.split(/[,;/|]/);
+  if (!Array.isArray(raw)) raw = [];
+  const mapped = Array.from(new Set(raw.map(normOne).filter(Boolean)));
+  // primary も補正
+  let priRaw = item.primary ?? item.primaryCategory ?? item.main ?? null;
+  const primary = normOne(priRaw) || mapped[0] || null;
+  return { mapped, primary };
+}
+
+/* ========= UI logic ========= */
+const SECTIONS = CANON.slice();
+const ALL_RAW = getAllFAQs();
+
+// de-dup by id（最後の定義を優先）
+const byId = new Map();
+for (const it of ALL_RAW) { if (it && it.id) byId.set(it.id, it); }
+const ALL = [...byId.values()].map(it => {
+  const { mapped, primary } = deriveCats(it);
+  return { ...it, categories: mapped, primary };
+});
+
+// もし1件も無ければ Notice を出す（原因の切り分けができるように）
+if (ALL.length === 0) {
+  console.warn('[FAQ] No data found. Check: data/faqs.js path & format.');
+  const intro = document.getElementById('intro');
+  if (intro) {
+    const n = document.createElement('div');
+    n.style.background = '#fff3cd';
+    n.style.border = '1px solid #ffeeba';
+    n.style.padding = '10px 14px';
+    n.style.borderRadius = '8px';
+    n.style.marginTop = '12px';
+    n.style.color = '#856404';
+    n.innerHTML = 'No FAQ data loaded. Please verify <code>data/faqs.js</code> is present and exports an array via <code>window.FAQS.push(...)</code> or <code>const FAQS = [...];</code>';
+    intro.appendChild(n);
+  }
+}
 
 function escapeHTML(s){return String(s||"").replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 function cardHtml(f){
-  const link=`articles.html?id=${encodeURIComponent(f.id)}`;
-  const tags=(f.categories||[]).map(c=>`<span class="tag">#${escapeHTML(c)}</span>`).join(' ');
-  const a = String(f.answer||'');
-  const preview = a.length>150 ? a.slice(0,150)+'…' : a;
+  const link = `articles.html?id=${encodeURIComponent(f.id)}`;
+  const tags = (f.categories||[]).map(c=>`<span class="tag">#${escapeHTML(c)}</span>`).join(' ');
+  const a = String(f.answer||''); const preview = a.length>150 ? a.slice(0,150)+'…' : a;
   return `<article class="faq" tabindex="0">
     <h3 class="q"><a href="${link}">${escapeHTML(f.question)}</a></h3>
     <p class="a">${escapeHTML(preview)}</p>
@@ -127,14 +182,12 @@ function cardHtml(f){
   </article>`;
 }
 function renderSections(){
-  const counts=Object.fromEntries(SECTIONS.map(s=>[s,0]));
   SECTIONS.forEach(section=>{
-    const grid=document.querySelector(\`.faq-grid[data-section="\${section}"]\`);
-    const list=FAQS.filter(f=>Array.isArray(f.categories) && f.categories.includes(section));
-    grid.innerHTML=list.map(cardHtml).join('');
-    counts[section]=list.length;
-    const badge=document.getElementById('count-'+section);
-    if(badge) badge.textContent=String(list.length);
+    const grid = document.querySelector(\`.faq-grid[data-section="\${section}"]\`);
+    const list = ALL.filter(f => Array.isArray(f.categories) && f.categories.includes(section));
+    if (grid) grid.innerHTML = list.map(cardHtml).join('');
+    const badge = document.getElementById('count-'+section);
+    if (badge) badge.textContent = String(list.length || 0);
   });
 }
 function normalize(s){return String(s||'').toLowerCase()}
@@ -146,12 +199,8 @@ function snippet(text,q){
 }
 function score(query,it){
   const terms=normalize(query).split(/\s+/).filter(Boolean);
-  let sc=0;
-  terms.forEach(t=>{
-    const hay=(it.question+' '+(it.answer||'')).toLowerCase();
-    if(hay.includes(t)) sc+=2;
-    if((it.question||'').toLowerCase().includes(t)) sc+=2;
-  });
+  let sc=0; const hay=(it.question+' '+(it.answer||'')).toLowerCase();
+  terms.forEach(t=>{ if(hay.includes(t)) sc+=2; if((it.question||'').toLowerCase().includes(t)) sc+=2; });
   return sc;
 }
 
@@ -159,7 +208,7 @@ function score(query,it){
 const search=document.getElementById('search'), suggest=document.getElementById('suggest');
 function updateSuggest(v){
   const q=v.trim(); if(!q){suggest.classList.remove('visible'); suggest.innerHTML=''; return;}
-  const ranked=FAQS.map(it=>({it,score:score(q,it)})).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).slice(0,12);
+  const ranked=ALL.map(it=>({it,score:score(q,it)})).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).slice(0,12);
   if(!ranked.length){suggest.classList.remove('visible'); suggest.innerHTML=''; return;}
   suggest.innerHTML=ranked.map(({it})=>`<div class="s-item" data-id="${it.id}" tabindex="0"><div class="s-title">${escapeHTML(it.question)}</div><div class="s-snippet">${snippet(it.answer,q)}</div></div>`).join('');
   suggest.classList.add('visible');
@@ -178,6 +227,14 @@ document.getElementById('year').textContent=new Date().getFullYear();
 
 // Init
 renderSections();
+
+/* =======（開発用）軽い可視化 ======= */
+console.info('[FAQ] loaded items =', ALL.length);
+if (ALL.length) {
+  console.table(ALL.slice(0,3).map(x=>({id:x.id, primary:x.primary, cats:(x.categories||[]).join(', ')})));
+}
 </script>
+
 </body>
 </html>
+
