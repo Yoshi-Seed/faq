@@ -96,36 +96,23 @@
   <footer class="site"><p>© <span id="year"></span> Seed Planning.</p></footer>
 </div>
 
-<!-- Load data -->
+<!-- Load data FIRST -->
 <script src="data/faqs.js"></script>
 
 <script>
+/* ====== Safe loader (supports window.FAQS or const FAQS) ====== */
 function getAllFAQs(){
-  try {
-    if (Array.isArray(window.FAQS) && window.FAQS.length) return window.FAQS;
-  } catch(e){}
-  try {
-    // 別ファイルで `const FAQS = [...]` の場合でも拾う
-    if (typeof FAQS !== 'undefined' && Array.isArray(FAQS) && FAQS.length) return FAQS;
-  } catch(e){}
+  try { if (Array.isArray(window.FAQS) && window.FAQS.length) return window.FAQS; } catch(e){}
+  try { if (typeof FAQS !== 'undefined' && Array.isArray(FAQS) && FAQS.length) return FAQS; } catch(e){}
   return [];
 }
-  
+
 /* ====== UI logic (no external deps) ====== */
-function getAllFAQs(){
-  try{ if(Array.isArray(window.FAQS) && window.FAQS.length) return window.FAQS; }catch(e){}
-  try{ if(typeof FAQS!=='undefined' && Array.isArray(FAQS) && FAQS.length) return FAQS; }catch(e){}
-  return [];
-}
-
 const SECTIONS = ["Patients","HCP","System","Compliance","Fieldwork","Operations","Timeline"];
-const ALL = getAllFAQs();
-
+const ALL = getAllFAQs(); // ←ここが肝
 // de-dup by id, keep last
-const byId = new Map(); 
-for(const it of ALL){ byId.set(it.id,it) } 
+const byId = new Map(); for (const it of ALL) { byId.set(it.id, it); }
 const FAQS = [...byId.values()];
-
 
 function escapeHTML(s){return String(s||"").replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 function cardHtml(f){
@@ -179,6 +166,7 @@ function updateSuggest(v){
 }
 search.addEventListener('input',e=>updateSuggest(e.target.value));
 search.addEventListener('focus',e=>updateSuggest(e.target.value));
+document.addEventListener('click',e=>{ if(!e.target.closest('.search')){ suggest.classList.remove('visible'); }});
 suggest.addEventListener('click',e=>{
   const it=e.target.closest('.s-item'); if(!it) return;
   location.href=`articles.html?id=${encodeURIComponent(it.dataset.id)}`;
@@ -193,5 +181,3 @@ renderSections();
 </script>
 </body>
 </html>
-
-
