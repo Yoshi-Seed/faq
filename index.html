@@ -96,27 +96,41 @@
   <footer class="site"><p>© <span id="year"></span> Seed Planning.</p></footer>
 </div>
 
-<!-- Load data FIRST -->
-<script src="data/faqs.js"></script>
-
-<!-- Load data FIRST -->
+<!-- Load data FIRST（1回だけでOK） -->
 <script src="data/faqs.js"></script>
 
 <script>
-/* ========= Safety Loader v2 ========= */
-/* 1) どんな定義でも拾う: window.FAQS / const FAQS / JSON風  */
+/* ========= Strong Loader v3 =========
+   1) window.FAQS / const FAQS / window.FAQS = [...] すべて対応
+   2) それでも見つからなければ、window上の「id & question を持つ配列」を自動探索
+   3) カテゴリ名の表記ゆれを正規化
+*/
+function pickArrayCandidateFromWindow(){
+  try{
+    const keys = Object.keys(window);
+    for(const k of keys){
+      const v = window[k];
+      if(Array.isArray(v) && v.length){
+        const sample = v.find(x => x && typeof x==='object' && ('id'in x) && ('question'in x));
+        if(sample){ console.info('[FAQ] picked global array:', k); return v; }
+      }
+    }
+  }catch(e){}
+  return [];
+}
 function getAllFAQs() {
   try { if (Array.isArray(window.FAQS) && window.FAQS.length) return window.FAQS; } catch(e){}
   try { if (typeof FAQS !== 'undefined' && Array.isArray(FAQS) && FAQS.length) return FAQS; } catch(e){}
-  // もし faqs.js が window.FAQS = [ ... ] 代入だった場合
-  try { if (typeof window.FAQS !== 'undefined' && typeof window.FAQS.length === 'number') return window.FAQS; } catch(e){}
-  return [];
+  // window.FAQS = [...] 形式（lengthはあるが配列判定のみでOK）
+  try { if (typeof window.FAQS !== 'undefined' && Array.isArray(window.FAQS)) return window.FAQS; } catch(e){}
+  // ★ 最後の手段：window から「id と question を持つ配列」を探索
+  return pickArrayCandidateFromWindow();
 }
 
-/* 2) カテゴリ正規化（表記ゆれを吸収: "Patient" "patients " など） */
+/* 2) カテゴリ正規化 */
 const CANON = ["Patients","HCP","System","Compliance","Fieldwork","Operations","Timeline"];
 const CANON_MAP = {
-  patients:"Patients", patient:"Patients", "pt":"Patients",
+  patients:"Patients", patient:"Patients", pt:"Patients",
   hcp:"HCP", physician:"HCP", doctor:"HCP",
   system:"System", healthcare:"System",
   compliance:"Compliance", legal:"Compliance", privacy:"Compliance",
@@ -130,30 +144,29 @@ function normOne(c){
   return CANON_MAP[k] || CANON.find(x => x.toLowerCase() === k) || null;
 }
 function deriveCats(item){
-  // データ側が categories / category / section / sections など、何でも拾う
   let raw = item.categories ?? item.category ?? item.section ?? item.sections ?? [];
   if (typeof raw === 'string') raw = raw.split(/[,;/|]/);
   if (!Array.isArray(raw)) raw = [];
   const mapped = Array.from(new Set(raw.map(normOne).filter(Boolean)));
-  // primary も補正
-  let priRaw = item.primary ?? item.primaryCategory ?? item.main ?? null;
+  // Primary（大文字キーにも対応）
+  let priRaw = item.primary ?? item.Primary ?? item.primaryCategory ?? item.main ?? null;
   const primary = normOne(priRaw) || mapped[0] || null;
   return { mapped, primary };
 }
 
 /* ========= UI logic ========= */
 const SECTIONS = CANON.slice();
-const ALL_RAW = getAllFAQs();
+const RAW = getAllFAQs();
 
 // de-dup by id（最後の定義を優先）
 const byId = new Map();
-for (const it of ALL_RAW) { if (it && it.id) byId.set(it.id, it); }
+for (const it of RAW) { if (it && it.id) byId.set(it.id, it); }
 const ALL = [...byId.values()].map(it => {
   const { mapped, primary } = deriveCats(it);
   return { ...it, categories: mapped, primary };
 });
 
-// もし1件も無ければ Notice を出す（原因の切り分けができるように）
+// データ未取得なら Notice（原因の切り分けに）
 if (ALL.length === 0) {
   console.warn('[FAQ] No data found. Check: data/faqs.js path & format.');
   const intro = document.getElementById('intro');
@@ -165,7 +178,7 @@ if (ALL.length === 0) {
     n.style.borderRadius = '8px';
     n.style.marginTop = '12px';
     n.style.color = '#856404';
-    n.innerHTML = 'No FAQ data loaded. Please verify <code>data/faqs.js</code> is present and exports an array via <code>window.FAQS.push(...)</code> or <code>const FAQS = [...];</code>';
+    n.innerHTML = 'No FAQ data loaded. Verify <code>data/faqs.js</code> exists and defines an array (e.g., <code>window.FAQS.push(...)</code> or <code>const FAQS = [...]</code>).';
     intro.appendChild(n);
   }
 }
@@ -228,13 +241,13 @@ document.getElementById('year').textContent=new Date().getFullYear();
 // Init
 renderSections();
 
-/* =======（開発用）軽い可視化 ======= */
+/* dev log */
 console.info('[FAQ] loaded items =', ALL.length);
-if (ALL.length) {
-  console.table(ALL.slice(0,3).map(x=>({id:x.id, primary:x.primary, cats:(x.categories||[]).join(', ')})));
-}
+if (ALL.length) console.table(ALL.slice(0,5).map(x=>({id:x.id, primary:x.primary, cats:(x.categories||[]).join(', ')})));
 </script>
+
 
 </body>
 </html>
+
 
