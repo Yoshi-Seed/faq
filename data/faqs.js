@@ -1,12 +1,10 @@
-/* ============================================
-   faqs.js  （保存先：faq/data/faqs.js）
-   ★ このファイルは「FAQデータだけ」を持つ
-   ★ ここに新しいFAQを追記していけばOK（Q69, Q70…）
-   ★ 他のJSからは window.FAQS を参照する
-============================================ */
+// data/faqs.js（推奨）
 (function(){
-  // ★ 合体配列を用意（既にあれば使う）
   window.FAQS = window.FAQS || [];
+  window.FAQS.push(
+    /* { id:"Q1", question:"...", answer:"...", categories:["System"], primary:"System" }, … */
+  );
+})();
 
   // ★ ここからFAQ本体
   window.FAQS.push(
@@ -82,3 +80,4 @@
   // ★ ここまでFAQ本体
 
 })();
+
