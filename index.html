@@ -96,98 +96,64 @@
   <footer class="site"><p>© <span id="year"></span> Seed Planning.</p></footer>
 </div>
 
-<!-- Load data FIRST（1回だけでOK） -->
+<!-- 1) 外部データ：読めたら使う -->
 <script src="data/faqs.js"></script>
 
+<!-- 2) 内蔵フォールバック（外部が空/失敗でも必ず出す） -->
+<script id="fallback-data">
+  window.FAQS_FALLBACK = [
+    { id:"QTEST1", question:"Test — Patients (fallback)", answer:"If you can see this, external data file wasn’t loaded. Check /faq/data/faqs.js path.", categories:["Patients"], primary:"Patients" },
+    { id:"QTEST2", question:"Test — HCP (fallback)",      answer:"Replace fallback by fixing data/faqs.js. Cards here prove HTML works.",        categories:["HCP"],      primary:"HCP" }
+  ];
+</script>
+
 <script>
-/* ========= Strong Loader v3 =========
-   1) window.FAQS / const FAQS / window.FAQS = [...] すべて対応
-   2) それでも見つからなければ、window上の「id & question を持つ配列」を自動探索
-   3) カテゴリ名の表記ゆれを正規化
-*/
-function pickArrayCandidateFromWindow(){
-  try{
-    const keys = Object.keys(window);
-    for(const k of keys){
-      const v = window[k];
-      if(Array.isArray(v) && v.length){
-        const sample = v.find(x => x && typeof x==='object' && ('id'in x) && ('question'in x));
-        if(sample){ console.info('[FAQ] picked global array:', k); return v; }
-      }
-    }
-  }catch(e){}
+/* ===== Strong loader (external > fallback) ===== */
+function loadFAQs(){
+  // 1) 外部
+  try{ if (Array.isArray(window.FAQS) && window.FAQS.length) return window.FAQS; }catch(e){}
+  try{ if (typeof FAQS!=='undefined' && Array.isArray(FAQS) && FAQS.length) return FAQS; }catch(e){}
+  // 2) フォールバック
+  try{ if (Array.isArray(window.FAQS_FALLBACK) && window.FAQS_FALLBACK.length) return window.FAQS_FALLBACK; }catch(e){}
   return [];
 }
-function getAllFAQs() {
-  try { if (Array.isArray(window.FAQS) && window.FAQS.length) return window.FAQS; } catch(e){}
-  try { if (typeof FAQS !== 'undefined' && Array.isArray(FAQS) && FAQS.length) return FAQS; } catch(e){}
-  // window.FAQS = [...] 形式（lengthはあるが配列判定のみでOK）
-  try { if (typeof window.FAQS !== 'undefined' && Array.isArray(window.FAQS)) return window.FAQS; } catch(e){}
-  // ★ 最後の手段：window から「id と question を持つ配列」を探索
-  return pickArrayCandidateFromWindow();
-}
 
-/* 2) カテゴリ正規化 */
-const CANON = ["Patients","HCP","System","Compliance","Fieldwork","Operations","Timeline"];
-const CANON_MAP = {
-  patients:"Patients", patient:"Patients", pt:"Patients",
-  hcp:"HCP", physician:"HCP", doctor:"HCP",
-  system:"System", healthcare:"System",
-  compliance:"Compliance", legal:"Compliance", privacy:"Compliance",
-  fieldwork:"Fieldwork", moderation:"Fieldwork", interview:"Fieldwork",
-  operations:"Operations", ops:"Operations",
-  timeline:"Timeline", schedule:"Timeline", timing:"Timeline"
-};
-function normOne(c){
-  if(!c) return null;
-  const k = String(c).trim().toLowerCase();
-  return CANON_MAP[k] || CANON.find(x => x.toLowerCase() === k) || null;
-}
-function deriveCats(item){
-  let raw = item.categories ?? item.category ?? item.section ?? item.sections ?? [];
-  if (typeof raw === 'string') raw = raw.split(/[,;/|]/);
-  if (!Array.isArray(raw)) raw = [];
-  const mapped = Array.from(new Set(raw.map(normOne).filter(Boolean)));
-  // Primary（大文字キーにも対応）
-  let priRaw = item.primary ?? item.Primary ?? item.primaryCategory ?? item.main ?? null;
-  const primary = normOne(priRaw) || mapped[0] || null;
-  return { mapped, primary };
-}
+/* ===== 正規化 ===== */
+const SECTIONS = ["Patients","HCP","System","Compliance","Fieldwork","Operations","Timeline"];
+const CANON = new Map(SECTIONS.map(s=>[s.toLowerCase(),s]));
+function normCat(c){ if(!c) return null; const k=String(c).trim().toLowerCase(); return CANON.get(k)||null; }
 
-/* ========= UI logic ========= */
-const SECTIONS = CANON.slice();
-const RAW = getAllFAQs();
-
-// de-dup by id（最後の定義を優先）
-const byId = new Map();
-for (const it of RAW) { if (it && it.id) byId.set(it.id, it); }
-const ALL = [...byId.values()].map(it => {
-  const { mapped, primary } = deriveCats(it);
-  return { ...it, categories: mapped, primary };
+const RAW = loadFAQs();
+// de-dup by id
+const map = new Map(); RAW.forEach(x=>{ if(x && x.id) map.set(x.id,x) });
+const FAQS = [...map.values()].map(x=>{
+  let cats = x.categories ?? x.category ?? [];
+  if (typeof cats === 'string') cats = cats.split(/[,;/|]/);
+  if (!Array.isArray(cats)) cats = [];
+  const fixed = [...new Set(cats.map(normCat).filter(Boolean))];
+  const primary = normCat(x.primary) || fixed[0] || null;
+  return { ...x, categories: fixed, primary };
 });
 
-// データ未取得なら Notice（原因の切り分けに）
-if (ALL.length === 0) {
-  console.warn('[FAQ] No data found. Check: data/faqs.js path & format.');
+/* ===== 0件なら画面にNotice ===== */
+if (!FAQS.length) {
   const intro = document.getElementById('intro');
   if (intro) {
     const n = document.createElement('div');
-    n.style.background = '#fff3cd';
-    n.style.border = '1px solid #ffeeba';
-    n.style.padding = '10px 14px';
-    n.style.borderRadius = '8px';
-    n.style.marginTop = '12px';
-    n.style.color = '#856404';
-    n.innerHTML = 'No FAQ data loaded. Verify <code>data/faqs.js</code> exists and defines an array (e.g., <code>window.FAQS.push(...)</code> or <code>const FAQS = [...]</code>).';
+    n.style.background='#fff3cd'; n.style.border='1px solid #ffeeba';
+    n.style.padding='10px 14px'; n.style.borderRadius='8px'; n.style.marginTop='12px'; n.style.color='#856404';
+    n.innerHTML='No FAQ data found. Please verify <code>/faq/data/faqs.js</code>.';
     intro.appendChild(n);
   }
+  console.warn('[FAQ] No items. External + fallback both empty.');
 }
 
+/* ===== UI ===== */
 function escapeHTML(s){return String(s||"").replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 function cardHtml(f){
-  const link = `articles.html?id=${encodeURIComponent(f.id)}`;
-  const tags = (f.categories||[]).map(c=>`<span class="tag">#${escapeHTML(c)}</span>`).join(' ');
-  const a = String(f.answer||''); const preview = a.length>150 ? a.slice(0,150)+'…' : a;
+  const link=`articles.html?id=${encodeURIComponent(f.id)}`;
+  const tags=(f.categories||[]).map(c=>`<span class="tag">#${escapeHTML(c)}</span>`).join(' ');
+  const a=String(f.answer||''); const preview=a.length>150?a.slice(0,150)+'…':a;
   return `<article class="faq" tabindex="0">
     <h3 class="q"><a href="${link}">${escapeHTML(f.question)}</a></h3>
     <p class="a">${escapeHTML(preview)}</p>
@@ -196,11 +162,11 @@ function cardHtml(f){
 }
 function renderSections(){
   SECTIONS.forEach(section=>{
-    const grid = document.querySelector(\`.faq-grid[data-section="\${section}"]\`);
-    const list = ALL.filter(f => Array.isArray(f.categories) && f.categories.includes(section));
-    if (grid) grid.innerHTML = list.map(cardHtml).join('');
-    const badge = document.getElementById('count-'+section);
-    if (badge) badge.textContent = String(list.length || 0);
+    const grid=document.querySelector(\`.faq-grid[data-section="\${section}"]\`);
+    const list=FAQS.filter(f=>Array.isArray(f.categories)&&f.categories.includes(section));
+    if(grid) grid.innerHTML=list.map(cardHtml).join('');
+    const badge=document.getElementById('count-'+section);
+    if(badge) badge.textContent=String(list.length||0);
   });
 }
 function normalize(s){return String(s||'').toLowerCase()}
@@ -221,14 +187,14 @@ function score(query,it){
 const search=document.getElementById('search'), suggest=document.getElementById('suggest');
 function updateSuggest(v){
   const q=v.trim(); if(!q){suggest.classList.remove('visible'); suggest.innerHTML=''; return;}
-  const ranked=ALL.map(it=>({it,score:score(q,it)})).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).slice(0,12);
+  const ranked=FAQS.map(it=>({it,score:score(q,it)})).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).slice(0,12);
   if(!ranked.length){suggest.classList.remove('visible'); suggest.innerHTML=''; return;}
   suggest.innerHTML=ranked.map(({it})=>`<div class="s-item" data-id="${it.id}" tabindex="0"><div class="s-title">${escapeHTML(it.question)}</div><div class="s-snippet">${snippet(it.answer,q)}</div></div>`).join('');
   suggest.classList.add('visible');
 }
 search.addEventListener('input',e=>updateSuggest(e.target.value));
 search.addEventListener('focus',e=>updateSuggest(e.target.value));
-document.addEventListener('click',e=>{ if(!e.target.closest('.search')){ suggest.classList.remove('visible'); }});
+document.addEventListener('click',e=>{ if(!e.target.closest('.search')) suggest.classList.remove('visible'); });
 suggest.addEventListener('click',e=>{
   const it=e.target.closest('.s-item'); if(!it) return;
   location.href=`articles.html?id=${encodeURIComponent(it.dataset.id)}`;
@@ -241,13 +207,8 @@ document.getElementById('year').textContent=new Date().getFullYear();
 // Init
 renderSections();
 
-/* dev log */
-console.info('[FAQ] loaded items =', ALL.length);
-if (ALL.length) console.table(ALL.slice(0,5).map(x=>({id:x.id, primary:x.primary, cats:(x.categories||[]).join(', ')})));
+// Dev log
+console.info('[FAQ] items loaded =', FAQS.length, ' (external preferred; fallback used if external empty)');
 </script>
-
-
 </body>
 </html>
-
-
