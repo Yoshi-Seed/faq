@@ -1,219 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>FAQ Article | Seed Planning</title>
-<meta name="description" content="Japan Healthcare Market Research FAQ article." />
-<style>
-  :root{--bg:#ffffff;--ink:#20323a;--muted:#5f7a84;--line:#e6eff1;--accent:#2f6f7e;--accent-2:#5baaae;--chip:#edf7f7;--mark:#fff3b0;--radius:14px;--shadow:0 4px 18px rgba(20,50,60,.08)}
-  html,body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans","Noto Sans JP",system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;line-height:1.7}
-  a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
-  header{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.9);backdrop-filter:saturate(180%) blur(8px);border-bottom:1px solid var(--line)}
-  .wrap{max-width:1100px;margin:0 auto;padding:22px 20px}
-  .topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
-  .brand{display:flex;align-items:center;gap:14px}
-  .brand img{height:34px}
-  .search{position:relative;flex:1 1 520px;max-width:680px;display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 14px;box-shadow:var(--shadow)}
-  .search input{flex:1;border:0;outline:0;font-size:16px;background:transparent;padding:6px 2px}
-  .grid{display:grid;grid-template-columns:1fr;gap:22px}
-  @media (min-width:980px){.grid{grid-template-columns:3fr 1.2fr}}
-  .article{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
-  .article h1{margin:0 0 12px;font-size:28px}
-  .meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
-  .tag{font-size:12px;color:var(--muted)}
-  .sidebar{position:sticky;top:96px;align-self:start;background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
-  .sidebar h3{margin:0 0 10px;font-size:16px}
-  .sidebar ul{margin:0;padding-left:18px}
-  .sidebar li{margin:6px 0}
-  .related{margin-top:22px;background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
-  mark{background:var(--mark);padding:0 .2em}
-  .empty{color:var(--muted)}
-  footer.site{margin:36px 0 80px;color:var(--muted);font-size:13px;text-align:center}
-  .pill{display:inline-block;background:var(--chip);color:var(--accent);border:1px solid #d9ecec;padding:2px 8px;border-radius:999px;font-size:12px}
-</style>
+  <meta charset="UTF-8">
+  <title>FAQ Article</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+    h1 { color: #2c3e50; }
+    .category { font-size: 0.9em; color: #7f8c8d; margin-bottom: 20px; }
+    .section-title { margin-top: 40px; font-size: 1.2em; color: #34495e; }
+    .related { list-style: none; padding: 0; }
+    .related li { margin: 6px 0; }
+    .related a { text-decoration: none; color: #2980b9; }
+    .related a:hover { text-decoration: underline; }
+  </style>
 </head>
 <body>
-<header>
-  <div class="wrap topbar">
-    <div class="brand">
-      <a href="index.html"><img src="seed-planning-logo.png" alt="Seed Planning" onerror="this.style.display='none'"></a>
-      <div class="pill"><a href="index.html">Back to Index</a></div>
-    </div>
-    <div class="search" role="search" aria-label="Search FAQ">
-      <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24"><path fill="currentColor" d="M10 2a8 8 0 0 1 6.32 12.906l4.387 4.387l-1.414 1.414l-4.387-4.387A8 8 0 1 1 10 2m0 2a6 6 0 1 0 0 12a6 6 0 0 0 0-12"/></svg>
-      <input id="search" type="search" placeholder="Search all FAQs... (Enter to jump)" autocomplete="off" />
-    </div>
-  </div>
-</header>
+  <div id="content"></div>
+  <div id="related"></div>
 
-<div class="wrap grid">
-  <article class="article" id="article">
-    <h1 id="title" class="empty">Loading…</h1>
-    <div class="meta" id="meta"></div>
-    <div id="content" class="empty">Please wait.</div>
-    <section class="related" id="related" hidden>
-      <h3>You may also be interested in…</h3>
-      <ul id="related-list"></ul>
-    </section>
-  </article>
+  <script>
+    // 全FAQ配列
+    const FAQS = [
+      { id:"Q1", question:"Do we need Japanese translations for all survey materials?", 
+        answer:"Yes, translations are required for patients. For HCPs, English may work in some cases, but Japanese improves clarity and pace. Always localize regulatory terms.", 
+        categories:["Operations","Fieldwork"], primary:"Operations" },
 
-  <aside class="sidebar">
-    <h3>Articles in this section</h3>
-    <ul id="section-list"></ul>
-  </aside>
-</div>
+      { id:"Q2", question:"How do we recruit Japanese patients for rare diseases?", 
+        answer:"Recruitment often relies on patient advocacy groups, social media outreach, and hospital networks. Direct-to-patient methods are common in Japan.", 
+        categories:["Patients","Recruitment"], primary:"Patients" },
 
-<footer class="site"><p>© <span id="year"></span> Seed Planning.</p></footer>
+      { id:"Q3", question:"What ethics approvals are required in Japan?", 
+        answer:"For studies involving patients, Institutional Review Board (IRB) approval is typically required. HCP-only surveys may not require IRB, but compliance review is advised.", 
+        categories:["Compliance","System"], primary:"Compliance" },
 
-<!-- Embedded data (68 items) -->
-<script id="faq-data" type="application/json">[
-{"id":"Q1","question":"Is every citizen in Japan covered by health insurance?","answer":"In Japan, all registered residents are required to enroll in public health insurance (either Employee's Health Insurance or National Health Insurance), ensuring universal coverage for necessary medical services.","categories":["System"],"primary":"System"},
-{"id":"Q2","question":"What percentage of medical expenses do patients typically pay out of pocket in Japan?","answer":"Generally 30% of the medical fee is paid at the point of care (10–30% depending on age and income categories), with the remainder covered by public insurance.","categories":["System"],"primary":"System"},
-{"id":"Q3","question":"Is there an upper limit to out-of-pocket payments for medical expenses in Japan?","answer":"Yes. The High-Cost Medical Expense Benefit sets a monthly cap on patient cost sharing, with thresholds varying by age and income; amounts exceeding the cap are reimbursed.","categories":["System","Patients"],"primary":"System"},
-{"id":"Q4","question":"Does the design of the healthcare payment system influence behaviors in clinical practice?","answer":"Yes. Uniform fee schedules and insurance rules shape practice patterns (e.g., test ordering, referral behaviors), and operational constraints influence daily workflow and time allocation.","categories":["System","HCP","Operations"],"primary":"System"},
-{"id":"Q5","question":"Is access to healthcare providers in Japan open and flexible?","answer":"Yes. Patients can generally visit their preferred facility without strict gatekeeping; however, large hospitals may require referral letters or additional fees for first visits.","categories":["System","Patients"],"primary":"System"},
-{"id":"Q6","question":"What challenges are associated with a system where anyone can freely access large hospitals or specialists?","answer":"It can cause overcrowding at tertiary hospitals, longer waiting times, and potential inefficiency; triage by referrals and differential fees are used to encourage appropriate access.","categories":["System","Patients","Operations"],"primary":"System"},
-{"id":"Q7","question":"Does Japan have a primary care physician system?","answer":"Not in a strict gatekeeping sense. Many clinics function as de facto primary care, but patients retain freedom to visit specialists directly.","categories":["System"],"primary":"System"},
-{"id":"Q8","question":"Are there any restrictions on physicians' clinical practices or referral pathways in Japan?","answer":"Clinical freedom is respected, but institutional protocols and insurance rules (including documentation requirements) guide referrals and certain procedures.","categories":["System","HCP"],"primary":"System"},
-{"id":"Q9","question":"Are Japan’s health insurance systems operated by private companies?","answer":"The core schemes are public: Employee-based and municipal National Health Insurance. Private insurers play a supplemental role rather than running the public schemes.","categories":["System"],"primary":"System"},
-{"id":"Q10","question":"How are health insurance premiums determined in Japan?","answer":"Employee plan premiums are income-based and shared by employers and employees; National Health Insurance premiums are set by municipalities considering income, household size, and assets.","categories":["System"],"primary":"System"},
-{"id":"Q11","question":"Is there a role for private health insurance in Japan?","answer":"Yes—mainly as supplemental coverage for hospitalization cash benefits or non-covered services; it does not replace the public system.","categories":["System"],"primary":"System"},
-{"id":"Q12","question":"What is the role of physicians and their influence on purchasing decisions in Japan?","answer":"Physicians strongly influence treatment choice and hospital purchasing decisions, especially for device-intensive or specialty areas; however, guidelines and formularies also shape choices.","categories":["HCP","Operations","System"],"primary":"HCP"},
-{"id":"Q13","question":"How is the health checkup system implemented in Japan?","answer":"It is supported by public programs and employers. Periodic checkups (including cancer screening by age) are encouraged with follow-up pathways when abnormalities are detected.","categories":["System","Operations","Patients"],"primary":"System"},
-{"id":"Q14","question":"What types of tests are included in health checkups in Japan?","answer":"Typical sets include physical exam, blood/urine tests, blood pressure, ECG, chest X-ray; age/risk-based items can include GI endoscopy, mammography, and others.","categories":["System","Patients"],"primary":"System"},
-{"id":"Q15","question":"What follow-up system is in place if abnormalities are found during a health checkup in Japan?","answer":"Participants receive referral recommendations or letters to appropriate facilities; follow-up is typically coordinated by clinics/companies, with insurance coverage applying to diagnostic care.","categories":["System","Patients","Operations"],"primary":"System"},
-{"id":"Q16","question":"What are the characteristics of price revisions for medical services and pharmaceuticals in Japan?","answer":"National fee schedules and drug prices undergo periodic revisions (usually every two years), affecting reimbursement levels and prescribing/uptake patterns.","categories":["System","Timeline"],"primary":"System"},
-{"id":"Q17","question":"What types of medical institutions exist in Japan?","answer":"University/tertiary hospitals, general hospitals, specialty centers, and private clinics; roles differ for acute, specialized, and community care.","categories":["System"],"primary":"System"},
-{"id":"Q18","question":"How do patients in Japan choose medical institutions?","answer":"By convenience, reputation, specialty availability, and referrals; universal coverage reduces price differences at point of care, so access and perceived quality matter.","categories":["Patients","System"],"primary":"Patients"},
-{"id":"Q19","question":"What is the number of hospital beds and the availability of medical equipment (such as MRI machines) in Japan?","answer":"Japan has a high number of hospital beds and abundant imaging equipment per capita compared with many countries; availability varies by region and facility type.","categories":["System"],"primary":"System"},
-{"id":"Q20","question":"Is there a formal system for general practitioners (GPs) or general medicine physicians in Japan?","answer":"A formal GP gatekeeping system is not pervasive; \"general internal medicine\" and primary-care-style clinics fulfill first-contact roles, with referrals to specialists as needed.","categories":["System"],"primary":"System"},
-{"id":"Q21","question":"How are medical specialties categorized in Japan?","answer":"Specialties follow national training boards (e.g., internal medicine, surgery, pediatrics) with sub-specialty certification; institutions may have different departmental arrangements.","categories":["HCP","System"],"primary":"HCP"},
-{"id":"Q22","question":"Are there any distinctive features in the Japanese system for medical licensing and board certification?","answer":"National licensing is standardized; specialty board certification has undergone reforms for quality assurance and training program accreditation.","categories":["HCP","System"],"primary":"HCP"},
-{"id":"Q23","question":"Do physicians in Japan see a high number of patients or handle a large number of consultations per doctor?","answer":"Yes, particularly in outpatient clinics; this impacts consultation time and scheduling preferences for research participation.","categories":["HCP","Operations"],"primary":"HCP"},
-{"id":"Q24","question":"Do patients in Japan visit medical institutions frequently?","answer":"Yes; visit frequency is relatively high due to accessibility, chronic disease follow-up, and cultural preferences for in-person care.","categories":["Patients","System"],"primary":"Patients"},
-{"id":"Q25","question":"Are consultation times for doctors in Japan short? If so, why?","answer":"Often shorter than in some countries due to patient volume, workflow, and documentation; efficiency and concise communication are valued.","categories":["HCP","Operations","System"],"primary":"HCP"},
-{"id":"Q26","question":"Are there differences in workload, such as working hours, between hospital-based physicians and clinic-based (private practice) physicians in Japan?","answer":"Yes; hospital physicians manage inpatient/outpatient and call duties, while clinic physicians focus on ambulatory care with more predictable hours.","categories":["HCP","Operations"],"primary":"HCP"},
-{"id":"Q27","question":"Which physicians are responsible for treating cancer patients in Japan?","answer":"Care is multidisciplinary: surgeons, medical oncologists, radiation oncologists, and organ-specific specialists; roles vary by institution.","categories":["HCP","System"],"primary":"HCP"},
-{"id":"Q28","question":"What is the current situation regarding the number and role of medical oncologists in Japan?","answer":"Medical oncology has expanded but remains concentrated; organ-specific oncology remains influential; expertise is centered in major hospitals.","categories":["HCP","System"],"primary":"HCP"},
-{"id":"Q29","question":"Which hospitals or medical institutions play a central role in cancer care in Japan?","answer":"Designated cancer centers, university hospitals, and large regional hospitals coordinate advanced cancer care and clinical trials.","categories":["System","HCP"],"primary":"System"},
-{"id":"Q30","question":"What is the process and what are the characteristics of the adoption and dissemination of new cancer drugs in Japan?","answer":"After regulatory approval and pricing, uptake is influenced by guidelines, hospital formulary decisions, and specialist consensus; dissemination is steady with periodic price reviews.","categories":["System","Timeline","HCP"],"primary":"System"},
-{"id":"Q31","question":"How much importance do Japanese physicians place on clinical guidelines?","answer":"High; guidelines and consensus statements are widely referenced in decision-making and education.","categories":["HCP","Compliance","System"],"primary":"HCP"},
-{"id":"Q32","question":"Are physicians in Japan generally willing to participate in research or surveys?","answer":"Willing but time-constrained; clear purpose, concise instruments, and fair honoraria improve participation rates.","categories":["HCP","Fieldwork","Compliance"],"primary":"HCP"},
-{"id":"Q33","question":"How should the survey duration and format be designed?","answer":"Keep concise with logical flow; for busy HCPs, 20–30 minutes for IDIs is common; use language and examples localized to Japan.","categories":["Fieldwork","Operations","HCP"],"primary":"Fieldwork"},
-{"id":"Q34","question":"Is localization of the survey content and language necessary for Japanese participants?","answer":"Yes—terminology, examples, and regulatory wording should be localized; Japanese materials increase clarity and pace.","categories":["Fieldwork","Compliance","Operations"],"primary":"Fieldwork"},
-{"id":"Q35","question":"Is it culturally acceptable for physicians in Japan to receive honoraria for participating in research?","answer":"Yes within ethical standards; clarity on research purpose, privacy, and tax documentation is expected.","categories":["HCP","Compliance","Operations"],"primary":"HCP"},
-{"id":"Q36","question":"What is the typical range of honoraria for physician participation in research in Japan?","answer":"Ranges vary by specialty/time; benchmark locally; ensure compliance and transparent communication on payment method.","categories":["HCP","Operations","Compliance"],"primary":"HCP"},
-{"id":"Q37","question":"Are there any specific characteristics or preferences regarding payment methods in Japan?","answer":"Bank transfer is common; clear invoicing/receipts and tax considerations should be addressed.","categories":["Operations","Compliance","HCP"],"primary":"Operations"},
-{"id":"Q38","question":"What manners and cultural considerations should be observed when interviewing or meeting with physicians in Japan?","answer":"Use polite forms, begin with appreciation, provide clear structure, and allow reflective pauses; confirm recording and confidentiality.","categories":["Fieldwork","HCP","Compliance"],"primary":"Fieldwork"},
-{"id":"Q39","question":"Are patients in Japan generally reluctant to participate in surveys?","answer":"Reluctance can occur due to privacy concerns and modesty; trust-building, clear consent, and simple language help.","categories":["Patients","Compliance","Fieldwork"],"primary":"Patients"},
-{"id":"Q40","question":"How should highly sensitive or privacy-related questions be handled in surveys?","answer":"Minimize PII, explain purpose and use, and provide opt-outs; ensure anonymization and secure storage.","categories":["Compliance","Fieldwork","Patients"],"primary":"Compliance"},
-{"id":"Q41","question":"What age groups are most commonly represented in patient surveys in Japan?","answer":"Middle to older adults are common given demographics; tailor recruiting and materials for accessibility.","categories":["Patients","Fieldwork"],"primary":"Patients"},
-{"id":"Q42","question":"What considerations or adaptations should be made when conducting surveys with elderly patients in Japan?","answer":"Use larger fonts, simpler structures, slower pace; consider caregiver presence and scheduling flexibility.","categories":["Patients","Fieldwork","Operations"],"primary":"Patients"},
-{"id":"Q43","question":"Are there any other considerations when conducting patient surveys in Japan?","answer":"Be attentive to literacy, regional differences, and clinic partnerships; align screening with clinical pathways.","categories":["Patients","Fieldwork","System"],"primary":"Patients"},
-{"id":"Q44","question":"What are the main channels used for patient recruitment in Japan?","answer":"Clinics/hospitals, advocacy groups, specialized vendors, and carefully screened online panels; social media may support rare diseases.","categories":["Patients","Fieldwork","Compliance"],"primary":"Patients"},
-{"id":"Q45","question":"What roles do pharmacists play in the Japanese healthcare system?","answer":"They manage dispensing, medication counseling, and coordination with prescribers; hospital and community roles differ.","categories":["HCP","System"],"primary":"HCP"},
-{"id":"Q46","question":"From what perspectives should pharmacists be asked for their opinions in research?","answer":"Medication management, adherence, drug utilization, and workflow; perspectives differ by hospital vs. community settings.","categories":["HCP","Fieldwork","Operations"],"primary":"HCP"},
-{"id":"Q47","question":"What are the differences between hospital pharmacists and community (dispensing) pharmacists in Japan?","answer":"Hospital pharmacists engage in inpatient care, rounds, and sterile prep; community pharmacists focus on dispensing, counseling, and coordination.","categories":["HCP","System","Operations"],"primary":"HCP"},
-{"id":"Q48","question":"Are honorarium settings and considerations the same as for physicians?","answer":"Similar principles but different benchmarks; align with role, time, and institutional policies.","categories":["HCP","Operations"],"primary":"HCP"},
-{"id":"Q49","question":"Can nurses be considered as valid target respondents for research in Japan?","answer":"Yes—nurses provide critical insights on care delivery, patient education, and device usability.","categories":["HCP","Fieldwork"],"primary":"HCP"},
-{"id":"Q50","question":"Can caregivers also be included as research participants?","answer":"Yes; caregivers offer perspectives on burden, logistics, and decision-making support.","categories":["Patients","Fieldwork"],"primary":"Patients"},
-{"id":"Q51","question":"What aspects tend to make Japanese research participants feel anxious or doubtful?","answer":"Ambiguous purpose, unclear data use, and complicated consent; address with transparent framing and plain language.","categories":["Patients","Fieldwork","Compliance"],"primary":"Patients"},
-{"id":"Q52","question":"Why is localization particularly important in the Japanese market?","answer":"Localization ensures conceptual equivalence, aligns with regulations, and improves comprehension and pace.","categories":["Fieldwork","Operations","Compliance"],"primary":"Fieldwork"},
-{"id":"Q53","question":"What should we be careful about when translating into Japanese?","answer":"Avoid literalism for idioms; ensure correct clinical terms and regulatory phrasing; add brief cultural context where needed.","categories":["Fieldwork","Operations","Compliance"],"primary":"Fieldwork"},
-{"id":"Q54","question":"What is an appropriate survey length for healthcare professionals and patients in Japan?","answer":"For HCPs, keep interviews concise (often 20–30 minutes); for patients, allow more time and simpler structures.","categories":["Fieldwork","HCP","Patients","Operations"],"primary":"Fieldwork"},
-{"id":"Q55","question":"What are the typical response patterns of Japanese participants to open-ended questions?","answer":"Responses may be concise; use probes and examples; create a safe, respectful atmosphere.","categories":["Fieldwork","Patients","HCP"],"primary":"Fieldwork"},
-{"id":"Q56","question":"Why is an In-Country Review necessary?","answer":"To validate translation, clinical/regulatory fit, and cultural nuance before launch; reduces risk and rework.","categories":["Fieldwork","Operations","Compliance"],"primary":"Fieldwork"},
-{"id":"Q57","question":"Why is qualitative research often perceived as difficult to conduct in Japan?","answer":"Time constraints, modest self-expression norms, and recruitment challenges; mitigated by careful design and moderation.","categories":["Fieldwork","Operations"],"primary":"Fieldwork"},
-{"id":"Q58","question":"Why do Japanese participants tend to be hesitant in sharing their opinions, and how can we effectively draw out their honest thoughts?","answer":"Build rapport, use non-leading questions, and allow silence; normalize differing views to reduce social pressure.","categories":["Fieldwork","Operations"],"primary":"Fieldwork"},
-{"id":"Q59","question":"Japanese participants tend to speak less during interviews. If responses are limited, does it mean the research cannot be considered valid? How should we address this issue?","answer":"Shorter responses do not equal low insight; structure probes, triangulate with quant or diaries, and interpret in cultural context.","categories":["Fieldwork","Operations"],"primary":"Fieldwork"},
-{"id":"Q60","question":"What should we be mindful of to ensure that participants feel comfortable sharing their thoughts during a group interview in Japan?","answer":"Set norms, manage turn-taking, and use warm-up rounds; watch hierarchy effects and ensure psychological safety.","categories":["Fieldwork","Operations","HCP","Patients"],"primary":"Fieldwork"},
-{"id":"Q61","question":"What considerations or precautions should overseas clients keep in mind when observing interviews or focus groups conducted in Japan?","answer":"Brief observers on etiquette; avoid visible reactions; use backroom chat discreetly; protect anonymity and consent.","categories":["Fieldwork","Operations","Compliance"],"primary":"Fieldwork"},
-{"id":"Q62","question":"What legal and ethical considerations are necessary when conducting market research in the healthcare field in Japan?","answer":"Follow national laws, industry codes, and data protection guidelines; obtain informed consent and avoid promotional framing.","categories":["Compliance"],"primary":"Compliance"},
-{"id":"Q63","question":"What should be considered regarding the handling of personal information when conducting healthcare-related market research in Japan?","answer":"Minimize PII, use anonymized IDs, secure storage, and controlled access; share aggregated insights only.","categories":["Compliance","Operations"],"primary":"Compliance"},
-{"id":"Q64","question":"When requesting participation from healthcare professionals or patients in Japan, how should informed consent be obtained, and what key points should be explained to them?","answer":"Explain purpose, data use, recording, confidentiality, and incentives; obtain written or verifiable digital consent.","categories":["Compliance","Fieldwork","HCP","Patients"],"primary":"Compliance"},
-{"id":"Q65","question":"Is it acceptable to provide honoraria to physicians and patients for participating in market research in Japan? What criteria should be used to determine appropriate compensation?","answer":"Yes within ethical standards; base amounts on time, expertise, and market benchmarks; document methods and taxes.","categories":["Compliance","Operations","HCP","Patients"],"primary":"Compliance"},
-{"id":"Q66","question":"Are there any considerations to keep in mind when setting the schedule for a research project commissioned to a Japanese research agency?","answer":"Account for holidays, approvals, translation/ICR time, and clinic hours; build buffers for recruitment.","categories":["Timeline","Operations"],"primary":"Timeline"},
-{"id":"Q67","question":"How can the expertise of analysts and Key Opinion Leader (KOL) networks within Japanese research agencies be effectively utilized in healthcare research?","answer":"Engage early for screener/refinement and sampling; leverage KOLs for feasibility checks and interpretation.","categories":["Operations","HCP","Fieldwork"],"primary":"Operations"},
-{"id":"Q68","question":"In Japan, is it possible to recruit physicians from a target list?","answer":"Possible with compliance and permissions; confirm list source/consent, avoid unsolicited contact, and align with codes.","categories":["Compliance","Fieldwork","HCP","Operations"],"primary":"Compliance"}
-]</script>
+      { id:"Q4", question:"How long does recruitment usually take?", 
+        answer:"Timelines vary by condition. Rare disease recruitment may take months. Common conditions can be faster, but expect longer lead times than in the US/EU.", 
+        categories:["Timeline","Recruitment"], primary:"Timeline" },
 
-<script>
-const FAQS=JSON.parse(document.getElementById('faq-data').textContent);
-const byId=Object.fromEntries(FAQS.map(x=>[x.id,x]));
-const params=new URLSearchParams(location.search);
-const qid=params.get('id');
-const sTerm=params.get('s')||'';
-const searchEl=document.getElementById('search');
+      { id:"Q5", question:"Do HCPs prefer online or in-person interviews?", 
+        answer:"HCPs are comfortable with both, but online is increasingly standard. Senior physicians may still prefer face-to-face, especially for in-depth discussions.", 
+        categories:["HCP","Fieldwork"], primary:"HCP" }
+      // …全FAQをここに展開
+    ];
 
-function escapeHTML(s){return String(s||"").replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
-function markOnce(text,term){
-  if(!term) return escapeHTML(text);
-  const t=String(text||''),i=t.toLowerCase().indexOf(term.toLowerCase());
-  if(i<0) return escapeHTML(t);
-  return escapeHTML(t.slice(0,i))+`<mark>${escapeHTML(t.slice(i,i+term.length))}</mark>`+escapeHTML(t.slice(i+term.length));
-}
-function renderArticle(id){
-  const a=byId[id];
-  const titleEl=document.getElementById('title');
-  const metaEl=document.getElementById('meta');
-  const contEl=document.getElementById('content');
-  const sectionList=document.getElementById('section-list');
-  const relatedBox=document.getElementById('related');
-  const relatedList=document.getElementById('related-list');
+    // URLパラメータからidを取得
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+    const article = FAQS.find(f => f.id === id);
 
-  if(!a){
-    titleEl.textContent='Not found';
-    contEl.innerHTML='The requested article does not exist. <a href="index.html">Back to Index</a>';
-    return;
-  }
+    const contentDiv = document.getElementById("content");
+    const relatedDiv = document.getElementById("related");
 
-  document.title = a.question + " | FAQ";
-  titleEl.textContent=a.question;
-  metaEl.innerHTML=a.categories.map(c=>`<span class="tag">#${c}</span>`).join(' ');
-  contEl.classList.remove('empty');
-  contEl.innerHTML = `<p>${(sTerm? markOnce(a.answer,sTerm) : escapeHTML(a.answer)).replace(/\n\n/g,'</p><p>')}</p>`;
+    if (article) {
+      contentDiv.innerHTML = `
+        <h1>${article.question}</h1>
+        <div class="category">Category: ${article.categories.join(", ")}</div>
+        <p>${article.answer}</p>
+      `;
 
-  // Section list (same primary)
-  const section = a.primary || a.categories[0];
-  const siblings=FAQS.filter(x=>x.id!==id && (x.primary||x.categories[0])===section);
-  sectionList.innerHTML = siblings.slice(0,12).map(s=>`<li><a href="article.html?id=${encodeURIComponent(s.id)}">${escapeHTML(s.question)}</a></li>`).join('');
+      // 関連記事（同カテゴリ内、ただし自分は除外）
+      const related = FAQS.filter(f => 
+        f.id !== article.id && f.categories.some(c => article.categories.includes(c))
+      );
 
-  // Related (category Jaccard + keyword overlap)
-  const terms=new Set((a.question+' '+a.answer).toLowerCase().split(/\W+/).filter(t=>t.length>3));
-  function score(b){
-    const A=new Set(a.categories), B=new Set(b.categories);
-    const inter=[...A].filter(x=>B.has(x)).length, union=new Set([...A,...B]).size;
-    let s= inter/(union||1) * 3;
-    const termsB=new Set((b.question+' '+b.answer).toLowerCase().split(/\W+/).filter(t=>t.length>3));
-    let kw=0; termsB.forEach(t=>{ if(terms.has(t)) kw++; });
-    s += Math.min(kw/10,2);
-    if((b.primary||b.categories[0])===(a.primary||a.categories[0])) s+=0.5;
-    return s;
-  }
-  const rel=FAQS.filter(x=>x.id!==id).map(x=>({x,sc:score(x)})).sort((m,n)=>n.sc-m.sc).slice(0,6);
-  relatedList.innerHTML = rel.map(r=>`<li><a href="article.html?id=${encodeURIComponent(r.x.id)}">${escapeHTML(r.x.question)}</a></li>`).join('');
-  relatedBox.hidden = rel.length===0;
-}
-
-function normalize(s){return String(s||'').toLowerCase()}
-function searchAll(q){
-  const terms=normalize(q).split(/\s+/).filter(Boolean);
-  return FAQS.map(it=>{
-    let score=0; terms.forEach(t=>{if((it.question+' '+it.answer).toLowerCase().includes(t))score+=2;if(it.question.toLowerCase().includes(t))score+=2});
-    return {it,score};
-  }).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).slice(0,10);
-}
-searchEl.addEventListener('keydown',e=>{
-  if(e.key==='Enter'){
-    const q=e.target.value.trim(); if(!q) return;
-    const top=searchAll(q)[0];
-    if(top) location.href=`article.html?id=${encodeURIComponent(top.it.id)}&s=${encodeURIComponent(q)}`;
-  }
-});
-
-document.getElementById('year').textContent=new Date().getFullYear();
-renderArticle(qid || 'Q1');
-</script>
+      if (related.length > 0) {
+        relatedDiv.innerHTML = `
+          <div class="section-title">Articles in this section</div>
+          <ul class="related">
+            ${related.map(f => `<li><a href="articles.html?id=${f.id}">${f.question}</a></li>`).join("")}
+          </ul>
+        `;
+      }
+    } else {
+      contentDiv.innerHTML = "<p>Article not found.</p>";
+    }
+  </script>
 </body>
 </html>
