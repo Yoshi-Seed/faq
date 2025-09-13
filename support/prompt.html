@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>プロンプト上達のコツ｜Seed Planning 自己学習教材</title>
+<style>
+:root{
+  --seed-blue: #0B62A3;
+  --seed-accent: #EAF3FA;
+  --seed-text: #1D2A36;
+  --bg: #ffffff;
+  --muted: #6b7a89;
+  --code-bg: #f6f8fa;
+  --border: #e5eef6;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+body {
+  font-family: "Noto Sans JP","Hiragino Kaku Gothic ProN","Meiryo","Yu Gothic",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  color: var(--seed-text);
+  background: var(--bg);
+  line-height: 1.7;
+}
+header.topbar {
+  position: fixed; inset: 0 0 auto 0; height: 56px;
+  display: flex; align-items: center; gap: 16px;
+  padding: 0 20px;
+  background: linear-gradient(90deg,var(--seed-blue), #0a4d80);
+  color: #fff; z-index: 10;
+  box-shadow: 0 2px 10px rgba(0,0,0,.08);
+}
+header.topbar .brand {
+  font-weight: 700; letter-spacing: .4px; font-size: 16px;
+}
+header.topbar .title { opacity:.95; font-size:14px; }
+.navigation {
+  position: fixed;
+  top: 56px;
+  left: 0;
+  right: 0;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  z-index: 9;
+  padding: 0;
+}
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  padding: 0 clamp(18px,4vw,56px);
+}
+.nav-tabs {
+  display: flex;
+  gap: 0;
+  flex: 1;
+}
+.nav-tab {
+  background: none;
+  border: none;
+  padding: 12px 20px;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+.nav-tab:hover {
+  color: var(--seed-blue);
+  background: rgba(11,98,163,0.05);
+}
+.nav-tab.active {
+  color: var(--seed-blue);
+  border-bottom-color: var(--seed-blue);
+  background: rgba(11,98,163,0.08);
+}
+.progress-indicator {
+  margin-left: 20px;
+  font-size: 12px;
+  color: var(--muted);
+  padding: 4px 12px;
+  background: var(--seed-accent);
+  border-radius: 12px;
+}
+main {
+  margin-top: 110px;
+  padding: 20px clamp(18px,4vw,56px) 40px;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.content-section {
+  display: none;
+  animation: fadeIn 0.3s ease-in-out;
+}
+.content-section.active {
+  display: block;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.section-nav {
+  position: sticky;
+  top: 120px;
+  background: var(--seed-accent);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 30px;
+  z-index: 5;
+}
+.section-nav h4 {
+  margin: 0 0 12px 0;
+  color: var(--seed-blue);
+  font-size: 14px;
+  font-weight: 600;
+}
+.section-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.section-link {
+  background: white;
+  border: 1px solid var(--border);
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  color: var(--seed-text);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+.section-link:hover {
+  background: var(--seed-blue);
+  color: white;
+  border-color: var(--seed-blue);
+}
+.cover {
+  text-align: center;
+  padding: 60px 0;
+  background: linear-gradient(135deg, var(--seed-accent) 0%, #ffffff 100%);
+  border-radius: 12px;
+  margin-bottom: 40px;
+}
+h1, h2, h3 { line-height: 1.35; margin: .8em 0 .4em 0; }
+h1 { font-size: clamp(28px, 4vw, 48px); color: var(--seed-blue); font-weight: 700; }
+h2 { font-size: clamp(22px, 3vw, 32px); color: var(--seed-blue); font-weight: 600; }
+h3 { font-size: clamp(18px, 2.5vw, 24px); color: var(--seed-blue); font-weight: 500; }
+h4 { font-size: clamp(16px, 2vw, 20px); color: var(--seed-text); font-weight: 600; margin: 1em 0 .3em 0; }
+.subtitle {
+  font-size: clamp(16px, 2vw, 20px);
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+.lead {
+  font-size: clamp(16px, 2vw, 18px);
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+.callout {
+  border-left: 4px solid var(--seed-blue); 
+  background: var(--seed-accent);
+  padding: 20px 24px; 
+  border-radius: 6px; 
+  margin: 24px 0;
+  font-size: 15px;
+}
+.callout strong {
+  color: var(--seed-blue);
+}
+.section {
+  margin: 30px 0;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border);
+}
+.section:last-child {
+  border-bottom: none;
+}
+.part-header {
+  background: var(--seed-blue);
+  color: white;
+  padding: 30px;
+  text-align: center;
+  border-radius: 12px;
+  margin: 0 0 30px 0;
+}
+.part-header h2 {
+  color: white;
+  margin: 0;
+  font-size: clamp(24px, 3vw, 36px);
+}
+.part-header .subtitle {
+  color: rgba(255,255,255,0.9);
+  margin: 10px 0 0 0;
+}
+ul, ol { 
+  padding-left: 1.2em; 
+  margin: 16px 0;
+}
+li { 
+  margin: 8px 0; 
+  line-height: 1.6;
+}
+.principles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin: 30px 0;
+}
+.principle-card {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+.principle-card h4 {
+  color: var(--seed-blue);
+  margin-top: 0;
+  font-size: 18px;
+}
+.comparison {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin: 30px 0;
+}
+.bad, .good {
+  padding: 20px;
+  border-radius: 8px;
+  border: 2px solid;
+}
+.bad {
+  border-color: #f56565;
+  background: #fed7d7;
+  color: #742a2a;
+}
+.good {
+  border-color: #48bb78;
+  background: #c6f6d5;
+  color: #22543d;
+}
+.prompt-example {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-x: auto;
+}
+.example-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 25px;
+  margin: 30px 0;
+}
+.example-card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(0,0,0,.06);
+}
+.example-card h4 {
+  margin-top: 0;
+  color: var(--seed-blue);
+  border-bottom: 2px solid var(--seed-accent);
+  padding-bottom: 8px;
+}
+.checklist {
+  background: #f7fafc;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 25px;
+  margin: 30px 0;
+}
+.checklist h4 {
+  color: var(--seed-blue);
+  margin-top: 0;
+}
+.checklist ul {
+  list-style: none;
+  padding-left: 0;
+}
+.checklist li {
+  position: relative;
+  padding-left: 25px;
+  margin: 12px 0;
+}
+.checklist li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--seed-blue);
+  font-weight: bold;
+}
+.overview-navigation {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin: 30px 0;
+}
+.overview-nav-card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 25px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,.05);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  color: inherit;
+}
+.overview-nav-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(11,98,163,.15);
+  border-color: var(--seed-blue);
+}
+.overview-nav-card h4 {
+  color: var(--seed-blue);
+  margin: 0 0 12px 0;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.overview-nav-card p {
+  margin: 0;
+  line-height: 1.5;
+  color: var(--seed-text);
+}
+.nav-icon {
+  font-size: 24px;
+  opacity: 0.8;
+}
+.nav-arrow {
+  margin-left: auto;
+  font-size: 16px;
+  color: var(--seed-blue);
+  transition: transform 0.2s ease;
+}
+.overview-nav-card:hover .nav-arrow {
+  transform: translateX(4px);
+}
+.resource-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 30px;
+  margin: 30px 0;
+}
+.resource-card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 30px;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.resource-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,.12);
+}
+.resource-icon {
+  font-size: 48px;
+  margin-bottom: 15px;
+  display: block;
+}
+.resource-card h4 {
+  color: var(--seed-blue);
+  margin: 0 0 15px 0;
+  font-size: 18px;
+  line-height: 1.4;
+}
+.resource-card p {
+  color: var(--seed-text);
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+.resource-details {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.resource-details span {
+  background: var(--seed-accent);
+  color: var(--seed-blue);
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+.resource-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.btn-preview, .btn-download {
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn-preview {
+  background: var(--seed-blue);
+  color: white;
+}
+.btn-preview:hover {
+  background: #0a4d80;
+  transform: translateY(-1px);
+}
+.btn-download {
+  background: white;
+  color: var(--seed-blue);
+  border: 1px solid var(--seed-blue);
+}
+.btn-download:hover {
+  background: var(--seed-blue);
+  color: white;
+  transform: translateY(-1px);
+}
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  backdrop-filter: blur(4px);
+}
+.modal-content {
+  background-color: white;
+  margin: 2% auto;
+  padding: 0;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 900px;
+  max-height: 90vh;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+.modal-header {
+  background: var(--seed-blue);
+  color: white;
+  padding: 20px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.modal-header h3 {
+  margin: 0;
+  color: white;
+}
+.close {
+  color: white;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  line-height: 1;
+}
+.close:hover {
+  opacity: 0.7;
+}
+.modal-body {
+  padding: 30px;
+  overflow-y: auto;
+  max-height: calc(90vh - 120px);
+  line-height: 1.6;
+}
+.preview-content h2, .preview-content h3, .preview-content h4 {
+  color: var(--seed-blue);
+  margin-top: 25px;
+  margin-bottom: 10px;
+}
+.preview-content p {
+  margin-bottom: 15px;
+}
+.preview-content ul {
+  margin-bottom: 15px;
+  padding-left: 20px;
+}
+.preview-content li {
+  margin-bottom: 8px;
+}
+.footer {
+  margin-top: 60px;
+  padding: 30px 0;
+  text-align: center;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 14px;
+}
+@media (max-width: 768px) {
+  .comparison {
+    grid-template-columns: 1fr;
+  }
+  .principles {
+    grid-template-columns: 1fr;
+  }
+  .overview-navigation {
+    grid-template-columns: 1fr;
+  }
+  .nav-container { flex-direction: column; gap: 8px; padding: 8px 18px; }
+  .nav-tabs { width: 100%; }
+  .nav-tab { flex: 1; text-align: center; padding: 10px 8px; font-size: 13px; }
+  .progress-indicator { margin: 0; }
+  main { margin-top: 140px; }
+  .section-nav { position: static; }
+  .resource-grid {
+    grid-template-columns: 1fr;
+  }
+  .resource-actions {
+    justify-content: center;
+  }
+  .modal-content {
+    width: 95%;
+    margin: 5% auto;
+  }
+  .modal-body {
+    padding: 20px;
+  }
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">Seed Planning</div>
+  <div class="title">プロンプト上達のコツ（自己学習教材）</div>
+</header>
+
+<nav class="navigation">
+  <div class="nav-container">
+    <div class="nav-tabs">
+      <button class="nav-tab active" onclick="showSection('overview')">概要</button>
+      <button class="nav-tab" onclick="showSection('part1')">Part 1: 基本</button>
+      <button class="nav-tab" onclick="showSection('part2')">Part 2: 実務</button>
+      <button class="nav-tab" onclick="showSection('part3')">Part 3: 高度</button>
+      <button class="nav-tab" onclick="showSection('appendix')">付録</button>
+    </div>
+    <div class="progress-indicator">
+      <span id="progress-text">概要</span>
+    </div>
+  </div>
+</nav>
+
+<main>
+  <!-- Overview Section -->
+  <div class="content-section active" id="overview">
+    <div class="cover">
+      <h1>プロンプト上達のコツ</h1>
+      <div class="subtitle">— シード・プランニング社員向け・自己学習教材（3部構成）—</div>
+      
+      <div class="callout" style="text-align: left; max-width: 800px; margin: 40px auto;">
+        <h3 style="margin-top: 0;">ねらい</h3>
+        <p>本教材は、社員が「自分の業務に当てはめて」すぐ使えるプロンプト術を、基本から応用まで やさしく解説します。調査会社である私たちの実務（公募案件、企画本、提案書、翻訳・要約、議事録・レポート作成など）に直結する具体例を収録しました。</p>
+        
+        <h4>各セクションへ直接移動</h4>
+        <div class="overview-navigation">
+          <a href="#" class="overview-nav-card" onclick="showSection('part1'); return false;">
+            <h4>パート1（基本）<span class="nav-arrow">→</span></h4>
+            <p>まずはここから。つまずきやすいポイントとコツを15分で把握。</p>
+          </a>
+          
+          <a href="#" class="overview-nav-card" onclick="showSection('part2'); return false;">
+            <h4>パート2（業務直結例）<span class="nav-arrow">→</span></h4>
+            <p>自分の仕事のページを見つけたら、そのまま試すだけ。</p>
+          </a>
+          
+          <a href="#" class="overview-nav-card" onclick="showSection('part3'); return false;">
+            <h4>パート3（高度版）<span class="nav-arrow">→</span></h4>
+            <p>AIになりきらせる／10倍発想など、ピークパフォーマンスを引き出す。</p>
+          </a>
+          
+          <a href="#" class="overview-nav-card" onclick="showSection('appendix'); return false;">
+            <h4>付録・資料<span class="nav-arrow">→</span></h4>
+            <p>詳細ガイドPDFのダウンロードとチェックリスト。</p>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PART 1 -->
+  <div class="content-section" id="part1">
+    <div class="section-nav">
+      <h4>Part 1 ナビゲーション</h4>
+      <div class="section-links">
+        <a href="#why-important" class="section-link">なぜ重要？</a>
+        <a href="#four-principles" class="section-link">4原則</a>
+        <a href="#common-pitfalls" class="section-link">つまずき改善</a>
+        <a href="#mini-exercise" class="section-link">演習</a>
+      </div>
+    </div>
+    <div class="part-header">
+      <h2>PART 1｜まずはここから：プロンプトの基本</h2>
+    </div>
+
+    <div class="section" id="why-important">
+      <h3>1-1 なぜプロンプトが大事？</h3>
+      <p class="lead">良いアウトプットは「良いプロンプト」から。社内B3チームの実務でも、翻訳・要約・下書き生成・書き起こしチェック等で大幅な時短と品質の均一化を実現しました（例：スクリーナー整合性の自動チェック、報告書の叩き台生成、面談当日の追加質問の即時翻訳など）。</p>
+      <div class="callout">
+        <strong>※参考：</strong>業務フローのAI代替状況レポート_v4のプロンプト例（翻訳、メール添削、厚労省リサーチ、書き起こしチェック、レポート草稿）
+      </div>
+    </div>
+
+    <div class="section" id="four-principles">
+      <h3>1-2 基本の4原則</h3>
+      <div class="principles">
+        <div class="principle-card">
+          <h4>目的</h4>
+          <p>誰向けに、何のための出力？</p>
+        </div>
+        <div class="principle-card">
+          <h4>背景</h4>
+          <p>前提・制約・既知情報（対象、期間、用途、トーン、評価観点）</p>
+        </div>
+        <div class="principle-card">
+          <h4>形式</h4>
+          <p>箇条書き／表／テンプレなど、望むアウトプットの形を明示</p>
+        </div>
+        <div class="principle-card">
+          <h4>段階</h4>
+          <p>難しい依頼は分割。概要→詳細→仕上げの順でキャッチボール</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="common-pitfalls">
+      <h3>1-3 よくあるつまずきと改善</h3>
+      <ul>
+        <li><strong>曖昧な指示</strong> → 目的と読者像を先に明記。</li>
+        <li><strong>前提不足</strong> → 背景・制約・評価観点を添える。</li>
+        <li><strong>一度に詰め込み</strong> → ステップに分けて段階的に依頼。</li>
+        <li><strong>検証不足</strong> → 出典付きで依頼し、重要箇所は人がレビュー。</li>
+      </ul>
+    </div>
+
+    <div class="section" id="mini-exercise">
+      <h3>1-4 ミニ演習（悪い→良い）</h3>
+      <div class="comparison">
+        <div class="bad">
+          <h4>悪い例</h4>
+          <p>「公募案件の企画書を作って」</p>
+        </div>
+        <div class="good">
+          <h4>良い例</h4>
+          <p>「○○省△△事業の仕様書PDF（別添）に基づき、当社の強み（定性調査・医療・BtoB）を活かした提案の骨子（章立て＋各章のねらい・スケジュール・体制・概算費用レンジ）を評価基準に対応させて箇条書きで。」</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PART 2 -->
+  <div class="content-section" id="part2">
+    <div class="section-nav">
+      <h4>Part 2 ナビゲーション</h4>
+      <div class="section-links">
+        <a href="#email-decline" class="section-link">お断りメール</a>
+        <a href="#rfp-unknown" class="section-link">公募案件</a>
+        <a href="#book-planning" class="section-link">企画本</a>
+        <a href="#translation" class="section-link">翻訳・要約</a>
+        <a href="#minutes-reports" class="section-link">議事録・レポート</a>
+        <a href="#screener-check" class="section-link">スクリーナー</a>
+      </div>
+    </div>
+    <div class="part-header">
+      <h2>PART 2｜業務でそのまま使える：実務直結プロンプト集</h2>
+    </div>
+
+    <div class="section" id="email-decline">
+      <h3>2-1 メール：クライアントへの「丁寧なお断り」仕上げ</h3>
+      <p><strong>【状況】</strong>下書きはあるが、表現の角を取りつつ誠実さと代替案を示したい。</p>
+      
+      <h4>プロンプト例</h4>
+      <div class="prompt-example">あなたは日本のビジネスマナーに詳しい営業マネージャーです。
+次の「お断りメール」の下書きを、
+1) 誠実で丁寧／2) 背景への共感／3) 代替案（時期／他社紹介／別プラン）／4) 角が立たない言い回し
+を踏まえて推敲してください。
+
+【相手】大手メーカーのX様（長年のご関係）
+【目的】今回のスケジュールでは対応が難しい旨を、信頼を損なわずにお伝え
+【トーン】フォーマル、簡潔、ポジティブクローズ
+【出力形式】件名案3つ／本文（日本語）／要点箇条書き（社内共有用）
+
+--- 下書き ---
+（ここに自分の下書きを貼る）</div>
+      
+      <div class="callout">
+        <strong>ヒント：</strong>社内レポートでは「メール添削」プロンプトにトーン指定を加える工夫が紹介されています。
+      </div>
+    </div>
+
+    <div class="section" id="rfp-unknown">
+      <h3>2-2 公募案件：まったく知らない領域に挑むとき</h3>
+      <p><strong>【状況】</strong>仕様書を読み解き、要件分解・不足情報の洗い出し・初期提案の骨子作りまでを最短距離で。</p>
+      
+      <h4>プロンプト例（仕様書アップロード前提）</h4>
+      <div class="prompt-example">あなたは公共調達の提案審査官の視点も持つ、調査設計の専門家です。
+添付の「公募仕様書PDF」を踏まえて、以下を順に出力してください。
+
+1) 事業の目的・背景・評価観点の要約（200〜300字）
+2) 要件分解（必須要件／望ましい要件／評価配点に直結する要素）
+3) 不足情報と、発注側に確認したい質問リスト（箇条書き）
+4) 提案骨子（章立て、各章のねらい、想定スケジュール、体制、概算費用レンジ）
+5) 当社の優位性になり得るポイント（3〜5点）とリスク（対応策つき）
+
+【出力形式】各項目見出し＋箇条書き／最後に「次の深掘り候補（3点）」</div>
+      
+      <h4>（追加依頼：ドメイン理解）</h4>
+      <div class="prompt-example">この領域の入門として、主要プレイヤー／関連制度・政策／用語集（20語）を「要点だけ」早わかりで。
+さらに、当社の既存実績と接続できる観点（ユースケース）も3つ挙げて。</div>
+      
+      <div class="callout">
+        <strong>ヒント：</strong>厚労省・ガイドライン等を扱う場合は「出典付き」を指示。重要情報は人が最終確認。
+      </div>
+    </div>
+
+    <div class="section" id="book-planning">
+      <h3>2-3 企画本：AIに任せると進むポイント</h3>
+      <ul>
+        <li><strong>読者ペルソナと言語化</strong>：誰のどんな課題を解く本かを先に固定。</li>
+        <li><strong>章立てと各章の「ねらい」整理</strong>：章ごとに読者価値と学びの遷移を設計。</li>
+        <li><strong>事例・コラム候補のブレスト</strong>：視点の抜け漏れを補う。</li>
+        <li><strong>図表アイデア</strong>：1枚で伝わる構造図・比較表・プロセス図の叩き台。</li>
+        <li><strong>草稿のリライト</strong>：語り口統一、冗長削減、見出しのキャッチ強化。</li>
+      </ul>
+      
+      <h4>プロンプト例</h4>
+      <div class="prompt-example">あなたはビジネス書の編集者です。
+以下の企画メモをもとに、(1)読者ペルソナ定義、(2)章立て（各章のねらい・要点3つずつ）、
+(3)図表アイデア（3点）、(4)コラム候補（3本）を提案してください。
+最後に、全体のタイトル案を5つ。
+
+【企画メモ】（ここに企画の狙い・既存章案・想定読者・差別化ポイントを貼る）
+【トーン】読みやすく・具体的・実務に役立つ
+【制約】出典が必要な事実は「要出典」と明記。</div>
+    </div>
+
+    <div class="section" id="translation">
+      <h3>2-4 翻訳・要約・転用（医療・BtoB前提）</h3>
+      <div class="example-grid">
+        <div class="example-card">
+          <h4>翻訳</h4>
+          <div class="prompt-example">この英文を、日本の医療現場で自然な表現に整えて日本語訳してください。
+対象は医師。専門用語は一般的な用法を優先し、不明な用語は注釈を付与。
+【出力】日本語訳＋用語注釈（箇条書き）</div>
+        </div>
+        <div class="example-card">
+          <h4>要約</h4>
+          <div class="prompt-example">以下の長文を、(1)要点5つ、(2)重要数値、(3)示唆の順で400字程度に要約してください。
+判断に関わる箇所は原文の語を維持。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="minutes-reports">
+      <h3>2-5 議事録・書き起こし・レポート</h3>
+      <div class="example-grid">
+        <div class="example-card">
+          <h4>書き起こしチェック</h4>
+          <div class="prompt-example">この書き起こし（日本語）に誤認識・話者混同・医学用語の誤記がないかチェックし、
+修正案を提示してください。</div>
+        </div>
+        <div class="example-card">
+          <h4>レポート草稿</h4>
+          <div class="prompt-example">添付の書き起こしをもとに、報告書のサマリー叩き台を作成。
+調査目的を意識した要約→示唆→次アクションの順で、見出し＋箇条書きで。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="screener-check">
+      <h3>2-6 スクリーナーの国内適合性チェック</h3>
+      <h4>プロンプト例</h4>
+      <div class="prompt-example">あなたは日本の医療制度・薬機法・適応を理解する調査PMです。
+添付のスクリーナー草案について、国内実情との整合性を点検してください。
+
+1) 条件の過不足（国内承認・適応・用語の整合）
+2) リクルート上の現実性リスク
+3) 修正提案（表現例つき）</div>
+    </div>
+  </div>
+
+  <!-- PART 3 -->
+  <div class="content-section" id="part3">
+    <div class="section-nav">
+      <h4>Part 3 ナビゲーション</h4>
+      <div class="section-links">
+        <a href="#role-assignment" class="section-link">ロール付与</a>
+        <a href="#10x-thinking" class="section-link">10倍発想</a>
+        <a href="#verification" class="section-link">出典・検証</a>
+      </div>
+    </div>
+    <div class="part-header">
+      <h2>PART 3｜ピークパフォーマンスを引き出す：高度プロンプト</h2>
+    </div>
+
+    <div class="section" id="role-assignment">
+      <h3>3-1 ロール付与（AIになりきらせる）</h3>
+      <ul>
+        <li><strong>エネルギー政策アナリスト</strong>／規制動向の要点と事業影響の整理</li>
+        <li><strong>ヘルスケア市場アナリスト</strong>／疾患領域の市場構造・患者導線の俯瞰</li>
+        <li><strong>公共調達の審査官</strong>／評価基準で提案骨子をレビュー</li>
+        <li><strong>編集長</strong>／章立ての流れ・読者価値・見出しの強度を評価</li>
+        <li><strong>法務チェック（一般的助言）</strong>／表現上のリスク示唆（※最終判断は人）</li>
+      </ul>
+      
+      <h4>プロンプト例</h4>
+      <div class="prompt-example">あなたは公共調達の審査官です。
+次の提案骨子を、評価基準（配点）に照らして加点・減点の観点を洗い出し、
+改善指示をください。最後に、加点を最大化する改稿版の見出し案を3つ。
+
+--- 提案骨子 ---
+（ここに骨子を貼る）</div>
+    </div>
+
+    <div class="section" id="10x-thinking">
+      <h3>3-2 「10倍」発想を出すチャレンジ</h3>
+      <h4>プロンプト例</h4>
+      <div class="prompt-example">あなたは戦略コンサルタントです。
+次のゴールを「10倍」良くするためのアイデアを、制約条件を踏まえて発想してください。
+
+【ゴール】○○（例：調査参加率の向上）
+【制約】予算上限◯◯万円／実施まで◯週間／品質基準◯◯
+【出力】(1)打ち手10個（低コスト順）(2)インパクト×実行難易度のマトリクス評価 
+(3)最初の72時間で着手できる3ステップ</div>
+    </div>
+
+    <div class="section" id="verification">
+      <h3>3-3 出典・検証・ファイル活用のコツ</h3>
+      <ul>
+        <li>重要情報は<strong>「出典付き」</strong>で依頼（例：厚労省・ガイドライン・統計のURL）。</li>
+        <li>AIの回答は必ず<strong>社内レビュー</strong>で検証（事実関係・表現の適切性）。</li>
+        <li>ファイルは仕様書・スクリーナー・議事録など<strong>「文脈の源泉」</strong>を積極投入。</li>
+        <li>良かった出力は<strong>プロンプトとセット</strong>で社内ナレッジ化（テンプレとして再利用）。</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 付録 -->
+  <div class="content-section" id="appendix">
+    <div class="section-nav">
+      <h4>付録 ナビゲーション</h4>
+      <div class="section-links">
+        <a href="#user-types" class="section-link">関連資料</a>
+        <a href="#checklist" class="section-link">チェックリスト</a>
+      </div>
+    </div>
+    <div class="part-header">
+      <h2>付録｜関連資料とチェックリスト</h2>
+    </div>
+
+    <div class="section" id="user-types">
+      <h3>関連資料ダウンロード</h3>
+      <p>プロンプト上達に役立つ詳細資料とケーススタディをご用意しました。</p>
+      
+      <div class="resource-grid">
+        <div class="resource-card">
+          <div class="resource-icon">📖</div>
+          <h4>AI プロンプト上達のコツ：完全ガイド</h4>
+          <p>あなただけの優秀なアシスタントを育てるための詳細なガイドブック。基本から応用まで、実践的なテクニックを網羅した完全版です。</p>
+          <div class="resource-details">
+            <span class="file-type">PDF</span>
+            <span class="file-size">1.1MB</span>
+            <span class="pages">全20ページ</span>
+          </div>
+          <div class="resource-actions">
+            <button class="btn-preview" onclick="previewDocument('prompt-guide')">📱 プレビュー</button>
+            <a href="https://page.gensparksite.com/get_upload_url/afd37c1adac2a71a0cf41e728865ade9f714d757a8474b3979cbf38496437561/default/1b289079-1c31-45d4-85a2-95b6eb9fafb0" class="btn-download" target="_blank">📥 ダウンロード</a>
+          </div>
+        </div>
+        
+        <div class="resource-card">
+          <div class="resource-icon">📊</div>
+          <h4>B3チーム業務フローAI代替状況レポート</h4>
+          <p>実際の業務でAIをどのように活用し、どれだけの効果を上げたかの詳細な分析レポート。具体的なプロンプト例と削減効果を掲載。</p>
+          <div class="resource-details">
+            <span class="file-type">PDF</span>
+            <span class="file-size">731KB</span>
+            <span class="pages">全6ページ</span>
+          </div>
+          <div class="resource-actions">
+            <button class="btn-preview" onclick="previewDocument('case-study')">📱 プレビュー</button>
+            <a href="https://page.gensparksite.com/get_upload_url/afd37c1adac2a71a0cf41e728865ade9f714d757a8474b3979cbf38496437561/default/31a1336d-a31f-4ca4-be4f-802db9e80e79" class="btn-download" target="_blank">📥 ダウンロード</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section" id="checklist">
+      <div class="checklist">
+        <h4>チェックリスト（はじめの一歩）</h4>
+        <ul>
+          <li>目的・読者・用途を書いたか？</li>
+          <li>背景・制約（期日・分量・評価観点）を伝えたか？</li>
+          <li>出力形式（箇条書き／表／テンプレ）を指定したか？</li>
+          <li>段階的に依頼し、検証→改善のループを回したか？</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    © Seed Planning — 社外秘／社内学習用途に限る
+  </div>
+</main>
+
+<!-- プレビューモーダル -->
+<div id="preview-modal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 id="modal-title">資料プレビュー</h3>
+      <span class="close" onclick="closeModal()">&times;</span>
+    </div>
+    <div class="modal-body">
+      <div id="modal-content" class="preview-content">
+        <!-- プレビューコンテンツがここに表示されます -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function showSection(sectionId) {
+  // すべてのセクションを非表示にする
+  const sections = document.querySelectorAll('.content-section');
+  sections.forEach(section => section.classList.remove('active'));
+  
+  // すべてのタブの active クラスを削除
+  const tabs = document.querySelectorAll('.nav-tab');
+  tabs.forEach(tab => tab.classList.remove('active'));
+  
+  // 指定されたセクションを表示
+  const targetSection = document.getElementById(sectionId);
+  if (targetSection) {
+    targetSection.classList.add('active');
+  }
+  
+  // 対応するタブに active クラスを追加
+  const activeTab = document.querySelector(`[onclick="showSection('${sectionId}')"]`);
+  if (activeTab) {
+    activeTab.classList.add('active');
+  }
+  
+  // プログレス表示を更新
+  const progressText = document.getElementById('progress-text');
+  const sectionNames = {
+    'overview': '概要',
+    'part1': 'Part 1: 基本',
+    'part2': 'Part 2: 実務', 
+    'part3': 'Part 3: 高度',
+    'appendix': '付録'
+  };
+  progressText.textContent = sectionNames[sectionId] || sectionId;
+  
+  // ページトップにスクロール
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// セクション内アンカーリンクのスムーススクロール
+document.addEventListener('DOMContentLoaded', function() {
+  const sectionLinks = document.querySelectorAll('.section-link');
+  sectionLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      const targetId = this.getAttribute('href').substring(1);
+      const targetElement = document.getElementById(targetId);
+      if (targetElement) {
+        const offsetTop = targetElement.offsetTop - 120;
+        window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+      }
+    });
+  });
+  
+  // キーボードナビゲーション
+  document.addEventListener('keydown', function(e) {
+    const currentSection = document.querySelector('.content-section.active');
+    if (!currentSection) return;
+    
+    const sectionOrder = ['overview', 'part1', 'part2', 'part3', 'appendix'];
+    const currentIndex = sectionOrder.indexOf(currentSection.id);
+    
+    if (e.key === 'ArrowLeft' && currentIndex > 0) {
+      showSection(sectionOrder[currentIndex - 1]);
+    } else if (e.key === 'ArrowRight' && currentIndex < sectionOrder.length - 1) {
+      showSection(sectionOrder[currentIndex + 1]);
+    } else if (e.key === 'Escape') {
+      closeModal();
+    }
+  });
+});
+
+// プレビュー機能
+function previewDocument(docType) {
+  const modal = document.getElementById('preview-modal');
+  const modalTitle = document.getElementById('modal-title');
+  const modalContent = document.getElementById('modal-content');
+  
+  let title, content;
+  
+  if (docType === 'prompt-guide') {
+    title = 'AI プロンプト上達のコツ：完全ガイド';
+    content = `
+      <h2>はじめに：AI は、もう一人の優秀な同僚です</h2>
+      <p>先日実施した社内AI利用実態調査では、多くの社員がすでにAIを業務に取り入れ、翻訳や情報収集、資料作成などで「作業効率が向上した」「新しいアイデアが出やすくなった」といった素晴らしい成果を上げていることがわかりました。</p>
+      
+      <p>その一方で、「自分の仕事にどう活かせるかイメージが湧かない」「プロンプト（AIへの指示）の書き方に悩んでいる」「AIの結果が期待通りでない」といった声も多く寄せられています。</p>
+      
+      <h3>実際の成果事例</h3>
+      <p>社内のB3チームはAI活用を推進し、目覚ましい成果を上げています：</p>
+      <ul>
+        <li><strong>翻訳業務</strong>：カスタムGPTにより、海外クライアントとのプロジェクトで一件あたり最大20万円の外注費を削減</li>
+        <li><strong>個票作成</strong>：インタビューの書き起こしから個票を作成する作業で、一件につき2時間の時間短縮</li>
+      </ul>
+      
+      <h2>第1章 プロンプトの「はじめの一歩」- 誰でもできる基本のキ</h2>
+      
+      <h3>AIは優秀な新入社員？</h3>
+      <p>生成AIとのコミュニケーションを成功させるための最初のステップは、AIに対する考え方を少し変えてみることです。生成AIを、「非常に優秀で素直な新入社員」だと考えてみてください。</p>
+      
+      <h3>優れたプロンプトを構成する「4つの必須要素」</h3>
+      <ol>
+        <li><strong>【指示】Instruction</strong>：何をしてほしい？（要約して、翻訳して、アイデアを3つ出して）</li>
+        <li><strong>【文脈】Context</strong>：どんな背景？（誰が読むのか、何のために使うのか）</li>
+        <li><strong>【入力情報】Input Data</strong>：どの情報を使う？（以下の文章、添付した議事録を元に）</li>
+        <li><strong>【出力形式】Output Format</strong>：どんな形でほしい？（箇条書きで、400字以内で）</li>
+      </ol>
+      
+      <p><em>※ 完全版PDFでは、実際のプロンプト例、応用テクニック、10倍思考などの詳細な解説が含まれています。</em></p>
+    `;
+  } else if (docType === 'case-study') {
+    title = 'B3チーム業務フローAI代替状況レポート';
+    content = `
+      <h2>分析期間：2025年3月 - 2025年7月現在</h2>
+      
+      <h3>ChatGPTとカスタムGPTの違い</h3>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0;">
+        <div style="border: 1px solid var(--border); padding: 15px; border-radius: 8px;">
+          <h4>ChatGPT</h4>
+          <p>カスタマイズせず、そのまま使う「汎用的なAIチャットツール」。検索や簡単な相談など、幅広い用途で利用できる。</p>
+        </div>
+        <div style="border: 1px solid var(--border); padding: 15px; border-radius: 8px;">
+          <h4>カスタムGPT</h4>
+          <p>特定のタスクや業務に合わせて、チームが内容や指示を"チューニング（調整）"した専用のGPT。業務に特化した設定で、より精度の高いアウトプットが得られる。</p>
+        </div>
+      </div>
+      
+      <h3>主な削減効果</h3>
+      <ul>
+        <li><strong>リクルート可能性判断</strong>：20～30分の時短</li>
+        <li><strong>スクリーナー適合性確認</strong>：20分の時短</li>
+        <li><strong>スクリーナー翻訳</strong>：8～20万円のコスト削減</li>
+        <li><strong>個票作成</strong>：1件につき2時間の時短</li>
+        <li><strong>書き起こしチェック</strong>：1件につき2時間の時短</li>
+        <li><strong>翻訳作業</strong>：1件につき4時間の時短</li>
+        <li><strong>報告書作成</strong>：案件により6～10時間の時短</li>
+      </ul>
+      
+      <h3>ユーザーの声（抜粋）</h3>
+      
+      <h4>メール作成・添削</h4>
+      <p>「ベース文さえ用意すれば、意図通りの内容に整えてくれる。返しにくい内容への返信原稿も作成してくれる。」</p>
+      
+      <h4>翻訳（日⇔英）</h4>
+      <p>「単なる添削ではなく、文脈や意図を汲んだ表現や代替案も積極的に提案してくれる。添削という枠を超えて'アドバイザー'のような役割も担ってくれる。」</p>
+      
+      <h4>実査準備・サポート</h4>
+      <p>「日本の臨床現場の情報、治療選択肢を短時間で把握することができる。ファクトチェックを自身で必ず行うことにより、より理解が深まっている。」</p>
+      
+      <p><em>※ 完全版PDFでは、具体的なプロンプト例、フィードバック手法、業務フロー詳細が掲載されています。</em></p>
+    `;
+  }
+  
+  modalTitle.textContent = title;
+  modalContent.innerHTML = content;
+  modal.style.display = 'block';
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  const modal = document.getElementById('preview-modal');
+  modal.style.display = 'none';
+  document.body.style.overflow = 'auto';
+}
+
+// モーダル外クリックで閉じる
+window.onclick = function(event) {
+  const modal = document.getElementById('preview-modal');
+  if (event.target == modal) {
+    closeModal();
+  }
+}
+</script>
+
+</body>
+</html>
