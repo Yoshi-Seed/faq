@@ -1,0 +1,145 @@
+:root{
+  --sidebar-width: 320px;
+  --c-primary:#2f6c9e;
+  --c-primary-light:#3f88bf;
+  --c-bg:#f7f9fa;
+  --c-placeholder-bg:#f8d5d5; /* light red */
+  --c-placeholder-text:#b94747;
+}
+
+/* Base */
+body{
+  font-size:1.25rem;background-color:var(--c-bg);
+  font-family:Arial, Helvetica, sans-serif;
+}
+
+/* Sidebar (overlay white) */
+#sidebar{
+  position:fixed;
+  top:56px; /* height of sticky navbar */
+  left:0;
+  width:var(--sidebar-width);
+  height:calc(100vh - 56px);
+  background:#ffffff;
+  overflow-y:auto;
+  transform:translateX(-100%);
+  transition:transform .3s ease-in-out;
+  z-index:1045;
+  border-right:1px solid #dee2e6;
+}
+body.sidebar-open #sidebar{transform:translateX(0);}
+
+/* Overlay */
+#overlay{
+  position:fixed;
+  top:56px;
+  left:0;right:0;bottom:0;
+  background:rgba(0,0,0,.4);
+  opacity:0;visibility:hidden;
+  transition:opacity .3s ease-in-out;
+  z-index:1040;
+}
+body.sidebar-open #overlay{opacity:1;visibility:visible;}
+
+/* Sidebar links */
+#sidebar .list-group-item{
+  background:transparent;
+  color:#212529;
+  border:none;
+  font-size:1rem;
+}
+#sidebar .list-group-item:hover{
+  background-color:#f1f3f5;
+  color:#212529;
+}
+
+/* Content */
+#content{
+  overflow-x:auto;
+}
+
+/* Placeholder */
+.prompt-placeholder{
+  display:inline-block;
+  background-color:var(--c-placeholder-bg);
+  color:var(--c-placeholder-text);
+  padding:0 0.2em;
+  margin:0 0.5em;
+  border-radius:.25rem;
+  cursor:pointer;
+}
+
+
+/* Editable */
+[contenteditable="true"]{
+/*  outline:2px solid var(--c-primary-light); */
+  min-height:1.8em;
+  background:#f9fcfc;
+  border-radius:.3rem;
+}
+
+/* Headings */
+.part-title{
+  border-left:8px solid var(--c-primary);
+  padding-left:.8rem;
+  font-size:1.9rem;
+  font-weight:700;
+  color:var(--c-primary);
+  margin-top:3rem;
+  margin-bottom:2rem;
+
+}
+.chapter-title{
+  border-left:4px solid var(--c-primary-light);
+  padding-left:.8rem;
+  font-size:1.45rem;
+  font-weight:600;
+  margin-left:.4rem;
+  margin-top: 2rem !important;
+  margin-bottom: 2rem;
+
+}
+.tech-number{font-weight:700;font-size:1.7rem;margin-right:.6rem;color:var(--c-primary-light);}
+.tech-name{font-size:1.7rem;font-weight:700;}
+
+
+
+
+/* 1) 包むラッパー全体に背景を付ける */
+.placeholder-wrapper {
+  display: inline-flex;
+  align-items: center;
+  background: #ffe8e8;
+  border-radius: 0.25rem;
+  padding: 0;                 /* 余白は括弧に寄せる */
+}
+
+.brkt {
+  color: #000;
+  user-select: none;
+  margin: 0 0.25em;           /* 可視的なスペース。コピーには付かない */
+}
+
+.prompt-placeholder {
+  background: transparent;    /* 背景はラッパーに一体化 */
+  color: #b94747;
+  padding: 0;
+  display: inline;
+}
+
+.placeholder-wrapper .brkt:first-of-type { margin-left: 0.25em; }
+.placeholder-wrapper .brkt:last-of-type  { margin-right: 0.25em; }
+
+#prompt-container{
+  margin: 2rem;
+}
+
+
+@media(max-width:768px){
+  body{font-size:1.0rem;}
+  .tech-number,.tech-name{font-size:1.45rem;}
+  #prompt-container{
+    margin: 0.2rem;
+  }
+  
+}
