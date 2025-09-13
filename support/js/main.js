@@ -222,14 +222,11 @@ function displayResults(learningType) {
     const resourcesContainer = document.getElementById('resources-container');
     resourcesContainer.innerHTML = '';
     
-    // Debug: Check if resources exist
+    // Check if resources exist
     if (!resources || resources.length === 0) {
-        console.log('No resources found for type:', learningType);
-        resourcesContainer.innerHTML = '<p>リソースが見つかりません。</p>';
+        resourcesContainer.innerHTML = '<p style="color: #6b7280;">このカテゴリのリソースは現在準備中です。</p>';
         return;
     }
-    
-    console.log('Resources found for type:', learningType, resources);
     
     resources.forEach(resource => {
         const resourceCard = document.createElement('div');
