@@ -262,28 +262,28 @@ const resourcesData = {
     ],
     resistant: [
         {
-            title: "AI基礎理解資料の提供",
-            description: "AIの安全性や基本的な仕組みについて分かりやすく説明した資料を提供します",
-            url: "https://www.seedplanning.co.jp",
-            tags: ["基礎理解", "安全性", "分かりやすい説明"]
+            title: "スマイルカーブ理論入門",
+            description: "AIとの適切な役割分担を理解することで、AIへの不安を軽減し、安心して業務に取り入れる方法を学習できます",
+            url: "resources/smile-curve-theory.pdf",
+            tags: ["不安解消", "役割分担", "安心活用"]
         },
         {
-            title: "AI導入成功事例集の閲覧",
-            description: "他社の安全で効果的なAI導入事例を紹介し、不安の解消をサポートします",
-            url: "https://www.seedplanning.co.jp",
-            tags: ["成功事例", "不安解消", "実績紹介"]
+            title: "B3チーム成功事例レポート",
+            description: "実際の社内チームがどのようにAIを安全かつ効果的に活用し、具体的な成果を上げたかの実例を参考にできます",
+            url: "resources/b3-team-case-study.pdf",
+            tags: ["成功事例", "実績紹介", "安全活用"]
         },
         {
-            title: "AI関連書籍（入門・安全性重視）購入支援",
-            description: "AIの安全性や基礎について書かれた信頼性の高い書籍の購入をサポートします",
-            url: "https://www.seedplanning.co.jp",
-            tags: ["入門書籍", "安全性重視", "信頼性"]
+            title: "AIプロンプト上達ガイド（基礎編）",
+            description: "AIとの基本的な付き合い方から学び、段階的に慣れ親しんでいくための優しい入門ガイド",
+            url: "resources/prompt-engineering-guide.pdf",
+            tags: ["入門ガイド", "段階的学習", "基礎理解"]
         },
         {
-            title: "個別相談・質問対応窓口",
-            description: "AIに関する不安や疑問について、いつでも個別に相談できる窓口を用意しています",
-            url: "https://www.seedplanning.co.jp",
-            tags: ["個別相談", "質問対応", "不安解消"]
+            title: "生成AIツール基本ガイド",
+            description: "各AIツールの基本的な特徴と安全な使い方を分かりやすく説明。AIへの理解を深めるための信頼できる情報源",
+            url: "resources/ai-tools-comparison-guide.pdf",
+            tags: ["基礎理解", "安全性", "信頼できる情報"]
         }
     ]
 };
