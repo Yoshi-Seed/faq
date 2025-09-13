@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>シード・プランニング AI導入会議 presents 社員研修サポートプログラム AI習得レベル診断</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- スタートページ -->
+        <div id="start-page" class="page active">
+            <div class="hero">
+                <div class="company-header">
+                    <img src="images/seed-planning-logo.png" alt="シード・プランニング" class="company-logo">
+                    <div class="program-title">
+                        <div class="main-title">AI導入会議 presents</div>
+                        <div class="sub-title">社員研修サポートプログラム</div>
+                    </div>
+                </div>
+                <h1>AI習得レベル診断</h1>
+                <p class="hero-description">
+                    あなたのAI活用レベルを診断し、<br>
+                    最適な会社サポートを提案します
+                </p>
+                <button class="btn btn-primary" onclick="startQuiz()">
+                    <i class="fas fa-play"></i>
+                    診断をはじめる
+                </button>
+            </div>
+            <div class="features">
+                <div class="feature">
+                    <i class="fas fa-clock"></i>
+                    <h3>約3分で完了</h3>
+                    <p>簡単な質問に答えるだけ</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-target"></i>
+                    <h3>AIスキル向上</h3>
+                    <p>実務で使えるAIスキル</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>個別最適化サポート</h3>
+                    <p>あなたに合ったサポート</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 質問ページ -->
+        <div id="quiz-page" class="page">
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <div class="progress-text">
+                    <span id="current-question">1</span> / <span id="total-questions">10</span>
+                </div>
+            </div>
+
+            <div class="question-container">
+                <h2 id="question-text">質問がここに表示されます</h2>
+                <div id="options-container" class="options">
+                    <!-- オプションがここに動的に追加されます -->
+                </div>
+            </div>
+
+            <div class="navigation">
+                <button id="prev-btn" class="btn btn-secondary" onclick="previousQuestion()" disabled>
+                    <i class="fas fa-arrow-left"></i>
+                    前の質問
+                </button>
+                <button id="next-btn" class="btn btn-primary" onclick="nextQuestion()" disabled>
+                    次の質問
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- 結果ページ -->
+        <div id="result-page" class="page">
+            <div class="result-container">
+                <div class="result-header">
+                    <div class="result-icon">
+                        <i id="result-icon" class="fas fa-trophy"></i>
+                    </div>
+                    <h2>診断結果</h2>
+                    <h3 id="result-title">あなたの学習タイプ</h3>
+                </div>
+
+                <div class="result-description">
+                    <p id="result-text">結果の詳細がここに表示されます</p>
+                </div>
+
+                <div class="recommended-resources">
+                    <h3><i class="fas fa-star"></i> おすすめのリソース</h3>
+                    <div id="resources-container" class="resources">
+                        <!-- リソースがここに動的に追加されます -->
+                    </div>
+                </div>
+
+                <div class="result-actions">
+                    <button class="btn btn-secondary" onclick="restartQuiz()">
+                        <i class="fas fa-redo"></i>
+                        もう一度診断する
+                    </button>
+                    <button class="btn btn-primary" onclick="shareResult()">
+                        <i class="fas fa-share"></i>
+                        結果をシェア
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2025 シード・プランニング AI導入会議. <a href="https://www.seedplanning.co.jp" target="_blank" style="color: white; text-decoration: underline;">seedplanning.co.jp</a></p>
+    </footer>
+
+    <script src="js/quiz-data.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
