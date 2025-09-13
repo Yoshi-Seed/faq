@@ -222,15 +222,27 @@ function displayResults(learningType) {
     const resourcesContainer = document.getElementById('resources-container');
     resourcesContainer.innerHTML = '';
     
+    // Debug: Check if resources exist
+    if (!resources || resources.length === 0) {
+        console.log('No resources found for type:', learningType);
+        resourcesContainer.innerHTML = '<p>リソースが見つかりません。</p>';
+        return;
+    }
+    
+    console.log('Resources found for type:', learningType, resources);
+    
     resources.forEach(resource => {
         const resourceCard = document.createElement('div');
         resourceCard.className = 'resource-card';
         resourceCard.innerHTML = `
             <h4>${resource.title}</h4>
             <p>${resource.description}</p>
-            <a href="${resource.url}" target="_blank" rel="noopener noreferrer" class="resource-link">
-                <i class="fas fa-external-link-alt"></i> 詳細を見る
-            </a>
+            ${resource.url === '#' ? 
+                '<span class="resource-link-disabled"><i class="fas fa-info-circle"></i> 詳細は別途案内</span>' : 
+                `<a href="${resource.url}" target="_blank" rel="noopener noreferrer" class="resource-link">
+                    <i class="fas fa-external-link-alt"></i> 詳細を見る
+                </a>`
+            }
             <div class="resource-tags">
                 ${resource.tags.map(tag => `<span class="resource-tag">${tag}</span>`).join('')}
             </div>

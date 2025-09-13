@@ -184,80 +184,80 @@ const learningTypes = {
 const resourcesData = {
     advanced: [
         {
+            title: "B3チーム成功事例レポート",
+            description: "AI活用で翻訳費20万円削減、作業時間2時間短縮を実現したB3チームの具体的な成功事例を参考にしてください",
+            url: "resources/b3-team-case-study.pdf",
+            tags: ["成功事例", "コスト削減", "業務効率化"]
+        },
+        {
+            title: "AIシナジー・プレイブック（戦略編）",
+            description: "複数AIツールの戦略的連携と協働のための上級者向け実践ガイド。AIストラテジストを目指す方へ",
+            url: "resources/ai-strategy-playbook.pdf",
+            tags: ["戦略的活用", "ツール連携", "上級テクニック"]
+        },
+        {
+            title: "AI活用中上級者向けトレーニングマニュアル",
+            description: "各ツールの特徴と使い分けを詳しく解説した2025年版の最新研修資料",
+            url: "resources/ai-training-manual-advanced.pdf",
+            tags: ["研修資料", "ツール比較", "使い分け"]
+        },
+        {
             title: "社内AI活用モデルケース作成プロジェクト",
             description: "あなたの知見を活かし、他の社員が参考にできるAI活用モデルケースの作成にご協力ください",
-            url: "https://www.seedplanning.co.jp",
+            url: "#",
             tags: ["モデルケース作成", "事例共有", "リーダーシップ"]
-        },
-        {
-            title: "AI関連書籍購入・社内ライブラリ充実プロジェクト",
-            description: "最新のAI関連書籍の選定と社内での知識共有活動にご参画ください",
-            url: "https://www.seedplanning.co.jp",
-            tags: ["書籍選定", "知識共有", "ライブラリ管理"]
-        },
-        {
-            title: "外部AIセミナー・カンファレンス参加支援（優先枠）",
-            description: "最新AI動向のキャッチアップのため、外部セミナー参加費を会社が全額支援します",
-            url: "https://www.seedplanning.co.jp",
-            tags: ["外部セミナー", "費用支援", "最新動向"]
-        },
-        {
-            title: "AI導入コンサルティング案件への参画機会",
-            description: "クライアント向けAI導入支援案件で、あなたの専門知識を活かしてください",
-            url: "https://www.seedplanning.co.jp",
-            tags: ["コンサルティング", "案件参画", "専門知識活用"]
         }
     ],
     intermediate: [
         {
-            title: "AI活用研修資料・テンプレート提供",
-            description: "プロンプト作成のコツや業務別活用例をまとめた研修資料を提供します",
-            url: "https://www.seedplanning.co.jp",
-            tags: ["研修資料", "テンプレート", "実践的"]
+            title: "AIプロンプト上達ガイド（実践編）",
+            description: "プロンプト作成の4つの必須要素から応用テクニックまで、業務に直結する実践的なガイド",
+            url: "resources/prompt-engineering-guide.pdf",
+            tags: ["プロンプト技術", "実践ガイド", "業務活用"]
+        },
+        {
+            title: "スマイルカーブ理論とAI活用",
+            description: "人間とAIの適切な役割分担を理解し、メモリ機能を活用してAIをカスタマイズする方法を学習",
+            url: "resources/smile-curve-theory.pdf",
+            tags: ["役割分担", "メモリ機能", "カスタマイズ"]
+        },
+        {
+            title: "B3チーム成功事例レポート",
+            description: "実際の業務でAIをどう活用したかの具体例。翻訳・分析・レポート作成での成功パターンを参考に",
+            url: "resources/b3-team-case-study.pdf",
+            tags: ["成功事例", "具体的手法", "参考モデル"]
         },
         {
             title: "AI関連書籍購入支援プログラム",
             description: "スキルアップに必要なAI関連書籍の購入費用を会社がサポートします",
-            url: "https://www.seedplanning.co.jp",
+            url: "#",
             tags: ["書籍購入支援", "スキルアップ", "費用サポート"]
-        },
-        {
-            title: "外部AIセミナー参加推奨",
-            description: "レベルアップに適した外部セミナーへの参加を推奨します。参加したいセミナーがあれば上長の承認を得て社内プロセスを進めてください",
-            url: "https://www.seedplanning.co.jp",
-            tags: ["外部セミナー", "参加推奨", "上長承認"]
-        },
-        {
-            title: "社内AI活用モデルケース参照",
-            description: "上級者が作成したAI活用のモデルケースを参考に、自身のスキル向上を図れます",
-            url: "https://www.seedplanning.co.jp",
-            tags: ["モデルケース", "参考資料", "スキル向上"]
         }
     ],
     beginner: [
         {
-            title: "AI基礎研修資料パッケージ",
-            description: "AI初心者向けの分かりやすい研修資料一式を提供。基本概念から実践まで段階的に学習できます",
-            url: "https://www.seedplanning.co.jp",
-            tags: ["基礎研修資料", "初心者向け", "段階的学習"]
+            title: "AIプロンプト上達ガイド（基礎編）",
+            description: "AIとの付き合い方から4つの必須要素まで、初心者でもすぐに実践できる基本的なプロンプト作成術",
+            url: "resources/prompt-engineering-guide.pdf",
+            tags: ["基礎知識", "プロンプト入門", "実践的"]
+        },
+        {
+            title: "スマイルカーブ理論入門",
+            description: "AIとの適切な役割分担を理解することで、安心してAIを業務に取り入れる方法を学習",
+            url: "resources/smile-curve-theory.pdf",
+            tags: ["基本理論", "役割分担", "安心活用"]
+        },
+        {
+            title: "生成AIツール基本ガイド",
+            description: "各AIツールの基本的な特徴と簡単な使い分けを分かりやすく解説。最初の一歩におすすめ",
+            url: "resources/ai-tools-comparison-guide.pdf",
+            tags: ["基本操作", "ツール入門", "分かりやすい"]
         },
         {
             title: "AI入門書籍購入支援",
             description: "初心者向けAI関連書籍の購入費用をサポートし、基礎知識の習得を支援します",
-            url: "https://www.seedplanning.co.jp",
+            url: "#",
             tags: ["入門書籍", "購入支援", "基礎知識"]
-        },
-        {
-            title: "AI活用スターターガイド",
-            description: "すぐに使えるプロンプトテンプレートと使い方説明書を提供します",
-            url: "https://www.seedplanning.co.jp",
-            tags: ["スターターガイド", "テンプレート", "実用的"]
-        },
-        {
-            title: "初心者向け外部セミナー情報提供",
-            description: "基礎から学べる外部セミナーの情報を提供し、参加費用の一部をサポートします",
-            url: "https://www.seedplanning.co.jp",
-            tags: ["外部セミナー", "初心者向け", "費用サポート"]
         }
     ],
     resistant: [
