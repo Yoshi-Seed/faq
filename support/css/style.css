@@ -1,0 +1,494 @@
+/* リセット & ベース設定 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background: linear-gradient(135deg, #8B4513 0%, #D2B48C 50%, #8B4513 100%);
+    min-height: 100vh;
+}
+
+/* コンテナ */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ページ管理 */
+.page {
+    display: none;
+    flex: 1;
+}
+
+.page.active {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* ボタンスタイル */
+.btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-primary {
+    background: #8B4513;
+    color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+    background: #A0522D;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(139, 69, 19, 0.4);
+}
+
+.btn-secondary {
+    background: white;
+    color: #8B4513;
+    border: 2px solid #8B4513;
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background: #8B4513;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* スタートページ */
+.hero {
+    text-align: center;
+    background: white;
+    padding: 60px 40px;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    margin-bottom: 40px;
+}
+
+.company-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.company-logo {
+    height: 80px;
+    width: auto;
+    object-fit: contain;
+}
+
+.program-title {
+    text-align: left;
+}
+
+.main-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #8B4513;
+    margin-bottom: 4px;
+}
+
+.sub-title {
+    font-size: 1rem;
+    color: #666;
+    font-weight: 500;
+}
+
+.hero-icon {
+    font-size: 4rem;
+    color: #8B4513;
+    margin-bottom: 20px;
+}
+
+.hero h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 16px;
+}
+
+.hero-description {
+    font-size: 1.1rem;
+    color: #6b7280;
+    margin-bottom: 32px;
+    line-height: 1.8;
+}
+
+.hero .btn {
+    font-size: 1.1rem;
+    padding: 16px 32px;
+}
+
+/* 機能紹介 */
+.features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+    margin-bottom: 40px;
+}
+
+.feature {
+    background: white;
+    padding: 32px 24px;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease;
+}
+
+.feature:hover {
+    transform: translateY(-4px);
+}
+
+.feature i {
+    font-size: 2.5rem;
+    color: #8B4513;
+    margin-bottom: 16px;
+}
+
+.feature h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 8px;
+}
+
+.feature p {
+    color: #6b7280;
+    font-size: 0.95rem;
+}
+
+/* プログレスバー */
+.progress-container {
+    background: white;
+    padding: 24px;
+    border-radius: 16px;
+    margin-bottom: 32px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+.progress-bar {
+    background: #f3f4f6;
+    height: 8px;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 12px;
+}
+
+.progress-fill {
+    background: linear-gradient(90deg, #8B4513, #D2B48C);
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.3s ease;
+    width: 0%;
+}
+
+.progress-text {
+    text-align: center;
+    font-weight: 500;
+    color: #4b5563;
+}
+
+/* 質問コンテナ */
+.question-container {
+    background: white;
+    padding: 40px;
+    border-radius: 16px;
+    margin-bottom: 32px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    flex: 1;
+}
+
+#question-text {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 32px;
+    line-height: 1.5;
+}
+
+/* オプションスタイル */
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.option {
+    padding: 20px 24px;
+    background: #f9fafb;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    text-align: left;
+}
+
+.option:hover {
+    background: #f3f4f6;
+    border-color: #d1d5db;
+    transform: translateY(-1px);
+}
+
+.option.selected {
+    background: #f5f5dc;
+    border-color: #8B4513;
+    color: #8B4513;
+    font-weight: 500;
+}
+
+.option.selected::before {
+    content: '✓ ';
+    font-weight: bold;
+}
+
+/* ナビゲーション */
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.navigation .btn {
+    flex: 1;
+    max-width: 200px;
+}
+
+/* 結果ページ */
+.result-container {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.result-header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.result-icon {
+    font-size: 4rem;
+    margin-bottom: 16px;
+}
+
+.result-header h2 {
+    font-size: 2rem;
+    color: #1f2937;
+    margin-bottom: 8px;
+}
+
+.result-header h3 {
+    font-size: 1.5rem;
+    color: #8B4513;
+    font-weight: 600;
+}
+
+.result-description {
+    background: #f8fafc;
+    padding: 24px;
+    border-radius: 12px;
+    margin-bottom: 32px;
+    border-left: 4px solid #8B4513;
+}
+
+.result-description p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #374151;
+}
+
+/* おすすめリソース */
+.recommended-resources h3 {
+    font-size: 1.3rem;
+    color: #1f2937;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.recommended-resources h3 i {
+    color: #f59e0b;
+}
+
+.resources {
+    display: grid;
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.resource-card {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.3s ease;
+}
+
+.resource-card:hover {
+    background: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.resource-card h4 {
+    color: #1f2937;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.resource-card p {
+    color: #6b7280;
+    font-size: 0.95rem;
+    margin-bottom: 12px;
+}
+
+.resource-card .resource-link {
+    color: #8B4513;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.resource-card .resource-link:hover {
+    text-decoration: underline;
+}
+
+.resource-card .resource-tags {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+}
+
+.resource-tag {
+    background: #f5f5dc;
+    color: #8B4513;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+/* アクション */
+.result-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* フッター */
+.footer {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 768px) {
+    .container {
+        padding: 16px;
+    }
+    
+    .hero {
+        padding: 40px 24px;
+    }
+    
+    .hero h1 {
+        font-size: 2rem;
+    }
+    
+    .company-header {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .program-title {
+        text-align: center;
+    }
+    
+    .company-logo {
+        height: 60px;
+    }
+    
+    .question-container {
+        padding: 24px;
+    }
+    
+    #question-text {
+        font-size: 1.3rem;
+    }
+    
+    .navigation {
+        flex-direction: column;
+    }
+    
+    .navigation .btn {
+        max-width: none;
+    }
+    
+    .result-container {
+        padding: 24px;
+    }
+    
+    .result-actions {
+        flex-direction: column;
+    }
+    
+    .features {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero h1 {
+        font-size: 1.8rem;
+    }
+    
+    .hero-description {
+        font-size: 1rem;
+    }
+    
+    #question-text {
+        font-size: 1.2rem;
+    }
+    
+    .option {
+        padding: 16px 20px;
+    }
+}
