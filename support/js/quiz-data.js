@@ -186,25 +186,25 @@ const resourcesData = {
         {
             title: "AI上級者向けガイド：実践者から戦略家へ",
             description: "AI コラボレーションの次なるフロンティアを探求し、ツールユーザーから AI ストラテジストへと進化するための戦略的思考フレームワーク",
-            url: "../resources/ai-strategy-advanced.pdf",
+            url: "/resources/ai-strategy-advanced.pdf",
             tags: ["戦略的思考", "AI協働", "フロンティア探求"]
         },
         {
             title: "AIツールプレイブック：デジタル・コパイロットを使いこなす戦略的ガイド",
             description: "2025年版最新のAI活用戦略。複数のAIアシスタントを連携させ、協働させるための高度で戦略的なアプローチ",
-            url: "../resources/ai-strategy-playbook.pdf",
+            url: "/resources/ai-strategy-playbook.pdf",
             tags: ["戦略的活用", "ツール連携", "2025年版"]
         },
         {
             title: "考える・アイデア出し・壁打ち用プロンプト集",
             description: "『AIを使って考えるための全技術』から56個の実践的なプロンプト技法。コピペで即座に活用可能",
-            url: "../resources/prompt-collection-text.pdf",
+            url: "/resources/prompt-collection-text.pdf",
             tags: ["プロンプト集", "アイデア発想", "実践技法"]
         },
         {
             title: "AI初級～上級レベルリソース集一覧",
             description: "あなたのAIレベルに応じた最適なリソースを提案。社内リソースへの総合的なナビゲーションガイド",
-            url: "../resources/ai-resources-list.pdf",
+            url: "/resources/ai-resources-list.pdf",
             tags: ["リソース集", "レベル別", "総合ガイド"]
         }
     ],
@@ -212,25 +212,25 @@ const resourcesData = {
         {
             title: "AI Co-Pilot プレイブック：中級者のための新しい働き方マスターガイド",
             description: "スマイルカーブ理論に基づく人間とAIの適切な役割分担を理解し、ユーザーからストラテジストへ進化するためのマインドセット",
-            url: "../resources/ai-intermediate-manual.pdf",
+            url: "/resources/ai-intermediate-manual.pdf",
             tags: ["Co-Pilot理論", "役割分担", "マインドセット"]
         },
         {
             title: "AIプロンプト上達のコツ：優秀なアシスタントを育てるガイド",
             description: "プロンプト作成の4つの必須要素から応用テクニックまで。AIを信頼できるアシスタント、壁打ち相手、ブレストパートナーに変える実践ガイド",
-            url: "../resources/prompt-guide-seed-planning.pdf",
+            url: "/resources/prompt-guide-seed-planning.pdf",
             tags: ["プロンプト技術", "実践ガイド", "アシスタント育成"]
         },
         {
             title: "AIツールプレイブック：デジタル・コパイロット戦略ガイド",
             description: "2025年版のAI活用戦略。習熟度のギャップを埋め、複数AIツールの協働を実現するための実践的アプローチ",
-            url: "../resources/ai-strategy-playbook.pdf",
+            url: "/resources/ai-strategy-playbook.pdf",
             tags: ["戦略的活用", "ツール協働", "実践アプローチ"]
         },
         {
             title: "考える・アイデア出し・壁打ち用プロンプト集",
             description: "『AIを使って考えるための全技術』から厳選された56個のプロンプト技法。コピペですぐに使える実践的なツール集",
-            url: "../resources/prompt-collection-text.pdf",
+            url: "/resources/prompt-collection-text.pdf",
             tags: ["プロンプト集", "アイデア発想", "即戦力ツール"]
         }
     ],
@@ -238,25 +238,25 @@ const resourcesData = {
         {
             title: "AIプロンプト上達のコツ：あなただけの優秀なアシスタントを育てるガイド",
             description: "AIは、もう一人の優秀な同僚です。正しい付き合い方を学び、AIを謎めいたツールから信頼できるアシスタントへと変える具体的で実践的なコツ",
-            url: "../resources/prompt-guide-seed-planning.pdf",
+            url: "/resources/prompt-guide-seed-planning.pdf",
             tags: ["基礎知識", "プロンプト入門", "アシスタント育成"]
         },
         {
             title: "AIツールプレイブック：初心者のためのAI導入ガイド",
             description: "2025年9月時点での業務に活用できるAIツールの最新情報と使用のコツ。AI使用ルールの再確認とアイデア集",
-            url: "../resources/ai-strategy-playbook.pdf",
+            url: "/resources/ai-strategy-playbook.pdf",
             tags: ["基本操作", "ツール入門", "2025年版"]
         },
         {
             title: "考える・アイデア出し・壁打ち用プロンプト集",
             description: "『AIを使って考えるための全技術』から初心者でも使える基本的なプロンプト。コピペですぐに始められるAI活用の第一歩",
-            url: "../resources/prompt-collection-text.pdf",
+            url: "/resources/prompt-collection-text.pdf",
             tags: ["プロンプト集", "初心者向け", "コピペ活用"]
         },
         {
             title: "AI初級～上級レベルリソース集一覧",
             description: "自分のAIレベルを診断し、最適な学習リソースを見つけるためのナビゲーション。段階的なスキルアップをサポート",
-            url: "../resources/ai-resources-list.pdf",
+            url: "/resources/ai-resources-list.pdf",
             tags: ["レベル診断", "学習ナビ", "段階的成長"]
         }
     ],
@@ -264,25 +264,25 @@ const resourcesData = {
         {
             title: "AIプロンプト上達のコツ：優しいAI入門ガイド",
             description: "「AIは、もう一人の優秀な同僚です」というコンセプトで、AIに対する不安を軽減し、段階的に慣れ親しんでいくための優しい導入ガイド",
-            url: "../resources/prompt-guide-seed-planning.pdf",
+            url: "/resources/prompt-guide-seed-planning.pdf",
             tags: ["不安解消", "段階的学習", "優しい導入"]
         },
         {
             title: "AI中級者向けスキルアップマニュアル（基礎理解編）",
             description: "スマイルカーブ理論に基づく人間とAIの適切な役割分担を理解し、AIへの不安を軽減して安心して業務に取り入れる方法",
-            url: "../resources/ai-intermediate-manual.pdf",
+            url: "/resources/ai-intermediate-manual.pdf",
             tags: ["役割分担理解", "不安軽減", "安心活用"]
         },
         {
             title: "AIツールプレイブック：安全なAI活用の基礎",
             description: "2025年版のAI活用ガイド。習熟度のギャップを理解し、安全で信頼できるAI活用の第一歩を踏み出すための基礎情報",
-            url: "../resources/ai-strategy-playbook.pdf",
+            url: "/resources/ai-strategy-playbook.pdf",
             tags: ["基礎理解", "安全性重視", "信頼性"]
         },
         {
             title: "AI初級～上級レベルリソース集一覧",
             description: "まずは自分のAIレベルを客観的に把握し、無理のない範囲で段階的にAIと親しむためのリソース案内",
-            url: "../resources/ai-resources-list.pdf",
+            url: "/resources/ai-resources-list.pdf",
             tags: ["レベル把握", "段階的導入", "無理なく学習"]
         }
     ]
