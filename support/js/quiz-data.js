@@ -184,106 +184,106 @@ const learningTypes = {
 const resourcesData = {
     advanced: [
         {
-            title: "B3チーム成功事例レポート",
-            description: "AI活用で翻訳費20万円削減、作業時間2時間短縮を実現したB3チームの具体的な成功事例を参考にしてください",
-            url: "resources/b3-team-case-study.pdf",
-            tags: ["成功事例", "コスト削減", "業務効率化"]
+            title: "AI上級者向けガイド：実践者から戦略家へ",
+            description: "AI コラボレーションの次なるフロンティアを探求し、ツールユーザーから AI ストラテジストへと進化するための戦略的思考フレームワーク",
+            url: "../resources/ai-strategy-advanced.pdf",
+            tags: ["戦略的思考", "AI協働", "フロンティア探求"]
         },
         {
-            title: "AIシナジー・プレイブック（戦略編）",
-            description: "複数AIツールの戦略的連携と協働のための上級者向け実践ガイド。AIストラテジストを目指す方へ",
-            url: "resources/ai-strategy-playbook.pdf",
-            tags: ["戦略的活用", "ツール連携", "上級テクニック"]
+            title: "AIツールプレイブック：デジタル・コパイロットを使いこなす戦略的ガイド",
+            description: "2025年版最新のAI活用戦略。複数のAIアシスタントを連携させ、協働させるための高度で戦略的なアプローチ",
+            url: "../resources/ai-strategy-playbook.pdf",
+            tags: ["戦略的活用", "ツール連携", "2025年版"]
         },
         {
-            title: "AI活用中上級者向けトレーニングマニュアル",
-            description: "各ツールの特徴と使い分けを詳しく解説した2025年版の最新研修資料",
-            url: "resources/ai-training-manual-advanced.pdf",
-            tags: ["研修資料", "ツール比較", "使い分け"]
+            title: "考える・アイデア出し・壁打ち用プロンプト集",
+            description: "『AIを使って考えるための全技術』から56個の実践的なプロンプト技法。コピペで即座に活用可能",
+            url: "../resources/prompt-collection-text.pdf",
+            tags: ["プロンプト集", "アイデア発想", "実践技法"]
         },
         {
-            title: "社内AI活用モデルケース作成プロジェクト",
-            description: "あなたの知見を活かし、他の社員が参考にできるAI活用モデルケースの作成にご協力ください",
-            url: "#",
-            tags: ["モデルケース作成", "事例共有", "リーダーシップ"]
+            title: "AI初級～上級レベルリソース集一覧",
+            description: "あなたのAIレベルに応じた最適なリソースを提案。社内リソースへの総合的なナビゲーションガイド",
+            url: "../resources/ai-resources-list.pdf",
+            tags: ["リソース集", "レベル別", "総合ガイド"]
         }
     ],
     intermediate: [
         {
-            title: "AIプロンプト上達ガイド（実践編）",
-            description: "プロンプト作成の4つの必須要素から応用テクニックまで、業務に直結する実践的なガイド",
-            url: "resources/prompt-engineering-guide.pdf",
-            tags: ["プロンプト技術", "実践ガイド", "業務活用"]
+            title: "AI Co-Pilot プレイブック：中級者のための新しい働き方マスターガイド",
+            description: "スマイルカーブ理論に基づく人間とAIの適切な役割分担を理解し、ユーザーからストラテジストへ進化するためのマインドセット",
+            url: "../resources/ai-intermediate-manual.pdf",
+            tags: ["Co-Pilot理論", "役割分担", "マインドセット"]
         },
         {
-            title: "スマイルカーブ理論とAI活用",
-            description: "人間とAIの適切な役割分担を理解し、メモリ機能を活用してAIをカスタマイズする方法を学習",
-            url: "resources/smile-curve-theory.pdf",
-            tags: ["役割分担", "メモリ機能", "カスタマイズ"]
+            title: "AIプロンプト上達のコツ：優秀なアシスタントを育てるガイド",
+            description: "プロンプト作成の4つの必須要素から応用テクニックまで。AIを信頼できるアシスタント、壁打ち相手、ブレストパートナーに変える実践ガイド",
+            url: "../resources/prompt-guide-seed-planning.pdf",
+            tags: ["プロンプト技術", "実践ガイド", "アシスタント育成"]
         },
         {
-            title: "B3チーム成功事例レポート",
-            description: "実際の業務でAIをどう活用したかの具体例。翻訳・分析・レポート作成での成功パターンを参考に",
-            url: "resources/b3-team-case-study.pdf",
-            tags: ["成功事例", "具体的手法", "参考モデル"]
+            title: "AIツールプレイブック：デジタル・コパイロット戦略ガイド",
+            description: "2025年版のAI活用戦略。習熟度のギャップを埋め、複数AIツールの協働を実現するための実践的アプローチ",
+            url: "../resources/ai-strategy-playbook.pdf",
+            tags: ["戦略的活用", "ツール協働", "実践アプローチ"]
         },
         {
-            title: "AI関連書籍購入支援プログラム",
-            description: "スキルアップに必要なAI関連書籍の購入費用を会社がサポートします",
-            url: "#",
-            tags: ["書籍購入支援", "スキルアップ", "費用サポート"]
+            title: "考える・アイデア出し・壁打ち用プロンプト集",
+            description: "『AIを使って考えるための全技術』から厳選された56個のプロンプト技法。コピペですぐに使える実践的なツール集",
+            url: "../resources/prompt-collection-text.pdf",
+            tags: ["プロンプト集", "アイデア発想", "即戦力ツール"]
         }
     ],
     beginner: [
         {
-            title: "AIプロンプト上達ガイド（基礎編）",
-            description: "AIとの付き合い方から4つの必須要素まで、初心者でもすぐに実践できる基本的なプロンプト作成術",
-            url: "resources/prompt-engineering-guide.pdf",
-            tags: ["基礎知識", "プロンプト入門", "実践的"]
+            title: "AIプロンプト上達のコツ：あなただけの優秀なアシスタントを育てるガイド",
+            description: "AIは、もう一人の優秀な同僚です。正しい付き合い方を学び、AIを謎めいたツールから信頼できるアシスタントへと変える具体的で実践的なコツ",
+            url: "../resources/prompt-guide-seed-planning.pdf",
+            tags: ["基礎知識", "プロンプト入門", "アシスタント育成"]
         },
         {
-            title: "スマイルカーブ理論入門",
-            description: "AIとの適切な役割分担を理解することで、安心してAIを業務に取り入れる方法を学習",
-            url: "resources/smile-curve-theory.pdf",
-            tags: ["基本理論", "役割分担", "安心活用"]
+            title: "AIツールプレイブック：初心者のためのAI導入ガイド",
+            description: "2025年9月時点での業務に活用できるAIツールの最新情報と使用のコツ。AI使用ルールの再確認とアイデア集",
+            url: "../resources/ai-strategy-playbook.pdf",
+            tags: ["基本操作", "ツール入門", "2025年版"]
         },
         {
-            title: "生成AIツール基本ガイド",
-            description: "各AIツールの基本的な特徴と簡単な使い分けを分かりやすく解説。最初の一歩におすすめ",
-            url: "resources/ai-tools-comparison-guide.pdf",
-            tags: ["基本操作", "ツール入門", "分かりやすい"]
+            title: "考える・アイデア出し・壁打ち用プロンプト集",
+            description: "『AIを使って考えるための全技術』から初心者でも使える基本的なプロンプト。コピペですぐに始められるAI活用の第一歩",
+            url: "../resources/prompt-collection-text.pdf",
+            tags: ["プロンプト集", "初心者向け", "コピペ活用"]
         },
         {
-            title: "AI入門書籍購入支援",
-            description: "初心者向けAI関連書籍の購入費用をサポートし、基礎知識の習得を支援します",
-            url: "#",
-            tags: ["入門書籍", "購入支援", "基礎知識"]
+            title: "AI初級～上級レベルリソース集一覧",
+            description: "自分のAIレベルを診断し、最適な学習リソースを見つけるためのナビゲーション。段階的なスキルアップをサポート",
+            url: "../resources/ai-resources-list.pdf",
+            tags: ["レベル診断", "学習ナビ", "段階的成長"]
         }
     ],
     resistant: [
         {
-            title: "スマイルカーブ理論入門",
-            description: "AIとの適切な役割分担を理解することで、AIへの不安を軽減し、安心して業務に取り入れる方法を学習できます",
-            url: "resources/smile-curve-theory.pdf",
-            tags: ["不安解消", "役割分担", "安心活用"]
+            title: "AIプロンプト上達のコツ：優しいAI入門ガイド",
+            description: "「AIは、もう一人の優秀な同僚です」というコンセプトで、AIに対する不安を軽減し、段階的に慣れ親しんでいくための優しい導入ガイド",
+            url: "../resources/prompt-guide-seed-planning.pdf",
+            tags: ["不安解消", "段階的学習", "優しい導入"]
         },
         {
-            title: "B3チーム成功事例レポート",
-            description: "実際の社内チームがどのようにAIを安全かつ効果的に活用し、具体的な成果を上げたかの実例を参考にできます",
-            url: "resources/b3-team-case-study.pdf",
-            tags: ["成功事例", "実績紹介", "安全活用"]
+            title: "AI中級者向けスキルアップマニュアル（基礎理解編）",
+            description: "スマイルカーブ理論に基づく人間とAIの適切な役割分担を理解し、AIへの不安を軽減して安心して業務に取り入れる方法",
+            url: "../resources/ai-intermediate-manual.pdf",
+            tags: ["役割分担理解", "不安軽減", "安心活用"]
         },
         {
-            title: "AIプロンプト上達ガイド（基礎編）",
-            description: "AIとの基本的な付き合い方から学び、段階的に慣れ親しんでいくための優しい入門ガイド",
-            url: "resources/prompt-engineering-guide.pdf",
-            tags: ["入門ガイド", "段階的学習", "基礎理解"]
+            title: "AIツールプレイブック：安全なAI活用の基礎",
+            description: "2025年版のAI活用ガイド。習熟度のギャップを理解し、安全で信頼できるAI活用の第一歩を踏み出すための基礎情報",
+            url: "../resources/ai-strategy-playbook.pdf",
+            tags: ["基礎理解", "安全性重視", "信頼性"]
         },
         {
-            title: "生成AIツール基本ガイド",
-            description: "各AIツールの基本的な特徴と安全な使い方を分かりやすく説明。AIへの理解を深めるための信頼できる情報源",
-            url: "resources/ai-tools-comparison-guide.pdf",
-            tags: ["基礎理解", "安全性", "信頼できる情報"]
+            title: "AI初級～上級レベルリソース集一覧",
+            description: "まずは自分のAIレベルを客観的に把握し、無理のない範囲で段階的にAIと親しむためのリソース案内",
+            url: "../resources/ai-resources-list.pdf",
+            tags: ["レベル把握", "段階的導入", "無理なく学習"]
         }
     ]
 };
