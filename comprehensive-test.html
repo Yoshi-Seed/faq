@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>診断ロジック包括テスト</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-case { margin: 15px 0; padding: 10px; border: 1px solid #ccc; }
+        .success { background-color: #d4edda; border-color: #c3e6cb; }
+        .error { background-color: #f8d7da; border-color: #f5c6cb; }
+        .warning { background-color: #fff3cd; border-color: #ffeaa7; }
+        pre { background: #f8f9fa; padding: 10px; font-size: 12px; }
+    </style>
+</head>
+<body>
+    <h1>診断ロジック包括テスト</h1>
+    <div id="test-results"></div>
+
+    <script src="support/js/quiz-data.js"></script>
+    <script>
+        // テストケース定義
+        const testCases = [
+            {
+                name: "全て1番目選択（Advanced期待）",
+                answers: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], // 全て最初の選択肢
+                expected: "advanced"
+            },
+            {
+                name: "全て2番目選択（Intermediate期待）", 
+                answers: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1], // 全て2番目の選択肢
+                expected: "intermediate"
+            },
+            {
+                name: "全て3番目選択（Beginner期待）",
+                answers: [2, 2, 2, 2, 2, 2, 2, 2, 2, 2], // 全て3番目の選択肢
+                expected: "beginner"
+            },
+            {
+                name: "全て4番目選択（Resistant期待）",
+                answers: [3, 3, 3, 3, 3, 3, 3, 3, 3, 3], // 全て最後の選択肢
+                expected: "resistant"
+            },
+            {
+                name: "混合パターン1（Advanced寄り）",
+                answers: [0, 0, 0, 0, 0, 1, 1, 1, 1, 1],
+                expected: "advanced"
+            },
+            {
+                name: "混合パターン2（Beginner寄り）",
+                answers: [2, 2, 2, 2, 2, 1, 1, 1, 1, 1],
+                expected: "beginner"
+            },
+            {
+                name: "境界ケース（Intermediate vs Beginner）",
+                answers: [1, 1, 1, 2, 2, 2, 2, 1, 1, 1],
+                expected: null // 結果を確認
+            }
+        ];
+
+        // スコア計算関数（main.jsから移植）
+        function calculateTestScores(answers) {
+            const scores = {
+                advanced: 0,
+                intermediate: 0,
+                beginner: 0,
+                resistant: 0
+            };
+            
+            answers.forEach((answerIndex, questionIndex) => {
+                if (answerIndex !== undefined && answerIndex !== null) {
+                    const question = quizData.questions[questionIndex];
+                    if (question && question.options && question.options[answerIndex]) {
+                        const selectedOption = question.options[answerIndex];
+                        
+                        Object.keys(selectedOption.scores).forEach(type => {
+                            scores[type] += selectedOption.scores[type];
+                        });
+                    }
+                }
+            });
+            
+            return scores;
+        }
+
+        // 結果判定関数（main.jsから移植）
+        function determineResult(scores) {
+            console.log('Determining result for scores:', scores);
+            
+            const maxScore = Math.max(...Object.values(scores));
+            console.log('Max score:', maxScore);
+            
+            const dominantType = Object.keys(scores).find(type => scores[type] === maxScore);
+            console.log('Dominant type:', dominantType);
+            
+            return dominantType;
+        }
+
+        // テスト実行
+        function runTests() {
+            const resultsContainer = document.getElementById('test-results');
+            
+            testCases.forEach((testCase, index) => {
+                console.log(`\n=== テストケース ${index + 1}: ${testCase.name} ===`);
+                
+                const div = document.createElement('div');
+                div.className = 'test-case';
+                
+                try {
+                    // スコア計算
+                    const scores = calculateTestScores(testCase.answers);
+                    console.log('Calculated scores:', scores);
+                    
+                    // 結果判定
+                    const result = determineResult(scores);
+                    console.log('Result:', result);
+                    
+                    // 検証
+                    const isValid = result !== undefined && result !== null;
+                    const isExpected = testCase.expected === null || result === testCase.expected;
+                    
+                    if (isValid && isExpected) {
+                        div.className += ' success';
+                        div.innerHTML = `
+                            <h3>✅ ${testCase.name}</h3>
+                            <p><strong>結果:</strong> ${result}</p>
+                            <pre>スコア: ${JSON.stringify(scores, null, 2)}</pre>
+                        `;
+                    } else if (!isValid) {
+                        div.className += ' error';
+                        div.innerHTML = `
+                            <h3>❌ ${testCase.name} - 結果が返されていません</h3>
+                            <p><strong>エラー:</strong> 結果判定が失敗 (result: ${result})</p>
+                            <pre>スコア: ${JSON.stringify(scores, null, 2)}</pre>
+                            <pre>回答パターン: ${JSON.stringify(testCase.answers)}</pre>
+                        `;
+                    } else {
+                        div.className += ' warning';
+                        div.innerHTML = `
+                            <h3>⚠️ ${testCase.name} - 期待結果と異なる</h3>
+                            <p><strong>期待:</strong> ${testCase.expected} | <strong>実際:</strong> ${result}</p>
+                            <pre>スコア: ${JSON.stringify(scores, null, 2)}</pre>
+                        `;
+                    }
+                } catch (error) {
+                    div.className += ' error';
+                    div.innerHTML = `
+                        <h3>💥 ${testCase.name} - エラー発生</h3>
+                        <p><strong>エラー:</strong> ${error.message}</p>
+                        <pre>回答パターン: ${JSON.stringify(testCase.answers)}</pre>
+                    `;
+                    console.error('Test error:', error);
+                }
+                
+                resultsContainer.appendChild(div);
+            });
+        }
+
+        // ページ読み込み後にテスト実行
+        document.addEventListener('DOMContentLoaded', runTests);
+    </script>
+</body>
+</html>

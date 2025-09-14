@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全レベル診断結果テスト</title>
+    <link rel="stylesheet" href="support/css/style.css">
+    <style>
+        .level-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .level-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .resource-card {
+            margin: 10px 0;
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            background: #f9f9f9;
+        }
+        .resource-link {
+            color: #0066cc;
+            text-decoration: none;
+        }
+        .resource-link:hover {
+            text-decoration: underline;
+        }
+        .resource-tag {
+            display: inline-block;
+            background: #e0e0e0;
+            padding: 2px 8px;
+            border-radius: 3px;
+            margin: 2px;
+            font-size: 0.8em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>全レベル診断結果テスト</h1>
+        
+        <!-- 上級者 -->
+        <div class="level-section">
+            <div class="level-title">🏆 上級者 (Advanced)</div>
+            <div id="advanced-resources"></div>
+        </div>
+        
+        <!-- 中級者 -->
+        <div class="level-section">
+            <div class="level-title">🚀 中級者 (Intermediate)</div>
+            <div id="intermediate-resources"></div>
+        </div>
+        
+        <!-- 初心者 -->
+        <div class="level-section">
+            <div class="level-title">🌱 初心者 (Beginner)</div>
+            <div id="beginner-resources"></div>
+        </div>
+        
+        <!-- 慎重派 -->
+        <div class="level-section">
+            <div class="level-title">🛡️ 慎重派 (Resistant)</div>
+            <div id="resistant-resources"></div>
+        </div>
+    </div>
+
+    <script src="support/js/quiz-data.js"></script>
+    <script>
+        // 各レベルのリソースを表示
+        document.addEventListener('DOMContentLoaded', function() {
+            const levels = ['advanced', 'intermediate', 'beginner', 'resistant'];
+            
+            levels.forEach(level => {
+                const container = document.getElementById(`${level}-resources`);
+                const resources = resourcesData[level];
+                
+                console.log(`${level} resources:`, resources);
+                
+                if (!resources || resources.length === 0) {
+                    container.innerHTML = '<p style="color: #6b7280;">このカテゴリのリソースは現在準備中です。</p>';
+                    return;
+                }
+                
+                resources.forEach((resource, index) => {
+                    console.log(`${level} resource ${index}:`, resource);
+                    const resourceCard = document.createElement('div');
+                    resourceCard.className = 'resource-card';
+                    resourceCard.innerHTML = `
+                        <h4>${resource.title}</h4>
+                        <p>${resource.description}</p>
+                        ${resource.url === '#' ? 
+                            '<span class="resource-link-disabled"><i class="fas fa-info-circle"></i> 詳細は別途案内</span>' : 
+                            `<a href="${resource.url}" target="_blank" rel="noopener noreferrer" class="resource-link">
+                                🔗 PDFを開く: ${resource.url}
+                            </a>`
+                        }
+                        <div class="resource-tags">
+                            ${resource.tags.map(tag => `<span class="resource-tag">${tag}</span>`).join('')}
+                        </div>
+                    `;
+                    container.appendChild(resourceCard);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
