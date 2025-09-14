@@ -189,37 +189,70 @@ function calculateResults() {
 // 結果表示
 function displayResults(learningType) {
     if (!learningTypes[learningType]) {
+        console.error('エラー: 無効なlearningType -', learningType);
         return;
     }
+    
+    // 最初に結果ページに遷移
+    showPage('result');
     
     const type = learningTypes[learningType];
     const resources = resourcesData[learningType];
     
     // アイコンと色を設定
     const resultIcon = document.getElementById('result-icon');
-    resultIcon.className = type.icon;
-    resultIcon.style.color = type.color;
+    if (resultIcon) {
+        resultIcon.className = type.icon;
+        resultIcon.style.color = type.color;
+    } else {
+        console.warn('result-icon要素が見つかりません');
+    }
     
     // タイトルと説明を設定
-    document.getElementById('result-title').textContent = type.name;
-    document.getElementById('result-text').textContent = type.description;
+    const resultTitle = document.getElementById('result-title');
+    const resultText = document.getElementById('result-text');
+    
+    if (resultTitle) {
+        resultTitle.textContent = type.name;
+    } else {
+        console.warn('result-title要素が見つかりません');
+    }
+    
+    if (resultText) {
+        resultText.textContent = type.description;
+    } else {
+        console.warn('result-text要素が見つかりません');
+    }
     
     // 特徴を追加
     const resultDescription = document.querySelector('.result-description');
-    const characteristicsHTML = `
-        <p>${type.description}</p>
-        <h4 style="margin-top: 20px; margin-bottom: 12px; color: #1f2937;">
-            <i class="fas fa-lightbulb" style="color: ${type.color}; margin-right: 8px;"></i>
-            あなたの学習特徴
-        </h4>
-        <ul style="padding-left: 20px; line-height: 1.8;">
-            ${type.characteristics.map(char => `<li>${char}</li>`).join('')}
-        </ul>
-    `;
-    resultDescription.innerHTML = characteristicsHTML;
+    if (resultDescription) {
+        const characteristicsHTML = `
+            <p>${type.description}</p>
+            <h4 style="margin-top: 20px; margin-bottom: 12px; color: #1f2937;">
+                <i class="fas fa-lightbulb" style="color: ${type.color}; margin-right: 8px;"></i>
+                あなたの学習特徴
+            </h4>
+            <ul style="padding-left: 20px; line-height: 1.8;">
+                ${type.characteristics.map(char => `<li>${char}</li>`).join('')}
+            </ul>
+        `;
+        resultDescription.innerHTML = characteristicsHTML;
+    } else {
+        console.warn('result-description要素が見つかりません');
+    }
     
     // おすすめリソースを表示
     const resourcesContainer = document.getElementById('resources-container');
+    if (!resourcesContainer) {
+        console.warn('resources-container要素が見つかりません');
+        // 結果ページに遷移していない可能性があります
+        showPage('result');
+        // 再試行
+        setTimeout(() => displayResults(learningType), 100);
+        return;
+    }
+    
     resourcesContainer.innerHTML = '';
     
     // Check if resources exist
@@ -266,10 +299,9 @@ function displayResults(learningType) {
             <div>慎重派: ${scores.resistant}点</div>
         </div>
     `;
-    resultDescription.appendChild(scoreDetails);
-    
-    // 結果ページを表示
-    showPage('result');
+    if (resultDescription) {
+        resultDescription.appendChild(scoreDetails);
+    }
 }
 
 // クイズを再開
