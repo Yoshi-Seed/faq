@@ -1,0 +1,66 @@
+10.12.43.156 - - [14/Sep/2025 03:55:13] "GET /support/ HTTP/1.1" 200 -
+10.12.43.156 - - [14/Sep/2025 03:55:13] "GET /support/images/seed-planning-logo.png HTTP/1.1" 200 -
+10.12.43.156 - - [14/Sep/2025 03:55:13] "GET /support/css/style.css HTTP/1.1" 200 -
+10.12.43.156 - - [14/Sep/2025 03:55:13] "GET /support/js/quiz-data.js HTTP/1.1" 200 -
+10.12.43.156 - - [14/Sep/2025 03:55:13] "GET /support/js/main.js HTTP/1.1" 200 -
+10.12.43.156 - - [14/Sep/2025 03:55:13] code 404, message File not found
+10.12.43.156 - - [14/Sep/2025 03:55:13] "GET /favicon.ico HTTP/1.1" 404 -
+10.12.43.156 - - [14/Sep/2025 03:55:38] "HEAD /resources/ai-strategy-advanced.pdf HTTP/1.1" 200 -
+10.12.43.156 - - [14/Sep/2025 03:56:15] "GET /test-resistant.html HTTP/1.1" 200 -
+10.12.43.156 - - [14/Sep/2025 03:56:15] "GET /support/css/style.css HTTP/1.1" 200 -
+10.12.43.156 - - [14/Sep/2025 03:56:15] "GET /support/js/quiz-data.js HTTP/1.1" 200 -
+10.12.43.156 - - [14/Sep/2025 03:56:15] code 404, message File not found
+10.12.43.156 - - [14/Sep/2025 03:56:15] "GET /favicon.ico HTTP/1.1" 404 -
+10.12.43.156 - - [14/Sep/2025 03:56:23] "HEAD /resources/prompt-guide-seed-planning.pdf HTTP/1.1" 200 -
+10.12.43.156 - - [14/Sep/2025 03:56:45] "GET /test-all-levels.html HTTP/1.1" 200 -
+10.12.43.156 - - [14/Sep/2025 03:56:45] "GET /support/css/style.css HTTP/1.1" 200 -
+10.12.43.156 - - [14/Sep/2025 03:56:45] "GET /support/js/quiz-data.js HTTP/1.1" 200 -
+10.12.43.156 - - [14/Sep/2025 03:56:45] code 404, message File not found
+10.12.43.156 - - [14/Sep/2025 03:56:45] "GET /favicon.ico HTTP/1.1" 404 -
+10.12.43.156 - - [14/Sep/2025 03:56:58] "HEAD /resources/ai-intermediate-manual.pdf HTTP/1.1" 200 -
+10.12.43.156 - - [14/Sep/2025 03:56:58] "HEAD /resources/ai-resources-list.pdf HTTP/1.1" 200 -
+10.12.43.156 - - [14/Sep/2025 03:56:58] "HEAD /resources/ai-strategy-advanced.pdf HTTP/1.1" 200 -
+10.12.43.156 - - [14/Sep/2025 03:56:58] "HEAD /resources/ai-strategy-playbook.pdf HTTP/1.1" 200 -
+10.12.43.156 - - [14/Sep/2025 03:56:58] "HEAD /resources/prompt-collection-text.pdf HTTP/1.1" 200 -
+10.12.43.156 - - [14/Sep/2025 03:56:58] "HEAD /resources/prompt-guide-seed-planning.pdf HTTP/1.1" 200 -
+10.12.43.156 - - [14/Sep/2025 03:58:18] "GET /test-all-levels.html HTTP/1.1" 200 -
+10.12.43.156 - - [14/Sep/2025 03:58:19] "GET /support/css/style.css HTTP/1.1" 200 -
+10.12.43.156 - - [14/Sep/2025 03:58:19] "GET /support/js/quiz-data.js HTTP/1.1" 200 -
+10.12.43.156 - - [14/Sep/2025 03:58:19] code 404, message File not found
+10.12.43.156 - - [14/Sep/2025 03:58:19] "GET /favicon.ico HTTP/1.1" 404 -
+10.12.43.156 - - [14/Sep/2025 03:59:01] "GET /support/ HTTP/1.1" 200 -
+10.12.43.156 - - [14/Sep/2025 03:59:01] "GET /support/images/seed-planning-logo.png HTTP/1.1" 200 -
+10.12.43.156 - - [14/Sep/2025 03:59:01] "GET /support/js/main.js HTTP/1.1" 200 -
+10.12.43.156 - - [14/Sep/2025 03:59:01] "GET /support/js/quiz-data.js HTTP/1.1" 304 -
+10.12.43.156 - - [14/Sep/2025 03:59:22] "GET /resources/prompt-collection-text.pdf HTTP/1.1" 200 -
+10.12.43.156 - - [14/Sep/2025 03:59:37] "GET /resources/ai-resources-list.pdf HTTP/1.1" 200 -
+10.12.43.156 - - [14/Sep/2025 04:07:23] "GET /comprehensive-test.html HTTP/1.1" 200 -
+10.12.43.156 - - [14/Sep/2025 04:07:23] "GET /support/js/quiz-data.js HTTP/1.1" 200 -
+10.12.43.156 - - [14/Sep/2025 04:07:23] code 404, message File not found
+10.12.43.156 - - [14/Sep/2025 04:07:23] "GET /favicon.ico HTTP/1.1" 404 -
+10.12.43.156 - - [14/Sep/2025 04:08:35] "GET /debug-resistant.html HTTP/1.1" 200 -
+10.12.43.156 - - [14/Sep/2025 04:08:35] "GET /support/js/quiz-data.js HTTP/1.1" 200 -
+10.12.43.156 - - [14/Sep/2025 04:08:35] "GET /support/js/main.js HTTP/1.1" 200 -
+10.12.43.156 - - [14/Sep/2025 04:08:35] code 404, message File not found
+10.12.43.156 - - [14/Sep/2025 04:08:35] "GET /favicon.ico HTTP/1.1" 404 -
+10.12.43.156 - - [14/Sep/2025 04:10:02] "GET /debug-resistant.html HTTP/1.1" 200 -
+10.12.43.156 - - [14/Sep/2025 04:10:02] "GET /support/js/quiz-data.js HTTP/1.1" 200 -
+10.12.43.156 - - [14/Sep/2025 04:10:02] "GET /support/js/main.js HTTP/1.1" 200 -
+10.12.43.156 - - [14/Sep/2025 04:10:03] code 404, message File not found
+10.12.43.156 - - [14/Sep/2025 04:10:03] "GET /favicon.ico HTTP/1.1" 404 -
+10.12.43.156 - - [14/Sep/2025 04:17:18] "GET /support/ HTTP/1.1" 304 -
+10.12.43.156 - - [14/Sep/2025 04:17:18] "GET /support/css/style.css HTTP/1.1" 304 -
+10.12.43.156 - - [14/Sep/2025 04:17:18] "GET /support/images/seed-planning-logo.png HTTP/1.1" 304 -
+10.12.43.156 - - [14/Sep/2025 04:17:18] "GET /support/js/main.js HTTP/1.1" 200 -
+10.12.43.156 - - [14/Sep/2025 04:17:18] "GET /support/js/quiz-data.js HTTP/1.1" 304 -
+10.12.43.156 - - [14/Sep/2025 04:22:07] "HEAD /support/resources/prompt-guide-seed-planning.pdf HTTP/1.1" 200 -
+10.12.43.156 - - [14/Sep/2025 04:22:12] "HEAD /support/resources/ai-strategy-advanced.pdf HTTP/1.1" 200 -
+10.12.43.156 - - [14/Sep/2025 04:22:12] "HEAD /support/resources/prompt-guide-seed-planning.pdf HTTP/1.1" 200 -
+10.12.43.156 - - [14/Sep/2025 04:22:12] "HEAD /support/resources/ai-intermediate-manual.pdf HTTP/1.1" 200 -
+10.12.43.156 - - [14/Sep/2025 04:22:13] "HEAD /support/resources/ai-strategy-playbook.pdf HTTP/1.1" 200 -
+10.12.43.156 - - [14/Sep/2025 04:22:19] "GET /test-all-levels.html HTTP/1.1" 200 -
+10.12.43.156 - - [14/Sep/2025 04:22:19] "GET /support/js/quiz-data.js HTTP/1.1" 200 -
+10.12.43.156 - - [14/Sep/2025 04:22:19] "GET /support/css/style.css HTTP/1.1" 200 -
+10.12.43.156 - - [14/Sep/2025 04:22:19] code 404, message File not found
+10.12.43.156 - - [14/Sep/2025 04:22:19] "GET /favicon.ico HTTP/1.1" 404 -
+10.12.43.156 - - [14/Sep/2025 04:22:30] "HEAD /support/resources/prompt-guide-seed-planning.pdf HTTP/1.1" 200 -

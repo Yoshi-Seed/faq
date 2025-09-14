@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>慎重派パターンデバッグ</title>
+    <script src="support/js/quiz-data.js"></script>
+    <script src="support/js/main.js"></script>
+</head>
+<body>
+    <h1>慎重派パターン自動テスト</h1>
+    <div id="debug-info"></div>
+    
+    <script>
+        // 慎重派になる回答パターン（全て最後の選択肢）をシミュレート
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('=== 慎重派パターン自動テスト開始 ===');
+            
+            // 全ての質問に対して最後の選択肢（resistant寄り）を選択
+            const resistantAnswers = [3, 3, 3, 3, 3, 3, 3, 3, 3, 3];
+            
+            // userAnswersを設定
+            userAnswers = resistantAnswers;
+            
+            console.log('設定した回答:', userAnswers);
+            
+            // 結果計算を直接実行
+            try {
+                calculateResults();
+            } catch (error) {
+                console.error('結果計算でエラー:', error);
+                document.getElementById('debug-info').innerHTML = `
+                    <div style="color: red;">
+                        <h2>エラー発生</h2>
+                        <p>${error.message}</p>
+                        <pre>${error.stack}</pre>
+                    </div>
+                `;
+            }
+        });
+    </script>
+</body>
+</html>
