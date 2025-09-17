@@ -270,7 +270,7 @@
         // FAQ Data with proper categorization
         const faqData = [
             // Healthcare System (Q1-Q17)
-            { id: "Q1", category: "healthcare-system", question: "Is every citizen in Japan covered by health insurance?", answer: "Yes, Japan has implemented a universal health insurance system since 1961, ensuring that all citizens are enrolled in some form of public health insurance. The system comprises various schemes, including: • Employees' Health Insurance: Designed for company employees. • National Health Insurance: Aimed at self-employed individuals, pensioners, and others not covered by employment-based insurance. • Medical Care System for the Elderly Aged 75 and Over: Specifically for individuals aged 75 and above.", relatedPdfs: ["Insights_into_Japan's_Universal_Health_Insurance_System_by_Seed_Planning.pdf"] },
+            { id: "Q1", category: "healthcare-system", question: "Is every citizen in Japan covered by health insurance?", answer: "Yes, Japan has implemented a universal health insurance system since 1961, ensuring that all citizens are enrolled in some form of public health insurance. The system comprises various schemes, including: • Employees' Health Insurance: Designed for company employees. • National Health Insurance: Aimed at self-employed individuals, pensioners, and others not covered by employment-based insurance. • Medical Care System for the Elderly Aged 75 and Over: Specifically for individuals aged 75 and above.", relatedPdfs: [{ name: "Insights into Japan's Universal Health Insurance System", url: "https://yoshi-seed.github.io/pdf/Insights_into_Japan%E2%80%99s_Universal_Health_Insurance_System_by_Seed_Planning.pdf" }] },
             { id: "Q2", category: "healthcare-system", question: "What percentage of medical expenses do patients typically pay out of pocket in Japan?", answer: "Public health insurance in Japan covers approximately 70% of medical costs, and patients are generally responsible for the remaining 30%. (For children and the elderly, the co-payment rate varies between 10% and 30%.) Reimbursement rates for medical services and drug prices are determined by the Central Social Insurance Medical Council (Chuikyo), under the Ministry of Health, Labour and Welfare. Chuikyo includes experts beyond HCPs, so decisions reflect broader social perspectives.", relatedPdfs: ["Japan Healthcare Payment Systems.pdf"] },
             { id: "Q3", category: "healthcare-system", question: "Is there an upper limit to out-of-pocket payments for medical expenses in Japan?", answer: "Yes. The High-Cost Medical Expense Benefit sets a monthly upper limit (based on income) for out-of-pocket payments per institution; amounts above the limit are reimbursed. This lowers financial barriers, so study designs should also consider non-economic burdens (time, family support). Because patients can easily use multiple institutions, anticipate multi-touchpoint care paths rather than a linear pathway.", relatedPdfs: ["High-Cost Medical Benefits Japan.pdf"] },
             { id: "Q4", category: "healthcare-system", question: "Does the design of the healthcare payment system influence behaviors in clinical practice?", answer: "Yes. Examples include additional reimbursement points for home healthcare and limits on inpatient days, which shape clinical practice and inter-facility cooperation. Whether a service is reimbursed often acts as a strong motivator in care and research adoption.", relatedPdfs: ["Japan Healthcare Payment Incentives.pdf"] },
@@ -462,11 +462,11 @@
                                     <h4 class="text-sm font-semibold text-gray-600 mb-2">Related PDFs:</h4>
                                     <div class="flex flex-wrap gap-2">
                                         ${faq.relatedPdfs.map(pdf => `
-                                            <a href="#" class="inline-flex items-center text-sm text-blue-600 hover:text-blue-800">
+                                            <a href="${typeof pdf === 'object' ? pdf.url : '#'}" target="_blank" class="inline-flex items-center text-sm text-blue-600 hover:text-blue-800">
                                                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                                                 </svg>
-                                                ${pdf}
+                                                ${typeof pdf === 'object' ? pdf.name : pdf}
                                             </a>
                                         `).join('')}
                                     </div>
@@ -538,11 +538,11 @@
                                         <h5 class="text-sm font-semibold text-gray-600 mb-2">Related PDFs:</h5>
                                         <div class="flex flex-wrap gap-2">
                                             ${faq.relatedPdfs.map(pdf => `
-                                                <a href="#" class="inline-flex items-center text-sm text-blue-600 hover:text-blue-800">
+                                                <a href="${typeof pdf === 'object' ? pdf.url : '#'}" target="_blank" class="inline-flex items-center text-sm text-blue-600 hover:text-blue-800">
                                                     <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                                                     </svg>
-                                                    ${pdf}
+                                                    ${typeof pdf === 'object' ? pdf.name : pdf}
                                                 </a>
                                             `).join('')}
                                         </div>
