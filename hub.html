@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Japan Medical Research Hub | Seed Planning</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+        }
+        .category-card {
+            transition: all 0.3s ease;
+        }
+        .category-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+        }
+        .faq-item {
+            transition: all 0.2s ease;
+        }
+        .faq-item:hover {
+            background-color: #f8fafc;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-3">
+                    <img src="seed_logo.svg" alt="Seed Planning" class="h-8 w-8">
+                    <h1 class="text-xl font-bold text-gray-900">Japan Medical Research Hub</h1>
+                </div>
+                <div class="text-sm text-gray-600">
+                    For Seed Planning Global clients only
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <!-- Welcome Section -->
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">Welcome to Japan Medical Research Hub</h2>
+            <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                Access comprehensive FAQs and resources for conducting medical research in Japan. 
+                Choose your area of interest below to get started.
+            </p>
+        </div>
+
+        <!-- Search Section -->
+        <div class="mb-12">
+            <div class="max-w-2xl mx-auto">
+                <div class="relative">
+                    <input 
+                        type="text" 
+                        id="global-search"
+                        placeholder="Search all FAQs and resources..."
+                        class="w-full px-6 py-4 text-lg border border-gray-300 rounded-full focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm"
+                    >
+                    <button class="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 bg-blue-600 text-white rounded-full hover:bg-blue-700">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- View Toggle -->
+        <div id="view-container">
+            <!-- Guided Start View (Default) -->
+            <div id="guided-start-view" class="block">
+                <div class="text-center mb-8">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">Guided Start</h3>
+                    <p class="text-gray-600">Select a category to explore relevant FAQs and resources</p>
+                </div>
+
+                <!-- Category Cards -->
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                    <!-- Japan Healthcare System -->
+                    <div class="category-card bg-white rounded-xl p-6 shadow-md cursor-pointer border border-gray-200" data-category="healthcare-system">
+                        <div class="flex items-center mb-4">
+                            <div class="p-3 bg-blue-100 rounded-lg">
+                                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <h4 class="text-lg font-semibold text-gray-900">Japan Healthcare System</h4>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">Understanding Japan's universal healthcare system, insurance coverage, payment structures, and regulatory environment.</p>
+                        <div class="text-sm text-blue-600 font-medium">17 FAQs available</div>
+                    </div>
+
+                    <!-- Patient Studies & Recruitment -->
+                    <div class="category-card bg-white rounded-xl p-6 shadow-md cursor-pointer border border-gray-200" data-category="patient-studies">
+                        <div class="flex items-center mb-4">
+                            <div class="p-3 bg-green-100 rounded-lg">
+                                <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <h4 class="text-lg font-semibold text-gray-900">Patient Studies & Recruitment</h4>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">Best practices for patient research, recruitment strategies, survey design, and cultural considerations in Japan.</p>
+                        <div class="text-sm text-green-600 font-medium">22 FAQs available</div>
+                    </div>
+
+                    <!-- Healthcare Professional Studies -->
+                    <div class="category-card bg-white rounded-xl p-6 shadow-md cursor-pointer border border-gray-200" data-category="hcp-studies">
+                        <div class="flex items-center mb-4">
+                            <div class="p-3 bg-purple-100 rounded-lg">
+                                <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <h4 class="text-lg font-semibold text-gray-900">Healthcare Professional Studies</h4>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">Research methodologies for physicians, pharmacists, nurses, and other healthcare professionals in Japan.</p>
+                        <div class="text-sm text-purple-600 font-medium">15 FAQs available</div>
+                    </div>
+
+                    <!-- Regulatory & Ethics -->
+                    <div class="category-card bg-white rounded-xl p-6 shadow-md cursor-pointer border border-gray-200" data-category="regulatory-ethics">
+                        <div class="flex items-center mb-4">
+                            <div class="p-3 bg-red-100 rounded-lg">
+                                <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <h4 class="text-lg font-semibold text-gray-900">Regulatory & Ethics</h4>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">Legal requirements, ethical considerations, privacy laws, and compliance for medical research in Japan.</p>
+                        <div class="text-sm text-red-600 font-medium">8 FAQs available</div>
+                    </div>
+
+                    <!-- Research Operations -->
+                    <div class="category-card bg-white rounded-xl p-6 shadow-md cursor-pointer border border-gray-200" data-category="research-operations">
+                        <div class="flex items-center mb-4">
+                            <div class="p-3 bg-yellow-100 rounded-lg">
+                                <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <h4 class="text-lg font-semibold text-gray-900">Research Operations</h4>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-4">Practical guidance on project management, scheduling, agency partnerships, and operational considerations.</p>
+                        <div class="text-sm text-yellow-600 font-medium">6 FAQs available</div>
+                    </div>
+
+                    <!-- Browse All FAQs -->
+                    <div class="category-card bg-gradient-to-br from-gray-700 to-gray-900 text-white rounded-xl p-6 shadow-md cursor-pointer border border-gray-200" data-category="all">
+                        <div class="flex items-center mb-4">
+                            <div class="p-3 bg-white bg-opacity-20 rounded-lg">
+                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <h4 class="text-lg font-semibold">Browse All FAQs</h4>
+                            </div>
+                        </div>
+                        <p class="text-gray-200 mb-4">Access all 68 FAQs with advanced search and filtering capabilities.</p>
+                        <div class="text-sm text-gray-300 font-medium">Complete FAQ collection</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category View -->
+            <div id="category-view" class="hidden">
+                <div class="mb-6 flex items-center justify-between">
+                    <div>
+                        <button id="back-to-guided" class="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                            </svg>
+                            Back to Guided Start
+                        </button>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="relative">
+                            <input 
+                                type="text" 
+                                id="category-search"
+                                placeholder="Search within this category..."
+                                class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            >
+                            <svg class="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+                    <h2 id="category-title" class="text-2xl font-bold text-gray-900 mb-2"></h2>
+                    <p id="category-description" class="text-gray-600"></p>
+                </div>
+
+                <!-- FAQ List -->
+                <div id="faq-list" class="space-y-4">
+                    <!-- FAQ items will be populated here -->
+                </div>
+            </div>
+
+            <!-- All FAQs View -->
+            <div id="all-faqs-view" class="hidden">
+                <div class="mb-6 flex items-center justify-between">
+                    <div>
+                        <button id="back-to-guided-from-all" class="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                            </svg>
+                            Back to Guided Start
+                        </button>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <select id="all-faqs-filter" class="border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            <option value="">All Categories</option>
+                            <option value="healthcare-system">Healthcare System</option>
+                            <option value="patient-studies">Patient Studies</option>
+                            <option value="hcp-studies">HCP Studies</option>
+                            <option value="regulatory-ethics">Regulatory & Ethics</option>
+                            <option value="research-operations">Research Operations</option>
+                        </select>
+                        <div class="relative">
+                            <input 
+                                type="text" 
+                                id="all-faqs-search"
+                                placeholder="Search all FAQs..."
+                                class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            >
+                            <svg class="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-2">All FAQs</h2>
+                    <p class="text-gray-600">Browse and search through all 68 FAQs about Japan medical research</p>
+                </div>
+
+                <!-- All FAQ List -->
+                <div id="all-faq-list" class="space-y-4">
+                    <!-- All FAQ items will be populated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // FAQ Data with proper categorization
+        const faqData = [
+            // Healthcare System (Q1-Q17)
+            { id: "Q1", category: "healthcare-system", question: "Is every citizen in Japan covered by health insurance?", answer: "Yes, Japan has implemented a universal health insurance system since 1961, ensuring that all citizens are enrolled in some form of public health insurance. The system comprises various schemes, including: • Employees' Health Insurance: Designed for company employees. • National Health Insurance: Aimed at self-employed individuals, pensioners, and others not covered by employment-based insurance. • Medical Care System for the Elderly Aged 75 and Over: Specifically for individuals aged 75 and above.", relatedPdfs: ["Japan Universal Healthcare Overview.pdf"] },
+            { id: "Q2", category: "healthcare-system", question: "What percentage of medical expenses do patients typically pay out of pocket in Japan?", answer: "Public health insurance in Japan covers approximately 70% of medical costs, and patients are generally responsible for the remaining 30%. (For children and the elderly, the co-payment rate varies between 10% and 30%.) Reimbursement rates for medical services and drug prices are determined by the Central Social Insurance Medical Council (Chuikyo), under the Ministry of Health, Labour and Welfare. Chuikyo includes experts beyond HCPs, so decisions reflect broader social perspectives.", relatedPdfs: ["Japan Healthcare Payment Systems.pdf"] },
+            { id: "Q3", category: "healthcare-system", question: "Is there an upper limit to out-of-pocket payments for medical expenses in Japan?", answer: "Yes. The High-Cost Medical Expense Benefit sets a monthly upper limit (based on income) for out-of-pocket payments per institution; amounts above the limit are reimbursed. This lowers financial barriers, so study designs should also consider non-economic burdens (time, family support). Because patients can easily use multiple institutions, anticipate multi-touchpoint care paths rather than a linear pathway.", relatedPdfs: ["High-Cost Medical Benefits Japan.pdf"] },
+            { id: "Q4", category: "healthcare-system", question: "Does the design of the healthcare payment system influence behaviors in clinical practice?", answer: "Yes. Examples include additional reimbursement points for home healthcare and limits on inpatient days, which shape clinical practice and inter-facility cooperation. Whether a service is reimbursed often acts as a strong motivator in care and research adoption.", relatedPdfs: ["Japan Healthcare Payment Incentives.pdf"] },
+            { id: "Q5", category: "healthcare-system", question: "Is access to healthcare providers in Japan open and flexible?", answer: "Yes. Patients can visit specialists and large hospitals freely without a referral. This \"free access system\" is a distinctive feature of Japanese healthcare with fewer restrictions than many countries.", relatedPdfs: ["Japan Free Access Healthcare System.pdf"] },
+            { id: "Q6", category: "healthcare-system", question: "What challenges arise when anyone can freely access large hospitals or specialists?", answer: "Free access leads to crowded outpatient departments at major hospitals and duplication of consultations/tests, wasting resources. For pathways and market entry, select carefully which level to target (clinic, mid-sized hospital, large hospital).", relatedPdfs: ["Japan Healthcare Access Challenges.pdf"] },
+            { id: "Q7", category: "healthcare-system", question: "Does Japan have a primary care physician system?", answer: "There is no direct US-style GP/PCP system. Initial consultations are also handled by specialists. Patients may visit university/large hospitals without a referral (extra fees may apply). Be mindful of institutional differences and define inclusion criteria carefully.", relatedPdfs: ["Japan Primary Care System Overview.pdf"] },
+            { id: "Q8", category: "healthcare-system", question: "Are there restrictions on physicians' clinical practices or referral pathways in Japan?", answer: "Generally no strict restrictions; referrals and diagnoses are at the physician's discretion. Some large institutions (e.g., university hospitals) recommend referral letters.", relatedPdfs: ["Japan Physician Practice Guidelines.pdf"] },
+            { id: "Q9", category: "healthcare-system", question: "Are Japan's health insurance systems operated by private companies?", answer: "No. The health insurance system is operated by public entities such as the government and local municipalities, not private insurers.", relatedPdfs: ["Japan Public Health Insurance Structure.pdf"] },
+            { id: "Q10", category: "healthcare-system", question: "How are health insurance premiums determined in Japan?", answer: "Premiums are based on income and age. They may be deducted from salaries via employers or paid individually per local government billing. Amount/methods vary by occupation and age.", relatedPdfs: ["Japan Health Insurance Premium Structure.pdf"] },
+            { id: "Q11", category: "healthcare-system", question: "Is there a role for private health insurance in Japan?", answer: "Yes, as a supplement to public insurance (e.g., advanced medical care, private-room surcharges). Interviews with private insurers are generally unnecessary. Practical note: Japan's de facto \"payers\" are the ~30 members of Chuikyo; interviewing them is extremely difficult and outside standard recruiting.", relatedPdfs: ["Japan Private Health Insurance Role.pdf"] },
+            { id: "Q12", category: "healthcare-system", question: "What is the role of physicians and their influence on purchasing decisions in Japan?", answer: "Physicians not only treat patients but significantly influence selection/adoption of devices and pharmaceuticals, often collaborating with hospital management and procurement. Research should capture both physician and admin perspectives.", relatedPdfs: ["Japan Physician Purchasing Influence.pdf"] },
+            { id: "Q13", category: "healthcare-system", question: "How is the health checkup system implemented in Japan?", answer: "Employers must provide annual health checkups under the Industrial Safety and Health Act. Many individuals also undergo comprehensive \"Ningen Dock\" exams at personal expense.", relatedPdfs: ["Japan Health Checkup System.pdf"] },
+            { id: "Q14", category: "healthcare-system", question: "What tests are included in health checkups in Japan?", answer: "Typically: height, weight, abdominal circumference, blood pressure, vision/hearing, blood tests (liver, kidney, glucose, lipids), urinalysis, chest X-ray, ECG. Municipalities/workplaces may add cancer screenings.", relatedPdfs: ["Japan Health Checkup Tests.pdf"] },
+            { id: "Q15", category: "healthcare-system", question: "What follow-up system is in place if abnormalities are found during a health checkup?", answer: "Occupational physicians or public health nurses recommend follow-up and encourage detailed exams or specialist visits. Many companies maintain proactive follow-up systems.", relatedPdfs: ["Japan Health Checkup Follow-up.pdf"] },
+            { id: "Q16", category: "healthcare-system", question: "What characterizes price revisions for services and pharmaceuticals in Japan?", answer: "Fees and drug prices are reviewed every two years (moving toward annual), with strong cost-containment. Even high launch prices often face early special cuts—important for long-term revenue planning.", relatedPdfs: ["Japan Drug Price Revision System.pdf"] },
+            { id: "Q17", category: "healthcare-system", question: "What types of medical institutions exist in Japan?", answer: "Two-tier model: Hospitals (~70%) with 20+ beds; Clinics/Shinryojo (~30%) with <20 beds, often private and neighborhood-based. Japan has fewer mid-sized centers and many small facilities, complicating integrated management.", relatedPdfs: ["Japan Medical Institution Types.pdf"] },
+
+            // HCP Studies (Q18-Q32)
+            { id: "Q18", category: "hcp-studies", question: "How do patients in Japan choose medical institutions?", answer: "Patients freely choose clinics or hospitals without referrals; severe cases may go directly to hospitals or university hospitals to see specialists. Japan lacks a strict \"gatekeeper\" sequence common in Western systems.", relatedPdfs: ["Japan Patient Choice Patterns.pdf"] },
+            { id: "Q19", category: "hcp-studies", question: "Hospital beds and medical equipment availability (e.g., MRI) in Japan?", answer: "Beds per capita are exceptionally high—over 4× the US. MRI installations/usage are ~8× the UK and ~1.3× the US. Hospital size and equipment availability are important sampling criteria.", relatedPdfs: ["Japan Medical Equipment Availability.pdf"] },
+            { id: "Q20", category: "hcp-studies", question: "Is there a formal GP/general medicine system?", answer: "Developing but early-stage versus the West. A general medicine board certification exists and is growing in urban hospitals, but practice remains highly specialty-based; comprehensive primary care physicians are still relatively few.", relatedPdfs: ["Japan General Medicine Development.pdf"] },
+            { id: "Q21", category: "hcp-studies", question: "How are medical specialties categorized?", answer: "19 base categories (MHLW): internal medicine, surgery, pediatrics, OB/GYN, psychiatry, dermatology, ophthalmology, otolaryngology, urology, orthopedics, neurosurgery, plastic surgery, emergency medicine, anesthesiology, radiology, rehabilitation, pathology, clinical laboratory medicine, general medicine. Other targetable areas include respiratory, gastroenterology, endocrinology/diabetology, nephrology, hematology, neurology, rheumatology, etc. Verify specialty names used overseas actually exist in Japan (e.g., \"Pain Medicine\" is not a standalone specialty).", relatedPdfs: ["Japan Medical Specialties Classification.pdf"] },
+            { id: "Q22", category: "hcp-studies", question: "Distinctive features of licensing and board certification?", answer: "With a medical license, physicians can claim any specialty; board certification is optional. Recruiting only board-certified specialists is not always feasible—confirm qualification needs during design.", relatedPdfs: ["Japan Medical Licensing System.pdf"] },
+            { id: "Q23", category: "hcp-studies", question: "Do physicians in Japan handle many consultations?", answer: "Yes. Doctors self-handle broad tasks (consults, paperwork, meetings, teaching, emergencies), concentrating workload. Outpatient visits per physician: Japan ~5,333 vs US ~1,538. Expect limited availability; be flexible in scheduling.", relatedPdfs: ["Japan Physician Workload Analysis.pdf"] },
+            { id: "Q24", category: "hcp-studies", question: "Do patients visit medical institutions frequently?", answer: "Yes. Average 11–14 outpatient visits/year per person (~2× OECD average), driven by shorter prescriptions (<30 days) and easy access. Assume multi-institution, multi-visit behaviors in design.", relatedPdfs: ["Japan Patient Visit Patterns.pdf"] },
+            { id: "Q25", category: "hcp-studies", question: "Are consultation times short? Why?", answer: "Typically 3–5 minutes per outpatient. Fee-for-service incentivizes volume. Messages/surveys must convey essentials quickly.", relatedPdfs: ["Japan Consultation Time Analysis.pdf"] },
+            { id: "Q26", category: "hcp-studies", question: "Workload differences: hospital vs clinic physicians?", answer: "Hospital physicians: longer hours, team care, night shifts; harder to schedule but highly specialized. Clinic physicians: more schedule autonomy and flexibility, though specialty scope may be limited by case mix.", relatedPdfs: ["Japan Hospital vs Clinic Physicians.pdf"] },
+            { id: "Q27", category: "hcp-studies", question: "Which physicians treat cancer patients?", answer: "Medical oncologists are relatively few; organ-specific surgeons (e.g., breast, GI, urology) often manage from surgery through chemotherapy, supporting continuity of care and patient reassurance.", relatedPdfs: ["Japan Cancer Treatment Physicians.pdf"] },
+            { id: "Q28", category: "hcp-studies", question: "Number/role of medical oncologists?", answer: "Certification began in 2006; as of 2020 about 1,455 specialists, with many hospitals lacking them. They mainly handle new therapies (immunotherapy/targeted agents) and complex cases.", relatedPdfs: ["Japan Medical Oncologists Role.pdf"] },
+            { id: "Q29", category: "hcp-studies", question: "Central institutions for cancer care?", answer: "Designated Cancer Care Hospitals (MHLW), university hospitals, and the National Cancer Center (~393 facilities) serve as hubs for advanced care, clinical trials, and new therapy introduction.", relatedPdfs: ["Japan Cancer Care Centers.pdf"] },
+            { id: "Q30", category: "hcp-studies", question: "Adoption/dissemination of new cancer drugs?", answer: "After PMDA approval, ~6-month Early Post-marketing Phase Vigilance (EPPV) precedes wider adoption. Physicians are cautious, often awaiting guideline inclusion and experience at major hospitals before broad use.", relatedPdfs: ["Japan New Cancer Drug Adoption.pdf"] },
+            { id: "Q31", category: "hcp-studies", question: "Importance of clinical guidelines?", answer: "Very high. Guidelines are the standard; off-guideline/off-label use is rare. Under national insurance, only guideline-concordant treatments are reimbursed.", relatedPdfs: ["Japan Clinical Guidelines Importance.pdf"] },
+            { id: "Q32", category: "hcp-studies", question: "Are physicians willing to participate in research?", answer: "Generally yes—if clearly \"for research only.\" Emphasize that it's market research, data are anonymized, and the aim is to understand real practice. Separate research from promotion to gain trust.", relatedPdfs: ["Japan Physician Research Participation.pdf"] },
+
+            // Patient Studies (Q33-Q51)
+            { id: "Q33", category: "patient-studies", question: "How to design duration/format?", answer: "Keep burden low. Online surveys: 20–30 minutes. Interviews: 60–90 minutes max. Online (Zoom/Teams) is preferred due to no travel time.", relatedPdfs: ["Japan Survey Design Guidelines.pdf"] },
+            { id: "Q34", category: "patient-studies", question: "Is localization necessary?", answer: "Yes. Use natural Japanese. Use domestic generic/brand drug names; common Japanese disease terms/abbreviations (e.g., RA, HbA1c); use Japan-standard units (mg/dL).", relatedPdfs: ["Japan Localization Requirements.pdf"] },
+            { id: "Q35", category: "patient-studies", question: "Is honoraria culturally acceptable for physicians?", answer: "Yes. It's standard and considered ethical to fairly compensate time/expertise; common in research and pharma industries in Japan.", relatedPdfs: ["Japan Research Honoraria Guidelines.pdf"] },
+            { id: "Q36", category: "patient-studies", question: "Typical honoraria ranges for physicians?", answer: "Interviews: several tens of thousands of JPY per hour. Examples—30 min: JPY 10,000–15,000; 60 min: ~JPY 20,000–30,000. Quant surveys: several thousand JPY depending on time.", relatedPdfs: ["Japan Honoraria Rates Guide.pdf"] },
+            { id: "Q37", category: "patient-studies", question: "Payment method preferences?", answer: "Common: Amazon gift cards, cash, or bank transfer; checks are uncommon. Confirm need for receipts/statements. Explain clearly how honoraria are delivered to build trust.", relatedPdfs: ["Japan Payment Methods Guide.pdf"] },
+            { id: "Q38", category: "patient-studies", question: "Manners/cultural points when meeting physicians?", answer: "Treat physicians as respected professionals; use polite forms (e.g., \"sensei\"). Avoid cancellations and be punctual—expected regardless of compensation.", relatedPdfs: ["Japan Business Etiquette Healthcare.pdf"] },
+            { id: "Q39", category: "patient-studies", question: "Are patients reluctant to participate?", answer: "Many are privacy-sensitive (history of large data breaches). From recruitment, clearly state anonymity, no PII collection, and statistical use only, to earn trust.", relatedPdfs: ["Japan Patient Privacy Concerns.pdf"] },
+            { id: "Q40", category: "patient-studies", question: "Handling sensitive/privacy-related questions?", answer: "Avoid unless necessary, or mark optional. Examples: income, education, family structure—forcing them causes refusals/dropouts and unreliable data. Provide \"Prefer not to answer\" options.", relatedPdfs: ["Navigating Privacy & Platforms in Japanese Patient Research.pdf"] },
+            { id: "Q41", category: "patient-studies", question: "Common age groups in patient surveys?", answer: "Older adults (60–70+) dominate chronic disease surveys (diabetes, hypertension, COPD, cardiovascular). Ensure readability, comprehension, and low burden.", relatedPdfs: ["Japan Patient Demographics Research.pdf"] },
+            { id: "Q42", category: "patient-studies", question: "Adapting surveys for elderly patients?", answer: "Use larger fonts and simplified questions; favor desktop/laptop UI; consider paper/telephone options; sometimes need family/caregiver support or consent.", relatedPdfs: ["Japan Elderly Patient Survey Design.pdf"] },
+            { id: "Q43", category: "patient-studies", question: "Other considerations for patient surveys?", answer: "Non-economic burdens (time, congestion, need for accompaniment) can be major obstacles. Emphasize safety/efficacy, daily life considerations, and family cooperation—often valued more than direct financial benefits.", relatedPdfs: ["Japan Patient Survey Considerations.pdf"] },
+            { id: "Q44", category: "patient-studies", question: "Main patient recruitment channels?", answer: "(1) Online patient panels—broad reach, but accurate screening is critical. (2) Social media—hashtags, patient influencers, communities (X, Instagram, Facebook). Ensure compliance with PMD Act ad/solicitation rules and strong privacy protection.", relatedPdfs: ["Japan Patient Recruitment Channels.pdf"] },
+            { id: "Q45", category: "patient-studies", question: "Roles of pharmacists?", answer: "Pharmacists support guidance/adherence; prescribing rights remain with physicians. With prescribing–dispensing separation, pharmacists' patient-facing roles expanded—medication compliance, side-effect management, OTC advice. Unlike some Western countries, no prescribing authority—keep in mind during recruiting.", relatedPdfs: ["Japan Pharmacist Role Overview.pdf"] },
+            { id: "Q46", category: "patient-studies", question: "What to ask pharmacists in research?", answer: "Focus on: (a) patient interactions & observed behaviors (side effects, discontinuation, self-changes), (b) inventory/procurement/storage (new drug intro, distribution challenges), (c) OTC/generics insights. Avoid therapy selection algorithms (outside scope).", relatedPdfs: ["Japan Pharmacist Research Topics.pdf"] },
+            { id: "Q47", category: "patient-studies", question: "Hospital vs community pharmacists—differences?", answer: "Hospital: dispensing, IV prep, in-house preparations, ward duties, emergency response, clinical trials. Community/dispensing: dispensing, medication guidance, OTC provision and consultations.", relatedPdfs: ["Japan Pharmacist Types Comparison.pdf"] },
+            { id: "Q48", category: "patient-studies", question: "Are honoraria considerations same as physicians (for pharmacists)?", answer: "Lower amounts are acceptable; an appropriate gift card or similar token is recommended.", relatedPdfs: ["Japan Pharmacist Compensation Guide.pdf"] },
+            { id: "Q49", category: "patient-studies", question: "Can nurses be research targets?", answer: "Yes—valuable for bedside insights. Nurses operate under physician direction (no diagnosis/treatment/prescribing authority in Japan). Provide real-world input on adherence, care challenges, device use. Unlike US NPs, Japan has no system enabling independent medical acts.", relatedPdfs: ["Japan Nurse Research Participation.pdf"] },
+            { id: "Q50", category: "patient-studies", question: "Can caregivers be included?", answer: "Yes—key proxies in a super-aging society, especially for dementia/chronic conditions. Targets: family members, nursing home staff, home care workers. Topics: medication management, visit support, care continuity, emotional/physical burdens. Mind privacy and emotional load; use indirect phrasing for sensitive items.", relatedPdfs: ["Japan Caregiver Research Guidelines.pdf"] },
+            { id: "Q51", category: "patient-studies", question: "What makes Japanese participants anxious or doubtful?", answer: "Questions like \"Why me?\" and \"What's the purpose?\" plus concerns over personal data and commercial motives. In invitations, clearly state purpose, sponsor, time/format, privacy protections, and \"no treatment impact\" to prevent withdrawals/non-response.", relatedPdfs: ["Japan Participant Anxiety Management.pdf"] },
+
+            // Patient Studies continued - Translation & Materials (Q52-Q56)
+            { id: "Q52", category: "patient-studies", question: "Why is localization crucial in Japan?", answer: "Healthcare systems, culture, and language differ; global designs without localization cause mismatches. Some roles (e.g., NP, PCP) don't exist, yielding non-applicable questions or no respondents. Tone/wording must match Japanese tendencies to maintain trust/cooperation.", relatedPdfs: ["Japan Localization Best Practices.pdf"] },
+            { id: "Q53", category: "patient-studies", question: "Translation cautions into Japanese?", answer: "Translate technical terms and system terminology to reflect Japan's reality. Do not use \"Nurse Practitioner (NP)\"; instead exclude from target or replace with \"nurse.\" Similarly localize titles like \"Pain Specialist\" or \"PCP\" if not official in Japan.", relatedPdfs: ["Japan Translation Guidelines Medical.pdf"] },
+            { id: "Q54", category: "patient-studies", question: "Appropriate survey length for HCPs/patients?", answer: "Aim for 20–30 minutes; longer risks dropouts and quality decline. HCPs have limited free time; patients/caregivers answer between visits and duties. If long, mark some sections optional and consider incentive upgrades for full completion.", relatedPdfs: ["Japan Survey Length Optimization.pdf"] },
+            { id: "Q55", category: "patient-studies", question: "Typical open-ended response patterns?", answer: "Concise answers are preferred; long free text is uncommon. Cultural: modesty and succinctness. Technical: mixed kanji–kana typing takes time, esp. on mobile. Use IDIs to obtain depth beyond open ends.", relatedPdfs: ["Japan Open-Ended Response Patterns.pdf"] },
+            { id: "Q56", category: "patient-studies", question: "Why is an In-Country Review necessary?", answer: "Local review ensures alignment with healthcare system norms, linguistic conventions, and tone. Translational accuracy alone doesn't ensure pharma terminology/brand tone consistency. Review names/abbreviations, tone/politeness, and standard Japanese survey phrasing.", relatedPdfs: ["Japan In-Country Review Process.pdf"] },
+
+            // Regulatory & Ethics (Q57-Q65)
+            { id: "Q57", category: "regulatory-ethics", question: "Why is qualitative research perceived as difficult?", answer: "Myth stems from \"not expressing true feelings.\" In reality, respondents speak cautiously considering context. With the right environment, skilled moderation, and clear pre-briefs, rich insights are achievable.", relatedPdfs: ["Japan Qualitative Research Methods.pdf"] },
+            { id: "Q58", category: "regulatory-ethics", question: "Why are participants hesitant, and how to draw honest thoughts?", answer: "Harmony-first culture (\"reading the room\"); initial politeness dampens negatives. Speaking changes with relationship perception. Create an environment where they feel safe to be candid; use appropriate questioning.", relatedPdfs: ["Japan Participant Engagement Strategies.pdf"] },
+            { id: "Q59", category: "regulatory-ethics", question: "If interview responses are limited, is research invalid?", answer: "Silence can signal reflection, not refusal. Attend to nonverbal cues (facial expression, tone, hesitation). Engage experienced Japanese moderators who can read \"the space between words\" to deepen findings.", relatedPdfs: ["Japan Nonverbal Communication Research.pdf"] },
+            { id: "Q60", category: "regulatory-ethics", question: "How to make group interviews comfortable in Japan?", answer: "Mind hierarchy and public self-consciousness. For physicians, group by similar seniority; consider IDIs when hierarchy inhibits. For patients, protect privacy and use indirect methods (anonymous written responses) so opinions aren't personally attributed.", relatedPdfs: ["Japan Group Interview Best Practices.pdf"] },
+            { id: "Q61", category: "regulatory-ethics", question: "Precautions for overseas clients observing sessions in Japan?", answer: "Participants are sensitive to group atmosphere; prominent client intervention can tense the room. Remain in background and communicate via interpreter/moderator. Post-session debriefs prevent nuance loss and deepen insights.", relatedPdfs: ["Japan Client Observation Guidelines.pdf"] },
+            { id: "Q62", category: "regulatory-ethics", question: "Legal/ethical considerations in Japan?", answer: "Research must be purely for research—not promotion/advertising. Strictly comply with personal data regulations; handle personal information with utmost care.", relatedPdfs: ["Japan Research Ethics Legal Framework.pdf"] },
+            { id: "Q63", category: "regulatory-ethics", question: "Handling personal information (APPI)?", answer: "APPI requires strict handling of personal data (names, contacts, histories). Medical information is \"sensitive personal information\": disclose purpose, obtain consent, anonymize properly, and dispose/store securely to meet legal/ethical standards.", relatedPdfs: ["Japan APPI Compliance Healthcare.pdf"] },
+            { id: "Q64", category: "regulatory-ethics", question: "Informed consent—how and what to explain?", answer: "Participation must be voluntary. Explain study purpose and confidentiality up front; obtain explicit written/on-screen consent per format. Especially with patients/general public, a transparent, reassuring process is key to trust and success.", relatedPdfs: ["Japan Informed Consent Best Practices.pdf"] },
+            { id: "Q65", category: "regulatory-ethics", question: "Is honoraria acceptable for HCPs/patients and how to set?", answer: "Yes, but structure carefully to avoid inducement/COI concerns. Set amounts/formats by role/affiliation. Clarify that research is informational only and won't influence prescribing/treatment to ensure ethical compliance and trust.", relatedPdfs: ["Japan Honoraria Ethics Guidelines.pdf"] },
+
+            // Research Operations (Q66-Q68)
+            { id: "Q66", category: "research-operations", question: "Scheduling with Japanese research agencies—what to note?", answer: "National holidays/long breaks—Golden Week (late Apr–early May), Obon (mid-Aug), New Year (late Dec–early Jan)—can halt operations. Plan around the Japanese calendar, allow generous timelines, and foster open discussion.", relatedPdfs: ["Japan Research Scheduling Guide.pdf"] },
+            { id: "Q67", category: "research-operations", question: "Leveraging analysts and KOL networks in Japan?", answer: "Some agencies have specialty analysts and proprietary KOL networks in oncology, immunology, rare diseases, etc. Though costlier, they bridge objectives and clinical realities—valuable for high-impact studies. Confirm availability early and specify needs to maximize value.", relatedPdfs: ["Japan KOL Network Utilization.pdf"] },
+            { id: "Q68", category: "research-operations", question: "Can physicians be recruited from a target list in Japan?", answer: "Recruitment is principally via anonymized matching using DCF (Doctor Contact File) codes to protect privacy and comply with law. Direct matching on personal info is generally prohibited except rare, tightly controlled cases. DCF list is matched to panel physicians; recruitment targets remain internal and undisclosed. Follow APPI and industry guidelines with transparent operations to maintain trust.", relatedPdfs: ["Japan DCF Recruitment Guidelines.pdf"] }
+        ];
+
+        // Category information
+        const categoryInfo = {
+            'healthcare-system': {
+                title: 'Japan Healthcare System',
+                description: 'Understanding Japan\'s universal healthcare system, insurance coverage, payment structures, and regulatory environment.'
+            },
+            'patient-studies': {
+                title: 'Patient Studies & Recruitment',
+                description: 'Best practices for patient research, recruitment strategies, survey design, and cultural considerations in Japan.'
+            },
+            'hcp-studies': {
+                title: 'Healthcare Professional Studies', 
+                description: 'Research methodologies for physicians, pharmacists, nurses, and other healthcare professionals in Japan.'
+            },
+            'regulatory-ethics': {
+                title: 'Regulatory & Ethics',
+                description: 'Legal requirements, ethical considerations, privacy laws, and compliance for medical research in Japan.'
+            },
+            'research-operations': {
+                title: 'Research Operations',
+                description: 'Practical guidance on project management, scheduling, agency partnerships, and operational considerations.'
+            }
+        };
+
+        // DOM Elements
+        const guidedStartView = document.getElementById('guided-start-view');
+        const categoryView = document.getElementById('category-view');
+        const allFaqsView = document.getElementById('all-faqs-view');
+        const categoryCards = document.querySelectorAll('.category-card');
+        const backToGuided = document.getElementById('back-to-guided');
+        const backToGuidedFromAll = document.getElementById('back-to-guided-from-all');
+        const globalSearch = document.getElementById('global-search');
+        const categorySearch = document.getElementById('category-search');
+        const allFaqsSearch = document.getElementById('all-faqs-search');
+        const allFaqsFilter = document.getElementById('all-faqs-filter');
+
+        let currentCategory = '';
+
+        // Show guided start view
+        function showGuidedStart() {
+            guidedStartView.classList.remove('hidden');
+            guidedStartView.classList.add('block');
+            categoryView.classList.remove('block');
+            categoryView.classList.add('hidden');
+            allFaqsView.classList.remove('block');
+            allFaqsView.classList.add('hidden');
+        }
+
+        // Show category view
+        function showCategoryView(category) {
+            currentCategory = category;
+            guidedStartView.classList.remove('block');
+            guidedStartView.classList.add('hidden');
+            categoryView.classList.remove('hidden');
+            categoryView.classList.add('block');
+            allFaqsView.classList.remove('block');
+            allFaqsView.classList.add('hidden');
+
+            const info = categoryInfo[category];
+            document.getElementById('category-title').textContent = info.title;
+            document.getElementById('category-description').textContent = info.description;
+
+            renderCategoryFAQs(category);
+        }
+
+        // Show all FAQs view
+        function showAllFaqsView() {
+            guidedStartView.classList.remove('block');
+            guidedStartView.classList.add('hidden');
+            categoryView.classList.remove('block');
+            categoryView.classList.add('hidden');
+            allFaqsView.classList.remove('hidden');
+            allFaqsView.classList.add('block');
+
+            renderAllFAQs();
+        }
+
+        // Render FAQs for a specific category
+        function renderCategoryFAQs(category, searchTerm = '') {
+            const filteredFaqs = faqData.filter(faq => {
+                const matchesCategory = faq.category === category;
+                const matchesSearch = !searchTerm || 
+                    faq.question.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    faq.answer.toLowerCase().includes(searchTerm.toLowerCase());
+                return matchesCategory && matchesSearch;
+            });
+
+            const faqList = document.getElementById('faq-list');
+            faqList.innerHTML = '';
+
+            if (filteredFaqs.length === 0) {
+                faqList.innerHTML = '<p class="text-gray-500 text-center py-8">No FAQs found for the current search.</p>';
+                return;
+            }
+
+            filteredFaqs.forEach(faq => {
+                const faqItem = document.createElement('div');
+                faqItem.className = 'faq-item bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow';
+                
+                faqItem.innerHTML = `
+                    <div class="flex items-start space-x-4">
+                        <div class="flex-shrink-0">
+                            <span class="bg-blue-100 text-blue-800 text-sm font-semibold px-3 py-1 rounded-full">${faq.id}</span>
+                        </div>
+                        <div class="flex-grow">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-3">${faq.question}</h3>
+                            <p class="text-gray-700 mb-4 leading-relaxed">${faq.answer}</p>
+                            ${faq.relatedPdfs && faq.relatedPdfs.length > 0 ? `
+                                <div class="border-t pt-4">
+                                    <h4 class="text-sm font-semibold text-gray-600 mb-2">Related PDFs:</h4>
+                                    <div class="flex flex-wrap gap-2">
+                                        ${faq.relatedPdfs.map(pdf => `
+                                            <a href="#" class="inline-flex items-center text-sm text-blue-600 hover:text-blue-800">
+                                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                                </svg>
+                                                ${pdf}
+                                            </a>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+                faqList.appendChild(faqItem);
+            });
+        }
+
+        // Render all FAQs
+        function renderAllFAQs(searchTerm = '', filterCategory = '') {
+            const filteredFaqs = faqData.filter(faq => {
+                const matchesSearch = !searchTerm || 
+                    faq.question.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    faq.answer.toLowerCase().includes(searchTerm.toLowerCase());
+                const matchesFilter = !filterCategory || faq.category === filterCategory;
+                return matchesSearch && matchesFilter;
+            });
+
+            const allFaqList = document.getElementById('all-faq-list');
+            allFaqList.innerHTML = '';
+
+            if (filteredFaqs.length === 0) {
+                allFaqList.innerHTML = '<p class="text-gray-500 text-center py-8">No FAQs found for the current search and filters.</p>';
+                return;
+            }
+
+            // Group by category
+            const groupedFaqs = {};
+            filteredFaqs.forEach(faq => {
+                if (!groupedFaqs[faq.category]) {
+                    groupedFaqs[faq.category] = [];
+                }
+                groupedFaqs[faq.category].push(faq);
+            });
+
+            Object.entries(groupedFaqs).forEach(([category, faqs]) => {
+                const categorySection = document.createElement('div');
+                categorySection.className = 'mb-8';
+                
+                const categoryHeader = document.createElement('div');
+                categoryHeader.className = 'mb-4';
+                categoryHeader.innerHTML = `
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">${categoryInfo[category]?.title || category}</h3>
+                    <p class="text-gray-600">${categoryInfo[category]?.description || ''}</p>
+                `;
+                categorySection.appendChild(categoryHeader);
+
+                const faqsContainer = document.createElement('div');
+                faqsContainer.className = 'space-y-4';
+
+                faqs.forEach(faq => {
+                    const faqItem = document.createElement('div');
+                    faqItem.className = 'faq-item bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow';
+                    
+                    faqItem.innerHTML = `
+                        <div class="flex items-start space-x-4">
+                            <div class="flex-shrink-0">
+                                <span class="bg-blue-100 text-blue-800 text-sm font-semibold px-3 py-1 rounded-full">${faq.id}</span>
+                            </div>
+                            <div class="flex-grow">
+                                <h4 class="text-lg font-semibold text-gray-900 mb-3">${faq.question}</h4>
+                                <p class="text-gray-700 mb-4 leading-relaxed">${faq.answer}</p>
+                                ${faq.relatedPdfs && faq.relatedPdfs.length > 0 ? `
+                                    <div class="border-t pt-4">
+                                        <h5 class="text-sm font-semibold text-gray-600 mb-2">Related PDFs:</h5>
+                                        <div class="flex flex-wrap gap-2">
+                                            ${faq.relatedPdfs.map(pdf => `
+                                                <a href="#" class="inline-flex items-center text-sm text-blue-600 hover:text-blue-800">
+                                                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                                    </svg>
+                                                    ${pdf}
+                                                </a>
+                                            `).join('')}
+                                        </div>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                    `;
+                    faqsContainer.appendChild(faqItem);
+                });
+
+                categorySection.appendChild(faqsContainer);
+                allFaqList.appendChild(categorySection);
+            });
+        }
+
+        // Event listeners
+        categoryCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const category = card.dataset.category;
+                if (category === 'all') {
+                    showAllFaqsView();
+                } else {
+                    showCategoryView(category);
+                }
+            });
+        });
+
+        backToGuided.addEventListener('click', showGuidedStart);
+        backToGuidedFromAll.addEventListener('click', showGuidedStart);
+
+        // Search functionality
+        globalSearch.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.trim();
+            if (searchTerm.length >= 2) {
+                showAllFaqsView();
+                renderAllFAQs(searchTerm);
+            }
+        });
+
+        categorySearch.addEventListener('input', (e) => {
+            renderCategoryFAQs(currentCategory, e.target.value);
+        });
+
+        allFaqsSearch.addEventListener('input', (e) => {
+            renderAllFAQs(e.target.value, allFaqsFilter.value);
+        });
+
+        allFaqsFilter.addEventListener('change', (e) => {
+            renderAllFAQs(allFaqsSearch.value, e.target.value);
+        });
+
+        // Initialize
+        showGuidedStart();
+    </script>
+</body>
+</html>
