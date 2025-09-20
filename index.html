@@ -32,7 +32,7 @@
             font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             line-height: 1.6;
             color: var(--text-color);
-            background: linear-gradient(135deg, var(--bg-color) 0%, #ffffff 100%);
+            background: linear-gradient(135deg, #8B4513 0%, #D2B48C 50%, #8B4513 100%);
             min-height: 100vh;
         }
 
@@ -118,6 +118,14 @@
             position: relative;
             z-index: 10;
         }
+        
+        @media (max-width: 480px) {
+            .search-section {
+                margin: -1.5rem 1rem 1rem;
+                padding: 1.2rem;
+                border-radius: 12px;
+            }
+        }
 
         .search-container {
             display: flex;
@@ -157,6 +165,47 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .filters {
+                grid-template-columns: 1fr;
+                gap: 0.8rem;
+            }
+            
+            .filter-select {
+                font-size: 0.9rem;
+                padding: 0.7rem 0.8rem;
+                width: 100%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+            
+            .filter-select option {
+                font-size: 0.85rem;
+                padding: 0.3rem 0.5rem;
+                white-space: normal;
+                word-wrap: break-word;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .filter-select {
+                font-size: 0.85rem;
+                padding: 0.6rem 0.7rem;
+                max-width: 100%;
+            }
+            
+            .filter-label {
+                font-size: 0.9rem;
+                font-weight: 600;
+            }
+            
+            .search-input {
+                font-size: 0.9rem;
+                padding: 0.8rem 1rem 0.8rem 3rem;
+            }
         }
 
         .filter-group {
@@ -437,6 +486,12 @@
 
             .filters {
                 grid-template-columns: 1fr;
+                gap: 0.8rem;
+            }
+            
+            .filter-select {
+                font-size: 0.9rem;
+                padding: 0.7rem 0.8rem;
             }
         }
 
@@ -546,7 +601,7 @@
 
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2024 Seed Planning, Inc. All rights reserved. | AI活用推進チーム</p>
+            <p>&copy; 2025 Seed Planning, Inc. All rights reserved. | AI導入会議</p>
         </div>
     </footer>
 
