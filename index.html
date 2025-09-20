@@ -1,32 +1,528 @@
 <!DOCTYPE html>
-<!--
-  DCFコード研修アプリ
-
-  このシンプルなWebアプリは、医師・薬剤師を対象とした市場調査で利用される
-  DCFコード（アルトマーク社が提供する医師・施設識別コード）に関する
-  理解度を高めるためのものです。複数の質問と選択肢に答えながら、
-  正しい答えには褒め言葉を、間違った答えには詳細な解説を返します。
--->
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DCFコード研修アプリ</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>シード・プランニング AI活用 FAQ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --bg-color: #f8f9fa;
+            --text-color: #333333;
+            --text-light: #6c757d;
+            --border-color: #dee2e6;
+            --card-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            --hover-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: linear-gradient(135deg, var(--bg-color) 0%, #ffffff 100%);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #34495e 100%);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: var(--card-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 100%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Search and Filter Section */
+        .search-section {
+            background: white;
+            margin: -3rem 2rem 2rem;
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
+            padding: 2rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .search-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .search-input-wrapper {
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3.5rem;
+            border: 2px solid var(--border-color);
+            border-radius: 50px;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            outline: none;
+        }
+
+        .search-input:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            font-size: 1.2rem;
+        }
+
+        .filters {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filter-label {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .filter-select {
+            padding: 0.8rem 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: var(--transition);
+            background: white;
+            cursor: pointer;
+        }
+
+        .filter-select:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            display: block;
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            font-weight: 500;
+            margin-top: 0.5rem;
+        }
+
+        /* FAQ Items */
+        .faq-container {
+            display: grid;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .faq-item {
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+            transition: var(--transition);
+            border-left: 4px solid var(--border-color);
+        }
+
+        .faq-item:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .faq-item.level-beginner { border-left-color: var(--success-color); }
+        .faq-item.level-intermediate { border-left-color: var(--warning-color); }
+        .faq-item.level-advanced { border-left-color: var(--accent-color); }
+        .faq-item.level-all { border-left-color: var(--secondary-color); }
+
+        .faq-header {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .faq-question-container {
+            flex: 1;
+        }
+
+        .faq-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .category-badge {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .level-badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: white;
+        }
+
+        .level-beginner .level-badge { background: var(--success-color); }
+        .level-intermediate .level-badge { background: var(--warning-color); }
+        .level-advanced .level-badge { background: var(--accent-color); }
+        .level-all .level-badge { background: var(--secondary-color); }
+
+        .faq-question {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .faq-toggle {
+            color: var(--secondary-color);
+            font-size: 1.5rem;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+
+        .faq-item.expanded .faq-toggle {
+            transform: rotate(45deg);
+        }
+
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .faq-item.expanded .faq-content {
+            max-height: 1000px;
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem 1.5rem;
+            color: var(--text-color);
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+
+        .faq-tags {
+            padding: 0 1.5rem 1.5rem;
+        }
+
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+
+        .tag {
+            background: #f8f9fa;
+            border: 1px solid var(--border-color);
+            color: var(--secondary-color);
+            padding: 0.2rem 0.6rem;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        /* No Results */
+        .no-results {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: white;
+            border-radius: 12px;
+            margin-top: 2rem;
+            box-shadow: var(--card-shadow);
+        }
+
+        .no-results-icon {
+            font-size: 4rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .no-results-text {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 3rem 0;
+            margin-top: 4rem;
+        }
+
+        .footer p {
+            opacity: 0.8;
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .loader {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--border-color);
+            border-top: 4px solid var(--secondary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+
+            .search-section {
+                margin: -2rem 1rem 1rem;
+                padding: 1.5rem;
+            }
+
+            .stats-section {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 1rem;
+            }
+
+            .faq-header {
+                padding: 1rem;
+            }
+
+            .faq-question {
+                font-size: 1rem;
+            }
+
+            .filters {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animation Classes */
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .highlight {
+            background-color: #fff3cd;
+            padding: 0.1rem 0.2rem;
+            border-radius: 3px;
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <img src="seed_logo.svg" alt="Seed Planning ロゴ" class="logo" />
-    <h1>DCFコード研修アプリ</h1>
-  </header>
-  <main>
-    <div id="quiz-container">
-      <!-- 質問コンテンツは script.js により動的に挿入されます -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <h1><i class="fas fa-robot"></i> AI活用 FAQ</h1>
+                <p>シード・プランニング社員向け 生成AI導入・活用ガイド</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="search-section">
+            <div class="search-container">
+                <div class="search-input-wrapper">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="search-input" id="searchInput" placeholder="キーワードで検索（例：ChatGPT、プロンプト、セキュリティ）">
+                </div>
+                
+                <div class="filters">
+                    <div class="filter-group">
+                        <label class="filter-label">カテゴリ</label>
+                        <select class="filter-select" id="categoryFilter">
+                            <option value="">すべてのカテゴリ</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label class="filter-label">レベル</label>
+                        <select class="filter-select" id="levelFilter">
+                            <option value="">すべてのレベル</option>
+                            <option value="全レベル共通">全レベル共通</option>
+                            <option value="初心者">初心者</option>
+                            <option value="中級者">中級者</option>
+                            <option value="上級者">上級者</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label class="filter-label">タグ</label>
+                        <select class="filter-select" id="tagFilter">
+                            <option value="">すべてのタグ</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats-section">
+            <div class="stat-card">
+                <span class="stat-number" id="totalQuestions">171</span>
+                <div class="stat-label">総質問数</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" id="displayedQuestions">171</span>
+                <div class="stat-label">表示中の質問数</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" id="categoriesCount">17</span>
+                <div class="stat-label">カテゴリ数</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" id="averageLevel">-</span>
+                <div class="stat-label">対象レベル</div>
+            </div>
+        </section>
+
+        <div class="loading" id="loadingIndicator">
+            <div class="loader"></div>
+        </div>
+
+        <section class="faq-container" id="faqContainer">
+            <!-- FAQ items will be inserted here by JavaScript -->
+        </section>
+
+        <div class="no-results" id="noResults" style="display: none;">
+            <i class="fas fa-search-minus no-results-icon"></i>
+            <p class="no-results-text">検索条件に一致するFAQが見つかりませんでした。<br>別のキーワードやフィルターをお試しください。</p>
+        </div>
     </div>
-  </main>
-  <footer>
-    <p>© 2025 Seed Planning, Inc.</p>
-  </footer>
-  <script src="script.js"></script>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Seed Planning, Inc. All rights reserved. | AI活用推進チーム</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
