@@ -32,53 +32,33 @@ class FAQManager {
     }
 
     async loadCSVData() {
-        const response = await fetch('Seed_AI_FAQ_public_dedup_plus_IS.csv');
-        const csvText = await response.text();
-        this.parseCSV(csvText);
+        // Load JSON data instead of CSV
+        const response = await fetch('faq_data.json');
+        const jsonData = await response.json();
+        this.parseJSON(jsonData);
     }
 
-    parseCSV(csvText) {
-        const lines = csvText.trim().split('\n');
-        const headers = lines[0].split(',').map(header => header.trim());
-        
-        for (let i = 1; i < lines.length; i++) {
-            const row = this.parseCSVLine(lines[i]);
-            if (row.length >= 5) {
-                const faq = {
-                    id: i,
-                    category: row[0].trim(),
-                    level: row[1].trim(),
-                    question: row[2].trim(),
-                    answer: row[3].trim(),
-                    tags: this.parseTags(row[4].trim())
-                };
+    parseJSON(jsonData) {
+        for (let i = 0; i < jsonData.length; i++) {
+            const item = jsonData[i];
+            const faq = {
+                id: i + 1,
+                category: item['#カテゴリー']?.trim() || '',
+                level: item['#レベル']?.trim() || '',
+                question: item['#Q']?.trim() || '',
+                answer: item['#A']?.trim() || '',
+                tags: this.parseTags(item['#タグ']?.trim() || '')
+            };
+            
+            // Only add if required fields are present
+            if (faq.question && faq.answer) {
                 this.faqData.push(faq);
             }
         }
         this.filteredData = [...this.faqData];
     }
 
-    parseCSVLine(line) {
-        const result = [];
-        let current = '';
-        let inQuotes = false;
-        
-        for (let i = 0; i < line.length; i++) {
-            const char = line[i];
-            
-            if (char === '"') {
-                inQuotes = !inQuotes;
-            } else if (char === ',' && !inQuotes) {
-                result.push(current);
-                current = '';
-            } else {
-                current += char;
-            }
-        }
-        
-        result.push(current);
-        return result;
-    }
+    // parseCSVLine method is no longer needed
 
     parseTags(tagString) {
         return tagString.split('#')
@@ -263,6 +243,8 @@ class FAQManager {
 
     updateStats() {
         document.getElementById('displayedQuestions').textContent = this.filteredData.length;
+        document.getElementById('totalQuestions').textContent = this.faqData.length;
+        document.getElementById('categoriesCount').textContent = this.categories.size;
         
         // Update level distribution
         const levelCounts = this.filteredData.reduce((acc, faq) => {
