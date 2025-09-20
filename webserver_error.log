@@ -79,3 +79,6 @@
 10.12.22.248 - - [20/Sep/2025 04:00:37] "GET /Seed_AI_FAQ_public_FINAL.csv HTTP/1.1" 200 -
 10.12.22.248 - - [20/Sep/2025 04:00:37] code 404, message File not found
 10.12.22.248 - - [20/Sep/2025 04:00:37] "GET /favicon.ico HTTP/1.1" 404 -
+10.12.22.248 - - [20/Sep/2025 04:06:32] "GET / HTTP/1.1" 200 -
+10.12.22.248 - - [20/Sep/2025 04:06:32] "GET /script.js HTTP/1.1" 200 -
+10.12.22.248 - - [20/Sep/2025 04:06:32] "GET /Seed_AI_FAQ_public_FINAL.csv HTTP/1.1" 200 -

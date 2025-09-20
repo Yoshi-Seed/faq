@@ -8,18 +8,19 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #3498db;
-            --accent-color: #e74c3c;
-            --success-color: #27ae60;
-            --warning-color: #f39c12;
-            --bg-color: #f8f9fa;
-            --text-color: #333333;
-            --text-light: #6c757d;
-            --border-color: #dee2e6;
-            --card-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            --hover-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            --primary-color: #8B4513;
+            --secondary-color: #A0522D;
+            --accent-color: #CD853F;
+            --success-color: #228B22;
+            --warning-color: #DAA520;
+            --bg-color: #FFF8DC;
+            --text-color: #2F1B14;
+            --text-light: #8B7355;
+            --border-color: #D2B48C;
+            --card-shadow: 0 2px 15px rgba(139, 69, 19, 0.15);
+            --hover-shadow: 0 6px 25px rgba(139, 69, 19, 0.25);
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --brand-gradient: linear-gradient(135deg, #8B4513 0%, #A0522D 50%, #CD853F 100%);
         }
 
         * {
@@ -32,19 +33,65 @@
             font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             line-height: 1.6;
             color: var(--text-color);
-            background: linear-gradient(135deg, var(--bg-color) 0%, #ffffff 100%);
+            background: linear-gradient(135deg, var(--bg-color) 0%, #FFFEF7 100%);
             min-height: 100vh;
         }
 
         /* Header */
         .header {
-            background: linear-gradient(135deg, var(--primary-color) 0%, #34495e 100%);
+            background: var(--brand-gradient);
             color: white;
-            padding: 2rem 0;
-            text-align: center;
-            box-shadow: var(--card-shadow);
+            padding: 3rem 0 2rem;
             position: relative;
             overflow: hidden;
+            box-shadow: var(--card-shadow);
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, #D2691E, #CD853F);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .logo-text {
+            color: white;
+        }
+
+        .logo-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            font-weight: 300;
+            margin-bottom: 0.2rem;
+        }
+
+        .logo-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+        }
+
+        .header-content {
+            text-align: center;
         }
 
         .header::before {
@@ -70,16 +117,18 @@
         }
 
         .header h1 {
-            font-size: 3rem;
-            font-weight: 700;
+            font-size: 2.5rem;
+            font-weight: 600;
             margin-bottom: 0.5rem;
-            letter-spacing: -0.02em;
+            letter-spacing: 0.02em;
+            line-height: 1.2;
         }
 
         .header p {
-            font-size: 1.2rem;
-            opacity: 0.9;
+            font-size: 1.1rem;
+            opacity: 0.95;
             font-weight: 300;
+            line-height: 1.4;
         }
 
         /* Container */
@@ -121,8 +170,8 @@
         }
 
         .search-input:focus {
-            border-color: var(--secondary-color);
-            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.1);
         }
 
         .search-icon {
@@ -162,7 +211,7 @@
         }
 
         .filter-select:focus {
-            border-color: var(--secondary-color);
+            border-color: var(--primary-color);
             outline: none;
         }
 
@@ -191,7 +240,7 @@
         .stat-number {
             font-size: 2.5rem;
             font-weight: 700;
-            color: var(--secondary-color);
+            color: var(--primary-color);
             display: block;
         }
 
@@ -224,7 +273,7 @@
 
         .faq-item.level-beginner { border-left-color: var(--success-color); }
         .faq-item.level-intermediate { border-left-color: var(--warning-color); }
-        .faq-item.level-advanced { border-left-color: var(--accent-color); }
+        .faq-item.level-advanced { border-left-color: #CD5C5C; }
         .faq-item.level-all { border-left-color: var(--secondary-color); }
 
         .faq-header {
@@ -248,7 +297,7 @@
         }
 
         .category-badge {
-            background: var(--primary-color);
+            background: var(--brand-gradient);
             color: white;
             padding: 0.3rem 0.8rem;
             border-radius: 20px;
@@ -262,15 +311,15 @@
         }
 
         .category-badge.hierarchical {
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
         }
 
         .category-badge.case-study {
-            background: linear-gradient(135deg, var(--success-color) 0%, #2ecc71 100%);
+            background: linear-gradient(135deg, #8B6914 0%, var(--warning-color) 100%);
         }
 
         .category-badge.employee-request {
-            background: linear-gradient(135deg, var(--warning-color) 0%, #e67e22 100%);
+            background: linear-gradient(135deg, #B8860B 0%, #DAA520 100%);
         }
 
         .level-badge {
@@ -283,7 +332,7 @@
 
         .level-beginner .level-badge { background: var(--success-color); }
         .level-intermediate .level-badge { background: var(--warning-color); }
-        .level-advanced .level-badge { background: var(--accent-color); }
+        .level-advanced .level-badge { background: #CD5C5C; }
         .level-all .level-badge { background: var(--secondary-color); }
 
         .faq-question {
@@ -295,7 +344,7 @@
         }
 
         .faq-toggle {
-            color: var(--secondary-color);
+            color: var(--primary-color);
             font-size: 1.5rem;
             transition: var(--transition);
             flex-shrink: 0;
@@ -333,9 +382,9 @@
         }
 
         .tag {
-            background: #f8f9fa;
+            background: #FFF8DC;
             border: 1px solid var(--border-color);
-            color: var(--secondary-color);
+            color: var(--primary-color);
             padding: 0.2rem 0.6rem;
             border-radius: 15px;
             font-size: 0.75rem;
@@ -365,15 +414,17 @@
 
         /* Footer */
         .footer {
-            background: var(--primary-color);
+            background: var(--brand-gradient);
             color: white;
             text-align: center;
-            padding: 3rem 0;
+            padding: 2.5rem 0;
             margin-top: 4rem;
+            border-top: 3px solid var(--accent-color);
         }
 
         .footer p {
-            opacity: 0.8;
+            opacity: 0.95;
+            font-size: 0.9rem;
         }
 
         /* Loading Animation */
@@ -388,7 +439,7 @@
             width: 40px;
             height: 40px;
             border: 4px solid var(--border-color);
-            border-top: 4px solid var(--secondary-color);
+            border-top: 4px solid var(--primary-color);
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
@@ -401,7 +452,17 @@
         /* Responsive Design */
         @media (max-width: 768px) {
             .header h1 {
-                font-size: 2rem;
+                font-size: 1.8rem;
+            }
+
+            .header-top {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: center;
+            }
+
+            .logo-title {
+                font-size: 1.2rem;
             }
 
             .container {
@@ -457,9 +518,17 @@
 <body>
     <header class="header">
         <div class="container">
+            <div class="header-top">
+                <div class="logo">
+                    <div class="logo-icon">S</div>
+                    <div class="logo-text">
+                        <div class="logo-subtitle">Market Research & Consulting</div>
+                        <div class="logo-title">SEED PLANNING</div>
+                    </div>
+                </div>
+            </div>
             <div class="header-content">
-                <h1><i class="fas fa-robot"></i> AI活用 FAQ</h1>
-                <p>シード・プランニング社員向け 生成AI導入・活用ガイド</p>
+                <h1>AI活用 FAQ<br><span style="font-size: 0.7em; font-weight: 400;">シード・プランニング社員向け 生成AI導入・活用ガイド</span></h1>
             </div>
         </div>
     </header>
@@ -536,7 +605,7 @@
 
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2024 Seed Planning, Inc. All rights reserved. | AI活用推進チーム</p>
+            <p>&copy; 2025 Seed Planning, Inc. All rights reserved. | AI導入会議</p>
         </div>
     </footer>
 
