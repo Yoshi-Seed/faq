@@ -64,3 +64,18 @@
 10.12.43.156 - - [14/Sep/2025 04:22:19] code 404, message File not found
 10.12.43.156 - - [14/Sep/2025 04:22:19] "GET /favicon.ico HTTP/1.1" 404 -
 10.12.43.156 - - [14/Sep/2025 04:22:30] "HEAD /support/resources/prompt-guide-seed-planning.pdf HTTP/1.1" 200 -
+10.12.22.248 - - [20/Sep/2025 01:41:37] "GET / HTTP/1.1" 200 -
+10.12.22.248 - - [20/Sep/2025 01:41:37] "GET /script.js HTTP/1.1" 200 -
+10.12.22.248 - - [20/Sep/2025 01:41:38] "GET /Seed_AI_FAQ_public_dedup_plus_IS.csv HTTP/1.1" 200 -
+10.12.22.248 - - [20/Sep/2025 01:41:38] code 404, message File not found
+10.12.22.248 - - [20/Sep/2025 01:41:38] "GET /favicon.ico HTTP/1.1" 404 -
+10.12.22.248 - - [20/Sep/2025 03:58:07] "GET / HTTP/1.1" 200 -
+10.12.22.248 - - [20/Sep/2025 03:58:07] "GET /script.js HTTP/1.1" 200 -
+10.12.22.248 - - [20/Sep/2025 03:58:08] "GET /Seed_AI_FAQ_public_FINAL.csv HTTP/1.1" 200 -
+10.12.22.248 - - [20/Sep/2025 03:58:09] code 404, message File not found
+10.12.22.248 - - [20/Sep/2025 03:58:09] "GET /favicon.ico HTTP/1.1" 404 -
+10.12.22.248 - - [20/Sep/2025 04:00:36] "GET / HTTP/1.1" 200 -
+10.12.22.248 - - [20/Sep/2025 04:00:36] "GET /script.js HTTP/1.1" 200 -
+10.12.22.248 - - [20/Sep/2025 04:00:37] "GET /Seed_AI_FAQ_public_FINAL.csv HTTP/1.1" 200 -
+10.12.22.248 - - [20/Sep/2025 04:00:37] code 404, message File not found
+10.12.22.248 - - [20/Sep/2025 04:00:37] "GET /favicon.ico HTTP/1.1" 404 -

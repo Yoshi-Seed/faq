@@ -32,7 +32,7 @@ class FAQManager {
     }
 
     async loadCSVData() {
-        const response = await fetch('Seed_AI_FAQ_public_dedup_plus_IS.csv');
+        const response = await fetch('Seed_AI_FAQ_public_FINAL.csv');
         const csvText = await response.text();
         this.parseCSV(csvText);
     }
@@ -95,15 +95,49 @@ class FAQManager {
     }
 
     populateFilters() {
-        // Populate category filter
+        // Populate category filter with hierarchical grouping
         const categorySelect = document.getElementById('categoryFilter');
         const sortedCategories = Array.from(this.categories).sort();
+        
+        // Group categories by type
+        const categoryGroups = {
+            'core': [],
+            'case_studies': [],
+            'employee_requests': [],
+            'other': []
+        };
+        
         sortedCategories.forEach(category => {
-            const option = document.createElement('option');
-            option.value = category;
-            option.textContent = category;
-            categorySelect.appendChild(option);
+            if (category.includes('社内事例 >')) {
+                categoryGroups.case_studies.push(category);
+            } else if (category.includes('社員からの要望 >')) {
+                categoryGroups.employee_requests.push(category);
+            } else if (category.includes('>')) {
+                categoryGroups.other.push(category);
+            } else {
+                categoryGroups.core.push(category);
+            }
         });
+        
+        // Add grouped options
+        const addCategoryGroup = (groupName, categories) => {
+            if (categories.length === 0) return;
+            
+            const optgroup = document.createElement('optgroup');
+            optgroup.label = groupName;
+            categories.forEach(category => {
+                const option = document.createElement('option');
+                option.value = category;
+                option.textContent = category.replace(' > ', ' › ');
+                optgroup.appendChild(option);
+            });
+            categorySelect.appendChild(optgroup);
+        };
+        
+        addCategoryGroup('基本カテゴリ', categoryGroups.core);
+        addCategoryGroup('社内事例', categoryGroups.case_studies);
+        addCategoryGroup('社員からの要望', categoryGroups.employee_requests);
+        addCategoryGroup('その他', categoryGroups.other);
 
         // Populate tag filter
         const tagSelect = document.getElementById('tagFilter');
@@ -204,12 +238,14 @@ class FAQManager {
         const levelText = this.getLevelText(faq.level);
         const highlightedQuestion = this.highlightSearchTerms(faq.question);
         const highlightedAnswer = this.highlightSearchTerms(faq.answer);
+        const categoryBadgeClass = this.getCategoryBadgeClass(faq.category);
+        const displayCategory = faq.category.replace(' > ', ' › ');
         
         faqItem.innerHTML = `
             <div class="faq-header" onclick="this.parentElement.classList.toggle('expanded')">
                 <div class="faq-question-container">
                     <div class="faq-meta">
-                        <span class="category-badge">${faq.category}</span>
+                        <span class="category-badge ${categoryBadgeClass}" title="${faq.category}">${displayCategory}</span>
                         <span class="level-badge">${levelText}</span>
                     </div>
                     <div class="faq-question">${highlightedQuestion}</div>
@@ -227,6 +263,17 @@ class FAQManager {
         `;
         
         return faqItem;
+    }
+
+    getCategoryBadgeClass(category) {
+        if (category.includes('社内事例 >')) {
+            return 'case-study';
+        } else if (category.includes('社員からの要望 >')) {
+            return 'employee-request';
+        } else if (category.includes('>')) {
+            return 'hierarchical';
+        }
+        return '';
     }
 
     getLevelClass(level) {
@@ -263,6 +310,8 @@ class FAQManager {
 
     updateStats() {
         document.getElementById('displayedQuestions').textContent = this.filteredData.length;
+        document.getElementById('totalQuestions').textContent = this.faqData.length;
+        document.getElementById('categoriesCount').textContent = this.categories.size;
         
         // Update level distribution
         const levelCounts = this.filteredData.reduce((acc, faq) => {
@@ -273,7 +322,14 @@ class FAQManager {
         const topLevel = Object.keys(levelCounts).reduce((a, b) => 
             levelCounts[a] > levelCounts[b] ? a : b, '');
         
-        document.getElementById('averageLevel').textContent = topLevel || '-';
+        // Show percentage if filtering is active
+        let levelDisplay = topLevel || '-';
+        if (this.filteredData.length !== this.faqData.length && this.filteredData.length > 0) {
+            const percentage = Math.round((levelCounts[topLevel] / this.filteredData.length) * 100);
+            levelDisplay = `${topLevel} (${percentage}%)`;
+        }
+        
+        document.getElementById('averageLevel').textContent = levelDisplay;
     }
 
     showLoading(show) {

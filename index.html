@@ -254,6 +254,23 @@
             border-radius: 20px;
             font-size: 0.8rem;
             font-weight: 500;
+            max-width: 300px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            display: inline-block;
+        }
+
+        .category-badge.hierarchical {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        }
+
+        .category-badge.case-study {
+            background: linear-gradient(135deg, var(--success-color) 0%, #2ecc71 100%);
+        }
+
+        .category-badge.employee-request {
+            background: linear-gradient(135deg, var(--warning-color) 0%, #e67e22 100%);
         }
 
         .level-badge {
@@ -486,15 +503,15 @@
 
         <section class="stats-section">
             <div class="stat-card">
-                <span class="stat-number" id="totalQuestions">171</span>
+                <span class="stat-number" id="totalQuestions">197</span>
                 <div class="stat-label">総質問数</div>
             </div>
             <div class="stat-card">
-                <span class="stat-number" id="displayedQuestions">171</span>
+                <span class="stat-number" id="displayedQuestions">197</span>
                 <div class="stat-label">表示中の質問数</div>
             </div>
             <div class="stat-card">
-                <span class="stat-number" id="categoriesCount">17</span>
+                <span class="stat-number" id="categoriesCount">40</span>
                 <div class="stat-label">カテゴリ数</div>
             </div>
             <div class="stat-card">
