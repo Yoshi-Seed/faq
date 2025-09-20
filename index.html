@@ -8,10 +8,10 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #3498db;
-            --accent-color: #e74c3c;
-            --success-color: #27ae60;
+            --primary-color: #8B4513;
+            --secondary-color: #A0522D;
+            --accent-color: #D2691E;
+            --success-color: #228B22;
             --warning-color: #f39c12;
             --bg-color: #f8f9fa;
             --text-color: #333333;
@@ -32,19 +32,38 @@
             font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             line-height: 1.6;
             color: var(--text-color);
-            background: linear-gradient(135deg, var(--bg-color) 0%, #ffffff 100%);
+            background: linear-gradient(135deg, #8B4513 0%, #D2B48C 50%, #8B4513 100%);
             min-height: 100vh;
         }
 
         /* Header */
         .header {
-            background: linear-gradient(135deg, var(--primary-color) 0%, #34495e 100%);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             color: white;
-            padding: 2rem 0;
+            padding: 3rem 0;
             text-align: center;
             box-shadow: var(--card-shadow);
             position: relative;
             overflow: hidden;
+        }
+        
+        /* Logo in header */
+        .header-logo {
+            position: absolute;
+            top: 1rem;
+            left: 2rem;
+            z-index: 2;
+            height: 60px;
+            width: auto;
+            background: white;
+            padding: 8px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        /* Header content with better spacing */
+        .header-content {
+            margin-top: 1rem;
         }
 
         .header::before {
@@ -92,12 +111,20 @@
         /* Search and Filter Section */
         .search-section {
             background: white;
-            margin: -3rem 2rem 2rem;
+            margin: -2rem 2rem 2rem;
             border-radius: 15px;
             box-shadow: var(--card-shadow);
             padding: 2rem;
             position: relative;
             z-index: 10;
+        }
+        
+        @media (max-width: 480px) {
+            .search-section {
+                margin: -1.5rem 1rem 1rem;
+                padding: 1.2rem;
+                border-radius: 12px;
+            }
         }
 
         .search-container {
@@ -121,8 +148,8 @@
         }
 
         .search-input:focus {
-            border-color: var(--secondary-color);
-            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.1);
         }
 
         .search-icon {
@@ -138,6 +165,47 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .filters {
+                grid-template-columns: 1fr;
+                gap: 0.8rem;
+            }
+            
+            .filter-select {
+                font-size: 0.9rem;
+                padding: 0.7rem 0.8rem;
+                width: 100%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+            
+            .filter-select option {
+                font-size: 0.85rem;
+                padding: 0.3rem 0.5rem;
+                white-space: normal;
+                word-wrap: break-word;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .filter-select {
+                font-size: 0.85rem;
+                padding: 0.6rem 0.7rem;
+                max-width: 100%;
+            }
+            
+            .filter-label {
+                font-size: 0.9rem;
+                font-weight: 600;
+            }
+            
+            .search-input {
+                font-size: 0.9rem;
+                padding: 0.8rem 1rem 0.8rem 3rem;
+            }
         }
 
         .filter-group {
@@ -162,7 +230,7 @@
         }
 
         .filter-select:focus {
-            border-color: var(--secondary-color);
+            border-color: var(--primary-color);
             outline: none;
         }
 
@@ -191,7 +259,7 @@
         .stat-number {
             font-size: 2.5rem;
             font-weight: 700;
-            color: var(--secondary-color);
+            color: var(--primary-color);
             display: block;
         }
 
@@ -225,7 +293,7 @@
         .faq-item.level-beginner { border-left-color: var(--success-color); }
         .faq-item.level-intermediate { border-left-color: var(--warning-color); }
         .faq-item.level-advanced { border-left-color: var(--accent-color); }
-        .faq-item.level-all { border-left-color: var(--secondary-color); }
+        .faq-item.level-all { border-left-color: var(--primary-color); }
 
         .faq-header {
             padding: 1.5rem;
@@ -267,7 +335,7 @@
         .level-beginner .level-badge { background: var(--success-color); }
         .level-intermediate .level-badge { background: var(--warning-color); }
         .level-advanced .level-badge { background: var(--accent-color); }
-        .level-all .level-badge { background: var(--secondary-color); }
+        .level-all .level-badge { background: var(--primary-color); }
 
         .faq-question {
             font-size: 1.1rem;
@@ -278,7 +346,7 @@
         }
 
         .faq-toggle {
-            color: var(--secondary-color);
+            color: var(--primary-color);
             font-size: 1.5rem;
             transition: var(--transition);
             flex-shrink: 0;
@@ -318,7 +386,7 @@
         .tag {
             background: #f8f9fa;
             border: 1px solid var(--border-color);
-            color: var(--secondary-color);
+            color: var(--primary-color);
             padding: 0.2rem 0.6rem;
             border-radius: 15px;
             font-size: 0.75rem;
@@ -386,6 +454,13 @@
             .header h1 {
                 font-size: 2rem;
             }
+            
+            .header-logo {
+                height: 40px;
+                top: 0.5rem;
+                left: 1rem;
+                padding: 6px;
+            }
 
             .container {
                 padding: 0 1rem;
@@ -411,6 +486,12 @@
 
             .filters {
                 grid-template-columns: 1fr;
+                gap: 0.8rem;
+            }
+            
+            .filter-select {
+                font-size: 0.9rem;
+                padding: 0.7rem 0.8rem;
             }
         }
 
@@ -439,10 +520,11 @@
 </head>
 <body>
     <header class="header">
+        <img src="seedplanning_logo_192.png" alt="シード・プランニング" class="header-logo">
         <div class="container">
             <div class="header-content">
-                <h1><i class="fas fa-robot"></i> AI活用 FAQ</h1>
-                <p>シード・プランニング社員向け 生成AI導入・活用ガイド</p>
+                <h1>シード・プランニング | AI活用 FAQ</h1>
+                <p>社員向け 生成AI導入・活用ガイド</p>
             </div>
         </div>
     </header>
@@ -486,15 +568,15 @@
 
         <section class="stats-section">
             <div class="stat-card">
-                <span class="stat-number" id="totalQuestions">171</span>
+                <span class="stat-number" id="totalQuestions">192</span>
                 <div class="stat-label">総質問数</div>
             </div>
             <div class="stat-card">
-                <span class="stat-number" id="displayedQuestions">171</span>
+                <span class="stat-number" id="displayedQuestions">192</span>
                 <div class="stat-label">表示中の質問数</div>
             </div>
             <div class="stat-card">
-                <span class="stat-number" id="categoriesCount">17</span>
+                <span class="stat-number" id="categoriesCount">36</span>
                 <div class="stat-label">カテゴリ数</div>
             </div>
             <div class="stat-card">
@@ -519,7 +601,7 @@
 
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2024 Seed Planning, Inc. All rights reserved. | AI活用推進チーム</p>
+            <p>&copy; 2025 Seed Planning, Inc. All rights reserved. | AI導入会議</p>
         </div>
     </footer>
 
