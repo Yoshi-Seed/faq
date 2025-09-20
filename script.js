@@ -39,22 +39,28 @@ class FAQManager {
 
     parseCSV(csvText) {
         const lines = csvText.trim().split('\n');
-        const headers = lines[0].split(',').map(header => header.trim());
+        console.log(`CSVパース開始: ${lines.length}行`);
         
         for (let i = 1; i < lines.length; i++) {
-            const row = this.parseCSVLine(lines[i]);
-            if (row.length >= 5) {
-                const faq = {
-                    id: i,
-                    category: row[0].trim(),
-                    level: row[1].trim(),
-                    question: row[2].trim(),
-                    answer: row[3].trim(),
-                    tags: this.parseTags(row[4].trim())
-                };
-                this.faqData.push(faq);
+            try {
+                const row = this.parseCSVLine(lines[i]);
+                if (row.length >= 5 && row[0] && row[2]) { // カテゴリと質問が存在する場合のみ
+                    const faq = {
+                        id: i,
+                        category: row[0],
+                        level: row[1],
+                        question: row[2],
+                        answer: row[3],
+                        tags: this.parseTags(row[4])
+                    };
+                    this.faqData.push(faq);
+                }
+            } catch (error) {
+                console.warn(`行 ${i} のパースエラー:`, error);
             }
         }
+        
+        console.log(`FAQデータ読み込み完了: ${this.faqData.length}項目`);
         this.filteredData = [...this.faqData];
     }
 
@@ -65,18 +71,26 @@ class FAQManager {
         
         for (let i = 0; i < line.length; i++) {
             const char = line[i];
+            const nextChar = line[i + 1];
             
             if (char === '"') {
-                inQuotes = !inQuotes;
+                if (inQuotes && nextChar === '"') {
+                    // エスケープされた引用符
+                    current += '"';
+                    i++; // 次の文字をスキップ
+                } else {
+                    // 引用符の開始または終了
+                    inQuotes = !inQuotes;
+                }
             } else if (char === ',' && !inQuotes) {
-                result.push(current);
+                result.push(current.trim());
                 current = '';
             } else {
                 current += char;
             }
         }
         
-        result.push(current);
+        result.push(current.trim());
         return result;
     }
 
@@ -185,14 +199,29 @@ class FAQManager {
         this.showLoading(true);
         
         setTimeout(() => {
+            // デバッグ用ログ
+            if (this.currentFilters.search) {
+                console.log('検索クエリ:', this.currentFilters.search);
+                console.log('総FAQ数:', this.faqData.length);
+            }
+            
             this.filteredData = this.faqData.filter(faq => {
                 const matchesSearch = this.matchesSearch(faq);
                 const matchesCategory = !this.currentFilters.category || faq.category === this.currentFilters.category;
                 const matchesLevel = !this.currentFilters.level || faq.level === this.currentFilters.level;
                 const matchesTag = !this.currentFilters.tag || faq.tags.includes(this.currentFilters.tag);
                 
-                return matchesSearch && matchesCategory && matchesLevel && matchesTag;
+                const matches = matchesSearch && matchesCategory && matchesLevel && matchesTag;
+                
+                // 検索結果のデバッグログ
+                if (this.currentFilters.search && matches) {
+                    console.log('マッチ:', faq.question.substring(0, 50) + '...');
+                }
+                
+                return matches;
             });
+            
+            console.log('フィルター結果:', this.filteredData.length, '件');
             
             this.renderFAQs();
             this.updateStats();
@@ -203,10 +232,34 @@ class FAQManager {
     matchesSearch(faq) {
         if (!this.currentFilters.search) return true;
         
-        const searchTerms = this.currentFilters.search.split(' ').filter(term => term.length > 0);
-        const searchableText = (faq.question + ' ' + faq.answer + ' ' + faq.category + ' ' + faq.tags.join(' ')).toLowerCase();
+        const searchQuery = this.currentFilters.search.toLowerCase().trim();
+        if (!searchQuery) return true;
         
-        return searchTerms.every(term => searchableText.includes(term));
+        // 検索対象となる全テキストを結合（タグの#記号を除去）
+        const searchableText = [
+            faq.question || '',
+            faq.answer || '',
+            faq.category || '',
+            ...faq.tags.map(tag => tag.replace('#', ''))
+        ].join(' ').toLowerCase();
+        
+        // スペース区切りで複数キーワード検索をサポート
+        const searchTerms = searchQuery.split(/\s+/).filter(term => term.length > 0);
+        
+        // すべての検索語が含まれているかチェック
+        const matches = searchTerms.every(term => {
+            return searchableText.includes(term);
+        });
+        
+        // デバッグ用ログ（最初の数件のみ）
+        if (this.currentFilters.search && matches && this.filteredData.length < 5) {
+            console.log('マッチした項目:', {
+                question: faq.question?.substring(0, 50) + '...',
+                searchableText: searchableText.substring(0, 100) + '...'
+            });
+        }
+        
+        return matches;
     }
 
     renderFAQs() {

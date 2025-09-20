@@ -82,3 +82,15 @@
 10.12.22.248 - - [20/Sep/2025 04:06:32] "GET / HTTP/1.1" 200 -
 10.12.22.248 - - [20/Sep/2025 04:06:32] "GET /script.js HTTP/1.1" 200 -
 10.12.22.248 - - [20/Sep/2025 04:06:32] "GET /Seed_AI_FAQ_public_FINAL.csv HTTP/1.1" 200 -
+10.12.22.248 - - [20/Sep/2025 04:10:11] "GET / HTTP/1.1" 200 -
+10.12.22.248 - - [20/Sep/2025 04:10:11] "GET /script.js HTTP/1.1" 304 -
+10.12.22.248 - - [20/Sep/2025 04:10:11] "GET /Seed_AI_FAQ_public_FINAL.csv HTTP/1.1" 304 -
+10.12.22.248 - - [20/Sep/2025 04:14:42] "GET / HTTP/1.1" 200 -
+10.12.22.248 - - [20/Sep/2025 04:14:42] "GET /script.js HTTP/1.1" 200 -
+10.12.22.248 - - [20/Sep/2025 04:14:42] "GET /Seed_AI_FAQ_public_FINAL.csv HTTP/1.1" 200 -
+10.12.22.248 - - [20/Sep/2025 04:14:43] code 404, message File not found
+10.12.22.248 - - [20/Sep/2025 04:14:43] "GET /favicon.ico HTTP/1.1" 404 -
+10.12.22.248 - - [20/Sep/2025 04:15:14] "GET /test_search.html HTTP/1.1" 200 -
+10.12.22.248 - - [20/Sep/2025 04:15:14] "GET /Seed_AI_FAQ_public_FINAL.csv HTTP/1.1" 200 -
+10.12.22.248 - - [20/Sep/2025 04:15:14] code 404, message File not found
+10.12.22.248 - - [20/Sep/2025 04:15:14] "GET /favicon.ico HTTP/1.1" 404 -

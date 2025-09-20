@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>検索機能テスト</title>
+</head>
+<body>
+    <h1>検索機能テスト</h1>
+    <div id="test-results"></div>
+    
+    <script>
+        // 検索機能のテスト
+        async function testSearchFunction() {
+            const testResults = document.getElementById('test-results');
+            
+            try {
+                // CSVデータを読み込み
+                const response = await fetch('Seed_AI_FAQ_public_FINAL.csv');
+                const csvText = await response.text();
+                
+                // 簡単なCSVパース
+                const lines = csvText.trim().split('\n');
+                const faqData = [];
+                
+                for (let i = 1; i < lines.length; i++) {
+                    const columns = lines[i].split(',');
+                    if (columns.length >= 5) {
+                        faqData.push({
+                            category: columns[0],
+                            level: columns[1], 
+                            question: columns[2],
+                            answer: columns[3],
+                            tags: columns[4].split('#').filter(t => t.trim())
+                        });
+                    }
+                }
+                
+                testResults.innerHTML += `<p>✅ CSV読み込み成功: ${faqData.length}項目</p>`;
+                
+                // 検索テスト
+                const searchTests = [
+                    'ChatGPT',
+                    'プロンプト', 
+                    'セキュリティ',
+                    'AI活用',
+                    '生成AI'
+                ];
+                
+                searchTests.forEach(searchTerm => {
+                    const results = faqData.filter(faq => {
+                        const searchableText = [
+                            faq.question,
+                            faq.answer,
+                            faq.category,
+                            ...faq.tags
+                        ].join(' ').toLowerCase();
+                        
+                        return searchableText.includes(searchTerm.toLowerCase());
+                    });
+                    
+                    testResults.innerHTML += `<p>🔍 "${searchTerm}": ${results.length}件の結果</p>`;
+                    
+                    // 最初の結果を表示
+                    if (results.length > 0) {
+                        testResults.innerHTML += `<p style="margin-left: 20px; font-size: 0.9em; color: #666;">例: ${results[0].question.substring(0, 80)}...</p>`;
+                    }
+                });
+                
+            } catch (error) {
+                testResults.innerHTML += `<p>❌ エラー: ${error.message}</p>`;
+            }
+        }
+        
+        // ページ読み込み時にテスト実行
+        window.addEventListener('load', testSearchFunction);
+    </script>
+</body>
+</html>
