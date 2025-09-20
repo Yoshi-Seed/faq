@@ -39,22 +39,27 @@ class FAQManager {
     }
 
     parseJSON(jsonData) {
+        this.faqData = []; // Clear existing data
+        
         for (let i = 0; i < jsonData.length; i++) {
             const item = jsonData[i];
+            
+            // Ensure all fields are properly extracted
             const faq = {
                 id: i + 1,
-                category: item['#カテゴリー']?.trim() || '',
-                level: item['#レベル']?.trim() || '',
-                question: item['#Q']?.trim() || '',
-                answer: item['#A']?.trim() || '',
-                tags: this.parseTags(item['#タグ']?.trim() || '')
+                category: (item['#カテゴリー'] || '').toString().trim(),
+                level: (item['#レベル'] || '').toString().trim(),
+                question: (item['#Q'] || '').toString().trim(),
+                answer: (item['#A'] || '').toString().trim(),
+                tags: this.parseTags((item['#タグ'] || '').toString().trim())
             };
             
-            // Only add if required fields are present
-            if (faq.question && faq.answer) {
+            // Only add if required fields are present and non-empty
+            if (faq.question && faq.answer && faq.question.length > 0 && faq.answer.length > 0) {
                 this.faqData.push(faq);
             }
         }
+        
         this.filteredData = [...this.faqData];
     }
 
@@ -149,8 +154,16 @@ class FAQManager {
     matchesSearch(faq) {
         if (!this.currentFilters.search) return true;
         
-        const searchTerms = this.currentFilters.search.split(' ').filter(term => term.length > 0);
-        const searchableText = (faq.question + ' ' + faq.answer + ' ' + faq.category + ' ' + faq.tags.join(' ')).toLowerCase();
+        const searchText = this.currentFilters.search.toLowerCase().trim();
+        if (!searchText) return true;
+        
+        const searchTerms = searchText.split(/\s+/).filter(term => term.length > 0);
+        const searchableText = (
+            (faq.question || '') + ' ' + 
+            (faq.answer || '') + ' ' + 
+            (faq.category || '') + ' ' + 
+            (faq.tags || []).join(' ')
+        ).toLowerCase();
         
         return searchTerms.every(term => searchableText.includes(term));
     }
