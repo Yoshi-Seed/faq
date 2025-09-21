@@ -33,34 +33,51 @@ class FAQManager {
     }
 
     async loadCSVData() {
-        // Load JSON data instead of CSV
-        const response = await fetch('faq_data.json');
-        const jsonData = await response.json();
-        this.parseJSON(jsonData);
+        try {
+            console.log('Loading JSON data...');
+            // Load JSON data instead of CSV
+            const response = await fetch('faq_data.json');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const jsonData = await response.json();
+            console.log('JSON data loaded, items count:', jsonData.length);
+            this.parseJSON(jsonData);
+        } catch (error) {
+            console.error('Error loading JSON data:', error);
+            throw error;
+        }
     }
 
     parseJSON(jsonData) {
         this.faqData = []; // Clear existing data
+        console.log('Parsing JSON data...');
         
         for (let i = 0; i < jsonData.length; i++) {
             const item = jsonData[i];
             
-            // Ensure all fields are properly extracted
-            const faq = {
-                id: i + 1,
-                category: (item['#カテゴリー'] || '').toString().trim(),
-                level: (item['#レベル'] || '').toString().trim(),
-                question: (item['#Q'] || '').toString().trim(),
-                answer: (item['#A'] || '').toString().trim(),
-                tags: this.parseTags((item['#タグ'] || '').toString().trim())
-            };
-            
-            // Only add if required fields are present and non-empty
-            if (faq.question && faq.answer && faq.question.length > 0 && faq.answer.length > 0) {
-                this.faqData.push(faq);
+            try {
+                // Ensure all fields are properly extracted
+                const faq = {
+                    id: i + 1,
+                    category: (item['#カテゴリー'] || '').toString().trim(),
+                    level: (item['#レベル'] || '').toString().trim(),
+                    question: (item['#Q'] || '').toString().trim(),
+                    answer: (item['#A'] || '').toString().trim(),
+                    tags: this.parseTags((item['#タグ'] || '').toString().trim())
+                };
+                
+                // Only add if required fields are present and non-empty
+                if (faq.question && faq.answer && faq.question.length > 0 && faq.answer.length > 0) {
+                    this.faqData.push(faq);
+                }
+            } catch (error) {
+                console.error(`Error parsing item ${i}:`, error, item);
+                continue;
             }
         }
         
+        console.log('Parsed FAQ data, total items:', this.faqData.length);
         this.filteredData = [...this.faqData];
     }
 
@@ -256,6 +273,12 @@ class FAQManager {
     }
 
     updateStats() {
+        console.log('Updating stats:', {
+            faqDataLength: this.faqData.length,
+            filteredDataLength: this.filteredData.length,
+            categoriesSize: this.categories.size
+        });
+        
         document.getElementById('displayedQuestions').textContent = this.filteredData.length;
         document.getElementById('totalQuestions').textContent = this.faqData.length;
         document.getElementById('categoriesCount').textContent = this.categories.size;
@@ -270,6 +293,8 @@ class FAQManager {
             levelCounts[a] > levelCounts[b] ? a : b, '');
         
         document.getElementById('averageLevel').textContent = topLevel || '-';
+        
+        console.log('Stats updated successfully');
     }
 
     showLoading(show) {
@@ -298,64 +323,90 @@ class FAQManager {
 
     // Daily FAQ functionality
     loadDailyFAQ() {
-        if (this.faqData.length === 0) return;
-
-        // Get today's date as seed for random selection
-        const today = new Date();
-        const dateString = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+        console.log('Loading Daily FAQ, data length:', this.faqData.length);
         
-        // Simple hash function to create consistent daily selection
-        let hash = 0;
-        for (let i = 0; i < dateString.length; i++) {
-            const char = dateString.charCodeAt(i);
-            hash = ((hash << 5) - hash) + char;
-            hash = hash & hash; // Convert to 32bit integer
+        if (this.faqData.length === 0) {
+            console.warn('No FAQ data available for Daily FAQ');
+            return;
         }
-        
-        // Use absolute value and modulo to get consistent index
-        const randomIndex = Math.abs(hash) % this.faqData.length;
-        const dailyFAQ = this.faqData[randomIndex];
 
-        this.renderDailyFAQ(dailyFAQ);
+        try {
+            // Get today's date as seed for random selection
+            const today = new Date();
+            const dateString = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+            
+            // Simple hash function to create consistent daily selection
+            let hash = 0;
+            for (let i = 0; i < dateString.length; i++) {
+                const char = dateString.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash; // Convert to 32bit integer
+            }
+            
+            // Use absolute value and modulo to get consistent index
+            const randomIndex = Math.abs(hash) % this.faqData.length;
+            const dailyFAQ = this.faqData[randomIndex];
+
+            console.log('Daily FAQ selected:', randomIndex, dailyFAQ);
+            this.renderDailyFAQ(dailyFAQ);
+        } catch (error) {
+            console.error('Error loading Daily FAQ:', error);
+        }
     }
 
     renderDailyFAQ(faq) {
-        const categoryElement = document.getElementById('dailyFaqCategory');
-        const levelElement = document.getElementById('dailyFaqLevel');
-        const questionElement = document.getElementById('dailyFaqQuestion');
-        const answerElement = document.getElementById('dailyFaqAnswer');
-        const tagsContainer = document.getElementById('dailyFaqTagsContainer');
-        const tagsElement = document.getElementById('dailyFaqTags');
-
-        // Update content
-        categoryElement.textContent = faq.category || 'カテゴリ不明';
-        levelElement.textContent = this.getLevelDisplayName(faq.level);
-        
-        // Remove question number prefix for cleaner display
-        const cleanQuestion = faq.question.replace(/^\d+\.\s*/, '');
-        questionElement.textContent = cleanQuestion;
-        answerElement.textContent = faq.answer;
-
-        // Handle tags
-        if (faq.tags && faq.tags.length > 0) {
-            tagsElement.innerHTML = faq.tags.map(tag => 
-                `<span class="daily-faq-tag">${tag}</span>`
-            ).join('');
-            tagsContainer.style.display = 'block';
-        } else {
-            tagsContainer.style.display = 'none';
+        if (!faq) {
+            console.error('No FAQ data provided to renderDailyFAQ');
+            return;
         }
 
-        // Add subtle animation
-        const card = document.getElementById('dailyFaqCard');
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(10px)';
-        
-        setTimeout(() => {
-            card.style.transition = 'all 0.5s ease-out';
-            card.style.opacity = '1';
-            card.style.transform = 'translateY(0)';
-        }, 100);
+        try {
+            const categoryElement = document.getElementById('dailyFaqCategory');
+            const levelElement = document.getElementById('dailyFaqLevel');
+            const questionElement = document.getElementById('dailyFaqQuestion');
+            const answerElement = document.getElementById('dailyFaqAnswer');
+            const tagsContainer = document.getElementById('dailyFaqTagsContainer');
+            const tagsElement = document.getElementById('dailyFaqTags');
+
+            if (!categoryElement || !levelElement || !questionElement || !answerElement) {
+                console.error('Daily FAQ DOM elements not found');
+                return;
+            }
+
+            // Update content
+            categoryElement.textContent = faq.category || 'カテゴリ不明';
+            levelElement.textContent = this.getLevelDisplayName(faq.level);
+            
+            // Remove question number prefix for cleaner display
+            const cleanQuestion = (faq.question || '').replace(/^\d+\.\s*/, '');
+            questionElement.textContent = cleanQuestion;
+            answerElement.textContent = faq.answer || '';
+
+            // Handle tags
+            if (faq.tags && faq.tags.length > 0 && tagsElement && tagsContainer) {
+                tagsElement.innerHTML = faq.tags.map(tag => 
+                    `<span class="daily-faq-tag">${tag}</span>`
+                ).join('');
+                tagsContainer.style.display = 'block';
+            } else if (tagsContainer) {
+                tagsContainer.style.display = 'none';
+            }
+
+            // Add subtle animation
+            const card = document.getElementById('dailyFaqCard');
+            if (card) {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(10px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'all 0.5s ease-out';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 100);
+            }
+        } catch (error) {
+            console.error('Error rendering Daily FAQ:', error);
+        }
     }
 
     getLevelDisplayName(level) {
