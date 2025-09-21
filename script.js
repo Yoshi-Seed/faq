@@ -24,6 +24,7 @@ class FAQManager {
             this.populateFilters();
             this.renderFAQs();
             this.updateStats();
+            this.loadDailyFAQ();
             this.showLoading(false);
         } catch (error) {
             console.error('Error initializing FAQ Manager:', error);
@@ -293,6 +294,78 @@ class FAQManager {
             </div>
         `;
         this.showLoading(false);
+    }
+
+    // Daily FAQ functionality
+    loadDailyFAQ() {
+        if (this.faqData.length === 0) return;
+
+        // Get today's date as seed for random selection
+        const today = new Date();
+        const dateString = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+        
+        // Simple hash function to create consistent daily selection
+        let hash = 0;
+        for (let i = 0; i < dateString.length; i++) {
+            const char = dateString.charCodeAt(i);
+            hash = ((hash << 5) - hash) + char;
+            hash = hash & hash; // Convert to 32bit integer
+        }
+        
+        // Use absolute value and modulo to get consistent index
+        const randomIndex = Math.abs(hash) % this.faqData.length;
+        const dailyFAQ = this.faqData[randomIndex];
+
+        this.renderDailyFAQ(dailyFAQ);
+    }
+
+    renderDailyFAQ(faq) {
+        const categoryElement = document.getElementById('dailyFaqCategory');
+        const levelElement = document.getElementById('dailyFaqLevel');
+        const questionElement = document.getElementById('dailyFaqQuestion');
+        const answerElement = document.getElementById('dailyFaqAnswer');
+        const tagsContainer = document.getElementById('dailyFaqTagsContainer');
+        const tagsElement = document.getElementById('dailyFaqTags');
+
+        // Update content
+        categoryElement.textContent = faq.category || 'カテゴリ不明';
+        levelElement.textContent = this.getLevelDisplayName(faq.level);
+        
+        // Remove question number prefix for cleaner display
+        const cleanQuestion = faq.question.replace(/^\d+\.\s*/, '');
+        questionElement.textContent = cleanQuestion;
+        answerElement.textContent = faq.answer;
+
+        // Handle tags
+        if (faq.tags && faq.tags.length > 0) {
+            tagsElement.innerHTML = faq.tags.map(tag => 
+                `<span class="daily-faq-tag">${tag}</span>`
+            ).join('');
+            tagsContainer.style.display = 'block';
+        } else {
+            tagsContainer.style.display = 'none';
+        }
+
+        // Add subtle animation
+        const card = document.getElementById('dailyFaqCard');
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(10px)';
+        
+        setTimeout(() => {
+            card.style.transition = 'all 0.5s ease-out';
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+        }, 100);
+    }
+
+    getLevelDisplayName(level) {
+        const levelMap = {
+            '全レベル共通': '全レベル',
+            '初心者': '初心者',
+            '中級者': '中級者', 
+            '上級者': '上級者'
+        };
+        return levelMap[level] || level || '-';
     }
 }
 
