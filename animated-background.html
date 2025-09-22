@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>シード・プランニング AI活用 FAQ</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="192x192" href="seedplanning_logo_192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="seedplanning_logo_192.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="seedplanning_logo_192.png">
+    <link rel="shortcut icon" href="seedplanning_logo_192.png">
+    
+    <!-- PWA Meta Tags -->
+    <link rel="apple-touch-icon" href="seedplanning_logo_192.png">
+    <meta name="theme-color" content="#8B4513">
+    <meta name="description" content="シード・プランニング社員向け生成AI導入・活用FAQ - 207問のQ&Aで業務効率化をサポート">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #8B4513;
+            --secondary-color: #A0522D;
+            --accent-color: #D2691E;
+            --success-color: #228B22;
+            --warning-color: #f39c12;
+            --bg-color: #f8f9fa;
+            --text-color: #333333;
+            --text-light: #6c757d;
+            --border-color: #dee2e6;
+            --card-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            --hover-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: var(--bg-color);
+            min-height: 100vh;
+        }
+
+        /* Animated Background Canvases for Header and Footer only */
+        #header-particle-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: linear-gradient(135deg, #8C5E3B 0%, #A3754A 30%, #B98C61 70%, #D2A288 100%);
+        }
+
+        #footer-particle-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: linear-gradient(135deg, #8C5E3B 0%, #A3754A 30%, #B98C61 70%, #D2A288 100%);
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, rgba(139, 69, 19, 0.9) 0%, rgba(210, 180, 140, 0.8) 50%, rgba(139, 69, 19, 0.9) 100%);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            box-shadow: var(--card-shadow);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        /* Logo in header */
+        .header-logo {
+            position: absolute;
+            top: 1rem;
+            left: 2rem;
+            z-index: 2;
+            height: 60px;
+            width: auto;
+            background: white;
+            padding: 8px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        /* Header content with better spacing */
+        .header-content {
+            margin-top: 1rem;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 100%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Search and Filter Section */
+        .search-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            margin: -2rem 2rem 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 2rem;
+            position: relative;
+            z-index: 10;
+        }
+        
+        @media (max-width: 480px) {
+            .search-section {
+                margin: -1.5rem 1rem 1rem;
+                padding: 1.2rem;
+                border-radius: 12px;
+            }
+        }
+
+        .search-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .search-input-wrapper {
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3.5rem;
+            border: 2px solid rgba(222, 226, 230, 0.6);
+            border-radius: 50px;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            outline: none;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        .search-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            font-size: 1.2rem;
+        }
+
+        .filters {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .filters {
+                grid-template-columns: 1fr;
+                gap: 0.8rem;
+            }
+            
+            .filter-select {
+                font-size: 0.9rem;
+                padding: 0.7rem 0.8rem;
+                width: 100%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+            
+            .filter-select option {
+                font-size: 0.85rem;
+                padding: 0.3rem 0.5rem;
+                white-space: normal;
+                word-wrap: break-word;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .filter-select {
+                font-size: 0.85rem;
+                padding: 0.6rem 0.7rem;
+                max-width: 100%;
+            }
+            
+            .filter-label {
+                font-size: 0.9rem;
+                font-weight: 600;
+            }
+            
+            .search-input {
+                font-size: 0.9rem;
+                padding: 0.8rem 1rem 0.8rem 3rem;
+            }
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filter-label {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .filter-select {
+            padding: 0.8rem 1rem;
+            border: 2px solid rgba(222, 226, 230, 0.6);
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: var(--transition);
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            cursor: pointer;
+        }
+
+        .filter-select:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+
+        /* Daily FAQ Section - Compact */
+        .daily-faq-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #fff 50%, #f8f9fa 100%);
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .daily-faq-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color), var(--secondary-color));
+        }
+
+        .daily-faq-header {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .daily-faq-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 8px rgba(139, 69, 19, 0.2);
+        }
+
+        .daily-faq-title {
+            flex: 1;
+        }
+
+        .daily-faq-title h3 {
+            color: var(--primary-color);
+            font-size: 1rem;
+            font-weight: 600;
+            margin: 0;
+            line-height: 1.2;
+        }
+
+        .daily-faq-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1rem;
+            border-left: 3px solid var(--accent-color);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+            transition: var(--transition);
+        }
+
+        .daily-faq-card:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+        }
+
+        .daily-faq-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.6rem;
+            flex-wrap: wrap;
+        }
+
+        .daily-faq-category {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+
+        .daily-faq-level {
+            background: var(--accent-color);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+
+        .daily-faq-question {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--primary-color);
+            margin-bottom: 0.6rem;
+            line-height: 1.3;
+        }
+
+        .daily-faq-answer {
+            color: var(--text-color);
+            line-height: 1.4;
+            font-size: 0.85rem;
+        }
+
+        .daily-faq-tags {
+            margin-top: 0.6rem;
+            padding-top: 0.6rem;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .daily-faq-tags-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+        }
+
+        .daily-faq-tag {
+            background: #f8f9fa;
+            border: 1px solid var(--border-color);
+            color: var(--primary-color);
+            padding: 0.1rem 0.4rem;
+            border-radius: 8px;
+            font-size: 0.65rem;
+            font-weight: 500;
+        }
+
+        /* Stats Section - Compact */
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 0.8rem;
+            margin: 1.5rem 0;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 8px;
+            padding: 0.8rem;
+            text-align: center;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+            transition: var(--transition);
+            border-top: 2px solid var(--primary-color);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+        }
+
+        .stat-number {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: block;
+            line-height: 1.2;
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            font-weight: 500;
+            margin-top: 0.2rem;
+            font-size: 0.8rem;
+            line-height: 1.2;
+        }
+
+        /* FAQ Items */
+        .faq-container {
+            display: grid;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .faq-item {
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+            transition: var(--transition);
+            border-left: 4px solid var(--border-color);
+        }
+
+        .faq-item:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .faq-item.level-beginner { border-left-color: var(--success-color); }
+        .faq-item.level-intermediate { border-left-color: var(--warning-color); }
+        .faq-item.level-advanced { border-left-color: var(--accent-color); }
+        .faq-item.level-all { border-left-color: var(--primary-color); }
+
+        .faq-header {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .faq-question-container {
+            flex: 1;
+        }
+
+        .faq-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .category-badge {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .level-badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: white;
+        }
+
+        .level-beginner .level-badge { background: var(--success-color); }
+        .level-intermediate .level-badge { background: var(--warning-color); }
+        .level-advanced .level-badge { background: var(--accent-color); }
+        .level-all .level-badge { background: var(--primary-color); }
+
+        .faq-question {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .faq-toggle {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+
+        .faq-item.expanded .faq-toggle {
+            transform: rotate(45deg);
+        }
+
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .faq-item.expanded .faq-content {
+            max-height: 1000px;
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem 1.5rem;
+            color: var(--text-color);
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+
+        .faq-tags {
+            padding: 0 1.5rem 1.5rem;
+        }
+
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+
+        .tag {
+            background: #f8f9fa;
+            border: 1px solid var(--border-color);
+            color: var(--primary-color);
+            padding: 0.2rem 0.6rem;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        /* No Results */
+        .no-results {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: white;
+            border-radius: 12px;
+            margin-top: 2rem;
+            box-shadow: var(--card-shadow);
+        }
+
+        .no-results-icon {
+            font-size: 4rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .no-results-text {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #8B4513 0%, #D2B48C 50%, #8B4513 100%);
+            color: white;
+            text-align: center;
+            padding: 3rem 0;
+            margin-top: 4rem;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .footer p {
+            opacity: 0.8;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .loader {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--border-color);
+            border-top: 4px solid var(--secondary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .header-logo {
+                height: 40px;
+                top: 0.5rem;
+                left: 1rem;
+                padding: 6px;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+
+            .search-section {
+                margin: -2rem 1rem 1rem;
+                padding: 1.5rem;
+            }
+
+            .daily-faq-section {
+                padding: 0.8rem 1rem;
+                margin: 1rem 0;
+            }
+
+            .daily-faq-header {
+                gap: 0.6rem;
+                margin-bottom: 0.6rem;
+            }
+
+            .daily-faq-icon {
+                width: 28px;
+                height: 28px;
+                font-size: 0.8rem;
+            }
+
+            .daily-faq-title h3 {
+                font-size: 0.9rem;
+            }
+
+            .daily-faq-card {
+                padding: 0.8rem;
+            }
+
+            .daily-faq-meta {
+                gap: 0.4rem;
+            }
+
+            .daily-faq-question {
+                font-size: 0.9rem;
+            }
+
+            .daily-faq-answer {
+                font-size: 0.8rem;
+            }
+
+            .stats-section {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.6rem;
+                margin: 1rem 0;
+            }
+            
+            .stat-card {
+                padding: 0.6rem;
+            }
+            
+            .stat-number {
+                font-size: 1.2rem;
+            }
+            
+            .stat-label {
+                font-size: 0.75rem;
+            }
+
+            .faq-header {
+                padding: 1rem;
+            }
+
+            .faq-question {
+                font-size: 1rem;
+            }
+
+            .filters {
+                grid-template-columns: 1fr;
+                gap: 0.8rem;
+            }
+            
+            .filter-select {
+                font-size: 0.9rem;
+                padding: 0.7rem 0.8rem;
+            }
+        }
+
+        /* Animation Classes */
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .highlight {
+            background-color: #fff3cd;
+            padding: 0.1rem 0.2rem;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <!-- Header Animated Background Canvas -->
+        <canvas id="header-particle-canvas"></canvas>
+        <img src="seedplanning_logo_192.png" alt="シード・プランニング" class="header-logo">
+        <div class="container">
+            <div class="header-content">
+                <h1>シード・プランニング | AI活用 FAQ</h1>
+                <p>社員向け 生成AI導入・活用ガイド</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="search-section">
+            <div class="search-container">
+                <div class="search-input-wrapper">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="search-input" id="searchInput" placeholder="キーワードで検索（例：ChatGPT、プロンプト、セキュリティ）">
+                </div>
+                
+                <div class="filters">
+                    <div class="filter-group">
+                        <label class="filter-label">カテゴリ</label>
+                        <select class="filter-select" id="categoryFilter">
+                            <option value="">すべてのカテゴリ</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label class="filter-label">レベル</label>
+                        <select class="filter-select" id="levelFilter">
+                            <option value="">すべてのレベル</option>
+                            <option value="全レベル共通">全レベル共通</option>
+                            <option value="初心者">初心者</option>
+                            <option value="中級者">中級者</option>
+                            <option value="上級者">上級者</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label class="filter-label">タグ</label>
+                        <select class="filter-select" id="tagFilter">
+                            <option value="">すべてのタグ</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Daily FAQ Section -->
+        <section class="daily-faq-section" id="dailyFaqSection">
+            <div class="daily-faq-header">
+                <div class="daily-faq-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="daily-faq-title">
+                    <h3>今日のFAQ</h3>
+                    <p class="daily-faq-subtitle">毎日更新される注目のQ&A</p>
+                </div>
+            </div>
+            
+            <div class="daily-faq-card" id="dailyFaqCard">
+                <div class="daily-faq-meta">
+                    <span class="daily-faq-category" id="dailyFaqCategory">読み込み中...</span>
+                    <span class="daily-faq-level" id="dailyFaqLevel">-</span>
+                </div>
+                
+                <div class="daily-faq-question" id="dailyFaqQuestion">
+                    今日のFAQを読み込んでいます...
+                </div>
+                
+                <div class="daily-faq-answer" id="dailyFaqAnswer">
+                    しばらくお待ちください。
+                </div>
+                
+                <div class="daily-faq-tags" id="dailyFaqTagsContainer" style="display: none;">
+                    <div class="daily-faq-tags-list" id="dailyFaqTags">
+                        <!-- Tags will be inserted here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats-section">
+            <div class="stat-card">
+                <span class="stat-number" id="totalQuestions">207</span>
+                <div class="stat-label">総質問数</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" id="displayedQuestions">207</span>
+                <div class="stat-label">表示中の質問数</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" id="categoriesCount">51</span>
+                <div class="stat-label">カテゴリ数</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" id="averageLevel">-</span>
+                <div class="stat-label">対象レベル</div>
+            </div>
+        </section>
+
+        <div class="loading" id="loadingIndicator">
+            <div class="loader"></div>
+        </div>
+
+        <section class="faq-container" id="faqContainer">
+            <!-- FAQ items will be inserted here by JavaScript -->
+        </section>
+
+        <div class="no-results" id="noResults" style="display: none;">
+            <i class="fas fa-search-minus no-results-icon"></i>
+            <p class="no-results-text">検索条件に一致するFAQが見つかりませんでした。<br>別のキーワードやフィルターをお試しください。</p>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <!-- Footer Animated Background Canvas -->
+        <canvas id="footer-particle-canvas"></canvas>
+        <div class="container">
+            <p>&copy; 2025 Seed Planning, Inc. All rights reserved. | AI導入会議</p>
+        </div>
+    </footer>
+
+    <!-- Particle Animation Script for Header and Footer -->
+    <script>
+        // Particle System for specific canvas elements (header and footer)
+        class ParticleSystem {
+            constructor(canvasId, containerElement) {
+                this.canvas = document.getElementById(canvasId);
+                this.container = containerElement;
+                this.ctx = this.canvas.getContext('2d');
+                this.particles = [];
+                this.connections = [];
+                this.particleCount = 30; // Reduced for smaller areas
+                this.maxDistance = 120;
+                this.mouse = { x: 0, y: 0, active: false };
+                
+                this.init();
+                this.bindEvents();
+                this.animate();
+            }
+            
+            init() {
+                this.resize();
+                this.createParticles();
+            }
+            
+            resize() {
+                const rect = this.container.getBoundingClientRect();
+                this.canvas.width = rect.width;
+                this.canvas.height = rect.height;
+            }
+            
+            createParticles() {
+                this.particles = [];
+                
+                for (let i = 0; i < this.particleCount; i++) {
+                    this.particles.push({
+                        x: Math.random() * this.canvas.width,
+                        y: Math.random() * this.canvas.height,
+                        vx: (Math.random() - 0.5) * 0.6,
+                        vy: (Math.random() - 0.5) * 0.6,
+                        radius: Math.random() * 1.5 + 0.5,
+                        opacity: Math.random() * 0.8 + 0.2,
+                        trail: []
+                    });
+                }
+            }
+            
+            updateParticles() {
+                this.particles.forEach(particle => {
+                    // Store current position for trail
+                    particle.trail.push({ x: particle.x, y: particle.y, opacity: particle.opacity });
+                    
+                    // Limit trail length
+                    if (particle.trail.length > 12) {
+                        particle.trail.shift();
+                    }
+                    
+                    // Update position
+                    particle.x += particle.vx;
+                    particle.y += particle.vy;
+                    
+                    // Bounce off edges
+                    if (particle.x < 0 || particle.x > this.canvas.width) {
+                        particle.vx *= -1;
+                    }
+                    if (particle.y < 0 || particle.y > this.canvas.height) {
+                        particle.vy *= -1;
+                    }
+                    
+                    // Keep particles in bounds
+                    particle.x = Math.max(0, Math.min(this.canvas.width, particle.x));
+                    particle.y = Math.max(0, Math.min(this.canvas.height, particle.y));
+                    
+                    // Mouse interaction (only when mouse is over this canvas)
+                    if (this.mouse.active) {
+                        const dx = this.mouse.x - particle.x;
+                        const dy = this.mouse.y - particle.y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (distance < 80) {
+                            const force = (80 - distance) / 80;
+                            particle.vx += dx * force * 0.008;
+                            particle.vy += dy * force * 0.008;
+                        }
+                    }
+                    
+                    // Add some randomness
+                    particle.vx += (Math.random() - 0.5) * 0.01;
+                    particle.vy += (Math.random() - 0.5) * 0.01;
+                    
+                    // Limit velocity
+                    const speed = Math.sqrt(particle.vx * particle.vx + particle.vy * particle.vy);
+                    if (speed > 1.5) {
+                        particle.vx = (particle.vx / speed) * 1.5;
+                        particle.vy = (particle.vy / speed) * 1.5;
+                    }
+                });
+            }
+            
+            drawParticles() {
+                this.particles.forEach(particle => {
+                    // Draw trail (golden color)
+                    particle.trail.forEach((point, index) => {
+                        const trailOpacity = (index / particle.trail.length) * particle.opacity * 0.25;
+                        const trailRadius = particle.radius * (index / particle.trail.length) * 0.7;
+                        
+                        this.ctx.beginPath();
+                        this.ctx.arc(point.x, point.y, trailRadius, 0, Math.PI * 2);
+                        this.ctx.fillStyle = `rgba(255, 215, 0, ${trailOpacity})`;
+                        this.ctx.fill();
+                    });
+                    
+                    // Draw main particle (golden color)
+                    this.ctx.beginPath();
+                    this.ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+                    this.ctx.fillStyle = `rgba(255, 215, 0, ${particle.opacity})`;
+                    this.ctx.fill();
+                    
+                    // Add glow effect (warm golden glow)
+                    const gradient = this.ctx.createRadialGradient(
+                        particle.x, particle.y, 0,
+                        particle.x, particle.y, particle.radius * 2.5
+                    );
+                    gradient.addColorStop(0, `rgba(255, 215, 0, ${particle.opacity * 0.4})`);
+                    gradient.addColorStop(0.5, `rgba(255, 193, 37, ${particle.opacity * 0.2})`);
+                    gradient.addColorStop(1, 'rgba(255, 215, 0, 0)');
+                    
+                    this.ctx.beginPath();
+                    this.ctx.arc(particle.x, particle.y, particle.radius * 2.5, 0, Math.PI * 2);
+                    this.ctx.fillStyle = gradient;
+                    this.ctx.fill();
+                });
+            }
+            
+            drawConnections() {
+                for (let i = 0; i < this.particles.length; i++) {
+                    for (let j = i + 1; j < this.particles.length; j++) {
+                        const dx = this.particles[i].x - this.particles[j].x;
+                        const dy = this.particles[i].y - this.particles[j].y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (distance < this.maxDistance) {
+                            const opacity = (1 - distance / this.maxDistance) * 0.12;
+                            
+                            this.ctx.beginPath();
+                            this.ctx.moveTo(this.particles[i].x, this.particles[i].y);
+                            this.ctx.lineTo(this.particles[j].x, this.particles[j].y);
+                            this.ctx.strokeStyle = `rgba(255, 215, 0, ${opacity})`;
+                            this.ctx.lineWidth = 0.4;
+                            this.ctx.stroke();
+                        }
+                    }
+                }
+            }
+            
+            draw() {
+                // Clear with fade effect for trails (using brown tone)
+                this.ctx.fillStyle = 'rgba(140, 94, 59, 0.05)';
+                this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                this.drawConnections();
+                this.drawParticles();
+            }
+            
+            animate() {
+                this.updateParticles();
+                this.draw();
+                requestAnimationFrame(() => this.animate());
+            }
+            
+            bindEvents() {
+                window.addEventListener('resize', () => {
+                    this.resize();
+                    this.createParticles();
+                });
+                
+                this.canvas.addEventListener('mousemove', (e) => {
+                    const rect = this.canvas.getBoundingClientRect();
+                    this.mouse.x = e.clientX - rect.left;
+                    this.mouse.y = e.clientY - rect.top;
+                    this.mouse.active = true;
+                });
+                
+                this.canvas.addEventListener('mouseenter', () => {
+                    this.mouse.active = true;
+                });
+                
+                this.canvas.addEventListener('mouseleave', () => {
+                    this.mouse.active = false;
+                });
+            }
+        }
+        
+        // Initialize particle systems when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            const headerElement = document.querySelector('.header');
+            const footerElement = document.querySelector('.footer');
+            
+            if (headerElement && document.getElementById('header-particle-canvas')) {
+                new ParticleSystem('header-particle-canvas', headerElement);
+            }
+            
+            if (footerElement && document.getElementById('footer-particle-canvas')) {
+                new ParticleSystem('footer-particle-canvas', footerElement);
+            }
+        });
+    </script>
+
+    <script src="script.js"></script>
+</body>
+</html>
