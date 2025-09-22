@@ -48,27 +48,27 @@
             min-height: 100vh;
         }
 
-        /* Modern Seed AI Background */
-        #seed-ai-background {
-            position: fixed;
+        /* Header and Footer Seed AI Background */
+        .header-bg, .footer-bg {
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
+            z-index: 0;
             pointer-events: none;
         }
 
-        .bg-gradient {
+        .header-bg .bg-gradient, .footer-bg .bg-gradient {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(120% 80% at 50% 30%, #E5A870 0%, #C18040 35%, #9A6030 80%, #6B4220 100%);
+            background: radial-gradient(120% 80% at 50% 50%, #E5A870 0%, #C18040 35%, #9A6030 80%, #6B4220 100%);
         }
 
-        .bg-curves {
+        .header-bg .bg-curves, .footer-bg .bg-curves {
             position: absolute;
             top: 0;
             left: 0;
@@ -76,7 +76,7 @@
             height: 100%;
         }
 
-        .bg-vignette {
+        .header-bg .bg-vignette, .footer-bg .bg-vignette {
             position: absolute;
             top: 0;
             left: 0;
@@ -86,7 +86,7 @@
             mix-blend-mode: multiply;
         }
 
-        .bg-canvas {
+        .header-bg .bg-canvas, .footer-bg .bg-canvas {
             position: absolute;
             top: 0;
             left: 0;
@@ -96,9 +96,6 @@
 
         /* Header */
         .header {
-            background: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
             color: white;
             padding: 3rem 0;
             text-align: center;
@@ -618,9 +615,6 @@
 
         /* Footer */
         .footer {
-            background: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
             color: white;
             text-align: center;
             padding: 3rem 0;
@@ -777,39 +771,37 @@
     </style>
 </head>
 <body>
-    <!-- Modern Seed AI Background -->
-    <div id="seed-ai-background">
-        <!-- Base gradient background -->
-        <div class="bg-gradient"></div>
-        
-        <!-- Organic curves with glow effects -->
-        <svg class="bg-curves" viewBox="0 0 1000 600" preserveAspectRatio="none">
-            <defs>
-                <filter id="blur" x="-20%" y="-20%" width="140%" height="140%">
-                    <feGaussianBlur in="SourceGraphic" stdDeviation="1.7" />
-                </filter>
-                <linearGradient id="glow" x1="0" x2="1" y1="0" y2="0">
-                    <stop offset="0%" stop-color="#ffffff" stop-opacity="0.15" />
-                    <stop offset="50%" stop-color="#ffffff" stop-opacity="0.35" />
-                    <stop offset="100%" stop-color="#ffffff" stop-opacity="0.12" />
-                </linearGradient>
-            </defs>
-            <path d="M-50,500 C150,350 300,250 520,300 S900,520 1100,350" fill="none" stroke="url(#glow)" stroke-width="1.2" filter="url(#blur)" />
-            <path d="M-80,420 C180,260 380,280 600,360 S980,520 1120,260" fill="none" stroke="url(#glow)" stroke-width="0.8" filter="url(#blur)" />
-            <path d="M-60,100 C160,160 440,80 720,180 S1080,380 1200,120" fill="none" stroke="url(#glow)" stroke-width="0.8" filter="url(#blur)" />
-            <path d="M-40,220 C200,120 360,200 580,240 S980,420 1180,200" fill="none" stroke="url(#glow)" stroke-width="1.2" filter="url(#blur)" />
-            <path d="M-30,560 C120,420 360,360 700,520 S1020,640 1260,420" fill="none" stroke="url(#glow)" stroke-width="0.8" filter="url(#blur)" />
-            <path d="M-20,40 C220,120 460,60 740,100 S1040,220 1280,80" fill="none" stroke="url(#glow)" stroke-width="0.8" filter="url(#blur)" />
-        </svg>
-        
-        <!-- Vignette overlay -->
-        <div class="bg-vignette"></div>
-        
-        <!-- Particle animation canvas -->
-        <canvas id="bg-canvas" class="bg-canvas"></canvas>
-    </div>
-
     <header class="header">
+        <!-- Header Seed AI Background -->
+        <div class="header-bg">
+            <!-- Base gradient background -->
+            <div class="bg-gradient"></div>
+            
+            <!-- Organic curves with glow effects -->
+            <svg class="bg-curves" viewBox="0 0 1000 600" preserveAspectRatio="none">
+                <defs>
+                    <filter id="header-blur" x="-20%" y="-20%" width="140%" height="140%">
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="1.7" />
+                    </filter>
+                    <linearGradient id="header-glow" x1="0" x2="1" y1="0" y2="0">
+                        <stop offset="0%" stop-color="#ffffff" stop-opacity="0.15" />
+                        <stop offset="50%" stop-color="#ffffff" stop-opacity="0.35" />
+                        <stop offset="100%" stop-color="#ffffff" stop-opacity="0.12" />
+                    </linearGradient>
+                </defs>
+                <path d="M-50,500 C150,350 300,250 520,300 S900,520 1100,350" fill="none" stroke="url(#header-glow)" stroke-width="1.2" filter="url(#header-blur)" />
+                <path d="M-80,420 C180,260 380,280 600,360 S980,520 1120,260" fill="none" stroke="url(#header-glow)" stroke-width="0.8" filter="url(#header-blur)" />
+                <path d="M-60,100 C160,160 440,80 720,180 S1080,380 1200,120" fill="none" stroke="url(#header-glow)" stroke-width="0.8" filter="url(#header-blur)" />
+                <path d="M-40,220 C200,120 360,200 580,240 S980,420 1180,200" fill="none" stroke="url(#header-glow)" stroke-width="1.2" filter="url(#header-blur)" />
+            </svg>
+            
+            <!-- Vignette overlay -->
+            <div class="bg-vignette"></div>
+            
+            <!-- Particle animation canvas -->
+            <canvas id="header-canvas" class="bg-canvas"></canvas>
+        </div>
+
         <img src="seedplanning_logo_192.png" alt="シード・プランニング" class="header-logo">
         <div class="container">
             <div class="header-content">
@@ -924,21 +916,52 @@
     </div>
 
     <footer class="footer">
+        <!-- Footer Seed AI Background -->
+        <div class="footer-bg">
+            <!-- Base gradient background -->
+            <div class="bg-gradient"></div>
+            
+            <!-- Organic curves with glow effects -->
+            <svg class="bg-curves" viewBox="0 0 1000 600" preserveAspectRatio="none">
+                <defs>
+                    <filter id="footer-blur" x="-20%" y="-20%" width="140%" height="140%">
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="1.7" />
+                    </filter>
+                    <linearGradient id="footer-glow" x1="0" x2="1" y1="0" y2="0">
+                        <stop offset="0%" stop-color="#ffffff" stop-opacity="0.15" />
+                        <stop offset="50%" stop-color="#ffffff" stop-opacity="0.35" />
+                        <stop offset="100%" stop-color="#ffffff" stop-opacity="0.12" />
+                    </linearGradient>
+                </defs>
+                <path d="M-50,100 C150,50 300,150 520,100 S900,80 1100,150" fill="none" stroke="url(#footer-glow)" stroke-width="1.2" filter="url(#footer-blur)" />
+                <path d="M-80,180 C180,140 380,120 600,140 S980,80 1120,140" fill="none" stroke="url(#footer-glow)" stroke-width="0.8" filter="url(#footer-blur)" />
+                <path d="M-60,500 C160,440 440,520 720,420 S1080,220 1200,480" fill="none" stroke="url(#footer-glow)" stroke-width="0.8" filter="url(#footer-blur)" />
+                <path d="M-40,380 C200,480 360,400 580,360 S980,180 1180,400" fill="none" stroke="url(#footer-glow)" stroke-width="1.2" filter="url(#footer-blur)" />
+            </svg>
+            
+            <!-- Vignette overlay -->
+            <div class="bg-vignette"></div>
+            
+            <!-- Particle animation canvas -->
+            <canvas id="footer-canvas" class="bg-canvas"></canvas>
+        </div>
+
         <div class="container">
             <p>&copy; 2025 Seed Planning, Inc. All rights reserved. | AI導入会議</p>
         </div>
     </footer>
 
-    <!-- Modern Seed AI Background Animation Script -->
+    <!-- Header/Footer Seed AI Background Animation Script -->
     <script>
-        // Seed AI Background - vanilla JS version of React component
+        // Seed AI Background - for specific containers (header/footer)
         class SeedAIBackground {
-            constructor(options = {}) {
-                this.dotCount = options.dotCount || 70;
+            constructor(canvasId, containerElement, options = {}) {
+                this.dotCount = options.dotCount || 35;
                 this.speed = options.speed || 1;
                 this.accent = options.accent || "#c18040";
                 
-                this.canvas = document.getElementById('bg-canvas');
+                this.canvas = document.getElementById(canvasId);
+                this.container = containerElement;
                 this.ctx = this.canvas.getContext('2d');
                 this.rafId = 0;
                 this.particles = [];
@@ -954,18 +977,18 @@
             }
             
             resize() {
+                const rect = this.container.getBoundingClientRect();
                 const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
-                const { innerWidth: w, innerHeight: h } = window;
                 
-                this.canvas.width = Math.floor(w * dpr);
-                this.canvas.height = Math.floor(h * dpr);
-                this.canvas.style.width = w + "px";
-                this.canvas.style.height = h + "px";
+                this.canvas.width = Math.floor(rect.width * dpr);
+                this.canvas.height = Math.floor(rect.height * dpr);
+                this.canvas.style.width = rect.width + "px";
+                this.canvas.style.height = rect.height + "px";
                 this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
                 
                 this.dpr = dpr;
-                this.width = w;
-                this.height = h;
+                this.width = rect.width;
+                this.height = rect.height;
             }
             
             createParticles() {
@@ -1049,11 +1072,24 @@
         
         // Initialize when DOM is loaded
         document.addEventListener('DOMContentLoaded', () => {
-            const background = new SeedAIBackground({
-                dotCount: 70,
-                speed: 1,
-                accent: "#c18040"
-            });
+            const headerElement = document.querySelector('.header');
+            const footerElement = document.querySelector('.footer');
+            
+            if (headerElement && document.getElementById('header-canvas')) {
+                new SeedAIBackground('header-canvas', headerElement, {
+                    dotCount: 35,
+                    speed: 1,
+                    accent: "#c18040"
+                });
+            }
+            
+            if (footerElement && document.getElementById('footer-canvas')) {
+                new SeedAIBackground('footer-canvas', footerElement, {
+                    dotCount: 35,
+                    speed: 1,
+                    accent: "#c18040"
+                });
+            }
         });
     </script>
 
