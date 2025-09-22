@@ -56,8 +56,8 @@
             width: 100%;
             height: 100%;
             z-index: 0;
-            background: linear-gradient(270deg, #654321 0%, #8B4513 25%, #A0522D 50%, #8B4513 75%, #6B3410 100%);
-            box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.2), inset 0 2px 10px rgba(255, 255, 255, 0.1);
+            background: linear-gradient(270deg, #A0522D 0%, #B8653F 25%, #CD853F 50%, #B8653F 75%, #A0522D 100%);
+            box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.15), inset 0 2px 10px rgba(255, 255, 255, 0.15);
         }
 
         #footer-particle-canvas {
@@ -67,17 +67,17 @@
             width: 100%;
             height: 100%;
             z-index: 0;
-            background: linear-gradient(270deg, #654321 0%, #8B4513 25%, #A0522D 50%, #8B4513 75%, #6B3410 100%);
-            box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.2), inset 0 2px 10px rgba(255, 255, 255, 0.1);
+            background: linear-gradient(270deg, #A0522D 0%, #B8653F 25%, #CD853F 50%, #B8653F 75%, #A0522D 100%);
+            box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.15), inset 0 2px 10px rgba(255, 255, 255, 0.15);
         }
 
         /* Header */
         .header {
-            background: linear-gradient(270deg, rgba(101, 67, 33, 0.95) 0%, rgba(139, 69, 19, 0.9) 25%, rgba(160, 82, 45, 0.85) 50%, rgba(139, 69, 19, 0.9) 75%, rgba(107, 52, 16, 0.95) 100%);
+            background: linear-gradient(270deg, rgba(160, 82, 45, 0.9) 0%, rgba(184, 101, 63, 0.85) 25%, rgba(205, 133, 63, 0.8) 50%, rgba(184, 101, 63, 0.85) 75%, rgba(160, 82, 45, 0.9) 100%);
             color: white;
             padding: 3rem 0;
             text-align: center;
-            box-shadow: var(--card-shadow), inset 0 0 30px rgba(0, 0, 0, 0.2), inset 0 2px 8px rgba(255, 255, 255, 0.1);
+            box-shadow: var(--card-shadow), inset 0 0 30px rgba(0, 0, 0, 0.15), inset 0 2px 8px rgba(255, 255, 255, 0.15);
             position: relative;
             overflow: hidden;
             z-index: 1;
@@ -593,7 +593,7 @@
 
         /* Footer */
         .footer {
-            background: linear-gradient(270deg, rgba(101, 67, 33, 0.95) 0%, rgba(139, 69, 19, 0.9) 25%, rgba(160, 82, 45, 0.85) 50%, rgba(139, 69, 19, 0.9) 75%, rgba(107, 52, 16, 0.95) 100%);
+            background: linear-gradient(270deg, rgba(160, 82, 45, 0.9) 0%, rgba(184, 101, 63, 0.85) 25%, rgba(205, 133, 63, 0.8) 50%, rgba(184, 101, 63, 0.85) 75%, rgba(160, 82, 45, 0.9) 100%);
             color: white;
             text-align: center;
             padding: 3rem 0;
@@ -601,7 +601,7 @@
             position: relative;
             overflow: hidden;
             z-index: 1;
-            box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.2), inset 0 2px 8px rgba(255, 255, 255, 0.1);
+            box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.15), inset 0 2px 8px rgba(255, 255, 255, 0.15);
         }
 
         .footer p {
@@ -992,25 +992,25 @@
                         if (trailOpacity > 0.01) {
                             this.ctx.beginPath();
                             this.ctx.arc(point.x, point.y, trailRadius, 0, Math.PI * 2);
-                            this.ctx.fillStyle = `rgba(255, 140, 50, ${trailOpacity})`;
+                            this.ctx.fillStyle = `rgba(255, 180, 100, ${trailOpacity})`;
                             this.ctx.fill();
                         }
                     });
                     
-                    // Draw main particle (warm copper/bronze color)
+                    // Draw main particle (warm corporate brown color)
                     this.ctx.beginPath();
                     this.ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-                    this.ctx.fillStyle = `rgba(255, 165, 70, ${particle.opacity})`;
+                    this.ctx.fillStyle = `rgba(255, 200, 120, ${particle.opacity})`;
                     this.ctx.fill();
                     
-                    // Add glow effect (warm copper glow)
+                    // Add glow effect (warm corporate brown glow)
                     const gradient = this.ctx.createRadialGradient(
                         particle.x, particle.y, 0,
                         particle.x, particle.y, particle.radius * 2.5
                     );
-                    gradient.addColorStop(0, `rgba(255, 165, 70, ${particle.opacity * 0.4})`);
-                    gradient.addColorStop(0.5, `rgba(255, 140, 50, ${particle.opacity * 0.2})`);
-                    gradient.addColorStop(1, 'rgba(255, 165, 70, 0)');
+                    gradient.addColorStop(0, `rgba(255, 200, 120, ${particle.opacity * 0.4})`);
+                    gradient.addColorStop(0.5, `rgba(255, 180, 100, ${particle.opacity * 0.2})`);
+                    gradient.addColorStop(1, 'rgba(255, 200, 120, 0)');
                     
                     this.ctx.beginPath();
                     this.ctx.arc(particle.x, particle.y, particle.radius * 2.5, 0, Math.PI * 2);
@@ -1032,7 +1032,7 @@
                             this.ctx.beginPath();
                             this.ctx.moveTo(this.particles[i].x, this.particles[i].y);
                             this.ctx.lineTo(this.particles[j].x, this.particles[j].y);
-                            this.ctx.strokeStyle = `rgba(255, 165, 70, ${opacity})`;
+                            this.ctx.strokeStyle = `rgba(255, 200, 120, ${opacity})`;
                             this.ctx.lineWidth = 0.5;
                             this.ctx.stroke();
                         }
@@ -1041,8 +1041,8 @@
             }
             
             draw() {
-                // Clear with fade effect for trails (using darker brown tone)
-                this.ctx.fillStyle = 'rgba(101, 67, 33, 0.08)';
+                // Clear with fade effect for trails (using corporate brown tone)
+                this.ctx.fillStyle = 'rgba(160, 82, 45, 0.06)';
                 this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
                 
                 this.drawConnections();
