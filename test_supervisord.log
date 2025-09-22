@@ -1,0 +1,15 @@
+2025-09-22 05:27:32,801 INFO RPC interface 'supervisor' initialized
+2025-09-22 05:27:32,801 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2025-09-22 05:27:32,803 INFO daemonizing the supervisord process
+2025-09-22 05:27:32,803 INFO supervisord started with pid 1997
+2025-09-22 05:27:33,807 INFO spawned: 'testserver' with pid 1999
+2025-09-22 05:27:33,945 WARN exited: testserver (exit status 1; not expected)
+2025-09-22 05:27:34,948 INFO spawned: 'testserver' with pid 2001
+2025-09-22 05:27:35,089 WARN exited: testserver (exit status 1; not expected)
+2025-09-22 05:27:37,606 INFO spawned: 'testserver' with pid 2007
+2025-09-22 05:27:37,696 WARN exited: testserver (exit status 1; not expected)
+2025-09-22 05:27:40,702 INFO spawned: 'testserver' with pid 2014
+2025-09-22 05:27:40,789 WARN exited: testserver (exit status 1; not expected)
+2025-09-22 05:27:41,791 INFO gave up: testserver entered FATAL state, too many start retries too quickly
+2025-09-22 05:27:45,764 INFO spawned: 'testserver' with pid 2024
+2025-09-22 05:27:46,846 INFO success: testserver entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)

@@ -1,0 +1,5 @@
+Server running on port 3001
+22/Sep/2025 05:27:56 - "GET /animated-background.html HTTP/1.1" 200 -
+22/Sep/2025 05:27:56 - "GET /seedplanning_logo_192.png HTTP/1.1" 200 -
+22/Sep/2025 05:27:56 - "GET /script.js HTTP/1.1" 200 -
+22/Sep/2025 05:27:57 - "GET /faq_data.json HTTP/1.1" 200 -

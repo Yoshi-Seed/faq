@@ -56,7 +56,8 @@
             width: 100%;
             height: 100%;
             z-index: 0;
-            background: linear-gradient(135deg, #8C5E3B 0%, #A3754A 30%, #B98C61 70%, #D2A288 100%);
+            background: linear-gradient(270deg, #4A1708 0%, #5A2010 25%, #6A2918 50%, #5A2010 75%, #4A1708 100%);
+            box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.15), inset 0 2px 10px rgba(255, 255, 255, 0.1);
         }
 
         #footer-particle-canvas {
@@ -66,16 +67,17 @@
             width: 100%;
             height: 100%;
             z-index: 0;
-            background: linear-gradient(135deg, #8C5E3B 0%, #A3754A 30%, #B98C61 70%, #D2A288 100%);
+            background: linear-gradient(270deg, #4A1708 0%, #5A2010 25%, #6A2918 50%, #5A2010 75%, #4A1708 100%);
+            box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.15), inset 0 2px 10px rgba(255, 255, 255, 0.1);
         }
 
         /* Header */
         .header {
-            background: linear-gradient(135deg, rgba(139, 69, 19, 0.9) 0%, rgba(210, 180, 140, 0.8) 50%, rgba(139, 69, 19, 0.9) 100%);
+            background: linear-gradient(270deg, rgba(74, 23, 8, 0.9) 0%, rgba(90, 32, 16, 0.85) 25%, rgba(106, 41, 24, 0.8) 50%, rgba(90, 32, 16, 0.85) 75%, rgba(74, 23, 8, 0.9) 100%);
             color: white;
             padding: 3rem 0;
             text-align: center;
-            box-shadow: var(--card-shadow);
+            box-shadow: var(--card-shadow), inset 0 0 30px rgba(0, 0, 0, 0.15), inset 0 2px 8px rgba(255, 255, 255, 0.1);
             position: relative;
             overflow: hidden;
             z-index: 1;
@@ -591,7 +593,7 @@
 
         /* Footer */
         .footer {
-            background: linear-gradient(135deg, #8B4513 0%, #D2B48C 50%, #8B4513 100%);
+            background: linear-gradient(270deg, rgba(74, 23, 8, 0.9) 0%, rgba(90, 32, 16, 0.85) 25%, rgba(106, 41, 24, 0.8) 50%, rgba(90, 32, 16, 0.85) 75%, rgba(74, 23, 8, 0.9) 100%);
             color: white;
             text-align: center;
             padding: 3rem 0;
@@ -599,6 +601,7 @@
             position: relative;
             overflow: hidden;
             z-index: 1;
+            box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.15), inset 0 2px 8px rgba(255, 255, 255, 0.1);
         }
 
         .footer p {
@@ -920,13 +923,17 @@
             
             updateParticles() {
                 this.particles.forEach(particle => {
-                    // Store current position for trail
-                    particle.trail.push({ x: particle.x, y: particle.y, opacity: particle.opacity });
+                    // Store current position for trail with timestamp
+                    particle.trail.push({ 
+                        x: particle.x, 
+                        y: particle.y, 
+                        opacity: particle.opacity,
+                        timestamp: Date.now()
+                    });
                     
-                    // Limit trail length
-                    if (particle.trail.length > 12) {
-                        particle.trail.shift();
-                    }
+                    // Remove trail points older than 2 seconds (2000ms)
+                    const now = Date.now();
+                    particle.trail = particle.trail.filter(point => now - point.timestamp < 2000);
                     
                     // Update position
                     particle.x += particle.vx;
@@ -972,31 +979,38 @@
             
             drawParticles() {
                 this.particles.forEach(particle => {
-                    // Draw trail (golden color)
+                    const now = Date.now();
+                    
+                    // Draw trail with time-based fading (warm copper/bronze color)
                     particle.trail.forEach((point, index) => {
-                        const trailOpacity = (index / particle.trail.length) * particle.opacity * 0.25;
-                        const trailRadius = particle.radius * (index / particle.trail.length) * 0.7;
+                        const age = now - point.timestamp;
+                        const maxAge = 2000; // 2 seconds
+                        const timeBasedOpacity = Math.max(0, 1 - (age / maxAge));
+                        const trailOpacity = timeBasedOpacity * particle.opacity * 0.3;
+                        const trailRadius = particle.radius * timeBasedOpacity * 0.8;
                         
-                        this.ctx.beginPath();
-                        this.ctx.arc(point.x, point.y, trailRadius, 0, Math.PI * 2);
-                        this.ctx.fillStyle = `rgba(255, 215, 0, ${trailOpacity})`;
-                        this.ctx.fill();
+                        if (trailOpacity > 0.01) {
+                            this.ctx.beginPath();
+                            this.ctx.arc(point.x, point.y, trailRadius, 0, Math.PI * 2);
+                            this.ctx.fillStyle = `rgba(160, 120, 90, ${trailOpacity})`;
+                            this.ctx.fill();
+                        }
                     });
                     
-                    // Draw main particle (golden color)
+                    // Draw main particle (specified dark brown color)
                     this.ctx.beginPath();
                     this.ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-                    this.ctx.fillStyle = `rgba(255, 215, 0, ${particle.opacity})`;
+                    this.ctx.fillStyle = `rgba(180, 140, 100, ${particle.opacity})`;
                     this.ctx.fill();
                     
-                    // Add glow effect (warm golden glow)
+                    // Add glow effect (specified dark brown glow)
                     const gradient = this.ctx.createRadialGradient(
                         particle.x, particle.y, 0,
                         particle.x, particle.y, particle.radius * 2.5
                     );
-                    gradient.addColorStop(0, `rgba(255, 215, 0, ${particle.opacity * 0.4})`);
-                    gradient.addColorStop(0.5, `rgba(255, 193, 37, ${particle.opacity * 0.2})`);
-                    gradient.addColorStop(1, 'rgba(255, 215, 0, 0)');
+                    gradient.addColorStop(0, `rgba(180, 140, 100, ${particle.opacity * 0.4})`);
+                    gradient.addColorStop(0.5, `rgba(160, 120, 90, ${particle.opacity * 0.2})`);
+                    gradient.addColorStop(1, 'rgba(180, 140, 100, 0)');
                     
                     this.ctx.beginPath();
                     this.ctx.arc(particle.x, particle.y, particle.radius * 2.5, 0, Math.PI * 2);
@@ -1018,8 +1032,8 @@
                             this.ctx.beginPath();
                             this.ctx.moveTo(this.particles[i].x, this.particles[i].y);
                             this.ctx.lineTo(this.particles[j].x, this.particles[j].y);
-                            this.ctx.strokeStyle = `rgba(255, 215, 0, ${opacity})`;
-                            this.ctx.lineWidth = 0.4;
+                            this.ctx.strokeStyle = `rgba(180, 140, 100, ${opacity})`;
+                            this.ctx.lineWidth = 0.5;
                             this.ctx.stroke();
                         }
                     }
@@ -1027,8 +1041,8 @@
             }
             
             draw() {
-                // Clear with fade effect for trails (using brown tone)
-                this.ctx.fillStyle = 'rgba(140, 94, 59, 0.05)';
+                // Clear with fade effect for trails (using specified brown tone)
+                this.ctx.fillStyle = 'rgba(74, 23, 8, 0.06)';
                 this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
                 
                 this.drawConnections();
