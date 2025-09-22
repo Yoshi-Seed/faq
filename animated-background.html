@@ -48,36 +48,61 @@
             min-height: 100vh;
         }
 
-        /* Animated Background Canvases for Header and Footer only */
-        #header-particle-canvas {
-            position: absolute;
+        /* Modern Seed AI Background */
+        #seed-ai-background {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 0;
-            background: linear-gradient(270deg, #4A1708 0%, #5A2010 25%, #6A2918 50%, #5A2010 75%, #4A1708 100%);
-            box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.15), inset 0 2px 10px rgba(255, 255, 255, 0.1);
+            z-index: -1;
+            pointer-events: none;
         }
 
-        #footer-particle-canvas {
+        .bg-gradient {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 0;
-            background: linear-gradient(270deg, #4A1708 0%, #5A2010 25%, #6A2918 50%, #5A2010 75%, #4A1708 100%);
-            box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.15), inset 0 2px 10px rgba(255, 255, 255, 0.1);
+            background: radial-gradient(120% 80% at 50% 30%, #E5A870 0%, #C18040 35%, #9A6030 80%, #6B4220 100%);
+        }
+
+        .bg-curves {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .bg-vignette {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(70% 50% at 50% 35%, rgba(0,0,0,0) 60%, rgba(0,0,0,0.12) 100%);
+            mix-blend-mode: multiply;
+        }
+
+        .bg-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
         }
 
         /* Header */
         .header {
-            background: linear-gradient(270deg, rgba(74, 23, 8, 0.9) 0%, rgba(90, 32, 16, 0.85) 25%, rgba(106, 41, 24, 0.8) 50%, rgba(90, 32, 16, 0.85) 75%, rgba(74, 23, 8, 0.9) 100%);
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             color: white;
             padding: 3rem 0;
             text-align: center;
-            box-shadow: var(--card-shadow), inset 0 0 30px rgba(0, 0, 0, 0.15), inset 0 2px 8px rgba(255, 255, 255, 0.1);
+            box-shadow: var(--card-shadow);
             position: relative;
             overflow: hidden;
             z-index: 1;
@@ -593,7 +618,9 @@
 
         /* Footer */
         .footer {
-            background: linear-gradient(270deg, rgba(74, 23, 8, 0.9) 0%, rgba(90, 32, 16, 0.85) 25%, rgba(106, 41, 24, 0.8) 50%, rgba(90, 32, 16, 0.85) 75%, rgba(74, 23, 8, 0.9) 100%);
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             color: white;
             text-align: center;
             padding: 3rem 0;
@@ -601,7 +628,6 @@
             position: relative;
             overflow: hidden;
             z-index: 1;
-            box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.15), inset 0 2px 8px rgba(255, 255, 255, 0.1);
         }
 
         .footer p {
@@ -751,9 +777,39 @@
     </style>
 </head>
 <body>
+    <!-- Modern Seed AI Background -->
+    <div id="seed-ai-background">
+        <!-- Base gradient background -->
+        <div class="bg-gradient"></div>
+        
+        <!-- Organic curves with glow effects -->
+        <svg class="bg-curves" viewBox="0 0 1000 600" preserveAspectRatio="none">
+            <defs>
+                <filter id="blur" x="-20%" y="-20%" width="140%" height="140%">
+                    <feGaussianBlur in="SourceGraphic" stdDeviation="1.7" />
+                </filter>
+                <linearGradient id="glow" x1="0" x2="1" y1="0" y2="0">
+                    <stop offset="0%" stop-color="#ffffff" stop-opacity="0.15" />
+                    <stop offset="50%" stop-color="#ffffff" stop-opacity="0.35" />
+                    <stop offset="100%" stop-color="#ffffff" stop-opacity="0.12" />
+                </linearGradient>
+            </defs>
+            <path d="M-50,500 C150,350 300,250 520,300 S900,520 1100,350" fill="none" stroke="url(#glow)" stroke-width="1.2" filter="url(#blur)" />
+            <path d="M-80,420 C180,260 380,280 600,360 S980,520 1120,260" fill="none" stroke="url(#glow)" stroke-width="0.8" filter="url(#blur)" />
+            <path d="M-60,100 C160,160 440,80 720,180 S1080,380 1200,120" fill="none" stroke="url(#glow)" stroke-width="0.8" filter="url(#blur)" />
+            <path d="M-40,220 C200,120 360,200 580,240 S980,420 1180,200" fill="none" stroke="url(#glow)" stroke-width="1.2" filter="url(#blur)" />
+            <path d="M-30,560 C120,420 360,360 700,520 S1020,640 1260,420" fill="none" stroke="url(#glow)" stroke-width="0.8" filter="url(#blur)" />
+            <path d="M-20,40 C220,120 460,60 740,100 S1040,220 1280,80" fill="none" stroke="url(#glow)" stroke-width="0.8" filter="url(#blur)" />
+        </svg>
+        
+        <!-- Vignette overlay -->
+        <div class="bg-vignette"></div>
+        
+        <!-- Particle animation canvas -->
+        <canvas id="bg-canvas" class="bg-canvas"></canvas>
+    </div>
+
     <header class="header">
-        <!-- Header Animated Background Canvas -->
-        <canvas id="header-particle-canvas"></canvas>
         <img src="seedplanning_logo_192.png" alt="シード・プランニング" class="header-logo">
         <div class="container">
             <div class="header-content">
@@ -868,191 +924,113 @@
     </div>
 
     <footer class="footer">
-        <!-- Footer Animated Background Canvas -->
-        <canvas id="footer-particle-canvas"></canvas>
         <div class="container">
             <p>&copy; 2025 Seed Planning, Inc. All rights reserved. | AI導入会議</p>
         </div>
     </footer>
 
-    <!-- Particle Animation Script for Header and Footer -->
+    <!-- Modern Seed AI Background Animation Script -->
     <script>
-        // Particle System for specific canvas elements (header and footer)
-        class ParticleSystem {
-            constructor(canvasId, containerElement) {
-                this.canvas = document.getElementById(canvasId);
-                this.container = containerElement;
+        // Seed AI Background - vanilla JS version of React component
+        class SeedAIBackground {
+            constructor(options = {}) {
+                this.dotCount = options.dotCount || 70;
+                this.speed = options.speed || 1;
+                this.accent = options.accent || "#c18040";
+                
+                this.canvas = document.getElementById('bg-canvas');
                 this.ctx = this.canvas.getContext('2d');
+                this.rafId = 0;
                 this.particles = [];
-                this.connections = [];
-                this.particleCount = 30; // Reduced for smaller areas
-                this.maxDistance = 120;
-                this.mouse = { x: 0, y: 0, active: false };
                 
                 this.init();
-                this.bindEvents();
-                this.animate();
             }
             
             init() {
                 this.resize();
                 this.createParticles();
+                this.bindEvents();
+                this.animate();
             }
             
             resize() {
-                const rect = this.container.getBoundingClientRect();
-                this.canvas.width = rect.width;
-                this.canvas.height = rect.height;
+                const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+                const { innerWidth: w, innerHeight: h } = window;
+                
+                this.canvas.width = Math.floor(w * dpr);
+                this.canvas.height = Math.floor(h * dpr);
+                this.canvas.style.width = w + "px";
+                this.canvas.style.height = h + "px";
+                this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+                
+                this.dpr = dpr;
+                this.width = w;
+                this.height = h;
             }
             
             createParticles() {
+                const TWO_PI = Math.PI * 2;
+                const rnd = (min, max) => Math.random() * (max - min) + min;
+                
                 this.particles = [];
-                
-                for (let i = 0; i < this.particleCount; i++) {
+                for (let i = 0; i < this.dotCount; i++) {
                     this.particles.push({
-                        x: Math.random() * this.canvas.width,
-                        y: Math.random() * this.canvas.height,
-                        vx: (Math.random() - 0.5) * 0.6,
-                        vy: (Math.random() - 0.5) * 0.6,
-                        radius: Math.random() * 1.5 + 0.5,
-                        opacity: Math.random() * 0.8 + 0.2,
-                        trail: []
+                        x: rnd(0, this.width),
+                        y: rnd(0, this.height),
+                        r: rnd(1, 2.2),
+                        a: rnd(0, TWO_PI),
+                        s: rnd(0.2, 0.7) * this.speed, // base speed
+                        o: rnd(0.35, 0.9), // opacity
+                        drift: rnd(0.4, 1.0) // orbital drift
                     });
                 }
-            }
-            
-            updateParticles() {
-                this.particles.forEach(particle => {
-                    // Store current position for trail with timestamp
-                    particle.trail.push({ 
-                        x: particle.x, 
-                        y: particle.y, 
-                        opacity: particle.opacity,
-                        timestamp: Date.now()
-                    });
-                    
-                    // Remove trail points older than 2 seconds (2000ms)
-                    const now = Date.now();
-                    particle.trail = particle.trail.filter(point => now - point.timestamp < 2000);
-                    
-                    // Update position
-                    particle.x += particle.vx;
-                    particle.y += particle.vy;
-                    
-                    // Bounce off edges
-                    if (particle.x < 0 || particle.x > this.canvas.width) {
-                        particle.vx *= -1;
-                    }
-                    if (particle.y < 0 || particle.y > this.canvas.height) {
-                        particle.vy *= -1;
-                    }
-                    
-                    // Keep particles in bounds
-                    particle.x = Math.max(0, Math.min(this.canvas.width, particle.x));
-                    particle.y = Math.max(0, Math.min(this.canvas.height, particle.y));
-                    
-                    // Mouse interaction (only when mouse is over this canvas)
-                    if (this.mouse.active) {
-                        const dx = this.mouse.x - particle.x;
-                        const dy = this.mouse.y - particle.y;
-                        const distance = Math.sqrt(dx * dx + dy * dy);
-                        
-                        if (distance < 80) {
-                            const force = (80 - distance) / 80;
-                            particle.vx += dx * force * 0.008;
-                            particle.vy += dy * force * 0.008;
-                        }
-                    }
-                    
-                    // Add some randomness
-                    particle.vx += (Math.random() - 0.5) * 0.01;
-                    particle.vy += (Math.random() - 0.5) * 0.01;
-                    
-                    // Limit velocity
-                    const speed = Math.sqrt(particle.vx * particle.vx + particle.vy * particle.vy);
-                    if (speed > 1.5) {
-                        particle.vx = (particle.vx / speed) * 1.5;
-                        particle.vy = (particle.vy / speed) * 1.5;
-                    }
-                });
-            }
-            
-            drawParticles() {
-                this.particles.forEach(particle => {
-                    const now = Date.now();
-                    
-                    // Draw trail with time-based fading (warm copper/bronze color)
-                    particle.trail.forEach((point, index) => {
-                        const age = now - point.timestamp;
-                        const maxAge = 2000; // 2 seconds
-                        const timeBasedOpacity = Math.max(0, 1 - (age / maxAge));
-                        const trailOpacity = timeBasedOpacity * particle.opacity * 0.3;
-                        const trailRadius = particle.radius * timeBasedOpacity * 0.8;
-                        
-                        if (trailOpacity > 0.01) {
-                            this.ctx.beginPath();
-                            this.ctx.arc(point.x, point.y, trailRadius, 0, Math.PI * 2);
-                            this.ctx.fillStyle = `rgba(160, 120, 90, ${trailOpacity})`;
-                            this.ctx.fill();
-                        }
-                    });
-                    
-                    // Draw main particle (specified dark brown color)
-                    this.ctx.beginPath();
-                    this.ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-                    this.ctx.fillStyle = `rgba(180, 140, 100, ${particle.opacity})`;
-                    this.ctx.fill();
-                    
-                    // Add glow effect (specified dark brown glow)
-                    const gradient = this.ctx.createRadialGradient(
-                        particle.x, particle.y, 0,
-                        particle.x, particle.y, particle.radius * 2.5
-                    );
-                    gradient.addColorStop(0, `rgba(180, 140, 100, ${particle.opacity * 0.4})`);
-                    gradient.addColorStop(0.5, `rgba(160, 120, 90, ${particle.opacity * 0.2})`);
-                    gradient.addColorStop(1, 'rgba(180, 140, 100, 0)');
-                    
-                    this.ctx.beginPath();
-                    this.ctx.arc(particle.x, particle.y, particle.radius * 2.5, 0, Math.PI * 2);
-                    this.ctx.fillStyle = gradient;
-                    this.ctx.fill();
-                });
-            }
-            
-            drawConnections() {
-                for (let i = 0; i < this.particles.length; i++) {
-                    for (let j = i + 1; j < this.particles.length; j++) {
-                        const dx = this.particles[i].x - this.particles[j].x;
-                        const dy = this.particles[i].y - this.particles[j].y;
-                        const distance = Math.sqrt(dx * dx + dy * dy);
-                        
-                        if (distance < this.maxDistance) {
-                            const opacity = (1 - distance / this.maxDistance) * 0.12;
-                            
-                            this.ctx.beginPath();
-                            this.ctx.moveTo(this.particles[i].x, this.particles[i].y);
-                            this.ctx.lineTo(this.particles[j].x, this.particles[j].y);
-                            this.ctx.strokeStyle = `rgba(180, 140, 100, ${opacity})`;
-                            this.ctx.lineWidth = 0.5;
-                            this.ctx.stroke();
-                        }
-                    }
-                }
-            }
-            
-            draw() {
-                // Clear with fade effect for trails (using specified brown tone)
-                this.ctx.fillStyle = 'rgba(74, 23, 8, 0.06)';
-                this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-                
-                this.drawConnections();
-                this.drawParticles();
             }
             
             animate() {
-                this.updateParticles();
-                this.draw();
-                requestAnimationFrame(() => this.animate());
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                // Soft radial glow from center
+                const grad = this.ctx.createRadialGradient(
+                    this.canvas.width / (2 * this.dpr),
+                    this.canvas.height / (2.6 * this.dpr),
+                    0,
+                    this.canvas.width / (2 * this.dpr),
+                    this.canvas.height / (2.6 * this.dpr),
+                    Math.max(this.canvas.width, this.canvas.height) / this.dpr
+                );
+                grad.addColorStop(0, "rgba(255,255,255,0.06)");
+                grad.addColorStop(1, "rgba(255,255,255,0.0)");
+                this.ctx.fillStyle = grad;
+                this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                // Update and draw particles
+                for (let p of this.particles) {
+                    // Gentle elliptical orbit
+                    p.a += 0.003 * p.s;
+                    p.x += Math.cos(p.a) * p.drift;
+                    p.y += Math.sin(p.a * 0.9) * (p.drift * 0.6);
+                    
+                    // Wrap at edges
+                    if (p.x < -10) p.x = this.width + 10;
+                    if (p.x > this.width + 10) p.x = -10;
+                    if (p.y < -10) p.y = this.height + 10;
+                    if (p.y > this.height + 10) p.y = -10;
+                    
+                    // Draw particle with glow
+                    this.ctx.beginPath();
+                    this.ctx.globalAlpha = p.o;
+                    this.ctx.shadowColor = "rgba(255,255,255,0.9)";
+                    this.ctx.shadowBlur = 12;
+                    this.ctx.fillStyle = "#fff";
+                    this.ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                    this.ctx.fill();
+                }
+                
+                // Reset shadow
+                this.ctx.shadowBlur = 0;
+                this.ctx.globalAlpha = 1;
+                
+                this.rafId = requestAnimationFrame(() => this.animate());
             }
             
             bindEvents() {
@@ -1060,36 +1038,22 @@
                     this.resize();
                     this.createParticles();
                 });
-                
-                this.canvas.addEventListener('mousemove', (e) => {
-                    const rect = this.canvas.getBoundingClientRect();
-                    this.mouse.x = e.clientX - rect.left;
-                    this.mouse.y = e.clientY - rect.top;
-                    this.mouse.active = true;
-                });
-                
-                this.canvas.addEventListener('mouseenter', () => {
-                    this.mouse.active = true;
-                });
-                
-                this.canvas.addEventListener('mouseleave', () => {
-                    this.mouse.active = false;
-                });
+            }
+            
+            destroy() {
+                if (this.rafId) {
+                    cancelAnimationFrame(this.rafId);
+                }
             }
         }
         
-        // Initialize particle systems when DOM is loaded
+        // Initialize when DOM is loaded
         document.addEventListener('DOMContentLoaded', () => {
-            const headerElement = document.querySelector('.header');
-            const footerElement = document.querySelector('.footer');
-            
-            if (headerElement && document.getElementById('header-particle-canvas')) {
-                new ParticleSystem('header-particle-canvas', headerElement);
-            }
-            
-            if (footerElement && document.getElementById('footer-particle-canvas')) {
-                new ParticleSystem('footer-particle-canvas', footerElement);
-            }
+            const background = new SeedAIBackground({
+                dotCount: 70,
+                speed: 1,
+                accent: "#c18040"
+            });
         });
     </script>
 
