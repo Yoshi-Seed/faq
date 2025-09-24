@@ -7,10 +7,13 @@ class FAQManager {
         this.tags = new Set();
         this.currentFilters = {
             search: '',
-            category: '',
-            level: '',
-            tag: ''
+            category: new Set(),
+            level: new Set(), 
+            tag: new Set()
         };
+        
+        // Multi-select filter manager
+        this.filterManager = new MultiSelectFilterManager(this);
         
         this.init();
     }
@@ -131,21 +134,12 @@ class FAQManager {
             }, 300);
         });
 
-        // Filter selects
-        document.getElementById('categoryFilter').addEventListener('change', (e) => {
-            this.currentFilters.category = e.target.value;
-            this.applyFilters();
-        });
-
-        document.getElementById('levelFilter').addEventListener('change', (e) => {
-            this.currentFilters.level = e.target.value;
-            this.applyFilters();
-        });
-
-        document.getElementById('tagFilter').addEventListener('change', (e) => {
-            this.currentFilters.tag = e.target.value;
-            this.applyFilters();
-        });
+        // Multi-select filter handlers
+        this.filterManager.setupEventListeners();
+        
+        // Load filters from URL and localStorage
+        this.filterManager.loadFiltersFromURL();
+        this.filterManager.loadFiltersFromStorage();
 
         // FAQ item click handlers will be added when rendering
     }
@@ -153,12 +147,15 @@ class FAQManager {
     applyFilters() {
         this.showLoading(true);
         
+        // Update filter display
+        this.filterManager.renderActiveFilters();
+        
         setTimeout(() => {
             this.filteredData = this.faqData.filter(faq => {
                 const matchesSearch = this.matchesSearch(faq);
-                const matchesCategory = !this.currentFilters.category || faq.category === this.currentFilters.category;
-                const matchesLevel = !this.currentFilters.level || faq.level === this.currentFilters.level;
-                const matchesTag = !this.currentFilters.tag || faq.tags.includes(this.currentFilters.tag);
+                const matchesCategory = this.currentFilters.category.size === 0 || this.currentFilters.category.has(faq.category);
+                const matchesLevel = this.currentFilters.level.size === 0 || this.currentFilters.level.has(faq.level);
+                const matchesTag = this.currentFilters.tag.size === 0 || faq.tags.some(tag => this.currentFilters.tag.has(tag));
                 
                 return matchesSearch && matchesCategory && matchesLevel && matchesTag;
             });
@@ -166,6 +163,10 @@ class FAQManager {
             this.renderFAQs();
             this.updateStats();
             this.showLoading(false);
+            
+            // Update URL and save to localStorage
+            this.filterManager.updateURL();
+            this.filterManager.saveToStorage();
         }, 150);
     }
 
@@ -486,6 +487,307 @@ window.addEventListener('scroll', () => {
         scrollToTopButton.style.pointerEvents = 'none';
     }
 });
+
+// Multi-Select Filter Manager
+class MultiSelectFilterManager {
+    constructor(faqManager) {
+        this.faqManager = faqManager;
+        this.activeFiltersContainer = document.getElementById('activeFilters');
+        this.filtersEmptyState = document.getElementById('filtersEmptyState');
+    }
+
+    setupEventListeners() {
+        // Category filter
+        document.getElementById('categoryFilter').addEventListener('change', (e) => {
+            if (e.target.value) {
+                this.addFilter('category', e.target.value);
+                e.target.selectedIndex = 0; // Reset select
+            }
+        });
+
+        // Level filter  
+        document.getElementById('levelFilter').addEventListener('change', (e) => {
+            if (e.target.value) {
+                this.addFilter('level', e.target.value);
+                e.target.selectedIndex = 0; // Reset select
+            }
+        });
+
+        // Tag filter
+        document.getElementById('tagFilter').addEventListener('change', (e) => {
+            if (e.target.value) {
+                this.addFilter('tag', e.target.value);
+                e.target.selectedIndex = 0; // Reset select
+            }
+        });
+    }
+
+    addFilter(type, value) {
+        if (!this.faqManager.currentFilters[type].has(value)) {
+            this.faqManager.currentFilters[type].add(value);
+            this.faqManager.applyFilters();
+        }
+    }
+
+    removeFilter(type, value) {
+        this.faqManager.currentFilters[type].delete(value);
+        this.faqManager.applyFilters();
+    }
+
+    clearAllFilters() {
+        this.faqManager.currentFilters.category.clear();
+        this.faqManager.currentFilters.level.clear(); 
+        this.faqManager.currentFilters.tag.clear();
+        this.faqManager.currentFilters.search = '';
+        document.getElementById('searchInput').value = '';
+        this.faqManager.applyFilters();
+    }
+
+    renderActiveFilters() {
+        const container = this.activeFiltersContainer;
+        const emptyState = this.filtersEmptyState;
+        
+        // Clear existing content
+        container.innerHTML = '';
+
+        const hasFilters = this.faqManager.currentFilters.category.size > 0 || 
+                          this.faqManager.currentFilters.level.size > 0 || 
+                          this.faqManager.currentFilters.tag.size > 0 ||
+                          this.faqManager.currentFilters.search.length > 0;
+
+        if (!hasFilters) {
+            container.appendChild(emptyState);
+            return;
+        }
+
+        // Create filter badges
+        this.createFilterBadges('category', 'カテゴリ', container);
+        this.createFilterBadges('level', 'レベル', container);
+        this.createFilterBadges('tag', 'タグ', container);
+        
+        // Add search badge if present
+        if (this.faqManager.currentFilters.search) {
+            this.createSearchBadge(container);
+        }
+
+        // Add clear all button
+        if (hasFilters) {
+            this.createClearAllButton(container);
+        }
+    }
+
+    createFilterBadges(type, label, container) {
+        this.faqManager.currentFilters[type].forEach(value => {
+            const badge = this.createBadge(type, value, label);
+            container.appendChild(badge);
+        });
+    }
+
+    createBadge(type, value, typeLabel) {
+        const badge = document.createElement('button');
+        badge.className = 'tag is-active';
+        badge.setAttribute('data-type', type);
+        badge.setAttribute('data-value', value);
+        badge.setAttribute('aria-pressed', 'true');
+        badge.setAttribute('aria-label', `${typeLabel}「${value}」を解除`);
+        
+        const text = document.createElement('span');
+        text.textContent = value;
+        
+        const removeBtn = document.createElement('button');
+        removeBtn.className = 'tag-remove';
+        removeBtn.innerHTML = '×';
+        removeBtn.setAttribute('aria-label', '削除');
+        removeBtn.setAttribute('tabindex', '-1');
+        
+        badge.appendChild(text);
+        badge.appendChild(removeBtn);
+        
+        // Event listeners
+        const handleRemove = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            this.removeFilter(type, value);
+        };
+        
+        badge.addEventListener('click', handleRemove);
+        removeBtn.addEventListener('click', handleRemove);
+        
+        // Keyboard support
+        badge.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                handleRemove(e);
+            }
+        });
+        
+        return badge;
+    }
+
+    createSearchBadge(container) {
+        const badge = document.createElement('button');
+        badge.className = 'tag is-active';
+        badge.setAttribute('aria-pressed', 'true');
+        badge.setAttribute('aria-label', `検索「${this.faqManager.currentFilters.search}」を解除`);
+        
+        const text = document.createElement('span');
+        text.textContent = `検索: ${this.faqManager.currentFilters.search}`;
+        
+        const removeBtn = document.createElement('button');
+        removeBtn.className = 'tag-remove';
+        removeBtn.innerHTML = '×';
+        removeBtn.setAttribute('aria-label', '削除');
+        removeBtn.setAttribute('tabindex', '-1');
+        
+        badge.appendChild(text);
+        badge.appendChild(removeBtn);
+        
+        // Event listeners
+        const handleRemove = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            this.faqManager.currentFilters.search = '';
+            document.getElementById('searchInput').value = '';
+            this.faqManager.applyFilters();
+        };
+        
+        badge.addEventListener('click', handleRemove);
+        removeBtn.addEventListener('click', handleRemove);
+        
+        // Keyboard support
+        badge.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                handleRemove(e);
+            }
+        });
+        
+        container.appendChild(badge);
+    }
+
+    createClearAllButton(container) {
+        const clearBtn = document.createElement('button');
+        clearBtn.className = 'clear-all';
+        clearBtn.textContent = 'すべて解除';
+        clearBtn.setAttribute('aria-label', 'すべてのフィルターを解除');
+        
+        clearBtn.addEventListener('click', () => {
+            this.clearAllFilters();
+        });
+        
+        clearBtn.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.clearAllFilters();
+            }
+        });
+        
+        container.appendChild(clearBtn);
+    }
+
+    // URL synchronization
+    updateURL() {
+        const url = new URL(window.location);
+        url.search = '';
+        
+        // Add filters to URL
+        this.faqManager.currentFilters.category.forEach(cat => {
+            url.searchParams.append('category', cat);
+        });
+        
+        this.faqManager.currentFilters.level.forEach(level => {
+            url.searchParams.append('level', level);
+        });
+        
+        this.faqManager.currentFilters.tag.forEach(tag => {
+            url.searchParams.append('tag', tag);
+        });
+        
+        if (this.faqManager.currentFilters.search) {
+            url.searchParams.set('search', this.faqManager.currentFilters.search);
+        }
+        
+        window.history.replaceState({}, '', url);
+    }
+
+    loadFiltersFromURL() {
+        const urlParams = new URLSearchParams(window.location.search);
+        
+        // Load categories
+        const categories = urlParams.getAll('category');
+        categories.forEach(cat => this.faqManager.currentFilters.category.add(cat));
+        
+        // Load levels
+        const levels = urlParams.getAll('level');
+        levels.forEach(level => this.faqManager.currentFilters.level.add(level));
+        
+        // Load tags
+        const tags = urlParams.getAll('tag');
+        tags.forEach(tag => this.faqManager.currentFilters.tag.add(tag));
+        
+        // Load search
+        const search = urlParams.get('search');
+        if (search) {
+            this.faqManager.currentFilters.search = search;
+            document.getElementById('searchInput').value = search;
+        }
+        
+        if (categories.length > 0 || levels.length > 0 || tags.length > 0 || search) {
+            this.faqManager.applyFilters();
+        }
+    }
+
+    // localStorage persistence
+    saveToStorage() {
+        const filters = {
+            category: Array.from(this.faqManager.currentFilters.category),
+            level: Array.from(this.faqManager.currentFilters.level),
+            tag: Array.from(this.faqManager.currentFilters.tag),
+            search: this.faqManager.currentFilters.search
+        };
+        
+        try {
+            localStorage.setItem('faq_filters', JSON.stringify(filters));
+        } catch (error) {
+            console.warn('Failed to save filters to localStorage:', error);
+        }
+    }
+
+    loadFiltersFromStorage() {
+        try {
+            const saved = localStorage.getItem('faq_filters');
+            if (!saved) return;
+            
+            const filters = JSON.parse(saved);
+            
+            // Only load from storage if no URL params were present
+            const hasUrlParams = window.location.search.length > 0;
+            if (hasUrlParams) return;
+            
+            // Load saved filters
+            if (filters.category) {
+                filters.category.forEach(cat => this.faqManager.currentFilters.category.add(cat));
+            }
+            if (filters.level) {
+                filters.level.forEach(level => this.faqManager.currentFilters.level.add(level));
+            }
+            if (filters.tag) {
+                filters.tag.forEach(tag => this.faqManager.currentFilters.tag.add(tag));
+            }
+            if (filters.search) {
+                this.faqManager.currentFilters.search = filters.search;
+                document.getElementById('searchInput').value = filters.search;
+            }
+            
+            if (filters.category?.length > 0 || filters.level?.length > 0 || 
+                filters.tag?.length > 0 || filters.search) {
+                this.faqManager.applyFilters();
+            }
+        } catch (error) {
+            console.warn('Failed to load filters from localStorage:', error);
+        }
+    }
+}
 
 // Add analytics tracking (if needed in the future)
 window.trackFAQInteraction = function(action, faqId, category) {

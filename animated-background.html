@@ -795,6 +795,95 @@
             padding: 0.1rem 0.2rem;
             border-radius: 3px;
         }
+
+        /* Active Filters */
+        .active-filters {
+            display: flex;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+            margin: 0.5rem 0 0;
+            padding: 0.8rem 1rem;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(222, 226, 230, 0.6);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            align-items: center;
+            min-height: 1rem;
+        }
+
+        .active-filters:empty {
+            display: none;
+        }
+
+        .tag.is-active {
+            border-color: var(--secondary-color);
+            background: #fff;
+            color: var(--primary-color);
+            padding: 0.3rem 0.8rem;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .tag.is-active:hover {
+            background: #f8f9fa;
+            border-color: var(--primary-color);
+        }
+
+        .tag.is-active:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(139, 69, 19, 0.2);
+        }
+
+        .tag-remove {
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: var(--text-light);
+            cursor: pointer;
+            padding: 0;
+            background: none;
+            border: none;
+            line-height: 1;
+        }
+
+        .tag-remove:hover {
+            color: var(--primary-color);
+        }
+
+        .clear-all {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-light);
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-left: auto;
+        }
+
+        .clear-all:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .clear-all:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(139, 69, 19, 0.2);
+        }
+
+        .filters-empty-state {
+            color: var(--text-light);
+            font-size: 0.85rem;
+            font-style: italic;
+            opacity: 0.7;
+        }
     </style>
 </head>
 <body>
@@ -872,6 +961,12 @@
                             <option value="">すべてのタグ</option>
                         </select>
                     </div>
+                </div>
+                
+                <!-- Active Filters Display -->
+                <div class="active-filters" id="activeFilters" aria-live="polite">
+                    <!-- Active filter badges will be inserted here by JavaScript -->
+                    <span class="filters-empty-state" id="filtersEmptyState">フィルターを選択してください</span>
                 </div>
             </div>
         </section>
