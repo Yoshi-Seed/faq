@@ -753,6 +753,1274 @@ window.EMS_DATA = {
         "RenalRisk"
       ],
       "flags": []
+    },
+    {
+      "id": "candesartan",
+      "generic": "カンデサルタン",
+      "english": "Candesartan",
+      "brands": [
+        "ブロプレス"
+      ],
+      "synonyms": [
+        "candesartan",
+        "candesarutan",
+        "ｶﾝﾃﾞｻﾙﾀﾝ"
+      ],
+      "classes": [
+        "ARB"
+      ],
+      "flags": []
+    },
+    {
+      "id": "olmesartan",
+      "generic": "オルメサルタン",
+      "english": "Olmesartan",
+      "brands": [
+        "オルメテック"
+      ],
+      "synonyms": [
+        "olmesartan",
+        "orumesartan",
+        "ｵﾙﾒｻﾙﾀﾝ"
+      ],
+      "classes": [
+        "ARB"
+      ],
+      "flags": []
+    },
+    {
+      "id": "telmisartan",
+      "generic": "テルミサルタン",
+      "english": "Telmisartan",
+      "brands": [
+        "ミカルディス"
+      ],
+      "synonyms": [
+        "telmisartan",
+        "terumisartan",
+        "ﾃﾙﾐｻﾙﾀﾝ"
+      ],
+      "classes": [
+        "ARB"
+      ],
+      "flags": []
+    },
+    {
+      "id": "irbesartan",
+      "generic": "イルベサルタン",
+      "english": "Irbesartan",
+      "brands": [
+        "アバプロ"
+      ],
+      "synonyms": [
+        "irbesartan",
+        "irubesartan",
+        "ｲﾙﾍﾞｻﾙﾀﾝ"
+      ],
+      "classes": [
+        "ARB"
+      ],
+      "flags": []
+    },
+    {
+      "id": "nifedipine",
+      "generic": "ニフェジピン",
+      "english": "Nifedipine",
+      "brands": [
+        "アダラート"
+      ],
+      "synonyms": [
+        "nifedipine",
+        "ﾆﾌｪｼﾞﾋﾟﾝ"
+      ],
+      "classes": [
+        "CCB"
+      ],
+      "flags": []
+    },
+    {
+      "id": "nicardipine",
+      "generic": "ニカルジピン",
+      "english": "Nicardipine",
+      "brands": [
+        "ペルジピン"
+      ],
+      "synonyms": [
+        "nicardipine",
+        "ﾆｶﾙｼﾞﾋﾟﾝ"
+      ],
+      "classes": [
+        "CCB"
+      ],
+      "flags": []
+    },
+    {
+      "id": "bisoprolol",
+      "generic": "ビソプロロール",
+      "english": "Bisoprolol",
+      "brands": [
+        "メインテート"
+      ],
+      "synonyms": [
+        "bisoprolol",
+        "ﾋﾞｿﾌﾟﾛﾛｰﾙ"
+      ],
+      "classes": [
+        "BetaBlocker"
+      ],
+      "flags": []
+    },
+    {
+      "id": "atenolol",
+      "generic": "アテノロール",
+      "english": "Atenolol",
+      "brands": [
+        "テノーミン"
+      ],
+      "synonyms": [
+        "atenolol",
+        "ｱﾃﾉﾛｰﾙ"
+      ],
+      "classes": [
+        "BetaBlocker"
+      ],
+      "flags": []
+    },
+    {
+      "id": "doxazosin",
+      "generic": "ドキサゾシン",
+      "english": "Doxazosin",
+      "brands": [
+        "カルデナリン"
+      ],
+      "synonyms": [
+        "doxazosin",
+        "ﾄﾞｷｻｿﾞｼﾝ"
+      ],
+      "classes": [
+        "AlphaBlocker"
+      ],
+      "flags": []
+    },
+    {
+      "id": "tamsulosin",
+      "generic": "タムスロシン",
+      "english": "Tamsulosin",
+      "brands": [
+        "ハルナール"
+      ],
+      "synonyms": [
+        "tamsulosin",
+        "ﾀﾑｽﾛｼﾝ"
+      ],
+      "classes": [
+        "AlphaBlocker"
+      ],
+      "flags": []
+    },
+    {
+      "id": "prazosin",
+      "generic": "プラゾシン",
+      "english": "Prazosin",
+      "brands": [
+        "ミニプレス"
+      ],
+      "synonyms": [
+        "prazosin",
+        "ﾌﾟﾗｿﾞｼﾝ"
+      ],
+      "classes": [
+        "AlphaBlocker"
+      ],
+      "flags": []
+    },
+    {
+      "id": "clonidine",
+      "generic": "クロニジン",
+      "english": "Clonidine",
+      "brands": [
+        "カタプレス"
+      ],
+      "synonyms": [
+        "clonidine",
+        "karonijin",
+        "ｸﾛﾆｼﾞﾝ"
+      ],
+      "classes": [
+        "CentralAlpha2"
+      ],
+      "flags": []
+    },
+    {
+      "id": "methyldopa",
+      "generic": "メチルドパ",
+      "english": "Methyldopa",
+      "brands": [
+        "アルドメット"
+      ],
+      "synonyms": [
+        "methyldopa",
+        "ﾒﾁﾙﾄﾞﾊﾟ"
+      ],
+      "classes": [
+        "CentralAlpha2"
+      ],
+      "flags": []
+    },
+    {
+      "id": "spironolactone",
+      "generic": "スピロノラクトン",
+      "english": "Spironolactone",
+      "brands": [
+        "アルダクトンA"
+      ],
+      "synonyms": [
+        "spironolactone",
+        "ｽﾋﾟﾛﾉﾗｸﾄﾝ"
+      ],
+      "classes": [
+        "Diuretic",
+        "MRA",
+        "PotassiumSparing"
+      ],
+      "flags": []
+    },
+    {
+      "id": "eplerenone",
+      "generic": "エプレレノン",
+      "english": "Eplerenone",
+      "brands": [
+        "セララ"
+      ],
+      "synonyms": [
+        "eplerenone",
+        "ｴﾌﾟﾚﾚﾉﾝ"
+      ],
+      "classes": [
+        "Diuretic",
+        "MRA"
+      ],
+      "flags": []
+    },
+    {
+      "id": "indapamide",
+      "generic": "インダパミド",
+      "english": "Indapamide",
+      "brands": [
+        "ナトリックス"
+      ],
+      "synonyms": [
+        "indapamide",
+        "ｲﾝﾀﾞﾊﾟﾐﾄﾞ"
+      ],
+      "classes": [
+        "Diuretic"
+      ],
+      "flags": []
+    },
+    {
+      "id": "trichlormethiazide",
+      "generic": "トリクロルメチアジド",
+      "english": "Trichlormethiazide",
+      "brands": [
+        "フルイトラン"
+      ],
+      "synonyms": [
+        "trichlormethiazide",
+        "ﾄﾘｸﾛﾙﾒﾁｱｼﾞﾄﾞ"
+      ],
+      "classes": [
+        "Diuretic"
+      ],
+      "flags": []
+    },
+    {
+      "id": "isosorbide_dinitrate",
+      "generic": "イソソルビド二硝酸",
+      "english": "Isosorbide dinitrate",
+      "brands": [
+        "フランドル",
+        "ニトロールR"
+      ],
+      "synonyms": [
+        "isosorbide dinitrate",
+        "isdn",
+        "ｲｿｿﾙﾋﾞﾄﾞ二硝酸"
+      ],
+      "classes": [
+        "NitrateLA"
+      ],
+      "flags": []
+    },
+    {
+      "id": "isosorbide_mononitrate",
+      "generic": "イソソルビド一硝酸",
+      "english": "Isosorbide mononitrate",
+      "brands": [],
+      "synonyms": [
+        "isosorbide mononitrate",
+        "ismn",
+        "ｲｿｿﾙﾋﾞﾄﾞ一硝酸"
+      ],
+      "classes": [
+        "NitrateLA"
+      ],
+      "flags": []
+    },
+    {
+      "id": "nicorandil",
+      "generic": "ニコランジル",
+      "english": "Nicorandil",
+      "brands": [
+        "シグマート"
+      ],
+      "synonyms": [
+        "nicorandil",
+        "ﾆｺﾗﾝｼﾞﾙ"
+      ],
+      "classes": [
+        "NitrateLike"
+      ],
+      "flags": []
+    },
+    {
+      "id": "riociguat",
+      "generic": "リオシグアト",
+      "english": "Riociguat",
+      "brands": [
+        "アデムパス"
+      ],
+      "synonyms": [
+        "riociguat",
+        "ｱﾃﾞﾑﾊﾟｽ",
+        "adempas"
+      ],
+      "classes": [
+        "sGCStimulator"
+      ],
+      "flags": []
+    },
+    {
+      "id": "ivabradine",
+      "generic": "イバブラジン",
+      "english": "Ivabradine",
+      "brands": [
+        "コララン"
+      ],
+      "synonyms": [
+        "ivabradine",
+        "ｲﾊﾞﾌﾞﾗｼﾞﾝ"
+      ],
+      "classes": [
+        "Ivabradine"
+      ],
+      "flags": []
+    },
+    {
+      "id": "sacubitril_valsartan",
+      "generic": "サクビトリル/バルサルタン",
+      "english": "Sacubitril/Valsartan",
+      "brands": [
+        "エンレスト"
+      ],
+      "synonyms": [
+        "sacubitril",
+        "entresto",
+        "ｴﾝﾚｽﾄ"
+      ],
+      "classes": [
+        "ARNI",
+        "ARB"
+      ],
+      "flags": []
+    },
+    {
+      "id": "pilsicainide",
+      "generic": "ピルシカイナイド",
+      "english": "Pilsicainide",
+      "brands": [
+        "サンリズム"
+      ],
+      "synonyms": [
+        "pilsicainide",
+        "ﾋﾟﾙｼｶｲﾅｲﾄﾞ"
+      ],
+      "classes": [
+        "Antiarrhythmic"
+      ],
+      "flags": []
+    },
+    {
+      "id": "flecainide",
+      "generic": "フレカイニド",
+      "english": "Flecainide",
+      "brands": [
+        "タンボコール"
+      ],
+      "synonyms": [
+        "flecainide",
+        "ﾌﾚｶｲﾆﾄﾞ"
+      ],
+      "classes": [
+        "Antiarrhythmic"
+      ],
+      "flags": [
+        "QT"
+      ]
+    },
+    {
+      "id": "metformin",
+      "generic": "メトホルミン",
+      "english": "Metformin",
+      "brands": [
+        "メトグルコ"
+      ],
+      "synonyms": [
+        "metformin",
+        "ﾒﾄﾎﾙﾐﾝ"
+      ],
+      "classes": [
+        "Biguanide"
+      ],
+      "flags": []
+    },
+    {
+      "id": "gliclazide",
+      "generic": "グリクラジド",
+      "english": "Gliclazide",
+      "brands": [
+        "グリミクロン"
+      ],
+      "synonyms": [
+        "gliclazide",
+        "ｸﾞﾘｸﾗｼﾞﾄﾞ"
+      ],
+      "classes": [
+        "Sulfonylurea"
+      ],
+      "flags": []
+    },
+    {
+      "id": "glipizide",
+      "generic": "グリピジド",
+      "english": "Glipizide",
+      "brands": [],
+      "synonyms": [
+        "glipizide"
+      ],
+      "classes": [
+        "Sulfonylurea"
+      ],
+      "flags": []
+    },
+    {
+      "id": "sitagliptin",
+      "generic": "シタグリプチン",
+      "english": "Sitagliptin",
+      "brands": [
+        "ジャヌビア"
+      ],
+      "synonyms": [
+        "sitagliptin",
+        "janubia",
+        "ｼﾀｸﾞﾘﾌﾟﾁﾝ"
+      ],
+      "classes": [
+        "DPP4i"
+      ],
+      "flags": []
+    },
+    {
+      "id": "linagliptin",
+      "generic": "リナグリプチン",
+      "english": "Linagliptin",
+      "brands": [
+        "トラゼンタ"
+      ],
+      "synonyms": [
+        "linagliptin",
+        "tradjenta",
+        "ﾘﾅｸﾞﾘﾌﾟﾁﾝ"
+      ],
+      "classes": [
+        "DPP4i"
+      ],
+      "flags": []
+    },
+    {
+      "id": "vildagliptin",
+      "generic": "ビルダグリプチン",
+      "english": "Vildagliptin",
+      "brands": [
+        "エクア"
+      ],
+      "synonyms": [
+        "vildagliptin",
+        "ｳﾞｨﾙﾀﾞｸﾞﾘﾌﾟﾁﾝ"
+      ],
+      "classes": [
+        "DPP4i"
+      ],
+      "flags": []
+    },
+    {
+      "id": "alogliptin",
+      "generic": "アログリプチン",
+      "english": "Alogliptin",
+      "brands": [
+        "ネシーナ"
+      ],
+      "synonyms": [
+        "alogliptin",
+        "nesina",
+        "ｱﾛｸﾞﾘﾌﾟﾁﾝ"
+      ],
+      "classes": [
+        "DPP4i"
+      ],
+      "flags": []
+    },
+    {
+      "id": "teneligliptin",
+      "generic": "テネリグリプチン",
+      "english": "Teneligliptin",
+      "brands": [
+        "テネリア"
+      ],
+      "synonyms": [
+        "teneligliptin",
+        "ﾃﾈﾘｸﾞﾘﾌﾟﾁﾝ"
+      ],
+      "classes": [
+        "DPP4i"
+      ],
+      "flags": []
+    },
+    {
+      "id": "empagliflozin",
+      "generic": "エンパグリフロジン",
+      "english": "Empagliflozin",
+      "brands": [
+        "ジャディアンス"
+      ],
+      "synonyms": [
+        "empagliflozin",
+        "ｴﾝﾊﾟｸﾞﾘﾌﾛｼﾞﾝ",
+        "jardiance"
+      ],
+      "classes": [
+        "SGLT2i"
+      ],
+      "flags": []
+    },
+    {
+      "id": "dapagliflozin",
+      "generic": "ダパグリフロジン",
+      "english": "Dapagliflozin",
+      "brands": [
+        "フォシーガ"
+      ],
+      "synonyms": [
+        "dapagliflozin",
+        "ﾀﾞﾊﾟｸﾞﾘﾌﾛｼﾞﾝ",
+        "forxiga"
+      ],
+      "classes": [
+        "SGLT2i"
+      ],
+      "flags": []
+    },
+    {
+      "id": "canagliflozin",
+      "generic": "カナグリフロジン",
+      "english": "Canagliflozin",
+      "brands": [
+        "カナグル"
+      ],
+      "synonyms": [
+        "canagliflozin",
+        "ｶﾅｸﾞﾘﾌﾛｼﾞﾝ"
+      ],
+      "classes": [
+        "SGLT2i"
+      ],
+      "flags": []
+    },
+    {
+      "id": "ipragliflozin",
+      "generic": "イプラグリフロジン",
+      "english": "Ipragliflozin",
+      "brands": [
+        "スーグラ"
+      ],
+      "synonyms": [
+        "ipragliflozin",
+        "ｱｲﾌﾟﾗｸﾞﾘﾌﾛｼﾞﾝ"
+      ],
+      "classes": [
+        "SGLT2i"
+      ],
+      "flags": []
+    },
+    {
+      "id": "luseogliflozin",
+      "generic": "ルセオグリフロジン",
+      "english": "Luseogliflozin",
+      "brands": [
+        "ルセフィ"
+      ],
+      "synonyms": [
+        "luseogliflozin",
+        "lusefi",
+        "ﾙｾｵｸﾞﾘﾌﾛｼﾞﾝ"
+      ],
+      "classes": [
+        "SGLT2i"
+      ],
+      "flags": []
+    },
+    {
+      "id": "tofogliflozin",
+      "generic": "トホグリフロジン",
+      "english": "Tofogliflozin",
+      "brands": [
+        "デベルザ"
+      ],
+      "synonyms": [
+        "tofogliflozin",
+        "ﾄﾎﾌｸﾞﾘﾌﾛｼﾞﾝ"
+      ],
+      "classes": [
+        "SGLT2i"
+      ],
+      "flags": []
+    },
+    {
+      "id": "pioglitazone",
+      "generic": "ピオグリタゾン",
+      "english": "Pioglitazone",
+      "brands": [
+        "アクトス"
+      ],
+      "synonyms": [
+        "pioglitazone",
+        "ﾋﾟｵｸﾞﾘﾀｿﾞﾝ"
+      ],
+      "classes": [
+        "TZD"
+      ],
+      "flags": []
+    },
+    {
+      "id": "acarbose",
+      "generic": "アカルボース",
+      "english": "Acarbose",
+      "brands": [
+        "グルコバイ"
+      ],
+      "synonyms": [
+        "acarbose",
+        "ｱｶﾙﾎﾞｰｽ"
+      ],
+      "classes": [
+        "alpha_GI"
+      ],
+      "flags": []
+    },
+    {
+      "id": "voglibose",
+      "generic": "ボグリボース",
+      "english": "Voglibose",
+      "brands": [
+        "ベイスン"
+      ],
+      "synonyms": [
+        "voglibose",
+        "ﾎﾞｸﾞﾘﾎﾞｰｽ"
+      ],
+      "classes": [
+        "alpha_GI"
+      ],
+      "flags": []
+    },
+    {
+      "id": "miglitol",
+      "generic": "ミグリトール",
+      "english": "Miglitol",
+      "brands": [
+        "セイブル"
+      ],
+      "synonyms": [
+        "miglitol",
+        "ﾐｸﾞﾘﾄｰﾙ"
+      ],
+      "classes": [
+        "alpha_GI"
+      ],
+      "flags": []
+    },
+    {
+      "id": "dulaglutide",
+      "generic": "デュラグルチド",
+      "english": "Dulaglutide",
+      "brands": [
+        "トルリシティ"
+      ],
+      "synonyms": [
+        "dulaglutide",
+        "ﾃﾞｭﾗｸﾞﾙﾁﾄﾞ"
+      ],
+      "classes": [
+        "GLP1RA"
+      ],
+      "flags": []
+    },
+    {
+      "id": "liraglutide",
+      "generic": "リラグルチド",
+      "english": "Liraglutide",
+      "brands": [
+        "ビクトーザ"
+      ],
+      "synonyms": [
+        "liraglutide",
+        "ﾘﾗｸﾞﾙﾁﾄﾞ"
+      ],
+      "classes": [
+        "GLP1RA"
+      ],
+      "flags": []
+    },
+    {
+      "id": "semaglutide",
+      "generic": "セマグルチド",
+      "english": "Semaglutide",
+      "brands": [
+        "オゼンピック",
+        "リベルサス"
+      ],
+      "synonyms": [
+        "semaglutide",
+        "ozempic",
+        "rybelsus",
+        "ｾﾏｸﾞﾙﾁﾄﾞ"
+      ],
+      "classes": [
+        "GLP1RA"
+      ],
+      "flags": []
+    },
+    {
+      "id": "sertraline",
+      "generic": "セルトラリン",
+      "english": "Sertraline",
+      "brands": [
+        "ジェイゾロフト"
+      ],
+      "synonyms": [
+        "sertraline",
+        "ｾﾙﾄﾗﾘﾝ",
+        "jzoloft"
+      ],
+      "classes": [
+        "SSRI"
+      ],
+      "flags": [
+        "Serotonergic"
+      ]
+    },
+    {
+      "id": "paroxetine",
+      "generic": "パロキセチン",
+      "english": "Paroxetine",
+      "brands": [
+        "パキシル"
+      ],
+      "synonyms": [
+        "paroxetine",
+        "ﾊﾟﾛｷｾﾁﾝ",
+        "paxil"
+      ],
+      "classes": [
+        "SSRI"
+      ],
+      "flags": [
+        "Serotonergic"
+      ]
+    },
+    {
+      "id": "fluvoxamine",
+      "generic": "フルボキサミン",
+      "english": "Fluvoxamine",
+      "brands": [
+        "デプロメール",
+        "ルボックス"
+      ],
+      "synonyms": [
+        "fluvoxamine",
+        "ﾌﾙﾎﾞｷｻﾐﾝ"
+      ],
+      "classes": [
+        "SSRI"
+      ],
+      "flags": [
+        "Serotonergic"
+      ]
+    },
+    {
+      "id": "escitalopram",
+      "generic": "エスシタロプラム",
+      "english": "Escitalopram",
+      "brands": [
+        "レクサプロ"
+      ],
+      "synonyms": [
+        "escitalopram",
+        "lexapro",
+        "ｴｽｼﾀﾛﾌﾟﾗﾑ"
+      ],
+      "classes": [
+        "SSRI"
+      ],
+      "flags": [
+        "Serotonergic"
+      ]
+    },
+    {
+      "id": "duloxetine",
+      "generic": "デュロキセチン",
+      "english": "Duloxetine",
+      "brands": [
+        "サインバルタ"
+      ],
+      "synonyms": [
+        "duloxetine",
+        "ｻｲﾝﾊﾞﾙﾀ"
+      ],
+      "classes": [
+        "SNRI"
+      ],
+      "flags": [
+        "Serotonergic"
+      ]
+    },
+    {
+      "id": "venlafaxine",
+      "generic": "ベンラファキシン",
+      "english": "Venlafaxine",
+      "brands": [
+        "イフェクサー"
+      ],
+      "synonyms": [
+        "venlafaxine",
+        "ｲﾌｪｸｻｰ"
+      ],
+      "classes": [
+        "SNRI"
+      ],
+      "flags": [
+        "Serotonergic"
+      ]
+    },
+    {
+      "id": "milnacipran",
+      "generic": "ミルナシプラン",
+      "english": "Milnacipran",
+      "brands": [
+        "トレドミン"
+      ],
+      "synonyms": [
+        "milnacipran",
+        "ﾐﾙﾅｼﾌﾟﾗﾝ"
+      ],
+      "classes": [
+        "SNRI"
+      ],
+      "flags": [
+        "Serotonergic"
+      ]
+    },
+    {
+      "id": "risperidone",
+      "generic": "リスペリドン",
+      "english": "Risperidone",
+      "brands": [
+        "リスパダール"
+      ],
+      "synonyms": [
+        "risperidone",
+        "ﾘｽﾍﾟﾘﾄﾞﾝ"
+      ],
+      "classes": [
+        "Antipsychotic"
+      ],
+      "flags": [
+        "QT"
+      ]
+    },
+    {
+      "id": "olanzapine",
+      "generic": "オランザピン",
+      "english": "Olanzapine",
+      "brands": [
+        "ジプレキサ"
+      ],
+      "synonyms": [
+        "olanzapine",
+        "ｵﾗﾝｻﾞﾋﾟﾝ"
+      ],
+      "classes": [
+        "Antipsychotic"
+      ],
+      "flags": []
+    },
+    {
+      "id": "aripiprazole",
+      "generic": "アリピプラゾール",
+      "english": "Aripiprazole",
+      "brands": [
+        "エビリファイ"
+      ],
+      "synonyms": [
+        "aripiprazole",
+        "ｱﾘﾋﾟﾌﾟﾗｿﾞｰﾙ"
+      ],
+      "classes": [
+        "Antipsychotic"
+      ],
+      "flags": []
+    },
+    {
+      "id": "linezolid",
+      "generic": "リネゾリド",
+      "english": "Linezolid",
+      "brands": [
+        "ザイボックス"
+      ],
+      "synonyms": [
+        "linezolid",
+        "ﾘﾈｿﾞﾘﾄﾞ",
+        "zyvox"
+      ],
+      "classes": [
+        "MAOI_A"
+      ],
+      "flags": [
+        "Serotonergic"
+      ]
+    },
+    {
+      "id": "imipramine",
+      "generic": "イミプラミン",
+      "english": "Imipramine",
+      "brands": [
+        "トフラニール"
+      ],
+      "synonyms": [
+        "imipramine"
+      ],
+      "classes": [
+        "TCA"
+      ],
+      "flags": [
+        "QT"
+      ]
+    },
+    {
+      "id": "nortriptyline",
+      "generic": "ノルトリプチリン",
+      "english": "Nortriptyline",
+      "brands": [],
+      "synonyms": [
+        "nortriptyline"
+      ],
+      "classes": [
+        "TCA"
+      ],
+      "flags": [
+        "QT"
+      ]
+    },
+    {
+      "id": "atorvastatin",
+      "generic": "アトルバスタチン",
+      "english": "Atorvastatin",
+      "brands": [
+        "リピトール"
+      ],
+      "synonyms": [
+        "atorvastatin",
+        "ﾘﾋﾟﾄｰﾙ"
+      ],
+      "classes": [
+        "Statin"
+      ],
+      "flags": []
+    },
+    {
+      "id": "rosuvastatin",
+      "generic": "ロスバスタチン",
+      "english": "Rosuvastatin",
+      "brands": [
+        "クレストール"
+      ],
+      "synonyms": [
+        "rosuvastatin",
+        "crestor",
+        "ﾛｽﾊﾞｽﾀﾁﾝ"
+      ],
+      "classes": [
+        "Statin"
+      ],
+      "flags": []
+    },
+    {
+      "id": "pravastatin",
+      "generic": "プラバスタチン",
+      "english": "Pravastatin",
+      "brands": [
+        "メバロチン"
+      ],
+      "synonyms": [
+        "pravastatin",
+        "mevalotin",
+        "ﾌﾟﾗﾊﾞｽﾀﾁﾝ"
+      ],
+      "classes": [
+        "Statin"
+      ],
+      "flags": []
+    },
+    {
+      "id": "levothyroxine",
+      "generic": "レボチロキシン",
+      "english": "Levothyroxine",
+      "brands": [
+        "チラーヂンS"
+      ],
+      "synonyms": [
+        "levothyroxine",
+        "l-thyroxine",
+        "ﾚﾎﾞﾁｮﾛｷｼﾝ"
+      ],
+      "classes": [
+        "Thyroid"
+      ],
+      "flags": []
+    },
+    {
+      "id": "methimazole",
+      "generic": "メチマゾール",
+      "english": "Methimazole",
+      "brands": [
+        "メルカゾール"
+      ],
+      "synonyms": [
+        "methimazole",
+        "mercazole",
+        "ﾒﾁﾏｿﾞｰﾙ"
+      ],
+      "classes": [
+        "Antithyroid"
+      ],
+      "flags": []
+    },
+    {
+      "id": "propylthiouracil",
+      "generic": "プロピルチオウラシル",
+      "english": "Propylthiouracil",
+      "brands": [],
+      "synonyms": [
+        "propylthiouracil",
+        "ptu"
+      ],
+      "classes": [
+        "Antithyroid"
+      ],
+      "flags": []
+    },
+    {
+      "id": "allopurinol",
+      "generic": "アロプリノール",
+      "english": "Allopurinol",
+      "brands": [
+        "ザイロリック"
+      ],
+      "synonyms": [
+        "allopurinol",
+        "ｱﾛﾌﾟﾘﾉｰﾙ"
+      ],
+      "classes": [
+        "UrateLowering"
+      ],
+      "flags": []
+    },
+    {
+      "id": "febuxostat",
+      "generic": "フェブキソスタット",
+      "english": "Febuxostat",
+      "brands": [
+        "フェブリク"
+      ],
+      "synonyms": [
+        "febuxostat",
+        "feburic",
+        "ﾌｪﾌﾞｷｿｽﾀｯﾄ"
+      ],
+      "classes": [
+        "UrateLowering"
+      ],
+      "flags": []
+    },
+    {
+      "id": "budesonide",
+      "generic": "ブデソニド",
+      "english": "Budesonide",
+      "brands": [
+        "パルミコート"
+      ],
+      "synonyms": [
+        "budesonide",
+        "pulmicort",
+        "ﾌﾞﾃﾞｿﾆﾄﾞ"
+      ],
+      "classes": [
+        "ICS"
+      ],
+      "flags": []
+    },
+    {
+      "id": "fluticasone",
+      "generic": "フルチカゾン",
+      "english": "Fluticasone",
+      "brands": [
+        "フルタイド"
+      ],
+      "synonyms": [
+        "fluticasone",
+        "flutide",
+        "ﾌﾙﾁｶｿﾞﾝ"
+      ],
+      "classes": [
+        "ICS"
+      ],
+      "flags": []
+    },
+    {
+      "id": "azithromycin",
+      "generic": "アジスロマイシン",
+      "english": "Azithromycin",
+      "brands": [
+        "ジスロマック"
+      ],
+      "synonyms": [
+        "azithromycin",
+        "ｱｼﾞｽﾛﾏｲｼﾝ"
+      ],
+      "classes": [
+        "Macrolide"
+      ],
+      "flags": [
+        "QT"
+      ]
+    },
+    {
+      "id": "levofloxacin",
+      "generic": "レボフロキサシン",
+      "english": "Levofloxacin",
+      "brands": [
+        "クラビット"
+      ],
+      "synonyms": [
+        "levofloxacin",
+        "ｸﾗﾋﾞｯﾄ",
+        "lvfx"
+      ],
+      "classes": [
+        "Fluoroquinolone"
+      ],
+      "flags": [
+        "QT"
+      ]
+    },
+    {
+      "id": "prednisolone",
+      "generic": "プレドニゾロン",
+      "english": "Prednisolone",
+      "brands": [],
+      "synonyms": [
+        "prednisolone",
+        "ﾌﾟﾚﾄﾞﾆｿﾞﾛﾝ"
+      ],
+      "classes": [
+        "Corticosteroid"
+      ],
+      "flags": []
+    },
+    {
+      "id": "diazepam",
+      "generic": "ジアゼパム",
+      "english": "Diazepam",
+      "brands": [
+        "セルシン",
+        "ホリゾン"
+      ],
+      "synonyms": [
+        "diazepam",
+        "ｼﾞｱｾﾞﾊﾟﾑ"
+      ],
+      "classes": [
+        "BZD"
+      ],
+      "flags": []
+    },
+    {
+      "id": "lorazepam",
+      "generic": "ロラゼパム",
+      "english": "Lorazepam",
+      "brands": [
+        "ワイパックス"
+      ],
+      "synonyms": [
+        "lorazepam",
+        "ﾛﾗｾﾞﾊﾟﾑ"
+      ],
+      "classes": [
+        "BZD"
+      ],
+      "flags": []
+    },
+    {
+      "id": "alprazolam",
+      "generic": "アルプラゾラム",
+      "english": "Alprazolam",
+      "brands": [
+        "ソラナックス"
+      ],
+      "synonyms": [
+        "alprazolam",
+        "ｱﾙﾌﾟﾗｿﾞﾗﾑ"
+      ],
+      "classes": [
+        "BZD"
+      ],
+      "flags": []
+    },
+    {
+      "id": "zolpidem",
+      "generic": "ゾルピデム",
+      "english": "Zolpidem",
+      "brands": [
+        "マイスリー"
+      ],
+      "synonyms": [
+        "zolpidem",
+        "ﾏｲｽﾘｰ"
+      ],
+      "classes": [
+        "ZDrug"
+      ],
+      "flags": []
     }
   ],
   "planned": [
@@ -873,6 +2141,139 @@ window.EMS_DATA = {
         "selegiline",
         "rasagiline",
         "amitriptyline"
+      ]
+    },
+    {
+      "label": "高血圧：ARB/ACEi/CCB/β/α/利尿/MRA",
+      "ids": [
+        "candesartan",
+        "olmesartan",
+        "telmisartan",
+        "irbesartan",
+        "enalapril",
+        "lisinopril",
+        "nifedipine",
+        "nicardipine",
+        "amlodipine",
+        "diltiazem",
+        "verapamil",
+        "bisoprolol",
+        "atenolol",
+        "propranolol",
+        "carvedilol",
+        "metoprolol",
+        "doxazosin",
+        "tamsulosin",
+        "prazosin",
+        "furosemide",
+        "hydrochlorothiazide",
+        "indapamide",
+        "trichlormethiazide",
+        "spironolactone",
+        "eplerenone"
+      ]
+    },
+    {
+      "label": "糖尿病：Biguanide/SU/DPP-4i/SGLT2i/GLP-1/TZD/α-GI",
+      "ids": [
+        "metformin",
+        "glimepiride",
+        "glibenclamide",
+        "gliclazide",
+        "glipizide",
+        "sitagliptin",
+        "linagliptin",
+        "vildagliptin",
+        "alogliptin",
+        "teneligliptin",
+        "empagliflozin",
+        "dapagliflozin",
+        "canagliflozin",
+        "ipragliflozin",
+        "luseogliflozin",
+        "tofogliflozin",
+        "dulaglutide",
+        "liraglutide",
+        "semaglutide",
+        "pioglitazone",
+        "acarbose",
+        "voglibose",
+        "miglitol",
+        "insulin"
+      ]
+    },
+    {
+      "label": "心疾患：長時間硝酸/ニコランジル/ARNI/イバブラジン/ジゴキシン/β遮断",
+      "ids": [
+        "isosorbide_dinitrate",
+        "isosorbide_mononitrate",
+        "nicorandil",
+        "sacubitril_valsartan",
+        "ivabradine",
+        "digoxin",
+        "bisoprolol",
+        "carvedilol",
+        "metoprolol"
+      ]
+    },
+    {
+      "label": "不整脈/QT：クラスI/III/抗精神病/マクロ/フルオロ",
+      "ids": [
+        "pilsicainide",
+        "flecainide",
+        "amiodarone",
+        "sotalol",
+        "haloperidol",
+        "quetiapine",
+        "risperidone",
+        "clarithromycin",
+        "erythromycin",
+        "azithromycin",
+        "levofloxacin"
+      ]
+    },
+    {
+      "label": "精神：SSRI/SNRI/TCA/抗精神病",
+      "ids": [
+        "sertraline",
+        "paroxetine",
+        "fluvoxamine",
+        "escitalopram",
+        "duloxetine",
+        "venlafaxine",
+        "milnacipran",
+        "amitriptyline",
+        "imipramine",
+        "nortriptyline",
+        "risperidone",
+        "olanzapine",
+        "aripiprazole",
+        "haloperidol",
+        "quetiapine"
+      ]
+    },
+    {
+      "label": "呼吸：ICS/β2/抗コリン",
+      "ids": [
+        "budesonide",
+        "fluticasone",
+        "salbutamol",
+        "salmeterol",
+        "ipratropium",
+        "tiotropium"
+      ]
+    },
+    {
+      "label": "脂質/甲状腺/痛風",
+      "ids": [
+        "atorvastatin",
+        "rosuvastatin",
+        "pravastatin",
+        "levothyroxine",
+        "methimazole",
+        "propylthiouracil",
+        "allopurinol",
+        "febuxostat"
       ]
     }
   ]

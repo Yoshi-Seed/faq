@@ -44,6 +44,7 @@ window.EMS_RULES = {
         "epinephrine"
       ],
       "patient_classes_any_of": [
+        "AlphaBlocker",
         "Antipsychotic"
       ],
       "severity": "orange",
@@ -130,6 +131,119 @@ window.EMS_RULES = {
         {
           "label": "EMレビュー（SU性低血糖の遷延）",
           "url": "https://www.emra.org/emresident/article/sulfonylurea"
+        }
+      ]
+    },
+    {
+      "id": "nitrates_stack_la_nicorandil",
+      "planned_any_of": [
+        "nitroglycerin"
+      ],
+      "patient_classes_any_of": [
+        "NitrateLA",
+        "NitrateLike"
+      ],
+      "severity": "orange",
+      "title": "長時間作用硝酸薬/ニコランジル内服中：血圧低下の相加",
+      "message": "既往の硝酸/ニコランジル使用で低血圧リスク↑。バイタル/右室梗塞疑い/意識を確認。",
+      "refs": [
+        {
+          "label": "添付文書・各種成書（相加的低血圧）",
+          "url": "https://www.pmda.go.jp/PmdaSearch/"
+        }
+      ]
+    },
+    {
+      "id": "nitrates_riociguat_contra",
+      "planned_any_of": [
+        "nitroglycerin"
+      ],
+      "patient_classes_any_of": [
+        "sGCStimulator"
+      ],
+      "severity": "red",
+      "title": "リオシグアト内服中：硝酸薬は禁忌級の低血圧リスク",
+      "message": "一酸化窒素–sGC系の相加で著明な血圧低下。投与回避を検討し指示医へ連絡。",
+      "refs": [
+        {
+          "label": "リオシグアト（Adempas）添文：硝酸薬との併用注意/禁忌",
+          "url": "https://www.pmda.go.jp/PmdaSearch/"
+        }
+      ]
+    },
+    {
+      "id": "epi_maoi_tca",
+      "planned_any_of": [
+        "epinephrine"
+      ],
+      "patient_classes_any_of": [
+        "MAOI_A",
+        "MAOI_B",
+        "TCA"
+      ],
+      "severity": "orange",
+      "title": "MAOI/TCA内服中：アドレナリンで過度昇圧・不整脈リスク",
+      "message": "アナフィラキシーではアドレナリン優先だが、用量/反応に注意し指示医に早期共有。",
+      "refs": [
+        {
+          "label": "各薬品添文（MAOI/TCAとカテコールアミン）",
+          "url": "https://www.pmda.go.jp/PmdaSearch/"
+        }
+      ]
+    },
+    {
+      "id": "aspirin_ssri_snri_bleed",
+      "planned_any_of": [
+        "aspirin_admin"
+      ],
+      "patient_classes_any_of": [
+        "SSRI",
+        "SNRI",
+        "Corticosteroid"
+      ],
+      "severity": "yellow",
+      "title": "SSRI/SNRI/ステロイド併用：アスピリンで消化管出血リスク↑",
+      "message": "特に高齢/既往ありで注意。必要性再確認と観察を強化。",
+      "refs": [
+        {
+          "label": "観察研究/レビュー（SSRI×出血リスク）",
+          "url": "https://www.ncbi.nlm.nih.gov/"
+        }
+      ]
+    },
+    {
+      "id": "salbutamol_qt_stack",
+      "planned_any_of": [
+        "salbutamol_admin"
+      ],
+      "patient_flags_any_of": [
+        "QT"
+      ],
+      "severity": "yellow",
+      "title": "QT延長薬内服中：β2刺激薬で低K→不整脈リスク",
+      "message": "低K＋QT延長の相加。症状/心電図に注意。",
+      "refs": [
+        {
+          "label": "CredibleMeds（QT延長薬）",
+          "url": "https://crediblemeds.org/"
+        }
+      ]
+    },
+    {
+      "id": "nitro_alpha_blocker_hypotension",
+      "planned_any_of": [
+        "nitroglycerin"
+      ],
+      "patient_classes_any_of": [
+        "AlphaBlocker"
+      ],
+      "severity": "yellow",
+      "title": "α遮断薬内服中：硝酸薬で起立性・低血圧に注意",
+      "message": "相加的血管拡張で血圧低下しやすい。投与前後でバイタルに注意。",
+      "refs": [
+        {
+          "label": "α遮断薬と血管拡張薬の相加",
+          "url": "https://www.pmda.go.jp/PmdaSearch/"
         }
       ]
     }
