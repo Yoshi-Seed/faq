@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>救急×お薬手帳 チェッカー (MVP)</title>
+  <meta name="description" content="搬送中に『この薬は何？』『今から投与して大丈夫？』を10秒で判断するための超軽量MVP。">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/icon-192.png">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
+  <meta name="theme-color" content="#0b1c2c">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="title">救急×お薬手帳 チェッカー</div>
+    <div class="subtitle">オフライン対応・MVP</div>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>① 患者のお薬</h2>
+      <div class="search-row">
+        <input id="searchInput" type="search" inputmode="search" placeholder="薬名（一般名/販売名/カナ/英字）を入力… 例：エリキュース / アスピリン / Cialis" autocomplete="off" />
+        <button id="addBtn" class="btn">追加</button>
+      </div>
+      <div id="searchHints" class="hints"></div>
+      <div id="patientChips" class="chips" aria-live="polite"></div>
+      <details class="small">
+        <summary>カテゴリを参考に追加（参考例）</summary>
+        <div id="categoryQuickAdd" class="quickadd"></div>
+      </details>
+    </section>
+
+    <section class="card">
+      <h2>② これから投与</h2>
+      <div id="plannedDrugs" class="planned"></div>
+    </section>
+
+    <section class="card">
+      <h2>③ 判定</h2>
+      <div id="results"></div>
+      <div id="noResults" class="ok-msg" hidden>いまの範囲では<strong>重大な注意事項なし</strong>（要観察）。</div>
+    </section>
+
+    <section class="card small">
+      <h2>根拠リンク（抜粋）</h2>
+      <ul class="refs">
+        <li><a target="_blank" rel="noopener" href="https://jrc.umin.ac.jp/">日本蘇生協議会（JRC）</a></li>
+        <li><a target="_blank" rel="noopener" href="https://www.acc.org/latest-in-cardiology/ten-points-to-remember/2015/12/02/15/24/treating-erectile-dysfunction-in-patients-with-cvd">PDE‑5内服時の硝酸薬回避（24h/48h）</a></li>
+        <li><a target="_blank" rel="noopener" href="https://www.pmda.go.jp/PmdaSearch/">PMDA医薬品医療機器情報提供</a></li>
+        <li><a target="_blank" rel="noopener" href="https://www.aaaai.org/Allergist-Resources/Ask-the-Expert/Answers/Old-Ask-the-Experts/beta-blockers-anaphylaxis">β遮断薬下アナフィラキシーでのグルカゴン</a></li>
+        <li><a target="_blank" rel="noopener" href="https://www.sps.nhs.uk/articles/using-intramuscular-injections-in-people-on-oral-anticoagulants/">抗凝固中のIM注射</a></li>
+        <li><a target="_blank" rel="noopener" href="https://crediblemeds.org/">QT延長薬（CredibleMeds）</a></li>
+        <li><a target="_blank" rel="noopener" href="https://www.fda.gov/drugs/drug-safety-and-availability/fda-drug-safety-communication-new-information-regarding-qt-prolongation-anti-nausea-drug-zofran">オンダンセトロンとQT延長</a></li>
+      </ul>
+    </section>
+
+    <section class="card small">
+      <h2>注意事項</h2>
+      <p class="disclaimer">本ツールは<strong>救急支援用の参考情報</strong>です。診断・治療の決定は<strong>指示医・地域MCプロトコール</strong>に従ってください。緊急時は疑わしきは連絡・中止・代替を優先してください。</p>
+      <p class="meta">データ最終更新：<span id="lastUpdated"></span> / バージョン：<span id="appVersion"></span></p>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <span>© EMS Meds Checker MVP – For field reference</span>
+  </footer>
+
+  <script src="data/drugs.js"></script>
+  <script src="data/rules.js"></script>
+  <script src="app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./service-worker.js').catch(()=>{});
+      });
+    }
+  </script>
+</body>
+</html>
