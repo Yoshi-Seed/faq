@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Eddy with Hiro · WebAR風ホログラム</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: #f5f8ff;
+        background: #000;
+      }
+
+      /* カメラ映像を全画面に表示 */
+      #cameraWrap {
+        position: fixed;
+        inset: 0;
+        overflow: hidden;
+        z-index: 0;
+        background: #000;
+      }
+
+      #cameraFeed {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transform: scaleX(-1); /* 自撮りっぽい左右反転 */
+      }
+
+      /* Three.js キャンバス（上に重ねる） */
+      #scene {
+        position: fixed;
+        inset: 0;
+        z-index: 1;
+      }
+
+      /* 虹色の屈折レイヤー（ほんのり） */
+      #prismLayer {
+        position: fixed;
+        inset: -20vh;
+        background-image: conic-gradient(
+          from 160deg,
+          rgba(255, 180, 220, 0.12),
+          rgba(255, 240, 180, 0.16),
+          rgba(180, 255, 210, 0.16),
+          rgba(160, 215, 255, 0.22),
+          rgba(210, 170, 255, 0.2),
+          rgba(255, 180, 230, 0.14),
+          rgba(255, 180, 220, 0.12)
+        );
+        mix-blend-mode: screen;
+        opacity: 0.45;
+        pointer-events: none;
+        animation: prismDrift 26s ease-in-out infinite alternate;
+        z-index: 2;
+      }
+
+      @keyframes prismDrift {
+        0% {
+          transform: translate3d(-4vw, -3vh, 0) rotate(0deg);
+        }
+        50% {
+          transform: translate3d(5vw, 4vh, 0) rotate(20deg);
+        }
+        100% {
+          transform: translate3d(-2vw, 1vh, 0) rotate(-15deg);
+        }
+      }
+
+      /* 中央のタイトル（DOMレイヤー） */
+      #titleOverlay {
+        position: fixed;
+        left: 50%;
+        top: 12vh;
+        transform: translateX(-50%);
+        text-align: center;
+        z-index: 3;
+        pointer-events: none;
+      }
+
+      #titleOverlay h1 {
+        margin: 0;
+        font-size: clamp(22px, 5vw, 32px);
+        letter-spacing: 0.32em;
+        text-transform: uppercase;
+        color: #fdfbff;
+        text-shadow: 0 0 16px rgba(230, 245, 255, 0.95),
+          0 0 36px rgba(150, 220, 255, 0.85);
+      }
+
+      #titleOverlay span {
+        display: inline-block;
+        margin-top: 0.4rem;
+        font-size: 0.8rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        opacity: 0.8;
+      }
+
+      /* 右下ヒント */
+      #hint {
+        position: fixed;
+        right: 5vw;
+        bottom: 4vh;
+        z-index: 4;
+        font-size: 0.7rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        padding: 0.4rem 0.8rem;
+        border-radius: 999px;
+        border: 1px solid rgba(200, 230, 255, 0.8);
+        background: rgba(2, 8, 22, 0.82);
+        box-shadow: 0 0 18px rgba(140, 200, 255, 0.7);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+      }
+
+      #hint strong {
+        font-weight: 600;
+      }
+
+      /* カメラ許可エラー時のメッセージ */
+      #cameraError {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 2rem;
+        background: radial-gradient(circle at top, #141b33, #050610 60%, #020208);
+        color: #f5f7ff;
+        z-index: 10;
+        font-size: 0.9rem;
+      }
+
+      #cameraError.hidden {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="cameraWrap">
+      <video id="cameraFeed" autoplay playsinline muted></video>
+    </div>
+
+    <canvas id="scene"></canvas>
+    <div id="prismLayer"></div>
+
+    <div id="titleOverlay">
+      <h1>Eddy with Hiro</h1>
+      <span>little holograms in our real world</span>
+    </div>
+
+    <div id="hint"><strong>TAP</strong> TO BURST FEATHERS & STARS</div>
+
+    <div id="cameraError" class="hidden">
+      カメラにアクセスできませんでした。<br />
+      HTTPS 環境のスマホブラウザで開くか、
+      カメラ使用の許可設定を確認してください。
+    </div>
+
+    <script src="https://unpkg.com/three@0.158.0/build/three.min.js"></script>
+
+    <script>
+      // --- カメラセットアップ ---
+      const video = document.getElementById("cameraFeed");
+      const cameraError = document.getElementById("cameraError");
+
+      async function setupCamera() {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({
+            video: {
+              facingMode: { ideal: "environment" },
+            },
+            audio: false,
+          });
+          video.srcObject = stream;
+          cameraError.classList.add("hidden");
+        } catch (e) {
+          cameraError.classList.remove("hidden");
+        }
+      }
+
+      setupCamera();
+
+      // --- Three.js シーン ---
+      const canvas = document.getElementById("scene");
+      const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+      let width = window.innerWidth;
+      let height = window.innerHeight;
+      renderer.setPixelRatio(window.devicePixelRatio);
+      renderer.setSize(width, height);
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 100);
+      camera.position.set(0, 0, 6);
+
+      const ambient = new THREE.AmbientLight(0xffffff, 0.6);
+      scene.add(ambient);
+
+      const keyLight = new THREE.DirectionalLight(0xaadfff, 1.1);
+      keyLight.position.set(4, 8, 10);
+      scene.add(keyLight);
+
+      const rimLight = new THREE.PointLight(0xffe0ff, 0.9, 30);
+      rimLight.position.set(-3, -4, -6);
+      scene.add(rimLight);
+
+      // --- 星のゲート（リング） ---
+      const gateGroup = new THREE.Group();
+      scene.add(gateGroup);
+
+      const ringGeom = new THREE.TorusGeometry(1.8, 0.08, 24, 64);
+      const ringMat = new THREE.MeshStandardMaterial({
+        color: 0xffffff,
+        emissive: 0x88ddff,
+        emissiveIntensity: 1.2,
+        metalness: 0.6,
+        roughness: 0.18,
+        transparent: true,
+        opacity: 0.85,
+      });
+      const ring = new THREE.Mesh(ringGeom, ringMat);
+      gateGroup.add(ring);
+
+      const innerRingGeom = new THREE.RingGeometry(0.3, 1.5, 64);
+      const innerRingMat = new THREE.MeshBasicMaterial({
+        color: 0xc5f3ff,
+        transparent: true,
+        opacity: 0.24,
+        side: THREE.DoubleSide,
+      });
+      const innerRing = new THREE.Mesh(innerRingGeom, innerRingMat);
+      innerRing.rotation.x = Math.PI / 2;
+      gateGroup.add(innerRing);
+
+      // --- 小さな星たち（ゲート周り） ---
+      const starGroup = new THREE.Group();
+      scene.add(starGroup);
+
+      const starCount = 90;
+      for (let i = 0; i < starCount; i++) {
+        const sGeom = new THREE.SphereGeometry(0.04 + Math.random() * 0.04, 10, 10);
+        const sMat = new THREE.MeshStandardMaterial({
+          color: 0xe8f6ff,
+          emissive: 0xaad8ff,
+          emissiveIntensity: 0.8 + Math.random() * 0.6,
+          metalness: 0.2,
+          roughness: 0.25,
+          transparent: true,
+          opacity: 0.9,
+        });
+        const star = new THREE.Mesh(sGeom, sMat);
+
+        const radius = 2 + Math.random() * 2.3;
+        const angle = Math.random() * Math.PI * 2;
+        const y = (Math.random() - 0.5) * 2.4;
+        star.position.set(Math.cos(angle) * radius, y, Math.sin(angle) * radius);
+        star.userData = {
+          baseY: y,
+          speed: 0.6 + Math.random() * 0.8,
+          phase: Math.random() * Math.PI * 2,
+        };
+        starGroup.add(star);
+      }
+
+      // --- 羽根（風に揺れる） ---
+      const featherGroup = new THREE.Group();
+      scene.add(featherGroup);
+
+      const featherCount = 26;
+      for (let i = 0; i < featherCount; i++) {
+        const fGeom = new THREE.ConeGeometry(0.06, 0.8, 8);
+        const fMat = new THREE.MeshStandardMaterial({
+          color: 0xffffff,
+          emissive: 0xaadfff,
+          emissiveIntensity: 0.5,
+          metalness: 0.1,
+          roughness: 0.35,
+          transparent: true,
+          opacity: 0.95,
+        });
+        const feather = new THREE.Mesh(fGeom, fMat);
+
+        feather.position.set(
+          (Math.random() - 0.5) * 4,
+          1.5 + Math.random() * 2.5,
+          -0.6 + Math.random() * 1.2
+        );
+        feather.rotation.set(
+          Math.random() * Math.PI,
+          Math.random() * Math.PI,
+          Math.random() * Math.PI
+        );
+
+        feather.userData = {
+          vy: -0.3 - Math.random() * 0.3,
+          swayPhase: Math.random() * Math.PI * 2,
+          swaySpeed: 0.6 + Math.random() * 0.6,
+        };
+        featherGroup.add(feather);
+      }
+
+      // --- タップ時のバースト用パーティクル ---
+      const bursts = [];
+
+      function spawnBurst(worldPos) {
+        const burstCount = 26;
+        const geom = new THREE.SphereGeometry(0.03, 8, 8);
+        for (let i = 0; i < burstCount; i++) {
+          const mat = new THREE.MeshBasicMaterial({
+            color: i % 2 === 0 ? 0xffffff : 0xffe8ff,
+          });
+          const m = new THREE.Mesh(geom, mat);
+          m.position.copy(worldPos);
+          const dir = new THREE.Vector3(
+            (Math.random() - 0.5) * 2,
+            (Math.random() - 0.5) * 2,
+            (Math.random() - 0.5) * 2
+          ).normalize();
+          const speed = 2 + Math.random() * 2.5;
+          bursts.push({ mesh: m, dir, speed, life: 0 });
+          scene.add(m);
+        }
+      }
+
+      // --- 画面タップでエフェクト ---
+      function screenToWorld(x, y) {
+        const ndcX = (x / width) * 2 - 1;
+        const ndcY = -(y / height) * 2 + 1;
+        const ndc = new THREE.Vector3(ndcX, ndcY, 0.5);
+        ndc.unproject(camera);
+        const dir = ndc.sub(camera.position).normalize();
+        const distance = (0 - camera.position.z) / dir.z; // z=0 平面との交点
+        return camera.position.clone().add(dir.multiplyScalar(distance));
+      }
+
+      function handleTap(screenX, screenY) {
+        const worldPos = screenToWorld(screenX, screenY);
+        spawnBurst(worldPos);
+      }
+
+      window.addEventListener("click", (e) => {
+        handleTap(e.clientX, e.clientY);
+      });
+
+      window.addEventListener("touchstart", (e) => {
+        const t = e.touches[0];
+        handleTap(t.clientX, t.clientY);
+      });
+
+      // --- リサイズ ---
+      function onResize() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        renderer.setSize(width, height);
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+      }
+      window.addEventListener("resize", onResize);
+
+      // --- アニメーションループ ---
+      let lastTime = performance.now();
+
+      function animate(now) {
+        requestAnimationFrame(animate);
+        const dt = Math.min(0.05, (now - lastTime) / 1000);
+        lastTime = now;
+
+        const t = now * 0.001;
+
+        // 星のゲートのゆらぎ
+        gateGroup.rotation.y += 0.12 * dt;
+        gateGroup.rotation.x = Math.sin(t * 0.3) * 0.15;
+        ring.material.emissiveIntensity = 1.1 + Math.sin(t * 1.3) * 0.3;
+
+        // 星たちのふわっと揺れる動き
+        starGroup.children.forEach((star) => {
+          const data = star.userData;
+          data.phase += data.speed * dt;
+          const offset = Math.sin(data.phase * 1.5) * 0.25;
+          star.position.y = data.baseY + offset;
+        });
+
+        // 羽根の落下＋風への揺れ
+        featherGroup.children.forEach((f) => {
+          const d = f.userData;
+          d.swayPhase += d.swaySpeed * dt;
+          const sway = Math.sin(d.swayPhase) * 0.3;
+          f.position.x += sway * dt;
+          f.position.y += d.vy * dt;
+          f.rotation.z += sway * 0.3 * dt;
+
+          if (f.position.y < -3) {
+            f.position.y = 2.4 + Math.random() * 1.5;
+            f.position.x = (Math.random() - 0.5) * 4;
+          }
+        });
+
+        // バーストエフェクト
+        for (let i = bursts.length - 1; i >= 0; i--) {
+          const b = bursts[i];
+          b.life += dt;
+          b.mesh.position.addScaledVector(b.dir, b.speed * dt);
+          const fade = Math.max(0, 1 - b.life / 0.8);
+          b.mesh.material.opacity = fade;
+          b.mesh.material.transparent = true;
+          if (b.life > 0.8) {
+            scene.remove(b.mesh);
+            b.mesh.geometry.dispose();
+            b.mesh.material.dispose();
+            bursts.splice(i, 1);
+          }
+        }
+
+        renderer.render(scene, camera);
+      }
+
+      requestAnimationFrame(animate);
+    </script>
+  </body>
+</html>
