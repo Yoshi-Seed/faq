@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>見積りチェックツール（Seed × Holden）</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      margin: 24px;
+      line-height: 1.6;
+    }
+    h1 {
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+    h2 {
+      font-size: 16px;
+      margin-top: 24px;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 4px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      max-width: 960px;
+    }
+    .card {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    label {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+    input[type="number"] {
+      width: 100%;
+      padding: 6px 8px;
+      box-sizing: border-box;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+    .row {
+      margin-bottom: 12px;
+    }
+    .small {
+      font-size: 12px;
+      color: #555;
+    }
+    .result {
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+    .result strong {
+      font-weight: 600;
+    }
+    .status {
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-size: 13px;
+      margin-top: 8px;
+    }
+    .status-ok {
+      background: #e6f5ec;
+      border: 1px solid #8cc9a6;
+      color: #276749;
+    }
+    .status-ng {
+      background: #fff4f4;
+      border: 1px solid #f19999;
+      color: #9b2c2c;
+    }
+    .pill {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      background: #f3f4f6;
+      margin-left: 4px;
+    }
+    .highlight {
+      font-weight: 600;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <h1>見積りチェックツール（Seed × Holden）</h1>
+  <p class="small">
+    Excelで作成した見積りの「答え合わせ」をするためのツールです。<br />
+    人件費・外注費・謝礼・クライアント見積額を入力すると、Holden 20%控除後の金額・利益・利益率を自動計算し、
+    目標利益率（デフォルト30%）を満たしているかをチェックします。
+  </p>
+
+  <div class="grid">
+    <!-- 左：入力エリア -->
+    <div>
+      <div class="card">
+        <h2>1. コストと見積額の入力</h2>
+
+        <div class="row">
+          <label for="hrCost">
+            人件費合計（社内工数・派遣さんなど）
+          </label>
+          <input type="number" id="hrCost" value="0" min="0" step="1000" />
+        </div>
+
+        <div class="row">
+          <label for="externalCost">
+            外注費合計（リクルート会社・通訳・Transcription など）
+          </label>
+          <input type="number" id="externalCost" value="0" min="0" step="1000" />
+        </div>
+
+        <div class="row">
+          <label for="incentiveCost">
+            謝礼合計（インタビュー・事前課題・事後課題など）
+          </label>
+          <input type="number" id="incentiveCost" value="0" min="0" step="1000" />
+        </div>
+
+        <hr />
+
+        <div class="row">
+          <label for="clientQuote">
+            クライアント見積額（Holdenへ請求する合計金額）
+          </label>
+          <input type="number" id="clientQuote" value="0" min="0" step="1000" />
+          <div class="small">
+            ※Excelで計算した「合計見積額（税込/税抜いずれかで統一）」をそのまま入力します。
+          </div>
+        </div>
+
+        <div class="row">
+          <label for="holdenMargin">
+            Holdenマージン（%）
+            <span class="pill">通常は20%</span>
+          </label>
+          <input type="number" id="holdenMargin" value="20" min="0" max="100" step="1" />
+        </div>
+
+        <div class="row">
+          <label for="targetMargin">
+            目標利益率（Seed受取額に対する%）
+            <span class="pill">推奨：30%以上</span>
+          </label>
+          <input type="number" id="targetMargin" value="30" min="0" max="80" step="1" />
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>2. 計算を更新</h2>
+        <p class="small">
+          値を変更すると自動的に再計算されます。<br />
+          Excelでセルを調整しながら、この画面の変化を見ると「どこを変えると何が動くか」がつかみやすくなります。
+        </p>
+        <button onclick="recalculate()">再計算する</button>
+      </div>
+    </div>
+
+    <!-- 右：結果エリア -->
+    <div>
+      <div class="card">
+        <h2>3. 計算結果</h2>
+        <div id="results">
+          <!-- JavaScriptで埋め込み -->
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>4. どこを調整すると良いかのヒント</h2>
+        <div id="advice" class="small">
+          入力すると、ここにコメントが表示されます。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function formatYen(value) {
+      if (isNaN(value)) return "-";
+      return value.toLocaleString("ja-JP", { style: "currency", currency: "JPY" });
+    }
+
+    function formatPercent(value) {
+      if (isNaN(value)) return "-";
+      return value.toFixed(1) + "%";
+    }
+
+    function recalculate() {
+      const hrCost = Number(document.getElementById("hrCost").value) || 0;
+      const externalCost = Number(document.getElementById("externalCost").value) || 0;
+      const incentiveCost = Number(document.getElementById("incentiveCost").value) || 0;
+      const clientQuote = Number(document.getElementById("clientQuote").value) || 0;
+
+      const holdenMarginPercent = Number(document.getElementById("holdenMargin").value) || 0;
+      const targetMarginPercent = Number(document.getElementById("targetMargin").value) || 0;
+
+      const holdenRate = holdenMarginPercent / 100;
+      const targetRate = targetMarginPercent / 100;
+
+      const totalCost = hrCost + externalCost + incentiveCost;
+
+      // Seed受取額（Holden 20%など控除後）
+      const seedRevenue = clientQuote * (1 - holdenRate);
+
+      // 利益
+      const profit = seedRevenue - totalCost;
+
+      // Seed受取額に対する利益率
+      const profitMargin = seedRevenue > 0 ? profit / seedRevenue : NaN;
+
+      // 目標利益率を満たすために必要な「最低クライアント見積額」
+      // 1) Seed受取額 = totalCost / (1 - targetRate)
+      // 2) clientQuote = Seed受取額 / (1 - holdenRate)
+      let minClientQuote = NaN;
+      if ((1 - targetRate) > 0 && (1 - holdenRate) > 0) {
+        const requiredSeedRevenue = totalCost / (1 - targetRate);
+        minClientQuote = requiredSeedRevenue / (1 - holdenRate);
+      }
+
+      // 結果の描画
+      const resultsDiv = document.getElementById("results");
+      let html = "";
+
+      html += `<div class="result"><strong>● 合計コスト（人件費＋外注費＋謝礼）</strong><br>${formatYen(totalCost)}</div>`;
+      html += `<div class="result"><strong>● Seed受取額（Holden控除後）</strong><br>${formatYen(seedRevenue)} <span class="small">（クライアント見積額 × ${(
+        (1 - holdenRate) *
+        100
+      ).toFixed(1)}%）</span></div>`;
+      html += `<div class="result"><strong>● 利益額（Seed受取額 − 合計コスト）</strong><br>${formatYen(profit)}</div>`;
+      html += `<div class="result"><strong>● 利益率（利益 ÷ Seed受取額）</strong><br>${formatPercent(
+        profitMargin * 100
+      )}</div>`;
+
+      if (!isNaN(minClientQuote)) {
+        html += `<div class="result"><strong>● 目標利益率 ${targetMarginPercent.toFixed(
+          0
+        )}% を守るための最低クライアント見積額</strong><br>${formatYen(
+          minClientQuote
+        )}</div>`;
+      }
+
+      // ステータス表示
+      let statusHtml = "";
+      if (isNaN(profitMargin) || seedRevenue <= 0) {
+        statusHtml =
+          '<div class="status status-ng">クライアント見積額が0または未入力のため、利益率を計算できません。</div>';
+      } else if (profitMargin >= targetRate) {
+        statusHtml = `<div class="status status-ok">
+          目標利益率 <span class="highlight">${targetMarginPercent.toFixed(
+            0
+          )}%</span> を満たしています。<br />
+          現在の利益率：<strong>${formatPercent(profitMargin * 100)}</strong>
+        </div>`;
+      } else {
+        const diff = (targetRate - profitMargin) * 100;
+        statusHtml = `<div class="status status-ng">
+          現在の利益率は <strong>${formatPercent(
+            profitMargin * 100
+          )}</strong> です。<br />
+          目標の ${targetMarginPercent.toFixed(0)}% を
+          <strong>${diff.toFixed(1)}ポイント</strong> 下回っています。<br />
+          クライアント見積額を増やすか、コストを見直す必要があるかもしれません。
+        </div>`;
+      }
+
+      resultsDiv.innerHTML = html + statusHtml;
+
+      // アドバイス
+      const adviceDiv = document.getElementById("advice");
+      let advice = "";
+
+      if (totalCost === 0 && clientQuote === 0) {
+        advice = "まずは Excel の計算結果から「合計コスト」と「クライアント見積額」を入力してみてください。";
+      } else {
+        advice += "● 利益率を上げるための基本的な動かし方<br />";
+        advice += "- クライアント見積額を上げる → Seed受取額が増え、利益率も上がります。<br />";
+        advice += "- 人件費・外注費・謝礼を見直す → 合計コストが下がれば、同じ見積額でも利益率が上がります。<br /><br />";
+
+        if (!isNaN(minClientQuote) && clientQuote > 0) {
+          if (clientQuote < minClientQuote) {
+            advice +=
+              "● 現在のクライアント見積額は、目標利益率を守るための最低額より低い水準です。<br />" +
+              "　・Excel側で PM工数の妥当性や、翻訳・通訳などのレートを見直してみてもよいかもしれません。<br />" +
+              "　・それでも難しい場合は、「案件の複雑さ」に応じて見積額アップを検討してもよいラインかと思います。";
+          } else {
+            advice +=
+              "● 目標利益率を満たしているため、基本的にはこのままの方向で問題ない水準かと思います。<br />" +
+              "　・Complexity が高い案件（ターゲット数が多い／リクルートが難しい／翻訳量が多いなど）の場合は、<br />" +
+              "　　もう少し利益率に余裕を持たせても良いかもしれません。";
+          }
+        }
+      }
+
+      adviceDiv.innerHTML = advice;
+    }
+
+    // 初期表示
+    recalculate();
+
+    // 入力が変わるたびに再計算
+    ["hrCost", "externalCost", "incentiveCost", "clientQuote", "holdenMargin", "targetMargin"].forEach(
+      (id) => {
+        document.getElementById(id).addEventListener("input", recalculate);
+      }
+    );
+  </script>
+</body>
+</html>
