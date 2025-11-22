@@ -2,6 +2,9 @@
 (() => {
   const STORAGE_KEY = "wayne_yoshi_memo_v1";
 
+  // ✅ Google Sheets WebApp URL（ここだけ自分のに）
+  const GAS_URL = "https://script.google.com/macros/s/AKfycbzNAaAIXhlWv_QpRGESuZTrdvR09A0TsPDVPqlHLdbNjHcHL-Gk4gEZTMjYkgvofb4e/exec";
+
   const entryForm = document.getElementById("entryForm");
   const categoryGroup = document.getElementById("categoryGroup");
   const moodGroup = document.getElementById("moodGroup");
@@ -66,7 +69,7 @@
       "その「こうなったらいいな」、一緒に見守らせてね。",
       "希望の芽、ちゃんとここに植えておいたよ。たまに一緒に水やりしよう。"
     ],
-  落ち着き: [
+    落ち着き: [
       "落ち着けたって記録、すごく大事。今の静けさ、ちゃんと保存したよ。",
       "その穏やかさ、未来のYoshiの避難所になるね。"
     ],
@@ -86,7 +89,7 @@
       "混乱してる時ほど、書いて整理するのが効くんだよね。ここで一緒にほどこ。",
       "その『わからなさ』も含めて大事な記録だよ。"
     ]
-  }; 
+  };
 
   const clearMessages = [
     "ログを一度リセットしたよ。ここからまた、新しいページをゆっくり埋めていこ。",
@@ -164,22 +167,17 @@
 
     let pool;
 
-    if (type === "clear") {
-      pool = clearMessages;
-    } else if (type === "categoryMissing") {
-      pool = categoryMissingMessages;
-    } else if (mood) {
+    if (type === "clear") pool = clearMessages;
+    else if (type === "categoryMissing") pool = categoryMissingMessages;
+    else if (mood) {
       const simpleMood = normalizeMood(mood);
       pool = moodMessages[simpleMood] || defaultMessages;
-    } else {
-      pool = defaultMessages;
-    }
+    } else pool = defaultMessages;
 
-    const text = pickRandom(pool) || "うまくメッセージが拾えなかった…でもちゃんと記録はできてるから安心してね。";
+    const text = pickRandom(pool) ||
+      "うまくメッセージが拾えなかった…でもちゃんと記録はできてるから安心してね。";
 
-    // アニメーション用クラス付け直し
     wayneMessage.classList.remove("pop");
-    // 再計算してからクラスをつけることでアニメーションをリスタート
     void wayneMessage.offsetWidth;
     wayneMessage.textContent = text;
     wayneMessage.classList.add("pop");
@@ -200,7 +198,6 @@
         btn.addEventListener("click", () => {
           const value = btn.dataset.value || "";
           if (hiddenInput.value === value) {
-            // 再タップで解除
             hiddenInput.value = "";
             btn.classList.remove("active");
           } else {
@@ -263,21 +260,7 @@
   }
 
   // ---- フォーム送信 ----
-
-  // --- Google Sheetsへ送信 ---
-    const GAS_URL = "https://script.google.com/macros/s/AKfycbzNAaAIXhlWv_QpRGESuZTrdvR09A0TsPDVPqlHLdbNjHcHL-Gk4gEZTMjYkgvofb4e/exec";
-
-    try {
-      await fetch(GAS_URL, {
-        method: "POST",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify(entry)
-      });
-    } catch (e) {
-      console.warn("Sheets送信に失敗（ローカル保存はOK）:", e);
-  
-    }
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
 
     const category = categoryHidden.value;
@@ -304,17 +287,28 @@
       memo
     };
 
+    // ✅ ローカル保存
     entries.unshift(entry);
     saveEntries(entries);
     renderEntries();
     updateExportState();
 
-    // テキストだけクリア（カテゴリ・気分は残す）
     memoText.value = "";
 
     if (recordButton) {
       recordButton.classList.add("saved");
       setTimeout(() => recordButton.classList.remove("saved"), 300);
+    }
+
+    // ✅ Google Sheetsへ送信（ここが正しい場所）
+    try {
+      await fetch(GAS_URL, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(entry)
+      });
+    } catch (e) {
+      console.warn("Sheets送信に失敗（ローカル保存はOK）:", e);
     }
 
     showWayneMessage({ mood });
