@@ -142,17 +142,29 @@ body {
   color: var(--text-sub);
 }
 
-.pill-group {
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 0.3rem;
-  overflow-x: auto;
-  padding-bottom: 0.1rem;
+/* --- pill grid layout（カテゴリ/気分をページ上に並べる） --- */
+.pill-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.45rem;
 }
 
-.pill-group--wrap {
-  flex-wrap: wrap;
+.pill-grid--mood {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+@media (max-width: 380px) {
+  .pill-grid--mood {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* もともとのpill-groupの横スクロール感を無効化したい場合はこれも */
+.pill-group {
   overflow-x: visible;
+  flex-wrap: wrap;
+}
+
 }
 
 .pill-button {
