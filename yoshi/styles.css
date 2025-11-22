@@ -245,12 +245,16 @@ button {
   padding: 0.6rem 0.75rem;
   font-size: 0.9rem;
   font-weight: 600;
-  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+
+  /* ここが変更ポイント */
+  background: linear-gradient(135deg, #0b2a6f, #0aa7c6);
+
   color: #ffffff;
   cursor: pointer;
-  box-shadow: 0 13px 28px rgba(255, 126, 177, 0.7);
+  box-shadow: 0 13px 28px rgba(10, 70, 170, 0.45);
   transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
 }
+
 
 .primary-button:hover {
   filter: brightness(1.03);
