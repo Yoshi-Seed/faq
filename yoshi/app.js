@@ -267,6 +267,19 @@
   // ---- フォーム送信 ----
   async function handleSubmit(event) {
     event.preventDefault();
+        try {
+      await fetch(GAS_URL, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(entry)
+      });
+    } catch (e) {
+      console.warn("Sheets送信に失敗（ローカル保存はOK）:", e);
+    }
+
+    celebrate();                 // ← これ追加
+    showWayneMessage({ mood });
+
 
     const category = categoryHidden.value;
     const mood = moodHidden.value;
@@ -430,6 +443,15 @@
   function bubbleMagic(x, y) {
     if (!rippleLayer) return;
 
+      // 🫧 バブルタップで魔法発動
+  if (bubble) {
+    bubble.addEventListener("click", (e) => {
+      const x = e.clientX;
+      const y = e.clientY;
+      bubbleMagic(x, y);
+    });
+  }
+    
     // 既存のリップル
     for (let i = 0; i < 3; i++) {
       const r = document.createElement("div");
