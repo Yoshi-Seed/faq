@@ -17,6 +17,10 @@
   const wayneMessage = document.getElementById("wayneMessage");
   const recordButton = document.getElementById("recordButton");
   const nowTimeEl = document.getElementById("nowTime");
+  const bubble = document.querySelector(".floating-bubble");
+  const celebrateLayer = document.getElementById("celebrateLayer");
+  const rippleLayer = document.getElementById("rippleLayer");
+
 
   if (!entryForm) {
     console.error("entryForm が見つかりません。HTML構造を確認してください。");
@@ -372,13 +376,90 @@
     showWayneMessage({ type: "clear" });
   }
 
+   // ---- 時間帯で背景テーマを変える ----
+  function applyThemeByTime() {
+    const now = new Date();
+    const h = now.getHours();
+    document.body.classList.remove(
+      "theme-morning",
+      "theme-day",
+      "theme-evening",
+      "theme-night"
+    );
+
+    if (h >= 5 && h < 9) {
+      document.body.classList.add("theme-morning");
+    } else if (h >= 9 && h < 16) {
+      document.body.classList.add("theme-day");
+    } else if (h >= 16 && h < 20) {
+      document.body.classList.add("theme-evening");
+    } else {
+      document.body.classList.add("theme-night");
+    }
+  }
+
+  // ---- 記録した瞬間の小さな祝福 ----
+  function celebrate() {
+    if (!celebrateLayer) return;
+
+    const icons = ["✨","🌟","💫","🎉","🫧","⭐️"];
+    const count = 14; // ほどよい量
+
+    const rect = recordButton.getBoundingClientRect();
+    const originX = rect.left + rect.width / 2;
+    const originY = rect.top + rect.height / 2;
+
+    for (let i = 0; i < count; i++) {
+      const p = document.createElement("div");
+      p.className = "particle";
+      p.textContent = icons[Math.floor(Math.random() * icons.length)];
+
+      const spreadX = (Math.random() - 0.5) * 160;
+      const spreadY = Math.random() * 40;
+      p.style.left = `${originX + spreadX}px`;
+      p.style.top = `${originY - spreadY}px`;
+      p.style.animationDelay = `${Math.random() * 120}ms`;
+
+      celebrateLayer.appendChild(p);
+      p.addEventListener("animationend", () => p.remove());
+    }
+  }
+
+   // ---- バブル触ったら背景がぱぱぱ〜ん：リップル魔法 ----
+  function bubbleMagic(x, y) {
+    if (!rippleLayer) return;
+
+    // リップルを複数発生させて“ぱぱぱ〜”感
+    for (let i = 0; i < 3; i++) {
+      const r = document.createElement("div");
+      r.className = "ripple";
+      r.style.left = `${x}px`;
+      r.style.top = `${y}px`;
+      r.style.animationDelay = `${i * 120}ms`;
+      rippleLayer.appendChild(r);
+      r.addEventListener("animationend", () => r.remove());
+    }
+  }
+
+  if (bubble) {
+    bubble.addEventListener("click", (e) => {
+      const x = e.clientX;
+      const y = e.clientY;
+      bubbleMagic(x, y);
+    });
+  }
+ 
   // ---- 初期化 ----
 
   setupPills();
   renderEntries();
   updateExportState();
   updateNowTime();
+  applyThemeByTime();
+
   setInterval(updateNowTime, 30000);
+  setInterval(applyThemeByTime, 5 * 60 * 1000); // 5分ごとに雰囲気チェック
+
 
   entryForm.addEventListener("submit", handleSubmit);
   if (exportButton) exportButton.addEventListener("click", handleExport);
