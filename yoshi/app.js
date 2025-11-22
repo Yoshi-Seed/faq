@@ -20,6 +20,7 @@
   const bubble = document.querySelector(".floating-bubble");
   const celebrateLayer = document.getElementById("celebrateLayer");
   const rippleLayer = document.getElementById("rippleLayer");
+  const appShell = document.querySelector(".app-shell");
 
 
   if (!entryForm) {
@@ -429,7 +430,7 @@
   function bubbleMagic(x, y) {
     if (!rippleLayer) return;
 
-    // リップルを複数発生させて“ぱぱぱ〜”感
+    // 既存のリップル
     for (let i = 0; i < 3; i++) {
       const r = document.createElement("div");
       r.className = "ripple";
@@ -439,15 +440,19 @@
       rippleLayer.appendChild(r);
       r.addEventListener("animationend", () => r.remove());
     }
+
+    // 🌊 画面全体をブォーンと波うたせる
+    if (appShell) {
+      appShell.classList.remove("wave-animate");
+      // 連打でも毎回発火するようにリセット
+      void appShell.offsetWidth;
+      appShell.classList.add("wave-animate");
+      appShell.addEventListener("animationend", () => {
+        appShell.classList.remove("wave-animate");
+      }, { once: true });
+    }
   }
 
-  if (bubble) {
-    bubble.addEventListener("click", (e) => {
-      const x = e.clientX;
-      const y = e.clientY;
-      bubbleMagic(x, y);
-    });
-  }
  
   // ---- 初期化 ----
 
