@@ -455,3 +455,115 @@ button:disabled {
     padding: 0.9rem 0.9rem 1rem;
   }
 }
+/* ===========================
+   iPhone最適化：見やすさ優先
+   =========================== */
+
+:root {
+  /* 全体スケールを少し大きめに */
+  --ui-scale: 1.12;
+}
+
+body {
+  font-size: calc(16px * var(--ui-scale));
+}
+
+/* シェル幅：iPhoneではほぼ全幅で使う */
+.app-shell {
+  max-width: 720px;            /* PCでも広めに */
+  padding: 1.4rem 1.2rem 3.2rem;
+}
+
+@media (max-width: 480px) {
+  .app-shell {
+    max-width: 100%;
+    padding: 1.2rem 1rem 3rem;
+  }
+}
+
+/* ヘッダー文字を大きく */
+.title-text h1 {
+  font-size: 1.35rem;
+}
+
+.subtitle {
+  font-size: 0.95rem;
+}
+
+/* カードの余白と角丸をゆったり */
+.card {
+  padding: 1.2rem 1.2rem 1.3rem;
+  border-radius: 20px;
+}
+
+/* セクション見出し */
+.card h2 {
+  font-size: 1.1rem;
+  margin-bottom: 0.9rem;
+}
+
+/* ラベル文字 */
+.field-label {
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+}
+
+/* カテゴリ/気分：ボタンを大きく、行間も広め */
+.pill-button {
+  padding: 0.65rem 0.9rem;
+  font-size: 0.95rem;
+  border-radius: 999px;
+}
+
+/* グリッドを“見やすさ寄り”に再設計 */
+.pill-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.6rem;
+}
+
+/* 気分は2列で大きく（例画像っぽい視認性） */
+.pill-grid--mood {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.6rem;
+}
+
+/* テキストエリアも大きめ＆高さ増し */
+textarea {
+  font-size: 1rem;
+  min-height: 140px;
+  padding: 0.9rem 0.9rem;
+  border-radius: 14px;
+}
+
+/* 注意書きも読めるサイズに */
+.hint-text {
+  font-size: 0.9rem;
+}
+
+.hint-text.small {
+  font-size: 0.85rem;
+}
+
+/* 記録ボタン：迫力を出す */
+.primary-button {
+  font-size: 1.05rem;
+  padding: 0.9rem 1rem;
+  box-shadow: 0 16px 34px rgba(10, 70, 170, 0.5);
+}
+
+/* 最近のメモ：文字を大きく */
+.entry-meta {
+  font-size: 0.9rem;
+}
+
+.entry-text {
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+/* ウェインツ君メッセージも“読みやすいカード感”に */
+.wayne-message {
+  font-size: 1rem;
+  padding: 0.8rem 0.9rem;
+}
+
