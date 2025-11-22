@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>Yoshiのポケットメモ｜ウェインツ君ログ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <link rel="stylesheet" href="styles.css" />
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="app-header">
+      <div class="app-title">
+        <div class="logo-face" aria-hidden="true">
+          <span class="logo-eyes">• •</span>
+          <span class="logo-mouth">︶</span>
+        </div>
+        <div class="title-text">
+          <h1>Yoshiのポケットメモ</h1>
+          <p class="subtitle">ウェインツ君とつくる、こころのログ</p>
+        </div>
+      </div>
+      <div class="now-time" id="nowTime"></div>
+    </header>
+
+    <main>
+      <!-- 入力カード -->
+      <section class="card entry-card">
+        <h2>今日のメモ</h2>
+        <form id="entryForm" autocomplete="off">
+          <!-- カテゴリ -->
+          <div class="field-group">
+            <label class="field-label">カテゴリ</label>
+            <div class="pill-group" id="categoryGroup">
+              <button type="button" class="pill-button" data-value="思ったこと">💡 思ったこと</button>
+              <button type="button" class="pill-button" data-value="聞いたこと">👂 聞いたこと</button>
+              <button type="button" class="pill-button" data-value="気づき">✨ 気づき</button>
+              <button type="button" class="pill-button" data-value="体調">🩺 体調</button>
+              <button type="button" class="pill-button" data-value="メモ">📘 メモ</button>
+              <button type="button" class="pill-button" data-value="買い物">🛒 買い物</button>
+            </div>
+            <input type="hidden" id="categoryHidden" name="category" required />
+          </div>
+
+          <!-- 気分 -->
+          <div class="field-group">
+            <label class="field-label">気分</label>
+            <div class="pill-group pill-group--wrap" id="moodGroup">
+              <button type="button" class="pill-button mood-pill" data-value="🌈 楽しみ">🌈 楽しみ</button>
+              <button type="button" class="pill-button mood-pill" data-value="😟 不安">😟 不安</button>
+              <button type="button" class="pill-button mood-pill" data-value="😌 安心">😌 安心</button>
+              <button type="button" class="pill-button mood-pill" data-value="🌀 心配">🌀 心配</button>
+              <button type="button" class="pill-button mood-pill" data-value="😡 怒り">😡 怒り</button>
+              <button type="button" class="pill-button mood-pill" data-value="😔 落胆">😔 落胆</button>
+              <button type="button" class="pill-button mood-pill" data-value="✨ 希望">✨ 希望</button>
+            </div>
+            <input type="hidden" id="moodHidden" name="mood" />
+          </div>
+
+          <!-- メモ -->
+          <div class="field-group">
+            <label for="memoText" class="field-label">メモ / ひとこと日記</label>
+            <textarea
+              id="memoText"
+              rows="4"
+              placeholder="今日の気づき、聞いたこと、心の声などを、自由にどうぞ。"
+            ></textarea>
+          </div>
+
+          <p class="hint-text small">
+            ※ 日付と時刻は自動で記録されます。メモが空でも、気分だけの記録もOKです。
+          </p>
+
+          <div class="button-row">
+            <button type="submit" class="primary-button" id="recordButton">
+              記録する
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- ウェインツ君メッセージ -->
+      <section class="card" id="messageSection">
+        <h2>ウェインツ君からひと言</h2>
+        <p id="wayneMessage" class="wayne-message">
+          記録すると、そのときのYoshiに合わせたひとことを届けるね。
+        </p>
+      </section>
+
+      <!-- 最近のメモ一覧 -->
+      <section class="card list-card">
+        <h2>最近のメモ</h2>
+        <div id="entriesList" class="entries-list">
+          <p class="empty-text">まだメモはありません。最初のひとこと、残してみる？</p>
+        </div>
+      </section>
+
+      <!-- エクスポート＆削除 -->
+      <section class="card export-card">
+        <h2>バックアップ / エクスポート</h2>
+        <p class="hint-text">
+          これまでの記録を、タブ区切りテキスト（.txt）としてダウンロードできます。<br />
+          Excelやスプレッドシートで開けば、あとからゆっくり振り返れます。
+        </p>
+        <div class="button-row">
+          <button id="exportButton" class="outline-button" type="button">
+            テキストで保存する
+          </button>
+          <button id="clearButton" class="danger-button outline-button small" type="button">
+            すべて削除…
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <p>いつでもここが、Yoshiのセーフスペース。</p>
+    </footer>
+  </div>
+
+  <!-- ちょっとした癒しのふわふわバブル -->
+  <div class="floating-bubble" aria-hidden="true"></div>
+</body>
+</html>

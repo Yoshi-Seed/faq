@@ -1,0 +1,359 @@
+// app.js
+(() => {
+  const STORAGE_KEY = "wayne_yoshi_memo_v1";
+
+  const entryForm = document.getElementById("entryForm");
+  const categoryGroup = document.getElementById("categoryGroup");
+  const moodGroup = document.getElementById("moodGroup");
+  const categoryHidden = document.getElementById("categoryHidden");
+  const moodHidden = document.getElementById("moodHidden");
+  const memoText = document.getElementById("memoText");
+  const entriesList = document.getElementById("entriesList");
+  const exportButton = document.getElementById("exportButton");
+  const clearButton = document.getElementById("clearButton");
+  const wayneMessage = document.getElementById("wayneMessage");
+  const recordButton = document.getElementById("recordButton");
+  const nowTimeEl = document.getElementById("nowTime");
+
+  if (!entryForm) {
+    console.error("entryForm が見つかりません。HTML構造を確認してください。");
+    return;
+  }
+
+  // ---- メッセージたち ----
+
+  const defaultMessages = [
+    "今日のひとこと、ちゃんと受け取ったよ。Yoshi、おつかれさま。",
+    "メモしておくって、それだけで未来のYoshiへのプレゼントだと思う。",
+    "はい、記録完了。ここはいつでもYoshiの味方チームだからね。",
+    "いいね、その気づき。あとで一緒に振り返るのが楽しみだなぁ。",
+    "今の気持ち、ちゃんと残せたね。深呼吸して、お茶でもどう？"
+  ];
+
+  const moodMessages = {
+    楽しみ: [
+      "ワクワクが伝わってきたよ。その気持ち、ちゃんと未来に届けておいた！",
+      "楽しみがあるって、それだけで今日がちょっと明るくなるね。",
+      "その「楽しみ」、カレンダーじゃなくて心のアルバムにも保存完了。"
+    ],
+    不安: [
+      "不安を書き出せたの、すごく大事な一歩だと思う。ここでは何を書いても大丈夫だよ。",
+      "不安を1人で抱え込まなくていいからね。文字にした分だけ、少し軽くなりますように。",
+      "「不安」ラベルで記録したよ。いつでも一緒に整理していこう。"
+    ],
+    安心: [
+      "ほっとした気持ち、こっちにも伝わってきたよ。よかったね。",
+      "安心できた瞬間って、ほんとに尊い。ちゃんとメモに残しておこう。",
+      "「大丈夫だった」という記録は、未来の不安へのお守りになると思う。"
+    ],
+    心配: [
+      "心配なこと、ここに預けてくれてありがとう。一人で抱えすぎないでね。",
+      "その心配、ちゃんとラベル付きで保存したよ。状況が変わったら一緒に更新しよ。",
+      "心配って、優しさの裏返しでもあるよね。その気持ちも含めて大事に扱おう。"
+    ],
+    怒り: [
+      "怒りをちゃんと文字にできるYoshi、すごく健全だと思う。ここでは何色の感情でもOK。",
+      "ムカッとした気持ち、ログに残しておいたよ。Yoshiの味方でいるから安心して。",
+      "怒りのエネルギー、あとでいい方向に変換できるように一緒に眺めよ。"
+    ],
+    落胆: [
+      "落ち込む日もあるよね。その気持ちを書いてくれてありがとう。一人じゃないよ。",
+      "うまくいかなかった日の記録も、いつか成長の証になるはず。ゆっくりで大丈夫。",
+      "「今日はしんどかった」が言えるのは、とても強いことだと思う。"
+    ],
+    希望: [
+      "希望のメモ、いいね。小さな一歩でも、ちゃんと未来につながってるよ。",
+      "その「こうなったらいいな」、一緒に見守らせてね。",
+      "希望の芽、ちゃんとここに植えておいたよ。たまに一緒に水やりしよう。"
+    ]
+  };
+
+  const clearMessages = [
+    "ログを一度リセットしたよ。ここからまた、新しいページをゆっくり埋めていこ。",
+    "データをきれいにしたよ。スッキリした気分で、また好きなときに使ってね。"
+  ];
+
+  const categoryMissingMessages = [
+    "どの箱に入れるか、1つだけ選んでみよっか？迷ったら「メモ」でOKだよ。",
+    "カテゴリをポチッとしてから記録ボタン、の順番でいこっか。"
+  ];
+
+  // ---- データの読み書き ----
+
+  function loadEntries() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return [];
+      const parsed = JSON.parse(raw);
+      if (!Array.isArray(parsed)) return [];
+      return parsed;
+    } catch (e) {
+      console.warn("メモの読み込みに失敗しました。", e);
+      return [];
+    }
+  }
+
+  function saveEntries(value) {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(value));
+    } catch (e) {
+      console.warn("メモの保存に失敗しました。", e);
+    }
+  }
+
+  let entries = loadEntries();
+
+  // ---- 日時表示 ----
+
+  function formatDisplay(date) {
+    const y = date.getFullYear();
+    const m = String(date.getMonth() + 1).padStart(2, "0");
+    const d = String(date.getDate()).padStart(2, "0");
+    const wdNames = ["日", "月", "火", "水", "木", "金", "土"];
+    const wd = wdNames[date.getDay()];
+    const hh = String(date.getHours()).padStart(2, "0");
+    const mm = String(date.getMinutes()).padStart(2, "0");
+    return `${y}/${m}/${d} (${wd}) ${hh}:${mm}`;
+  }
+
+  function updateNowTime() {
+    if (!nowTimeEl) return;
+    const now = new Date();
+    nowTimeEl.textContent = formatDisplay(now);
+  }
+
+  // ---- ユーティリティ ----
+
+  function pickRandom(arr) {
+    if (!arr || arr.length === 0) return "";
+    const i = Math.floor(Math.random() * arr.length);
+    return arr[i];
+  }
+
+  function normalizeMood(moodValue) {
+    if (!moodValue) return "";
+    const parts = moodValue.split(" ");
+    if (parts.length >= 2) {
+      return parts.slice(1).join(" ");
+    }
+    return moodValue;
+  }
+
+  function showWayneMessage({ mood, type } = {}) {
+    if (!wayneMessage) return;
+
+    let pool;
+
+    if (type === "clear") {
+      pool = clearMessages;
+    } else if (type === "categoryMissing") {
+      pool = categoryMissingMessages;
+    } else if (mood) {
+      const simpleMood = normalizeMood(mood);
+      pool = moodMessages[simpleMood] || defaultMessages;
+    } else {
+      pool = defaultMessages;
+    }
+
+    const text = pickRandom(pool) || "うまくメッセージが拾えなかった…でもちゃんと記録はできてるから安心してね。";
+
+    // アニメーション用クラス付け直し
+    wayneMessage.classList.remove("pop");
+    // 再計算してからクラスをつけることでアニメーションをリスタート
+    void wayneMessage.offsetWidth;
+    wayneMessage.textContent = text;
+    wayneMessage.classList.add("pop");
+  }
+
+  // ---- pillボタンのセットアップ ----
+
+  function setupPills() {
+    const categoryButtons = Array.from(
+      categoryGroup.querySelectorAll("button[data-value]")
+    );
+    const moodButtons = Array.from(
+      moodGroup.querySelectorAll("button[data-value]")
+    );
+
+    function attachPillBehavior(buttons, hiddenInput, groupElement) {
+      buttons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const value = btn.dataset.value || "";
+          if (hiddenInput.value === value) {
+            // 再タップで解除
+            hiddenInput.value = "";
+            btn.classList.remove("active");
+          } else {
+            hiddenInput.value = value;
+            buttons.forEach((b) => b.classList.toggle("active", b === btn));
+          }
+          if (groupElement && groupElement.classList.contains("shake")) {
+            groupElement.classList.remove("shake");
+          }
+        });
+      });
+    }
+
+    attachPillBehavior(categoryButtons, categoryHidden, categoryGroup);
+    attachPillBehavior(moodButtons, moodHidden, moodGroup);
+  }
+
+  // ---- メモ一覧の描画 ----
+
+  function renderEntries() {
+    if (!entriesList) return;
+
+    entriesList.innerHTML = "";
+
+    if (!entries.length) {
+      const p = document.createElement("p");
+      p.className = "empty-text";
+      p.textContent = "まだメモはありません。最初のひとこと、残してみる？";
+      entriesList.appendChild(p);
+      return;
+    }
+
+    const fragment = document.createDocumentFragment();
+
+    entries.forEach((entry) => {
+      const item = document.createElement("article");
+      item.className = "entry-item";
+
+      const meta = document.createElement("div");
+      meta.className = "entry-meta";
+      const moodPart = entry.mood ? ` · ${entry.mood}` : "";
+      meta.textContent = `${entry.displayTime} · ${entry.category}${moodPart}`;
+
+      const text = document.createElement("p");
+      text.className = "entry-text";
+      text.textContent = entry.memo || "(メモは空欄)";
+
+      item.appendChild(meta);
+      item.appendChild(text);
+      fragment.appendChild(item);
+    });
+
+    entriesList.appendChild(fragment);
+  }
+
+  function updateExportState() {
+    const hasEntries = entries.length > 0;
+    if (exportButton) exportButton.disabled = !hasEntries;
+    if (clearButton) clearButton.disabled = !hasEntries;
+  }
+
+  // ---- フォーム送信 ----
+
+  function handleSubmit(event) {
+    event.preventDefault();
+
+    const category = categoryHidden.value;
+    const mood = moodHidden.value;
+    const memo = memoText.value.trim();
+
+    if (!category) {
+      if (categoryGroup) {
+        categoryGroup.classList.remove("shake");
+        void categoryGroup.offsetWidth;
+        categoryGroup.classList.add("shake");
+      }
+      showWayneMessage({ type: "categoryMissing" });
+      return;
+    }
+
+    const now = new Date();
+    const entry = {
+      id: `e_${now.getTime()}`,
+      timestamp: now.toISOString(),
+      displayTime: formatDisplay(now),
+      category,
+      mood,
+      memo
+    };
+
+    entries.unshift(entry);
+    saveEntries(entries);
+    renderEntries();
+    updateExportState();
+
+    // テキストだけクリア（カテゴリ・気分は残す）
+    memoText.value = "";
+
+    if (recordButton) {
+      recordButton.classList.add("saved");
+      setTimeout(() => recordButton.classList.remove("saved"), 300);
+    }
+
+    showWayneMessage({ mood });
+  }
+
+  // ---- エクスポート ----
+
+  function makeExportContent(list) {
+    const header = "iso_timestamp\t日時\tカテゴリ\t気分\tメモ";
+    const lines = list.map((e) => {
+      const memo = (e.memo || "")
+        .replace(/\t/g, " ")
+        .replace(/\r?\n/g, "\\n");
+      const mood = e.mood || "";
+      return `${e.timestamp}\t${e.displayTime}\t${e.category}\t${mood}\t${memo}`;
+    });
+    return [header, ...lines].join("\n");
+  }
+
+  function handleExport() {
+    if (!entries.length) {
+      showWayneMessage();
+      return;
+    }
+
+    const content = makeExportContent(entries);
+    const blob = new Blob([content], {
+      type: "text/plain;charset=utf-8"
+    });
+
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+
+    const now = new Date();
+    const y = now.getFullYear();
+    const m = String(now.getMonth() + 1).padStart(2, "0");
+    const d = String(now.getDate()).padStart(2, "0");
+    a.download = `yoshi_memo_${y}${m}${d}.txt`;
+    a.href = url;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    showWayneMessage();
+  }
+
+  // ---- 全削除 ----
+
+  function handleClear() {
+    if (!entries.length) return;
+    const ok = window.confirm(
+      "本当にすべてのメモを削除しますか？\n（この操作は元に戻せません）"
+    );
+    if (!ok) return;
+
+    entries = [];
+    saveEntries(entries);
+    renderEntries();
+    updateExportState();
+    showWayneMessage({ type: "clear" });
+  }
+
+  // ---- 初期化 ----
+
+  setupPills();
+  renderEntries();
+  updateExportState();
+  updateNowTime();
+  setInterval(updateNowTime, 30000);
+
+  entryForm.addEventListener("submit", handleSubmit);
+  if (exportButton) exportButton.addEventListener("click", handleExport);
+  if (clearButton) clearButton.addEventListener("click", handleClear);
+})();
