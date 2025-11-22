@@ -264,6 +264,19 @@
 
   // ---- フォーム送信 ----
 
+  // --- Google Sheetsへ送信 ---
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbzNAaAIXhlWv_QpRGESuZTrdvR09A0TsPDVPqlHLdbNjHcHL-Gk4gEZTMjYkgvofb4e/exec";
+
+    try {
+      await fetch(GAS_URL, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(entry)
+      });
+    } catch (e) {
+      console.warn("Sheets送信に失敗（ローカル保存はOK）:", e);
+  
+    }
   function handleSubmit(event) {
     event.preventDefault();
 
