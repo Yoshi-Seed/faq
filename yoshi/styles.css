@@ -665,3 +665,34 @@ body.theme-night .pill-button.active {
   50%     { filter: brightness(1.12); }
 }
 
+/* 夜モード時：ウェインツ君メッセージの視認性を上げる */
+body.theme-night #messageSection .wayne-message {
+  background: rgba(255, 255, 255, 0.08);   /* ふんわり明るい面 */
+  color: #eaf2ff;                          /* 文字はしっかり白寄り */
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: inset 0 0 0 1px rgba(10,167,198,0.08);
+}
+
+/* 夜モード時：見出しも少し持ち上げ */
+body.theme-night #messageSection h2 {
+  color: #f3f7ff;
+}
+
+/* ===========================
+   🌊 画面ブォーン波うち
+   =========================== */
+
+.app-shell.wave-animate {
+  animation: screenWave 900ms cubic-bezier(.2, .8, .2, 1);
+  transform-origin: center top;
+  filter: saturate(1.08);
+}
+
+@keyframes screenWave {
+  0%   { transform: translateY(0) skewY(0deg) scale(1); }
+  20%  { transform: translateY(-2px) skewY(0.4deg) scale(1.005); }
+  45%  { transform: translateY(3px) skewY(-0.6deg) scale(0.995); }
+  70%  { transform: translateY(-1px) skewY(0.3deg) scale(1.002); }
+  100% { transform: translateY(0) skewY(0deg) scale(1); }
+}
+
