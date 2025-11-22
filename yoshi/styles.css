@@ -566,4 +566,102 @@ textarea {
   font-size: 1rem;
   padding: 0.8rem 0.9rem;
 }
+/* ===========================
+   🌅🌓 時間帯テーマ（背景の空気）
+   =========================== */
+
+body.theme-morning {
+  --bg-gradient: linear-gradient(135deg, #fff6d8, #dff7ff 40%, #ffe7f5 85%);
+}
+body.theme-day {
+  --bg-gradient: linear-gradient(135deg, #e8f6ff, #e7ffe8 45%, #fff6c9 85%);
+}
+body.theme-evening {
+  --bg-gradient: linear-gradient(135deg, #ffe5d4, #e6e0ff 45%, #d9f7ff 85%);
+}
+body.theme-night {
+  --bg-gradient: linear-gradient(135deg, #0c1730, #132a52 45%, #0c3c4f 85%);
+  --card-bg: rgba(15, 25, 45, 0.9);
+  --text-main: #e9f1ff;
+  --text-sub: #b3c1d8;
+  --card-border: rgba(255,255,255,0.08);
+}
+
+/* 夜はボタンも少し落ち着いた輝きに */
+body.theme-night .pill-button {
+  background: rgba(255,255,255,0.1);
+  color: #e9f1ff;
+}
+body.theme-night .pill-button.active {
+  background: linear-gradient(135deg, #2a5bd7, #0aa7c6);
+}
+
+/* ===========================
+   🎉 祝福アニメ（星・紙吹雪）
+   =========================== */
+
+.celebrate-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 999;
+}
+
+.particle {
+  position: absolute;
+  font-size: 18px;
+  opacity: 0;
+  transform: translate3d(0,0,0) scale(0.8);
+  animation: popFloat 900ms ease-out forwards;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.15));
+}
+
+@keyframes popFloat {
+  0%   { opacity: 0; transform: translateY(10px) scale(0.6) rotate(0deg); }
+  20%  { opacity: 1; transform: translateY(0) scale(1.0) rotate(10deg); }
+  100% { opacity: 0; transform: translateY(-80px) scale(1.1) rotate(35deg); }
+}
+
+/* ===========================
+   🫧 バブルタップ演出（色の走り＋ぶわ〜ん影響）
+   =========================== */
+
+.ripple-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 998;
+}
+
+.ripple {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0.9;
+  animation: rippleBurst 1200ms ease-out forwards;
+  mix-blend-mode: screen;
+  background: radial-gradient(circle,
+    rgba(10,167,198,0.9),
+    rgba(11,42,111,0.2) 60%,
+    rgba(255,255,255,0) 75%);
+}
+
+@keyframes rippleBurst {
+  0%   { transform: translate(-50%, -50%) scale(0); opacity: 0.9; }
+  60%  { transform: translate(-50%, -50%) scale(18); opacity: 0.45; }
+  100% { transform: translate(-50%, -50%) scale(26); opacity: 0; }
+}
+
+/* バブル自体を触りたくなる微アニメ */
+.floating-bubble {
+  cursor: pointer;
+  animation: bubbleFloat 7s ease-in-out infinite, bubblePulse 2.8s ease-in-out infinite;
+}
+@keyframes bubblePulse {
+  0%,100% { filter: brightness(1); }
+  50%     { filter: brightness(1.12); }
+}
 
