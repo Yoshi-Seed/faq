@@ -28,34 +28,49 @@
       <section class="card entry-card">
         <h2>今日のメモ</h2>
         <form id="entryForm" autocomplete="off">
-          <!-- カテゴリ -->
-          <div class="field-group">
-            <label class="field-label">カテゴリ</label>
-            <div class="pill-group" id="categoryGroup">
-              <button type="button" class="pill-button" data-value="思ったこと">💡 思ったこと</button>
-              <button type="button" class="pill-button" data-value="聞いたこと">👂 聞いたこと</button>
-              <button type="button" class="pill-button" data-value="気づき">✨ 気づき</button>
-              <button type="button" class="pill-button" data-value="体調">🩺 体調</button>
-              <button type="button" class="pill-button" data-value="メモ">📘 メモ</button>
-              <button type="button" class="pill-button" data-value="買い物">🛒 買い物</button>
-            </div>
-            <input type="hidden" id="categoryHidden" name="category" required />
-          </div>
+<!-- カテゴリ -->
+<div class="field-group">
+  <label class="field-label">カテゴリ</label>
+  <div class="pill-grid" id="categoryGroup">
+    <button type="button" class="pill-button" data-value="思ったこと">💡 思ったこと</button>
+    <button type="button" class="pill-button" data-value="聞いたこと">👂 聞いたこと</button>
+    <button type="button" class="pill-button" data-value="気づき">✨ 気づき</button>
+    <button type="button" class="pill-button" data-value="体調">🩺 体調</button>
+    <button type="button" class="pill-button" data-value="メモ">📘 メモ</button>
+    <button type="button" class="pill-button" data-value="買い物">🛒 買い物</button>
 
-          <!-- 気分 -->
-          <div class="field-group">
-            <label class="field-label">気分</label>
-            <div class="pill-group pill-group--wrap" id="moodGroup">
-              <button type="button" class="pill-button mood-pill" data-value="🌈 楽しみ">🌈 楽しみ</button>
-              <button type="button" class="pill-button mood-pill" data-value="😟 不安">😟 不安</button>
-              <button type="button" class="pill-button mood-pill" data-value="😌 安心">😌 安心</button>
-              <button type="button" class="pill-button mood-pill" data-value="🌀 心配">🌀 心配</button>
-              <button type="button" class="pill-button mood-pill" data-value="😡 怒り">😡 怒り</button>
-              <button type="button" class="pill-button mood-pill" data-value="😔 落胆">😔 落胆</button>
-              <button type="button" class="pill-button mood-pill" data-value="✨ 希望">✨ 希望</button>
-            </div>
-            <input type="hidden" id="moodHidden" name="mood" />
-          </div>
+    <!-- 追加カテゴリ -->
+    <button type="button" class="pill-button" data-value="思い出し">🧠 思い出し</button>
+    <button type="button" class="pill-button" data-value="学び">📚 学び</button>
+    <button type="button" class="pill-button" data-value="発見">🔎 発見</button>
+    <button type="button" class="pill-button" data-value="決意">🔥 決意</button>
+  </div>
+  <input type="hidden" id="categoryHidden" name="category" required />
+</div>
+
+
+<!-- 気分 -->
+<div class="field-group">
+  <label class="field-label">気分</label>
+  <div class="pill-grid pill-grid--mood" id="moodGroup">
+    <button type="button" class="pill-button mood-pill" data-value="🌈 楽しみ">🌈 楽しみ</button>
+    <button type="button" class="pill-button mood-pill" data-value="😟 不安">😟 不安</button>
+    <button type="button" class="pill-button mood-pill" data-value="😌 安心">😌 安心</button>
+    <button type="button" class="pill-button mood-pill" data-value="🌀 心配">🌀 心配</button>
+    <button type="button" class="pill-button mood-pill" data-value="😡 怒り">😡 怒り</button>
+    <button type="button" class="pill-button mood-pill" data-value="😔 落胆">😔 落胆</button>
+    <button type="button" class="pill-button mood-pill" data-value="✨ 希望">✨ 希望</button>
+
+    <!-- 追加気分 -->
+    <button type="button" class="pill-button mood-pill" data-value="🫧 落ち着き">🫧 落ち着き</button>
+    <button type="button" class="pill-button mood-pill" data-value="🪞 反省">🪞 反省</button>
+    <button type="button" class="pill-button mood-pill" data-value="🌱 前向き">🌱 前向き</button>
+    <button type="button" class="pill-button mood-pill" data-value="🧊 冷静">🧊 冷静</button>
+    <button type="button" class="pill-button mood-pill" data-value="🌪️ 混乱">🌪️ 混乱</button>
+  </div>
+  <input type="hidden" id="moodHidden" name="mood" />
+</div>
+
 
           <!-- メモ -->
           <div class="field-group">
