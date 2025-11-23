@@ -264,62 +264,63 @@
     if (clearButton) clearButton.disabled = !hasEntries;
   }
 
-  // ---- フォーム送信 ----
-  async function handleSubmit(event) {
-    event.preventDefault();
+// ---- フォーム送信 ----
+async function handleSubmit(event) {
+  event.preventDefault();
 
-    const category = categoryHidden.value;
-    const mood = moodHidden.value;
-    const memo = memoText.value.trim();
+  const category = categoryHidden.value;
+  const mood = moodHidden.value;
+  const memo = memoText.value.trim();
 
-    if (!category) {
-      if (categoryGroup) {
-        categoryGroup.classList.remove("shake");
-        void categoryGroup.offsetWidth;
-        categoryGroup.classList.add("shake");
-      }
-      showWayneMessage({ type: "categoryMissing" });
-      return;
+  if (!category) {
+    if (categoryGroup) {
+      categoryGroup.classList.remove("shake");
+      void categoryGroup.offsetWidth;
+      categoryGroup.classList.add("shake");
     }
-
-    const now = new Date();
-    const entry = {
-      id: `e_${now.getTime()}`,
-      timestamp: now.toISOString(),
-      displayTime: formatDisplay(now),
-      category,
-      mood,
-      memo
-    };
-
-    // ✅ まずローカル保存
-    entries.unshift(entry);
-    saveEntries(entries);
-    renderEntries();
-    updateExportState();
-
-    memoText.value = "";
-
-    if (recordButton) {
-      recordButton.classList.add("saved");
-      setTimeout(() => recordButton.classList.remove("saved"), 300);
-    }
-
-    // ✅ Sheets へ送信（失敗してもローカルは残る）
-    try {
-      await fetch(GAS_URL, {
-        method: "POST",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify(entry)
-      });
-    } catch (e) {
-      console.warn("Sheets送信に失敗（ローカル保存はOK）:", e);
-    }
-
-    // ✅ 祝福＆メッセージ
-    celebrate();
-    showWayneMessage({ mood });
+    showWayneMessage({ type: "categoryMissing" });
+    return;
   }
+
+  const now = new Date();
+  const entry = {
+    id: `e_${now.getTime()}`,
+    timestamp: now.toISOString(),
+    displayTime: formatDisplay(now),
+    category,
+    mood,
+    memo
+  };
+
+  // ✅ ローカル保存
+  entries.unshift(entry);
+  saveEntries(entries);
+  renderEntries();
+  updateExportState();
+
+  memoText.value = "";
+
+  if (recordButton) {
+    recordButton.classList.add("saved");
+    setTimeout(() => recordButton.classList.remove("saved"), 300);
+  }
+
+  // ✅ Sheetsへ送信
+  try {
+    await fetch(GAS_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(entry)
+    });
+  } catch (e) {
+    console.warn("Sheets送信に失敗（ローカル保存はOK）:", e);
+  }
+
+  // ✅ 祝福＆ウェインツ君ひと言
+  celebrate();
+  showWayneMessage({ mood });
+}
+
 
 
   // ---- エクスポート ----
