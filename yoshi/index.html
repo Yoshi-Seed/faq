@@ -32,15 +32,12 @@
 <div class="field-group">
   <label class="field-label">カテゴリ</label>
   <div class="pill-grid" id="categoryGroup">
-    <button type="button" class="pill-button" data-value="思ったこと">💡 思ったこと</button>
-    <button type="button" class="pill-button" data-value="聞いたこと">👂 聞いたこと</button>
+    <button type="button" class="pill-button" data-value="思い">💡 思い</button>
+    <button type="button" class="pill-button" data-value="仕事・チーム">🏢 仕事・チーム</button>
     <button type="button" class="pill-button" data-value="気づき">✨ 気づき</button>
     <button type="button" class="pill-button" data-value="体調">🩺 体調</button>
-    <button type="button" class="pill-button" data-value="メモ">📘 メモ</button>
+    <button type="button" class="pill-button" data-value="メモ・記録">📘 メモ・記録</button>
     <button type="button" class="pill-button" data-value="買い物">🛒 買い物</button>
-
-    <!-- 追加カテゴリ -->
-    <button type="button" class="pill-button" data-value="思い出し">🧠 思い出し</button>
     <button type="button" class="pill-button" data-value="学び">📚 学び</button>
     <button type="button" class="pill-button" data-value="発見">🔎 発見</button>
     <button type="button" class="pill-button" data-value="決意">🔥 決意</button>
@@ -53,23 +50,19 @@
 <div class="field-group">
   <label class="field-label">気分</label>
   <div class="pill-grid pill-grid--mood" id="moodGroup">
-    <button type="button" class="pill-button mood-pill" data-value="🌈 楽しみ">🌈 楽しみ</button>
-    <button type="button" class="pill-button mood-pill" data-value="😟 不安">😟 不安</button>
-    <button type="button" class="pill-button mood-pill" data-value="😌 安心">😌 安心</button>
-    <button type="button" class="pill-button mood-pill" data-value="🌀 心配">🌀 心配</button>
-    <button type="button" class="pill-button mood-pill" data-value="😡 怒り">😡 怒り</button>
-    <button type="button" class="pill-button mood-pill" data-value="😔 落胆">😔 落胆</button>
-    <button type="button" class="pill-button mood-pill" data-value="✨ 希望">✨ 希望</button>
-
-    <!-- 追加気分 -->
-    <button type="button" class="pill-button mood-pill" data-value="🫧 落ち着き">🫧 落ち着き</button>
-    <button type="button" class="pill-button mood-pill" data-value="🪞 反省">🪞 反省</button>
-    <button type="button" class="pill-button mood-pill" data-value="🌱 前向き">🌱 前向き</button>
+    <!-- 並び順：冷静→安心→前向き→楽しみ→希望→心配→混乱→怒り -->
     <button type="button" class="pill-button mood-pill" data-value="🧊 冷静">🧊 冷静</button>
+    <button type="button" class="pill-button mood-pill" data-value="😌 安心">😌 安心</button>
+    <button type="button" class="pill-button mood-pill" data-value="🌱 前向き">🌱 前向き</button>
+    <button type="button" class="pill-button mood-pill" data-value="🌈 楽しみ">🌈 楽しみ</button>
+    <button type="button" class="pill-button mood-pill" data-value="✨ 希望">✨ 希望</button>
+    <button type="button" class="pill-button mood-pill" data-value="🌀 心配">🌀 心配</button>
     <button type="button" class="pill-button mood-pill" data-value="🌪️ 混乱">🌪️ 混乱</button>
+    <button type="button" class="pill-button mood-pill" data-value="😡 怒り">😡 怒り</button>
   </div>
   <input type="hidden" id="moodHidden" name="mood" />
 </div>
+
 
 
           <!-- メモ -->
@@ -83,12 +76,12 @@
           </div>
 
           <p class="hint-text small">
-            ※ 日付と時刻は自動で記録されます。メモが空でも、気分だけの記録もOKです。
+            ※ 日付と時刻は自動で記録されます。気分だけの記録もOK。
           </p>
 
           <div class="button-row">
             <button type="submit" class="primary-button" id="recordButton">
-              記録する
+              記録
             </button>
           </div>
         </form>
@@ -98,7 +91,7 @@
       <section class="card" id="messageSection">
         <h2>ウェインツ君からひと言</h2>
         <p id="wayneMessage" class="wayne-message">
-          記録すると、そのときのYoshiに合わせたひとことを届けるね。
+          Yoshiに合わせたひとことを届けるね。
         </p>
       </section>
 
