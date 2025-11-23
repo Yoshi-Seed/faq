@@ -267,19 +267,6 @@
   // ---- フォーム送信 ----
   async function handleSubmit(event) {
     event.preventDefault();
-        try {
-      await fetch(GAS_URL, {
-        method: "POST",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify(entry)
-      });
-    } catch (e) {
-      console.warn("Sheets送信に失敗（ローカル保存はOK）:", e);
-    }
-
-    celebrate();                 // ← これ追加
-    showWayneMessage({ mood });
-
 
     const category = categoryHidden.value;
     const mood = moodHidden.value;
@@ -305,7 +292,7 @@
       memo
     };
 
-    // ✅ ローカル保存
+    // ✅ まずローカル保存
     entries.unshift(entry);
     saveEntries(entries);
     renderEntries();
@@ -318,7 +305,7 @@
       setTimeout(() => recordButton.classList.remove("saved"), 300);
     }
 
-    // ✅ Google Sheetsへ送信（ここが正しい場所）
+    // ✅ Sheets へ送信（失敗してもローカルは残る）
     try {
       await fetch(GAS_URL, {
         method: "POST",
@@ -329,8 +316,11 @@
       console.warn("Sheets送信に失敗（ローカル保存はOK）:", e);
     }
 
+    // ✅ 祝福＆メッセージ
+    celebrate();
     showWayneMessage({ mood });
   }
+
 
   // ---- エクスポート ----
 
@@ -439,19 +429,10 @@
     }
   }
 
-   // ---- バブル触ったら背景がぱぱぱ〜ん：リップル魔法 ----
+  // ---- バブル触ったら背景がぱぱぱ〜ん：リップル魔法 ----
   function bubbleMagic(x, y) {
     if (!rippleLayer) return;
 
-      // 🫧 バブルタップで魔法発動
-  if (bubble) {
-    bubble.addEventListener("click", (e) => {
-      const x = e.clientX;
-      const y = e.clientY;
-      bubbleMagic(x, y);
-    });
-  }
-    
     // 既存のリップル
     for (let i = 0; i < 3; i++) {
       const r = document.createElement("div");
@@ -466,14 +447,25 @@
     // 🌊 画面全体をブォーンと波うたせる
     if (appShell) {
       appShell.classList.remove("wave-animate");
-      // 連打でも毎回発火するようにリセット
-      void appShell.offsetWidth;
+      void appShell.offsetWidth; // リセット
       appShell.classList.add("wave-animate");
-      appShell.addEventListener("animationend", () => {
-        appShell.classList.remove("wave-animate");
-      }, { once: true });
+      appShell.addEventListener(
+        "animationend",
+        () => appShell.classList.remove("wave-animate"),
+        { once: true }
+      );
     }
   }
+
+  // 🫧 バブルタップで魔法発動（← これは関数の外側）
+  if (bubble) {
+    bubble.addEventListener("click", (e) => {
+      const x = e.clientX;
+      const y = e.clientY;
+      bubbleMagic(x, y);
+    });
+  }
+
 
  
   // ---- 初期化 ----
