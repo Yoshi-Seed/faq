@@ -119,25 +119,24 @@ body {
   text-align: right;
 }
 
-/* --- Liquid Glass Cards (修正版) --- */
+/* --- Liquid Glass Cards (透明度強化版) --- */
 .card {
   position: relative;
-  /* 修正①: 0.55(濃い) → 0.25(薄い) に変更 */
-  background: rgba(255, 255, 255, 0.25);
+  /* 修正①: 白さを消すため 0.25 → 0.15 まで下げました */
+  background: rgba(255, 255, 255, 0.15);
   
   border-radius: 22px;
   padding: 1.2rem 1.2rem 1.3rem;
   
-  /* 修正②: 枠線も少し薄くして馴染ませる */
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  /* 枠線も薄くして馴染ませます */
+  border: 1px solid rgba(255, 255, 255, 0.3);
   
   box-shadow:
     0 12px 30px rgba(0, 0, 0, 0.10),
-    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
   
-  /* すりガラス効果 */
-  backdrop-filter: blur(18px) saturate(140%);
-  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  backdrop-filter: blur(24px) saturate(140%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
   
   margin-bottom: 0.9rem;
   overflow: hidden;
@@ -147,11 +146,11 @@ body {
   content: "";
   position: absolute;
   inset: 0;
+  /* 反射光もさらに控えめに */
   background:
-    /* 修正③: 反射光(グレア)も 0.85 → 0.5 くらいに下げて白飛びを防ぐ */
-    radial-gradient(120% 80% at 10% 0%, rgba(255,255,255,0.5), rgba(255,255,255,0) 60%),
-    linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0) 45%);
-  opacity: 0.9;
+    radial-gradient(120% 80% at 10% 0%, rgba(255,255,255,0.4), rgba(255,255,255,0) 60%),
+    linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0) 45%);
+  opacity: 0.8;
   pointer-events: none;
 }
 
@@ -406,18 +405,25 @@ body.theme-evening {
   animation: gradientMove 18s ease infinite;
 }
 
-/* 🌞 Day：修正版（位置移動方式） */
+/* 🌞 Day：スカイブルー強調版 */
 body.theme-day {
-  /* 1. すべての色を1つの長いグラデーションにつなげます */
+  /* 青の彩度を上げました。
+     淡い青(#eaf6ff) → 鮮やかスカイブルー(#63a4ff) → 爽やかミント → 陽の光 → 淡い青
+     と変化します。
+  */
   background-image: linear-gradient(
     135deg,
-    #eaf6ff 0%,   /* ① うすブルー */
-    #a8dcff 25%,  /* ② スカイブルー */
-    #ecffef 50%,  /* ③ 薄グリーン */
-    #fff8dc 75%,  /* ④ 薄黄色 */
-    #eaf6ff 100%  /* ⑤ うすブルーに戻る */
+    #eaf6ff 0%,   /* スタート: 淡い青 */
+    #63a4ff 25%,  /* ここでしっかり「スカイブルー」になります */
+    #a8ffe0 50%,  /* 少し緑へ */
+    #fff4c4 75%,  /* 少し黄色へ */
+    #eaf6ff 100%  /* 淡い青に戻る */
   );
 
+  background-size: 400% 400%;
+  animation: dayGradient 30s ease infinite;
+  background-attachment: fixed;
+}
   /* 2. 背景を画面の4倍の大きさに引き伸ばします */
   background-size: 400% 400%;
 
