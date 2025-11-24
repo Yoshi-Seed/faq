@@ -445,12 +445,14 @@
     });
   }
 
-  // ---- ☁️ 雲を生成して浮かべる ----
+  // ---- ☁️ 雲を生成して浮かべる（修正版：JSで強制的に黒を透過） ----
   function initClouds() {
     const layer = document.getElementById("cloudLayer");
     if (!layer) return;
 
-    // ✅ 画像パス修正：ご指定の通り cloud1.png ... に変更しました
+    // 🔥 JSで強制的にレイヤー順序を修正（これでカードの裏に行きます）
+    layer.style.zIndex = "0";
+
     const cloudImages = [
       "images/cloud1.png",
       "images/cloud2.png",
@@ -465,6 +467,9 @@
       img.className = "cloud";
       img.alt = ""; 
 
+      // 🔥 JSで強制的に「黒を透明にする魔法」をかける
+      img.style.mixBlendMode = "screen"; 
+      
       const topPos = Math.random() * 60; 
       const sizeScale = 0.5 + Math.random() * 0.8; 
       const duration = 40 + Math.random() * 40; 
@@ -483,6 +488,9 @@
   function startShootingStars() {
     const layer = document.getElementById("starLayer");
     if (!layer) return;
+
+    // 星レイヤーも念のためJSでz-index指定
+    layer.style.zIndex = "0";
 
     function spawnStar() {
       if (!document.body.classList.contains("theme-night")) return;
@@ -519,6 +527,12 @@
   }
 
   // ---- 初期化 ----
+
+  // 🔥 コンテンツ（カード）を最前面に出すための強制設定
+  if (appShell) {
+    appShell.style.position = "relative";
+    appShell.style.zIndex = "10";
+  }
 
   setupPills();
   renderEntries();
