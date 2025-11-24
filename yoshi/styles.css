@@ -56,12 +56,11 @@ body {
   max-width: 720px;
   margin: 0 auto;
   padding: 1.4rem 1.2rem 3.2rem;
-
-  /* 👇 ここが重要！これで雲より手前に来ます */
+  
+  /* 👇 この2行があるか確認してください */
   position: relative;
-  z-index: 10; 
+  z-index: 10;
 }
-
 
 /* ② ファイルの一番下にある「雲の設定」を、これに書き換えてください */
 /* =========================
@@ -693,11 +692,11 @@ body.theme-morning .cloud-layer {
   background-repeat: no-repeat;
   background-size: contain;
   
-  /* 👇 ここが魔法！黒い背景を透明にして、雲だけを光らせます */
+  /* 👇 この一行が超重要です！これを追加してください */
   mix-blend-mode: screen; 
   
-  opacity: 0.8; 
-  filter: blur(3px); /* 少しぼかすと馴染みます */
+  opacity: 0.8;
+  filter: blur(2px); /* 輪郭を少しぼかすとさらにリアルになります */
 }
 
 /* アニメーションはそのまま */
