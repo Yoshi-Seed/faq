@@ -119,24 +119,24 @@ body {
   text-align: right;
 }
 
-/* --- Liquid Glass Cards (透明度強化版) --- */
+/* --- Liquid Glass Cards (背景が綺麗に透ける設定) --- */
 .card {
   position: relative;
-  /* 修正①: 白さを消すため 0.25 → 0.15 まで下げました */
+  /* 背景色をさらに薄くして、グラデーションを透過させる */
   background: rgba(255, 255, 255, 0.15);
   
   border-radius: 22px;
   padding: 1.2rem 1.2rem 1.3rem;
   
-  /* 枠線も薄くして馴染ませます */
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  /* 枠線も控えめに */
+  border: 1px solid rgba(255, 255, 255, 0.35);
   
   box-shadow:
-    0 12px 30px rgba(0, 0, 0, 0.10),
-    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    0 12px 30px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
   
-  backdrop-filter: blur(24px) saturate(140%);
-  -webkit-backdrop-filter: blur(24px) saturate(140%);
+  backdrop-filter: blur(20px) saturate(120%);
+  -webkit-backdrop-filter: blur(20px) saturate(120%);
   
   margin-bottom: 0.9rem;
   overflow: hidden;
@@ -146,11 +146,11 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  /* 反射光もさらに控えめに */
+  /* 反射光を弱めて白飛びを防ぐ */
   background:
     radial-gradient(120% 80% at 10% 0%, rgba(255,255,255,0.4), rgba(255,255,255,0) 60%),
     linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0) 45%);
-  opacity: 0.8;
+  opacity: 0.7;
   pointer-events: none;
 }
 
@@ -405,24 +405,38 @@ body.theme-evening {
   animation: gradientMove 18s ease infinite;
 }
 
-/* 🌞 Day：スカイブルー強調版 */
+/* 🌞 Day：色の変化をくっきりさせたバージョン */
 body.theme-day {
-  /* 青の彩度を上げました。
-     淡い青(#eaf6ff) → 鮮やかスカイブルー(#63a4ff) → 爽やかミント → 陽の光 → 淡い青
-     と変化します。
+  /* 指定の流れ:
+    1. スカイブルー (#3bb1ff)
+    2. 淡いブルー (#d4f4ff)
+    3. グリーンがかったブルー (#7affd6)
+    4. 朝焼けのような淡いイエロー (#fff5cc)
+    5. スカイブルーに戻る
   */
   background-image: linear-gradient(
     135deg,
-    #eaf6ff 0%,   /* スタート: 淡い青 */
-    #63a4ff 25%,  /* ここでしっかり「スカイブルー」になります */
-    #a8ffe0 50%,  /* 少し緑へ */
-    #fff4c4 75%,  /* 少し黄色へ */
-    #eaf6ff 100%  /* 淡い青に戻る */
+    #3bb1ff 0%,    /* ① くっきりしたスカイブルー */
+    #d4f4ff 25%,   /* ② 休憩のような淡いブルー */
+    #7affd6 50%,   /* ③ 爽やかなミントグリーンブルー */
+    #fff5cc 75%,   /* ④ 朝焼けの光（イエロー） */
+    #3bb1ff 100%   /* ⑤ 最初に戻る */
   );
 
+  /* 色の変化を大きく見せるためサイズは400% */
   background-size: 400% 400%;
-  animation: dayGradient 30s ease infinite;
+  
+  /* 28秒かけてゆっくり一周 */
+  animation: dayGradient 28s ease infinite;
+  
+  /* スクロール時のガタつき防止 */
   background-attachment: fixed;
+}
+
+@keyframes dayGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
   /* 2. 背景を画面の4倍の大きさに引き伸ばします */
   background-size: 400% 400%;
