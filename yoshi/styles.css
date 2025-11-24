@@ -606,12 +606,14 @@ textarea {
 body.theme-morning {
   --bg-gradient: linear-gradient(135deg, #fff6d8, #dff7ff 40%, #ffe7f5 85%);
 }
+
+/* 🌞 day：淡いまま4フェーズで育つ（位置移動は使わない） */
 body.theme-day {
-  /* dayは“背景位置を動かす方式”をやめて、色そのものを順番に変える */
   animation: dayGradient 30s ease-in-out infinite;
 }
+
 @keyframes dayGradient {
-  /* ① うすブルー（ずっと淡いままスタート） */
+  /* ① うすブルー（淡いままスタート） */
   0% {
     background: linear-gradient(
       135deg,
@@ -621,17 +623,17 @@ body.theme-day {
     );
   }
 
-  /* ② ブルースカイ（ここまで“淡さを保ったまま”育てる） */
+  /* ② スカイブルーまで“淡さを保って”育つ */
   25% {
     background: linear-gradient(
       135deg,
-      #dff3ff 0%,
-      #bfe6ff 55%,
-      #9dd8ff 100%
+      #e3f4ff 0%,
+      #cfeaff 55%,
+      #a8ddff 100%
     );
   }
 
-  /* ③ 薄グリーン（前の淡いグリーンを残すゾーン） */
+  /* ③ 薄グリーン（前の淡いグリーンも残す） */
   50% {
     background: linear-gradient(
       135deg,
@@ -661,6 +663,44 @@ body.theme-day {
     );
   }
 }
+
+body.theme-evening {
+  --bg-gradient: linear-gradient(135deg, #ffe5d4, #e6e0ff 45%, #d9f7ff 85%);
+}
+
+/* 🌙 night：ブルー → 薄い朝焼け → ブルー の呼吸 */
+body.theme-night {
+  --bg-gradient: linear-gradient(
+    135deg,
+    #07162f 0%,
+    #0b2a6f 28%,
+    #f3c6d6 52%,
+    #ffd9b7 62%,
+    #234e8f 78%,
+    #07162f 100%
+  );
+
+  --card-bg: rgba(15, 25, 45, 0.9);
+  --text-main: #e9f1ff;
+  --text-sub: #b3c1d8;
+  --card-border: rgba(255,255,255,0.08);
+
+  animation-duration: 26s; /* 夜はゆっくり */
+}
+
+/* 夜のカード濃度（body.theme-night の外に出す！） */
+body.theme-night .card {
+  background: rgba(10, 18, 34, 0.60);
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow:
+    0 14px 34px rgba(0,0,0,0.45),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+}
+
+body.theme-night .card::before {
+  opacity: 0.35;
+}
+
 
   
   /* 4フェーズ循環：
