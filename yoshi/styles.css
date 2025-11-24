@@ -644,25 +644,55 @@ body.theme-day {
 @keyframes dayGradient {
   /* ① うすブルー */
   0% {
-    background: linear-gradient(135deg, #eaf6ff 0%, #dff0ff 55%, #eaf6ff 100%);
+    background: linear-gradient(
+      135deg,
+      #eaf6ff 0%,
+      #e3f1ff 45%,
+      #eaf6ff 100%
+    );
   }
-  /* ② スカイブルー（淡いまま） */
+
+  /* ② スカイブルー（少しだけ濃く） */
   25% {
-    background: linear-gradient(135deg, #e3f4ff 0%, #cfeaff 55%, #a8ddff 100%);
+    background: linear-gradient(
+      135deg,
+      #e5f3ff 0%,
+      #cfe6ff 45%,
+      #a8d9ff 100%
+    );
   }
-  /* ③ 薄グリーン */
+
+  /* ③ 薄グリーン（ブルーとの差をやわらかく） */
   50% {
-    background: linear-gradient(135deg, #ecffef 0%, #e2fff0 55%, #ecffef 100%);
+    background: linear-gradient(
+      135deg,
+      #e9fff1 0%,
+      #e3fff2 45%,
+      #e9fff1 100%
+    );
   }
-  /* ④ 薄黄色 */
+
+  /* ④ 薄黄色（少しブルーを混ぜて境目を目立たなく） */
   75% {
-    background: linear-gradient(135deg, #fff8dc 0%, #fff2c9 55%, #fff8dc 100%);
+    background: linear-gradient(
+      135deg,
+      #fff8e5 0%,
+      #fff3d3 45%,
+      #f4f4ff 100%
+    );
   }
-  /* ⑤ 戻りのうすブルー */
+
+  /* ⑤ 戻りのうすブルー（最初とほぼ同じ色に戻す） */
   100% {
-    background: linear-gradient(135deg, #eaf6ff 0%, #dff0ff 55%, #eaf6ff 100%);
+    background: linear-gradient(
+      135deg,
+      #eaf6ff 0%,
+      #e3f1ff 45%,
+      #eaf6ff 100%
+    );
   }
 }
+
 
 body.theme-evening {
   --bg-gradient: linear-gradient(135deg, #ffe5d4, #e6e0ff 45%, #d9f7ff 85%);
