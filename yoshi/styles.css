@@ -113,21 +113,56 @@ body {
 
 /* カード */
 
+/* --- Liquid Glass Cards --- */
 .card {
-  background: var(--card-bg);
-  border-radius: var(--radius-card);
-  box-shadow: var(--shadow-soft);
-  padding: 1rem 1rem 1.1rem;
-  border: 1px solid var(--card-border);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  position: relative;
+  background: rgba(255, 255, 255, 0.55); /* 透明度アップ */
+  border-radius: 22px;
+  padding: 1.2rem 1.2rem 1.3rem;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7); /* 内側の反射 */
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
   margin-bottom: 0.9rem;
+  overflow: hidden;
 }
 
-.card h2 {
-  font-size: 0.95rem;
-  margin: 0 0 0.7rem;
+/* ガラス表面の“うっすら反射/ハイライト” */
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(120% 80% at 10% 0%, rgba(255,255,255,0.85), rgba(255,255,255,0) 60%),
+    linear-gradient(135deg, rgba(255,255,255,0.25), rgba(255,255,255,0) 45%);
+  opacity: 0.9;
+  pointer-events: none;
 }
+
+/* ガラスの縁の“きらっとしたリムライト” */
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 22px;
+  padding: 1px;
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.9),
+    rgba(255,255,255,0.15) 40%,
+    rgba(0,160,255,0.20) 70%,
+    rgba(255,255,255,0.6)
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+}
+
 
 /* 入力フォーム */
 
@@ -606,6 +641,18 @@ body.theme-evening {
   --bg-gradient: linear-gradient(135deg, #ffe5d4, #e6e0ff 45%, #d9f7ff 85%);
 }
 body.theme-night {
+ body.theme-night .card {
+  background: rgba(10, 18, 34, 0.60); /* 夜は濃いめガラス */
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow:
+    0 14px 34px rgba(0,0,0,0.45),
+    inset 0 1px 0 rgba(255,255,255,0.08);
+}
+
+body.theme-night .card::before {
+  opacity: 0.35; /* 反射は控えめに */
+} 
+  
   /* 深いブルー → うすい朝焼け（ピンク〜アプリコット） → 深いブルー に回帰 */
   --bg-gradient: linear-gradient(
     135deg,
