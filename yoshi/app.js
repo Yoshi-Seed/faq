@@ -467,8 +467,7 @@
       img.className = "cloud";
       img.alt = ""; 
 
-      // 🔥 JSで強制的に「黒を透明にする魔法」をかける
-      img.style.mixBlendMode = "screen"; 
+      // 透明背景画像を使用しているのでmix-blend-modeは不要 
       
       const topPos = Math.random() * 60; 
       const sizeScale = 0.5 + Math.random() * 0.8; 
