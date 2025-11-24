@@ -54,6 +54,10 @@ body {
   max-width: 720px;
   margin: 0 auto;
   padding: 1.4rem 1.2rem 3.2rem;
+  
+  /* 👇 ここから追加：雲より手前に表示させる設定 */
+  position: relative;
+  z-index: 10;
 }
 
 @media (max-width: 480px) {
@@ -631,7 +635,7 @@ body.theme-night #messageSection .wayne-message {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  z-index: -1; /* カードより奥、背景より手前 */
+  z-index: 0; /* カードより奥、背景より手前 */
   overflow: hidden;
   opacity: 0;
   transition: opacity 2s ease;
@@ -647,9 +651,11 @@ body.theme-morning .cloud-layer {
   position: absolute;
   background-repeat: no-repeat;
   background-size: contain;
-  /* 重要：黒い背景を透過させて雲だけ残す魔法 */
-  mix-blend-mode: screen; 
-  opacity: 0.7;
+  
+  /* 👇 削除してください */
+  /* mix-blend-mode: screen; */
+  
+  opacity: 0.8; /* 透明度を少し上げてもいいかも（お好みで） */
   filter: blur(1px);
 }
 
@@ -666,7 +672,7 @@ body.theme-morning .cloud-layer {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  z-index: -1;
+  z-index: 0;
   overflow: hidden;
   opacity: 0;
   transition: opacity 2s ease;
