@@ -1,0 +1,4 @@
+.container {
+  background: linear-gradient(to right, #87CEEB, #B0E0E6, #ADD8E6, #F0E68C, #87CEEB);
+  transition: background 0.5s ease-in-out;
+}
