@@ -2,7 +2,7 @@
 (() => {
   const STORAGE_KEY = "wayne_yoshi_memo_v1";
 
-  // ✅ Google Sheets WebApp URL（ここだけ自分のに）
+  // ✅ Google Sheets WebApp URL
   const GAS_URL = "https://script.google.com/macros/s/AKfycbwBBYcJpLXbfiooN5M9XnzKrBQa-F07ICZ8xSzXvJmf0j8mz-Wztv0j9i63c1btAubw/exec";
 
   const entryForm = document.getElementById("entryForm");
@@ -22,14 +22,12 @@
   const rippleLayer = document.getElementById("rippleLayer");
   const appShell = document.querySelector(".app-shell");
 
-
   if (!entryForm) {
     console.error("entryForm が見つかりません。HTML構造を確認してください。");
     return;
   }
 
   // ---- メッセージたち ----
-
   const defaultMessages = [
     "今日のひとこと、ちゃんと受け取ったよ。Yoshi、おつかれさま。",
     "メモしておくって、それだけで未来のYoshiへのプレゼントだと思う。",
@@ -107,7 +105,6 @@
   ];
 
   // ---- データの読み書き ----
-
   function loadEntries() {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
@@ -132,7 +129,6 @@
   let entries = loadEntries();
 
   // ---- 日時表示 ----
-
   function formatDisplay(date) {
     const y = date.getFullYear();
     const m = String(date.getMonth() + 1).padStart(2, "0");
@@ -151,7 +147,6 @@
   }
 
   // ---- ユーティリティ ----
-
   function pickRandom(arr) {
     if (!arr || arr.length === 0) return "";
     const i = Math.floor(Math.random() * arr.length);
@@ -171,7 +166,6 @@
     if (!wayneMessage) return;
 
     let pool;
-
     if (type === "clear") pool = clearMessages;
     else if (type === "categoryMissing") pool = categoryMissingMessages;
     else if (mood) {
@@ -189,7 +183,6 @@
   }
 
   // ---- pillボタンのセットアップ ----
-
   function setupPills() {
     const categoryButtons = Array.from(
       categoryGroup.querySelectorAll("button[data-value]")
@@ -221,10 +214,8 @@
   }
 
   // ---- メモ一覧の描画 ----
-
   function renderEntries() {
     if (!entriesList) return;
-
     entriesList.innerHTML = "";
 
     if (!entries.length) {
@@ -236,7 +227,6 @@
     }
 
     const fragment = document.createDocumentFragment();
-
     entries.forEach((entry) => {
       const item = document.createElement("article");
       item.className = "entry-item";
@@ -254,7 +244,6 @@
       item.appendChild(text);
       fragment.appendChild(item);
     });
-
     entriesList.appendChild(fragment);
   }
 
@@ -264,67 +253,64 @@
     if (clearButton) clearButton.disabled = !hasEntries;
   }
 
-// ---- フォーム送信 ----
-async function handleSubmit(event) {
-  event.preventDefault();
+  // ---- フォーム送信 ----
+  async function handleSubmit(event) {
+    event.preventDefault();
 
-  const category = categoryHidden.value;
-  const mood = moodHidden.value;
-  const memo = memoText.value.trim();
+    const category = categoryHidden.value;
+    const mood = moodHidden.value;
+    const memo = memoText.value.trim();
 
-  if (!category) {
-    if (categoryGroup) {
-      categoryGroup.classList.remove("shake");
-      void categoryGroup.offsetWidth;
-      categoryGroup.classList.add("shake");
+    if (!category) {
+      if (categoryGroup) {
+        categoryGroup.classList.remove("shake");
+        void categoryGroup.offsetWidth;
+        categoryGroup.classList.add("shake");
+      }
+      showWayneMessage({ type: "categoryMissing" });
+      return;
     }
-    showWayneMessage({ type: "categoryMissing" });
-    return;
+
+    const now = new Date();
+    const entry = {
+      id: `e_${now.getTime()}`,
+      timestamp: now.toISOString(),
+      displayTime: formatDisplay(now),
+      category,
+      mood,
+      memo
+    };
+
+    // ✅ ローカル保存
+    entries.unshift(entry);
+    saveEntries(entries);
+    renderEntries();
+    updateExportState();
+
+    memoText.value = "";
+
+    if (recordButton) {
+      recordButton.classList.add("saved");
+      setTimeout(() => recordButton.classList.remove("saved"), 300);
+    }
+
+    // ✅ Sheetsへ送信
+    try {
+      await fetch(GAS_URL, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(entry)
+      });
+    } catch (e) {
+      console.warn("Sheets送信に失敗（ローカル保存はOK）:", e);
+    }
+
+    // ✅ 祝福＆ウェインツ君ひと言
+    celebrate();
+    showWayneMessage({ mood });
   }
-
-  const now = new Date();
-  const entry = {
-    id: `e_${now.getTime()}`,
-    timestamp: now.toISOString(),
-    displayTime: formatDisplay(now),
-    category,
-    mood,
-    memo
-  };
-
-  // ✅ ローカル保存
-  entries.unshift(entry);
-  saveEntries(entries);
-  renderEntries();
-  updateExportState();
-
-  memoText.value = "";
-
-  if (recordButton) {
-    recordButton.classList.add("saved");
-    setTimeout(() => recordButton.classList.remove("saved"), 300);
-  }
-
-  // ✅ Sheetsへ送信
-  try {
-    await fetch(GAS_URL, {
-      method: "POST",
-      headers: { "Content-Type": "text/plain;charset=utf-8" },
-      body: JSON.stringify(entry)
-    });
-  } catch (e) {
-    console.warn("Sheets送信に失敗（ローカル保存はOK）:", e);
-  }
-
-  // ✅ 祝福＆ウェインツ君ひと言
-  celebrate();
-  showWayneMessage({ mood });
-}
-
-
 
   // ---- エクスポート ----
-
   function makeExportContent(list) {
     const header = "iso_timestamp\t日時\tカテゴリ\t気分\tメモ";
     const lines = list.map((e) => {
@@ -344,10 +330,7 @@ async function handleSubmit(event) {
     }
 
     const content = makeExportContent(entries);
-    const blob = new Blob([content], {
-      type: "text/plain;charset=utf-8"
-    });
-
+    const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
 
@@ -366,7 +349,6 @@ async function handleSubmit(event) {
   }
 
   // ---- 全削除 ----
-
   function handleClear() {
     if (!entries.length) return;
     const ok = window.confirm(
@@ -381,7 +363,7 @@ async function handleSubmit(event) {
     showWayneMessage({ type: "clear" });
   }
 
-   // ---- 時間帯で背景テーマを変える ----
+  // ---- 時間帯で背景テーマを変える ----
   function applyThemeByTime() {
     const now = new Date();
     const h = now.getHours();
@@ -406,9 +388,8 @@ async function handleSubmit(event) {
   // ---- 記録した瞬間の小さな祝福 ----
   function celebrate() {
     if (!celebrateLayer) return;
-
     const icons = ["✨","🌟","💫","🎉","🫧","⭐️"];
-    const count = 14; // ほどよい量
+    const count = 14; 
 
     const rect = recordButton.getBoundingClientRect();
     const originX = rect.left + rect.width / 2;
@@ -434,7 +415,6 @@ async function handleSubmit(event) {
   function bubbleMagic(x, y) {
     if (!rippleLayer) return;
 
-    // 既存のリップル
     for (let i = 0; i < 3; i++) {
       const r = document.createElement("div");
       r.className = "ripple";
@@ -445,10 +425,9 @@ async function handleSubmit(event) {
       r.addEventListener("animationend", () => r.remove());
     }
 
-    // 🌊 画面全体をブォーンと波うたせる
     if (appShell) {
       appShell.classList.remove("wave-animate");
-      void appShell.offsetWidth; // リセット
+      void appShell.offsetWidth; 
       appShell.classList.add("wave-animate");
       appShell.addEventListener(
         "animationend",
@@ -458,7 +437,6 @@ async function handleSubmit(event) {
     }
   }
 
-  // 🫧 バブルタップで魔法発動（← これは関数の外側）
   if (bubble) {
     bubble.addEventListener("click", (e) => {
       const x = e.clientX;
@@ -467,8 +445,79 @@ async function handleSubmit(event) {
     });
   }
 
+  // ---- ☁️ 雲を生成して浮かべる ----
+  function initClouds() {
+    const layer = document.getElementById("cloudLayer");
+    if (!layer) return;
 
- 
+    // ✅ 画像パス修正：ご指定の通り cloud1.png ... に変更しました
+    const cloudImages = [
+      "images/cloud1.png",
+      "images/cloud2.png",
+      "images/cloud3.png"
+    ];
+
+    const cloudCount = 5;
+
+    for (let i = 0; i < cloudCount; i++) {
+      const img = document.createElement("img");
+      img.src = pickRandom(cloudImages);
+      img.className = "cloud";
+      img.alt = ""; 
+
+      const topPos = Math.random() * 60; 
+      const sizeScale = 0.5 + Math.random() * 0.8; 
+      const duration = 40 + Math.random() * 40; 
+      const delay = Math.random() * -80; 
+
+      img.style.top = `${topPos}%`;
+      img.style.width = `${200 * sizeScale}px`; 
+      img.style.animation = `cloudFloat ${duration}s linear infinite`;
+      img.style.animationDelay = `${delay}s`;
+
+      layer.appendChild(img);
+    }
+  }
+
+  // ---- 🌠 流れ星を定期的に降らせる ----
+  function startShootingStars() {
+    const layer = document.getElementById("starLayer");
+    if (!layer) return;
+
+    function spawnStar() {
+      if (!document.body.classList.contains("theme-night")) return;
+
+      const star = document.createElement("div");
+      star.className = "shooting-star";
+
+      const tail = document.createElement("div");
+      tail.className = "star-tail";
+      star.appendChild(tail);
+
+      const startX = 50 + Math.random() * 50; 
+      const startY = Math.random() * 40;
+      
+      star.style.left = `${startX}%`;
+      star.style.top = `${startY}%`;
+
+      const duration = 1.5 + Math.random() * 1.5;
+      star.style.animation = `shootStar ${duration}s ease-out forwards`;
+
+      layer.appendChild(star);
+      star.addEventListener("animationend", () => star.remove());
+    }
+
+    function loop() {
+      const nextDelay = 4000 + Math.random() * 6000;
+      setTimeout(() => {
+        spawnStar();
+        loop();
+      }, nextDelay);
+    }
+
+    loop();
+  }
+
   // ---- 初期化 ----
 
   setupPills();
@@ -477,11 +526,14 @@ async function handleSubmit(event) {
   updateNowTime();
   applyThemeByTime();
 
-  setInterval(updateNowTime, 30000);
-  setInterval(applyThemeByTime, 5 * 60 * 1000); // 5分ごとに雰囲気チェック
+  initClouds();          // ☁️ 雲を開始
+  startShootingStars();  // 🌠 星を開始
 
+  setInterval(updateNowTime, 30000);
+  setInterval(applyThemeByTime, 5 * 60 * 1000);
 
   entryForm.addEventListener("submit", handleSubmit);
   if (exportButton) exportButton.addEventListener("click", handleExport);
   if (clearButton) clearButton.addEventListener("click", handleClear);
+
 })();
