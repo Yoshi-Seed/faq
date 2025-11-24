@@ -397,83 +397,69 @@ body.theme-evening {
   animation: gradientMove 18s ease infinite;
 }
 
-/* Day: “位置を動かす”のをやめて、色を淡いまま差し替える */
+/* 🌞 Day：修正版（位置移動方式） */
 body.theme-day {
-  animation: dayGradient 30s ease-in-out infinite;
-  background-size: 100% 100%; /* Safariの線(シーム)回避 */
+  /* 1. すべての色を1つの長いグラデーションにつなげます */
+  background-image: linear-gradient(
+    135deg,
+    #eaf6ff 0%,   /* ① うすブルー */
+    #a8dcff 25%,  /* ② スカイブルー */
+    #ecffef 50%,  /* ③ 薄グリーン */
+    #fff8dc 75%,  /* ④ 薄黄色 */
+    #eaf6ff 100%  /* ⑤ うすブルーに戻る */
+  );
+
+  /* 2. 背景を画面の4倍の大きさに引き伸ばします */
+  background-size: 400% 400%;
+
+  /* 3. 位置だけを動かすアニメーションを指定 */
+  animation: dayGradient 30s ease infinite;
+  
+  /* 固定対策 */
+  background-attachment: fixed;
 }
 
+/* 以前の記述（background: linear-gradient...）は全て消して、これだけにします */
 @keyframes dayGradient {
-  /* ① うすブルー */
   0% {
-    background: linear-gradient(
-      135deg,
-      #eaf6ff 0%,
-      #def0ff 55%,
-      #eaf6ff 100%
-    );
+    background-position: 0% 50%;
   }
-  /* ② ブルースカイ（30秒の中でここまで淡く育つ） */
-  25% {
-    background: linear-gradient(
-      135deg,
-      #e3f4ff 0%,
-      #c9e9ff 55%,
-      #a8dcff 100%
-    );
-  }
-  /* ③ 薄グリーン（淡いグリーンを残す） */
   50% {
-    background: linear-gradient(
-      135deg,
-      #ecffef 0%,
-      #e2fff0 55%,
-      #ecffef 100%
-    );
+    background-position: 100% 50%;
   }
-  /* ④ 薄黄色（光ゾーン） */
-  75% {
-    background: linear-gradient(
-      135deg,
-      #fff8dc 0%,
-      #fff2c9 55%,
-      #fff8dc 100%
-    );
-  }
-  /* ⑤ うすブルーに帰還 */
   100% {
-    background: linear-gradient(
-      135deg,
-      #eaf6ff 0%,
-      #def0ff 55%,
-      #eaf6ff 100%
-    );
+    background-position: 0% 50%;
   }
 }
 
-/* Night: ブルー → 薄い朝焼け → ブルー */
+/* 🌙 Night：修正版 */
 body.theme-night {
   color-scheme: dark;
 
-  animation: nightGradient 26s ease-in-out infinite;
-  background-size: 100% 100%; /* ここも線回避 */
+  /* 濃紺 → ピンク → オレンジ → 濃紺 の長いグラデーション */
+  background-image: linear-gradient(
+    135deg,
+    #07162f 0%,
+    #0b2a6f 25%,
+    #f3c6d6 50%,
+    #ffd9b7 75%,
+    #07162f 100%
+  );
+  
+  background-size: 400% 400%;
+  animation: nightGradient 26s ease infinite;
+  background-attachment: fixed;
+
   --text-main: #e9f1ff;
   --text-sub: #b3c1d8;
   --card-border: rgba(255,255,255,0.08);
 }
 
 @keyframes nightGradient {
-  0% {
-    background: linear-gradient(135deg, #07162f 0%, #0b2a6f 45%, #07162f 100%);
-  }
-  50% {
-    background: linear-gradient(135deg, #0b2a6f 0%, #f3c6d6 55%, #ffd9b7 100%);
-  }
-  100% {
-    background: linear-gradient(135deg, #07162f 0%, #0b2a6f 45%, #07162f 100%);
-  }
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
-
 /* 夜のカード（※入れ子禁止なので外に出す） */
 body.theme-night .card {
   background: rgba(10, 18, 34, 0.60);
