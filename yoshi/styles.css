@@ -572,18 +572,39 @@ body.theme-morning {
   --bg-gradient: linear-gradient(135deg, #fff6d8, #dff7ff 40%, #ffe7f5 85%);
 }
 body.theme-day {
-  --bg-gradient: linear-gradient(135deg, #e8f6ff, #e7ffe8 45%, #fff6c9 85%);
+  /* グリーンの生命感 → 透明感のある空色へ */
+  --bg-gradient: linear-gradient(
+    135deg,
+    #e7ffe8 0%,
+    #d9fff2 22%,
+    #c8f2ff 46%,
+    #8fd6ff 66%,
+    #5fb4ff 82%,
+    #e7ffe8 100%
+  );
 }
+
 body.theme-evening {
   --bg-gradient: linear-gradient(135deg, #ffe5d4, #e6e0ff 45%, #d9f7ff 85%);
 }
 body.theme-night {
-  --bg-gradient: linear-gradient(135deg, #0c1730, #132a52 45%, #0c3c4f 85%);
+  /* 深いブルー → うすい朝焼け（ピンク〜アプリコット） → 深いブルー に回帰 */
+  --bg-gradient: linear-gradient(
+    135deg,
+    #07162f 0%,
+    #0b2a6f 28%,
+    #f3c6d6 52%,
+    #ffd9b7 62%,
+    #234e8f 78%,
+    #07162f 100%
+  );
+
   --card-bg: rgba(15, 25, 45, 0.9);
   --text-main: #e9f1ff;
   --text-sub: #b3c1d8;
   --card-border: rgba(255,255,255,0.08);
 }
+
 
 /* 夜はボタンも少し落ち着いた輝きに */
 body.theme-night .pill-button {
