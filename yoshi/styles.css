@@ -607,7 +607,61 @@ body.theme-morning {
   --bg-gradient: linear-gradient(135deg, #fff6d8, #dff7ff 40%, #ffe7f5 85%);
 }
 body.theme-day {
-    animation-duration: 30s; /* 日中はゆっくり4色が巡る */
+  /* dayは“背景位置を動かす方式”をやめて、色そのものを順番に変える */
+  animation: dayGradient 30s ease-in-out infinite;
+}
+@keyframes dayGradient {
+  /* ① うすブルー（ずっと淡いままスタート） */
+  0% {
+    background: linear-gradient(
+      135deg,
+      #eaf6ff 0%,
+      #dff0ff 55%,
+      #eaf6ff 100%
+    );
+  }
+
+  /* ② ブルースカイ（ここまで“淡さを保ったまま”育てる） */
+  25% {
+    background: linear-gradient(
+      135deg,
+      #dff3ff 0%,
+      #bfe6ff 55%,
+      #9dd8ff 100%
+    );
+  }
+
+  /* ③ 薄グリーン（前の淡いグリーンを残すゾーン） */
+  50% {
+    background: linear-gradient(
+      135deg,
+      #ecffef 0%,
+      #e2fff0 55%,
+      #ecffef 100%
+    );
+  }
+
+  /* ④ 薄黄色（光がさす感じ。濃くしない） */
+  75% {
+    background: linear-gradient(
+      135deg,
+      #fff8dc 0%,
+      #fff2c9 55%,
+      #fff8dc 100%
+    );
+  }
+
+  /* ⑤ うすブルーに帰還 */
+  100% {
+    background: linear-gradient(
+      135deg,
+      #eaf6ff 0%,
+      #dff0ff 55%,
+      #eaf6ff 100%
+    );
+  }
+}
+
   
   /* 4フェーズ循環：
      うすブルー → ブルースカイ → 薄グリーン → 薄黄色 → だんだんまたブルー
