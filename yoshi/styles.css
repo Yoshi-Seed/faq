@@ -1,37 +1,21 @@
-/* =========================================
-   ベース設定
-   ========================================= */
-
 :root {
   color-scheme: light;
-
-  /* 背景グラデ（デフォルトは朝〜昼っぽい） */
   --bg-gradient: linear-gradient(135deg, #ffe1f0, #d5f3ff 40%, #fff7c4 80%);
-
-  /* カード・テキスト */
   --card-bg: rgba(255, 255, 255, 0.9);
   --card-border: rgba(255, 255, 255, 0.7);
-  --text-main: #243143;
-  --text-sub: #5b6a81;
-
-  /* アクセント */
   --accent: #ff7ba5;
   --accent-strong: #ff4f8a;
   --accent-soft: #ffe3f0;
+  --text-main: #243143;
+  --text-sub: #5b6a81;
+  --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.12);
+  --radius-card: 18px;
+  --radius-pill: 999px;
   --danger: #f36b7f;
 
-  /* 影・角丸 */
-  --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.12);
-  --radius-card: 22px;
-  --radius-pill: 999px;
-
-  /* UIスケール（スマホ寄りに少し大きめ） */
-  --ui-scale: 1.08;
+  /* iPhone見やすさスケール */
+  --ui-scale: 1.12;
 }
-
-/* =========================================
-   全体レイアウト
-   ========================================= */
 
 *,
 *::before,
@@ -43,81 +27,78 @@ html,
 body {
   margin: 0;
   padding: 0;
-  height: 100%;
 }
 
 body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    "Hiragino Sans", "Noto Sans JP", sans-serif;
-  font-size: calc(16px * var(--ui-scale));
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
   color: var(--text-main);
+
+  /* 既定は変数グラデ＋ゆらぎ */
   background: var(--bg-gradient);
-  background-size: 200% 200%;
-  animation: gradientMove 18s ease-in-out infinite;
+  background-size: 300% 300%;
+  animation: gradientMove 18s ease infinite;
+
+  font-size: calc(16px * var(--ui-scale));
   -webkit-font-smoothing: antialiased;
 }
 
+/* 既定の背景ゆらぎ（morning/eveningなどで使う） */
 @keyframes gradientMove {
-  0% {
-    background-position: 0% 0%;
-  }
-  50% {
-    background-position: 100% 100%;
-  }
-  100% {
-    background-position: 0% 0%;
-  }
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 .app-shell {
-  max-width: 900px;
+  max-width: 720px;
   margin: 0 auto;
   padding: 1.4rem 1.2rem 3.2rem;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
 }
 
-/* =========================================
-   ヘッダー
-   ========================================= */
+@media (max-width: 480px) {
+  .app-shell {
+    max-width: 100%;
+    padding: 1.2rem 1rem 3rem;
+  }
+}
 
+/* ヘッダー */
 .app-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
   margin-bottom: 1rem;
 }
 
 .app-title {
   display: flex;
   align-items: center;
-  gap: 0.7rem;
+  gap: 0.75rem;
 }
 
 .logo-face {
-  width: 42px;
-  height: 42px;
+  width: 46px;
+  height: 46px;
   border-radius: 16px;
-  background: linear-gradient(135deg, #ffe4f0, #ffd9c9);
+  background: radial-gradient(circle at 35% 25%, #ffffff, #ffe3f3);
+  box-shadow: 0 10px 22px rgba(255, 129, 176, 0.4);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  font-size: 0.6rem;
+  color: #384152;
   position: relative;
-  box-shadow: 0 6px 16px rgba(255, 140, 170, 0.5);
 }
 
 .logo-eyes {
-  position: absolute;
-  top: 40%;
-  transform: translateY(-50%);
-  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  margin-bottom: -0.1rem;
 }
 
 .logo-mouth {
-  position: absolute;
-  bottom: 24%;
-  transform: translateY(50%);
   font-size: 0.8rem;
 }
 
@@ -127,28 +108,26 @@ body {
 }
 
 .subtitle {
+  margin: 0.1rem 0 0;
   font-size: 0.95rem;
   color: var(--text-sub);
-  margin: 0.05rem 0 0;
 }
 
 .now-time {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: var(--text-sub);
+  text-align: right;
 }
 
-/* =========================================
-   Liquid Glass カード
-   ========================================= */
-
+/* --- Liquid Glass Cards --- */
 .card {
   position: relative;
   background: rgba(255, 255, 255, 0.55);
-  border-radius: var(--radius-card);
-  padding: 1.2rem 1.25rem 1.3rem;
+  border-radius: 22px;
+  padding: 1.2rem 1.2rem 1.3rem;
   border: 1px solid rgba(255, 255, 255, 0.55);
   box-shadow:
-    0 14px 34px rgba(0, 0, 0, 0.10),
+    0 12px 30px rgba(0, 0, 0, 0.10),
     inset 0 1px 0 rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(18px) saturate(140%);
   -webkit-backdrop-filter: blur(18px) saturate(140%);
@@ -156,31 +135,29 @@ body {
   overflow: hidden;
 }
 
-/* 表面の反射 */
 .card::before {
   content: "";
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(120% 80% at 10% 0%, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0) 60%),
-    linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0) 45%);
+    radial-gradient(120% 80% at 10% 0%, rgba(255,255,255,0.85), rgba(255,255,255,0) 60%),
+    linear-gradient(135deg, rgba(255,255,255,0.25), rgba(255,255,255,0) 45%);
   opacity: 0.9;
   pointer-events: none;
 }
 
-/* 縁のリムライト */
 .card::after {
   content: "";
   position: absolute;
   inset: 0;
-  border-radius: var(--radius-card);
+  border-radius: 22px;
   padding: 1px;
   background: linear-gradient(
     180deg,
-    rgba(255, 255, 255, 0.9),
-    rgba(255, 255, 255, 0.15) 40%,
-    rgba(0, 160, 255, 0.20) 70%,
-    rgba(255, 255, 255, 0.6)
+    rgba(255,255,255,0.9),
+    rgba(255,255,255,0.15) 40%,
+    rgba(0,160,255,0.20) 70%,
+    rgba(255,255,255,0.6)
   );
   -webkit-mask:
     linear-gradient(#000 0 0) content-box,
@@ -190,74 +167,17 @@ body {
   pointer-events: none;
 }
 
-/* カード内部のコンテンツ */
-.card > * {
-  position: relative;
-  z-index: 1;
-}
-
-/* =========================================
-   セクション見出し・テキスト
-   ========================================= */
-
-.card h2 {
-  font-size: 1.1rem;
-  margin: 0 0 0.9rem;
-}
-
-.field-group {
-  margin-bottom: 0.85rem;
-}
+/* 入力フォーム */
+.field-group { margin-bottom: 0.75rem; }
 
 .field-label {
   display: block;
   font-size: 0.95rem;
-  margin-bottom: 0.45rem;
-  color: var(--text-main);
-}
-
-.hint-text {
-  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
   color: var(--text-sub);
 }
 
-.hint-text.small {
-  font-size: 0.85rem;
-}
-
-/* =========================================
-   テキストエリア
-   ========================================= */
-
-textarea {
-  width: 100%;
-  border-radius: 14px;
-  border: 1px solid rgba(172, 185, 210, 0.6);
-  padding: 0.9rem 0.9rem;
-  font-size: 1rem;
-  resize: vertical;
-  font-family: inherit;
-  color: var(--text-main);
-  background: rgba(255, 255, 255, 0.92);
-  outline: none;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-  min-height: 140px;
-}
-
-textarea::placeholder {
-  color: rgba(140, 155, 178, 0.9);
-}
-
-textarea:focus {
-  border-color: rgba(149, 195, 255, 0.9);
-  box-shadow: 0 0 0 1px rgba(120, 180, 255, 0.35);
-  background: rgba(255, 255, 255, 1);
-}
-
-/* =========================================
-   Pill ボタン（カテゴリ・気分）
-   ========================================= */
-
+/* pill grid layout */
 .pill-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -266,73 +186,70 @@ textarea:focus {
 
 .pill-grid--mood {
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.6rem;
 }
 
 .pill-button {
+  flex: 0 0 auto;
   border-radius: var(--radius-pill);
-  border: 1px solid rgba(195, 210, 235, 0.9);
+  border: none;
   padding: 0.65rem 0.9rem;
   font-size: 0.95rem;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(230, 242, 255, 0.9));
+  background: #f2f5ff;
   color: var(--text-main);
+  cursor: pointer;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
-  cursor: pointer;
-  outline: none;
-  transition:
-    background 0.2s ease,
-    box-shadow 0.2s ease,
-    transform 0.08s ease,
-    border-color 0.2s ease,
-    color 0.2s ease;
-  box-shadow: 0 3px 8px rgba(54, 97, 171, 0.15);
-  white-space: nowrap;
+  gap: 0.2rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease, color 0.12s ease;
 }
 
-.pill-button:active {
-  transform: translateY(1px);
-  box-shadow: 0 1px 4px rgba(54, 97, 171, 0.18);
-}
+.pill-button:active { transform: translateY(1px) scale(0.98); }
 
 .pill-button.active {
-  border-color: rgba(32, 139, 255, 0.9);
-  background: linear-gradient(135deg, #e0f1ff, #b8ddff);
-  box-shadow: 0 5px 12px rgba(32, 139, 255, 0.35);
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  color: #fff;
+  box-shadow: 0 3px 10px rgba(255,126,177,0.55);
 }
 
-/* カテゴリ不足のときのシェイク */
-.shake {
-  animation: shake 250ms ease;
+.mood-pill { background: #f7f3ff; }
+
+.mood-pill.active {
+  background: linear-gradient(135deg, #ffd7ef, #fff1c3);
+  color: #433444;
 }
 
-@keyframes shake {
-  0%,
-  100% {
-    transform: translateX(0);
-  }
-  25% {
-    transform: translateX(-3px);
-  }
-  50% {
-    transform: translateX(3px);
-  }
+/* テキストエリア */
+textarea {
+  width: 100%;
+  border-radius: 14px;
+  border: 1px solid #dde3f0;
+  padding: 0.9rem 0.9rem;
+  font-family: inherit;
+  font-size: 1rem;
+  resize: vertical;
+  min-height: 140px;
+  outline: none;
+  background: rgba(255,255,255,0.9);
+  transition: border-color 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
 }
 
-/* =========================================
-   ボタン
-   ========================================= */
+textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px rgba(255,126,165,0.45);
+  background: #fff;
+}
 
+/* ボタン */
 .button-row {
   display: flex;
-  gap: 0.6rem;
-  margin-top: 0.9rem;
+  gap: 0.5rem;
+  margin-top: 0.7rem;
+  flex-wrap: wrap;
 }
 
-button {
-  font-family: inherit;
-}
+button { font-family: inherit; }
 
 .primary-button {
   flex: 1;
@@ -340,100 +257,75 @@ button {
   border: none;
   padding: 0.9rem 1rem;
   font-size: 1.05rem;
-  cursor: pointer;
-  background: linear-gradient(135deg, #0a75ff, #00a4ce);
-  color: #ffffff;
   font-weight: 600;
-  box-shadow: 0 16px 34px rgba(10, 70, 170, 0.5);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition:
-    transform 0.08s ease,
-    box-shadow 0.08s ease,
-    filter 0.12s ease;
+  background: linear-gradient(135deg, #0b2a6f, #0aa7c6);
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 16px 34px rgba(10,70,170,0.5);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
 }
 
-.primary-button:hover {
-  filter: brightness(1.04);
-}
+.primary-button:hover { filter: brightness(1.03); }
 
-.primary-button:active {
-  transform: translateY(1px);
-  box-shadow: 0 10px 24px rgba(10, 70, 170, 0.55);
-}
-
+.primary-button:active,
 .primary-button.saved {
-  animation: savedPulse 420ms ease-out;
-}
-
-@keyframes savedPulse {
-  0% {
-    transform: scale(1);
-  }
-  30% {
-    transform: scale(1.04);
-  }
-  100% {
-    transform: scale(1);
-  }
+  transform: translateY(1px) scale(0.98);
+  box-shadow: 0 9px 18px rgba(255,126,177,0.6);
 }
 
 .outline-button {
   border-radius: 999px;
-  padding: 0.55rem 0.9rem;
-  border: 1px solid rgba(120, 140, 170, 0.6);
-  background: rgba(255, 255, 255, 0.86);
-  font-size: 0.9rem;
+  border: 1px solid rgba(90,110,140,0.35);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.8rem;
+  background: rgba(255,255,255,0.9);
   cursor: pointer;
+  color: var(--text-main);
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: 0.35rem;
-  color: var(--text-main);
-}
-
-.outline-button.small {
-  padding: 0.45rem 0.7rem;
-  font-size: 0.85rem;
-}
-
-.outline-button:disabled {
-  opacity: 0.4;
-  cursor: default;
+  gap: 0.3rem;
 }
 
 .danger-button {
-  border-color: rgba(243, 107, 127, 0.7);
-  color: #b73b4b;
+  border-color: rgba(243,107,127,0.6);
+  color: var(--danger);
 }
 
-/* =========================================
-   メモ一覧
-   ========================================= */
+.outline-button.small {
+  font-size: 0.75rem;
+  padding: 0.4rem 0.6rem;
+}
 
+button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* メモ一覧 */
 .entries-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.55rem;
+  max-height: 320px;
+  overflow-y: auto;
+  padding-right: 0.1rem;
 }
 
 .entry-item {
-  border-radius: 12px;
-  padding: 0.55rem 0.75rem;
-  background: rgba(255, 255, 255, 0.8);
-  box-shadow: 0 1px 4px rgba(23, 47, 93, 0.12);
+  padding: 0.55rem 0.1rem;
+  border-bottom: 1px dashed rgba(210,220,238,0.9);
 }
+
+.entry-item:last-child { border-bottom: none; }
 
 .entry-meta {
   font-size: 0.9rem;
   color: var(--text-sub);
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.1rem;
 }
 
 .entry-text {
   font-size: 1rem;
   line-height: 1.65;
+  white-space: pre-wrap;
 }
 
 .empty-text {
@@ -441,94 +333,177 @@ button {
   color: var(--text-sub);
 }
 
-/* =========================================
-   ウェインツ君メッセージ
-   ========================================= */
+/* ヒント・メッセージ */
+.hint-text { font-size: 0.9rem; color: var(--text-sub); }
+.hint-text.small { font-size: 0.85rem; }
 
 .wayne-message {
   font-size: 1rem;
+  line-height: 1.5;
+  margin: 0;
   padding: 0.8rem 0.9rem;
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.95);
-  border: 1px dashed rgba(211, 151, 189, 0.9);
-  color: var(--text-main);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.7);
-  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  background: linear-gradient(135deg, #fff3fb, #f1f4ff);
+  border: 1px dashed rgba(255,155,199,0.8);
+  position: relative;
 }
 
-.wayne-message.pop {
-  transform: translateY(-1px);
+.wayne-message::before {
+  content: "💬";
+  position: absolute;
+  left: -0.1rem;
+  top: -0.9rem;
+  font-size: 0.9rem;
+}
+
+.wayne-message.pop { animation: message-pop 0.4s ease-out; }
+
+@keyframes message-pop {
+  0%   { transform: translateY(4px); opacity: 0; }
+  40%  { transform: translateY(-2px); opacity: 1; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+/* ちょっとしたシェイク */
+#categoryGroup.shake, #moodGroup.shake { animation: shake 0.18s ease; }
+
+@keyframes shake {
+  0%,100% { transform: translateX(0); }
+  25%     { transform: translateX(-2px); }
+  75%     { transform: translateX(2px); }
+}
+
+/* フッター */
+.app-footer {
+  margin-top: 0.6rem;
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--text-sub);
+}
+
+/* =========================
+   🌅🌓 時間帯テーマ（背景の空気）
+   ========================= */
+
+/* Morning: 明るめやさしい固定グラデ */
+body.theme-morning {
+  --bg-gradient: linear-gradient(135deg, #fff6d8, #dff7ff 40%, #ffe7f5 85%);
+  animation: gradientMove 18s ease infinite;
+}
+
+/* Evening: 夕方のやわらかい温度 */
+body.theme-evening {
+  --bg-gradient: linear-gradient(135deg, #ffe5d4, #e6e0ff 45%, #d9f7ff 85%);
+  animation: gradientMove 18s ease infinite;
+}
+
+/* Day: “位置を動かす”のをやめて、色を淡いまま差し替える */
+body.theme-day {
+  animation: dayGradient 30s ease-in-out infinite;
+  background-size: 100% 100%; /* Safariの線(シーム)回避 */
+}
+
+@keyframes dayGradient {
+  /* ① うすブルー */
+  0% {
+    background: linear-gradient(
+      135deg,
+      #eaf6ff 0%,
+      #def0ff 55%,
+      #eaf6ff 100%
+    );
+  }
+  /* ② ブルースカイ（30秒の中でここまで淡く育つ） */
+  25% {
+    background: linear-gradient(
+      135deg,
+      #e3f4ff 0%,
+      #c9e9ff 55%,
+      #a8dcff 100%
+    );
+  }
+  /* ③ 薄グリーン（淡いグリーンを残す） */
+  50% {
+    background: linear-gradient(
+      135deg,
+      #ecffef 0%,
+      #e2fff0 55%,
+      #ecffef 100%
+    );
+  }
+  /* ④ 薄黄色（光ゾーン） */
+  75% {
+    background: linear-gradient(
+      135deg,
+      #fff8dc 0%,
+      #fff2c9 55%,
+      #fff8dc 100%
+    );
+  }
+  /* ⑤ うすブルーに帰還 */
+  100% {
+    background: linear-gradient(
+      135deg,
+      #eaf6ff 0%,
+      #def0ff 55%,
+      #eaf6ff 100%
+    );
+  }
+}
+
+/* Night: ブルー → 薄い朝焼け → ブルー */
+body.theme-night {
+  color-scheme: dark;
+
+  animation: nightGradient 26s ease-in-out infinite;
+  background-size: 100% 100%; /* ここも線回避 */
+  --text-main: #e9f1ff;
+  --text-sub: #b3c1d8;
+  --card-border: rgba(255,255,255,0.08);
+}
+
+@keyframes nightGradient {
+  0% {
+    background: linear-gradient(135deg, #07162f 0%, #0b2a6f 45%, #07162f 100%);
+  }
+  50% {
+    background: linear-gradient(135deg, #0b2a6f 0%, #f3c6d6 55%, #ffd9b7 100%);
+  }
+  100% {
+    background: linear-gradient(135deg, #07162f 0%, #0b2a6f 45%, #07162f 100%);
+  }
+}
+
+/* 夜のカード（※入れ子禁止なので外に出す） */
+body.theme-night .card {
+  background: rgba(10, 18, 34, 0.60);
+  border: 1px solid rgba(255,255,255,0.12);
   box-shadow:
-    0 8px 20px rgba(120, 120, 170, 0.35),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.7);
+    0 14px 34px rgba(0,0,0,0.45),
+    inset 0 1px 0 rgba(255,255,255,0.08);
 }
 
-/* 夜モードで読みやすく */
+body.theme-night .card::before { opacity: 0.35; }
+
+/* 夜はpillも落ち着きトーン */
+body.theme-night .pill-button {
+  background: rgba(255,255,255,0.1);
+  color: #e9f1ff;
+}
+body.theme-night .pill-button.active {
+  background: linear-gradient(135deg, #2a5bd7, #0aa7c6);
+}
+
+/* 夜モード時：ウェインツ君メッセージ見やすさ */
 body.theme-night #messageSection .wayne-message {
   background: rgba(255, 255, 255, 0.08);
   color: #eaf2ff;
-  border-color: rgba(255, 255, 255, 0.16);
-  box-shadow: inset 0 0 0 1px rgba(10, 167, 198, 0.08);
+  border: 1px solid rgba(255,255,255,0.14);
 }
 
-/* =========================================
-   フッター
-   ========================================= */
-
-.app-footer {
-  margin-top: auto;
-  padding-top: 1.2rem;
-  font-size: 0.9rem;
-  color: var(--text-sub);
-  text-align: center;
-}
-
-/* =========================================
-   Floating Bubble（癒しのバブル）
-   ========================================= */
-
-.floating-bubble {
-  position: fixed;
-  right: 1.2rem;
-  bottom: 1.2rem;
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 30% 20%, #ffffff, rgba(255, 255, 255, 0)),
-    linear-gradient(135deg, #ff9fd0, #a8d9ff);
-  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.22);
-  opacity: 0.9;
-  animation: bubbleFloat 7s ease-in-out infinite, bubblePulse 2.8s ease-in-out infinite;
-  cursor: pointer;
-  z-index: 1000;
-  touch-action: manipulation;
-}
-
-@keyframes bubbleFloat {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-6px);
-  }
-}
-
-@keyframes bubblePulse {
-  0%,
-  100% {
-    filter: brightness(1);
-  }
-  50% {
-    filter: brightness(1.12);
-  }
-}
-
-/* =========================================
-   祝福アニメ（星・紙吹雪）
-   ========================================= */
-
+/* =========================
+   🎉 祝福アニメ（星・紙吹雪）
+   ========================= */
 .celebrate-layer {
   position: fixed;
   inset: 0;
@@ -541,30 +516,20 @@ body.theme-night #messageSection .wayne-message {
   position: absolute;
   font-size: 18px;
   opacity: 0;
-  transform: translate3d(0, 0, 0) scale(0.8);
+  transform: translate3d(0,0,0) scale(0.8);
   animation: popFloat 900ms ease-out forwards;
-  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.15));
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.15));
 }
 
 @keyframes popFloat {
-  0% {
-    opacity: 0;
-    transform: translateY(10px) scale(0.6) rotate(0deg);
-  }
-  20% {
-    opacity: 1;
-    transform: translateY(0) scale(1) rotate(10deg);
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(-80px) scale(1.1) rotate(35deg);
-  }
+  0%   { opacity: 0; transform: translateY(10px) scale(0.6) rotate(0deg); }
+  20%  { opacity: 1; transform: translateY(0) scale(1.0) rotate(10deg); }
+  100% { opacity: 0; transform: translateY(-80px) scale(1.1) rotate(35deg); }
 }
 
-/* =========================================
-   バブル・リップル＋画面波打ち
-   ========================================= */
-
+/* =========================
+   🫧 バブルタップ演出（色の走り＋ぶわ〜ん影響）
+   ========================= */
 .ripple-layer {
   position: fixed;
   inset: 0;
@@ -581,183 +546,56 @@ body.theme-night #messageSection .wayne-message {
   opacity: 0.9;
   animation: rippleBurst 1200ms ease-out forwards;
   mix-blend-mode: screen;
-  background: radial-gradient(
-    circle,
-    rgba(10, 167, 198, 0.9),
-    rgba(11, 42, 111, 0.2) 60%,
-    rgba(255, 255, 255, 0) 75%
-  );
+  background: radial-gradient(circle,
+    rgba(10,167,198,0.9),
+    rgba(11,42,111,0.2) 60%,
+    rgba(255,255,255,0) 75%);
 }
 
 @keyframes rippleBurst {
-  0% {
-    transform: translate(-50%, -50%) scale(0);
-    opacity: 0.9;
-  }
-  60% {
-    transform: translate(-50%, -50%) scale(18);
-    opacity: 0.45;
-  }
-  100% {
-    transform: translate(-50%, -50%) scale(26);
-    opacity: 0;
-  }
+  0%   { transform: translate(-50%, -50%) scale(0); opacity: 0.9; }
+  60%  { transform: translate(-50%, -50%) scale(18); opacity: 0.45; }
+  100% { transform: translate(-50%, -50%) scale(26); opacity: 0; }
 }
 
+/* 浮遊バブル（癒し要素） */
+.floating-bubble {
+  position: fixed;
+  right: 1.2rem;
+  bottom: 1.2rem;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 30% 20%, #ffffff, rgba(255, 255, 255, 0)),
+    linear-gradient(135deg, #ff9fd0, #a8d9ff);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.22);
+  opacity: 0.85;
+  animation: bubbleFloat 7s ease-in-out infinite;
+  pointer-events: auto;
+  z-index: 1000;
+  touch-action: manipulation;
+}
+
+@keyframes bubbleFloat {
+  0%   { transform: translate3d(0,0,0); }
+  50%  { transform: translate3d(0,-8px,0); }
+  100% { transform: translate3d(0,0,0); }
+}
+
+/* =========================
+   🌊 画面ブォーン波うち
+   ========================= */
 .app-shell.wave-animate {
-  animation: screenWave 900ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  animation: screenWave 900ms cubic-bezier(.2, .8, .2, 1);
   transform-origin: center top;
   filter: saturate(1.08);
 }
 
 @keyframes screenWave {
-  0% {
-    transform: translateY(0) skewY(0deg) scale(1);
-  }
-  20% {
-    transform: translateY(-2px) skewY(0.4deg) scale(1.005);
-  }
-  45% {
-    transform: translateY(3px) skewY(-0.6deg) scale(0.995);
-  }
-  70% {
-    transform: translateY(-1px) skewY(0.3deg) scale(1.002);
-  }
-  100% {
-    transform: translateY(0) skewY(0deg) scale(1);
-  }
-}
-
-/* =========================================
-   時間帯テーマ（背景の空気）
-   ========================================= */
-
-body.theme-morning {
-  --bg-gradient: linear-gradient(135deg, #fff6d8, #dff7ff 40%, #ffe7f5 85%);
-}
-
-/* 🌞 Day：淡いまま4フェーズで育つ（線が出ない方式） */
-body.theme-day {
-  /* bodyのgradientMoveを止めて、day専用に切り替え */
-  animation: dayGradient 30s ease-in-out infinite;
-
-  /* 重要：背景の土台を固定して“リセット線”を防ぐ */
-  background-repeat: no-repeat;
-  background-size: 240% 240%;
-  background-position: 50% 50%;
-  background-attachment: fixed; /* iPhoneの帯防止に効く */
-}
-
-@keyframes dayGradient {
-  /* ① うすブルー（淡いままスタート） */
-  0% {
-    background-image: linear-gradient(
-      135deg,
-      #eaf6ff 0%,
-      #e3f1ff 50%,
-      #eaf6ff 100%
-    );
-  }
-
-  /* ② スカイブルーまで淡く育つ */
-  25% {
-    background-image: linear-gradient(
-      135deg,
-      #e6f4ff 0%,
-      #d3ecff 50%,
-      #9fd7ff 100%
-    );
-  }
-
-  /* ③ 薄グリーン（前の淡いグリーン残す） */
-  50% {
-    background-image: linear-gradient(
-      135deg,
-      #ecffef 0%,
-      #e3fff2 50%,
-      #ecffef 100%
-    );
-  }
-
-  /* ④ 薄黄色（淡いまま光が差す） */
-  75% {
-    background-image: linear-gradient(
-      135deg,
-      #fff9e6 0%,
-      #fff1cc 50%,
-      #f0f4ff 100%
-    );
-  }
-
-  /* ⑤ うすブルーに帰還 */
-  100% {
-    background-image: linear-gradient(
-      135deg,
-      #eaf6ff 0%,
-      #e3f1ff 50%,
-      #eaf6ff 100%
-    );
-  }
-}
-
-
-body.theme-evening {
-  --bg-gradient: linear-gradient(135deg, #ffe5d4, #e6e0ff 45%, #d9f7ff 85%);
-}
-
-/* 🌙 Night：ブルー → 薄い朝焼け → ブルー */
-body.theme-night {
-  --bg-gradient: linear-gradient(
-    135deg,
-    #07162f 0%,
-    #0b2a6f 28%,
-    #f3c6d6 52%,
-    #ffd9b7 62%,
-    #234e8f 78%,
-    #07162f 100%
-  );
-
-  --card-bg: rgba(15, 25, 45, 0.9);
-  --text-main: #e9f1ff;
-  --text-sub: #b3c1d8;
-  --card-border: rgba(255, 255, 255, 0.08);
-
-  animation-duration: 26s;
-}
-
-/* 夜のカード濃度 */
-body.theme-night .card {
-  background: rgba(10, 18, 34, 0.60);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow:
-    0 14px 34px rgba(0, 0, 0, 0.45),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
-}
-
-body.theme-night .card::before {
-  opacity: 0.35;
-}
-
-/* =========================================
-   レスポンシブ
-   ========================================= */
-
-@media (max-width: 600px) {
-  .app-shell {
-    max-width: 100%;
-    padding: 1.2rem 1rem 3rem;
-  }
-
-  .app-header {
-    align-items: flex-start;
-  }
-
-  .title-text h1 {
-    font-size: 1.25rem;
-  }
-
-  .pill-grid,
-  .pill-grid--mood {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+  0%   { transform: translateY(0) skewY(0deg) scale(1); }
+  20%  { transform: translateY(-2px) skewY(0.4deg) scale(1.005); }
+  45%  { transform: translateY(3px) skewY(-0.6deg) scale(0.995); }
+  70%  { transform: translateY(-1px) skewY(0.3deg) scale(1.002); }
+  100% { transform: translateY(0) skewY(0deg) scale(1); }
 }
