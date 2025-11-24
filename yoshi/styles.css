@@ -622,3 +622,123 @@ body.theme-night #messageSection .wayne-message {
   70%  { transform: translateY(-1px) skewY(0.3deg) scale(1.002); }
   100% { transform: translateY(0) skewY(0deg) scale(1); }
 }
+
+
+/* =========================
+   ☁️ 昼の癒し：浮遊する雲
+   ========================= */
+.cloud-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1; /* カードより奥、背景より手前 */
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 2s ease;
+}
+
+/* 昼と朝だけ雲を表示 */
+body.theme-day .cloud-layer,
+body.theme-morning .cloud-layer {
+  opacity: 1;
+}
+
+.cloud {
+  position: absolute;
+  background-repeat: no-repeat;
+  background-size: contain;
+  /* 重要：黒い背景を透過させて雲だけ残す魔法 */
+  mix-blend-mode: screen; 
+  opacity: 0.7;
+  filter: blur(1px);
+}
+
+/* 雲のアニメーション：左から右へ */
+@keyframes cloudFloat {
+  0% { transform: translateX(-150px); }
+  100% { transform: translateX(100vw); }
+}
+
+/* =========================
+   🌠 夜の癒し：十字架の流星
+   ========================= */
+.star-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 2s ease;
+}
+
+/* 夜だけ星を表示 */
+body.theme-night .star-layer {
+  opacity: 1;
+}
+
+.shooting-star {
+  position: absolute;
+  /* 星の中心核 */
+  width: 4px;
+  height: 4px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.8), 
+              0 0 15px rgba(200, 220, 255, 0.4);
+  opacity: 0;
+}
+
+/* 十字架の光（縦） */
+.shooting-star::before {
+  content: "";
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 2px;
+  height: 24px; /* 十字の長さ */
+  background: linear-gradient(to bottom, transparent, #fff, transparent);
+  border-radius: 99px;
+}
+
+/* 十字架の光（横） */
+.shooting-star::after {
+  content: "";
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 24px; /* 十字の長さ */
+  height: 2px;
+  background: linear-gradient(to right, transparent, #fff, transparent);
+  border-radius: 99px;
+}
+
+/* 尾っぽ */
+.star-tail {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 80px; /* 尾の長さ */
+  height: 1px;
+  background: linear-gradient(to right, rgba(255,255,255,0.8), transparent);
+  transform-origin: left center;
+  /* 斜めに走るので回転させる */
+  transform: rotate(200deg) translate(0, -50%);
+  opacity: 0.6;
+}
+
+/* 流れるアニメーション */
+@keyframes shootStar {
+  0% {
+    transform: translate(0, 0) scale(0.5);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+    transform: translate(-40px, 40px) scale(1);
+  }
+  100% {
+    /* 画面左下へ大きく移動 */
+    transform: translate(-400px, 400px) scale(0.8);
+    opacity: 0;
+  }
+}
