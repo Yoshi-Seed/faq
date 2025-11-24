@@ -119,18 +119,26 @@ body {
   text-align: right;
 }
 
-/* --- Liquid Glass Cards --- */
+/* --- Liquid Glass Cards (修正版) --- */
 .card {
   position: relative;
-  background: rgba(255, 255, 255, 0.55);
+  /* 修正①: 0.55(濃い) → 0.25(薄い) に変更 */
+  background: rgba(255, 255, 255, 0.25);
+  
   border-radius: 22px;
   padding: 1.2rem 1.2rem 1.3rem;
-  border: 1px solid rgba(255, 255, 255, 0.55);
+  
+  /* 修正②: 枠線も少し薄くして馴染ませる */
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  
   box-shadow:
     0 12px 30px rgba(0, 0, 0, 0.10),
     inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  
+  /* すりガラス効果 */
   backdrop-filter: blur(18px) saturate(140%);
   -webkit-backdrop-filter: blur(18px) saturate(140%);
+  
   margin-bottom: 0.9rem;
   overflow: hidden;
 }
@@ -140,8 +148,9 @@ body {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(120% 80% at 10% 0%, rgba(255,255,255,0.85), rgba(255,255,255,0) 60%),
-    linear-gradient(135deg, rgba(255,255,255,0.25), rgba(255,255,255,0) 45%);
+    /* 修正③: 反射光(グレア)も 0.85 → 0.5 くらいに下げて白飛びを防ぐ */
+    radial-gradient(120% 80% at 10% 0%, rgba(255,255,255,0.5), rgba(255,255,255,0) 60%),
+    linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0) 45%);
   opacity: 0.9;
   pointer-events: none;
 }
