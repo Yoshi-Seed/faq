@@ -323,11 +323,14 @@
 
     // ✅ Sheetsへ送信
     try {
+      console.log("📤 Sending to Google Sheets:", entry);
+      console.log("📤 Energy value:", entry.energy);
       await fetch(GAS_URL, {
         method: "POST",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify(entry)
       });
+      console.log("✅ Successfully sent to Google Sheets");
     } catch (e) {
       console.warn("Sheets送信に失敗（ローカル保存はOK）:", e);
     }
