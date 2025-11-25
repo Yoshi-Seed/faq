@@ -568,7 +568,72 @@ body.theme-morning {
     #d8f6ff 88%,  /* 朝の薄いブルー */
     #b9efe7 100%  /* ブルーグリーンの朝空 */
   );
-  animation: gradientMove 18s ease infinite;
+
+  /* 朝焼け → ライムグリーン → 淡いブルーとゆっくり推移させる */
+  background-size: 420% 420%;
+  animation: morningDawn 42s ease-in-out infinite;
+  background-attachment: fixed;
+}
+
+@keyframes morningDawn {
+  /* 夜明け前のブルーからやさしいオレンジへ */
+  0% {
+    background: linear-gradient(
+      135deg,
+      #0e214d 0%,
+      #1c3a67 22%,
+      #2e5681 38%,
+      #efb181 60%,
+      #ffe4bf 72%,
+      #d8f6ff 88%,
+      #b9efe7 100%
+    );
+  }
+
+  /* 朝焼けを強く見せたあと、ライムへ向かう準備 */
+  32% {
+    background: linear-gradient(
+      135deg,
+      #113567 0%,
+      #1f467b 24%,
+      #2f6794 44%,
+      #f0b78f 66%,
+      #ffe7c6 76%,
+      #f2f6e3 90%,
+      #d8f6ff 100%
+    );
+  }
+
+  /* 優しいライムグリーンで一面を満たす */
+  58% {
+    background: linear-gradient(
+      135deg,
+      #d9f7c3 0%,
+      #d9f7c3 50%,
+      #d9f7c3 100%
+    );
+  }
+
+  /* ライムから淡いブルーへゆっくり戻す */
+  82% {
+    background: linear-gradient(
+      135deg,
+      #c3f2e8 0%,
+      #d7f4ff 60%,
+      #bde6ff 100%
+    );
+  }
+
+  /* 初期の薄いブルーに帰還 */
+  100% {
+    background: linear-gradient(
+      135deg,
+      #1c3a67 0%,
+      #2e5681 28%,
+      #d8f6ff 78%,
+      #b9efe7 100%
+    );
+  }
 }
 
 /* Evening: 夕方のやわらかい温度 */
