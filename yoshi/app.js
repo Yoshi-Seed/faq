@@ -3,7 +3,7 @@
   const STORAGE_KEY = "wayne_yoshi_memo_v1";
 
   // ✅ Google Sheets WebApp URL
-  const GAS_URL = "https://script.google.com/macros/s/AKfycbz2-7DBvMVCXa1sOgfWwJff6fwX06zabuCFMOie9dHlM8rJV2J8mO-SJRKdhIiKm3n3/exec";
+  const GAS_URL = "https://script.google.com/macros/s/AKfycbwBBYcJpLXbfiooN5M9XnzKrBQa-F07ICZ8xSzXvJmf0j8mz-Wztv0j9i63c1btAubw/exec";
 
   const entryForm = document.getElementById("entryForm");
   const categoryGroup = document.getElementById("categoryGroup");
@@ -21,10 +21,6 @@
   const celebrateLayer = document.getElementById("celebrateLayer");
   const rippleLayer = document.getElementById("rippleLayer");
   const appShell = document.querySelector(".app-shell");
-  const energySlider = document.getElementById("energySlider");
-  const energyValueEl = document.getElementById("energyValue");
-  const energyHidden = document.getElementById("energyHidden");
-  const energyCard = document.getElementById("energyCard");
 
   if (!entryForm) {
     console.error("entryForm が見つかりません。HTML構造を確認してください。");
@@ -186,81 +182,6 @@
     wayneMessage.classList.add("pop");
   }
 
-  // ---- 余力スライダー ----
-  const energyLabels = ["しんどい", "低め", "普通", "まあまあ", "元気"];
-
-  function setEnergyUI(valueIndex, { animate = false } = {}) {
-    const label = energyLabels[valueIndex] || "普通";
-
-    if (energyHidden) energyHidden.value = label;
-    if (energyValueEl) energyValueEl.textContent = label;
-
-    if (energyCard) {
-      energyCard.classList.remove("energy-up", "energy-down");
-
-      // 高い側（まあまあ/元気）
-     if (valueIndex >= 3) {
-  energyCard.classList.add("energy-up");
-  if (animate) triggerSilver(valueIndex === 4 ? 3 : 1);
-}
-
-
-      // 低い側（低め/しんどい）
-      if (valueIndex <= 1) {
-        energyCard.classList.add("energy-down");
-        if (animate) spawnCheerBubbles(valueIndex);
-      }
-    }
-  }
-
-function triggerSilver(times = 1) {
-  if (!energyCard) return;
-
-  let count = 0;
-  const flashOnce = () => {
-    energyCard.classList.remove("energy-up");
-    void energyCard.offsetWidth; // リセット
-    energyCard.classList.add("energy-up");
-    count++;
-    if (count < times) {
-      setTimeout(flashOnce, 220); // フラッシュ間隔（好みで調整OK）
-    }
-  };
-
-  flashOnce();
-}
-  function spawnCheerBubbles(level) {
-    // level 0=しんどい, 1=低め
-    const count = level === 0 ? 10 : 6;
-
-    for (let i = 0; i < count; i++) {
-      const b = document.createElement("div");
-      b.className = "cheer-bubble";
-
-      const x = Math.random() * window.innerWidth;
-      const y = window.innerHeight - 40 + Math.random() * 40;
-
-      b.style.left = `${x}px`;
-      b.style.top = `${y}px`;
-      b.style.animationDelay = `${Math.random() * 220}ms`;
-      b.style.transform = `translateY(${Math.random() * 30}px) scale(${0.7 + Math.random() * 0.7})`;
-
-      document.body.appendChild(b);
-      b.addEventListener("animationend", () => b.remove());
-    }
-  }
-
-  if (energySlider) {
-    // 初期値「普通」
-    setEnergyUI(Number(energySlider.value), { animate: false });
-
-    energySlider.addEventListener("input", () => {
-      setEnergyUI(Number(energySlider.value), { animate: true });
-    });
-  }
-
-
-  
   // ---- pillボタンのセットアップ ----
   function setupPills() {
     const categoryButtons = Array.from(
@@ -339,8 +260,6 @@ function triggerSilver(times = 1) {
     const category = categoryHidden.value;
     const mood = moodHidden.value;
     const memo = memoText.value.trim();
-   const energy = energyHidden?.value || "普通";
-
 
     if (!category) {
       if (categoryGroup) {
@@ -359,7 +278,6 @@ function triggerSilver(times = 1) {
       displayTime: formatDisplay(now),
       category,
       mood,
-      energy,   // ←追加
       memo
     };
 
@@ -394,15 +312,13 @@ function triggerSilver(times = 1) {
 
   // ---- エクスポート ----
   function makeExportContent(list) {
-        const header = "iso_timestamp\t日時\tカテゴリ\t気分\t余力\tメモ";
-        const lines = list.map((e) => {
+    const header = "iso_timestamp\t日時\tカテゴリ\t気分\tメモ";
+    const lines = list.map((e) => {
       const memo = (e.memo || "")
         .replace(/\t/g, " ")
         .replace(/\r?\n/g, "\\n");
-          const mood = e.mood || "";
-      const energy = e.energy || "";
-      return `${e.timestamp}\t${e.displayTime}\t${e.category}\t${mood}\t${energy}\t${memo}`;
-
+      const mood = e.mood || "";
+      return `${e.timestamp}\t${e.displayTime}\t${e.category}\t${mood}\t${memo}`;
     });
     return [header, ...lines].join("\n");
   }
@@ -612,12 +528,7 @@ function triggerSilver(times = 1) {
   // ---- ☁️⚡ 入道雲イベント（30秒〜1分に1度） ----
   function startEventCloud() {
     const layer = document.getElementById("cloudLayer");
-    if (!layer) {
-      console.error("cloudLayer not found!");
-      return;
-    }
-    
-    console.log("Event cloud system initialized");
+    if (!layer) return;
 
     let eventCloudElement = null;
     let isEventRunning = false;
@@ -628,38 +539,22 @@ function triggerSilver(times = 1) {
         document.body.classList.contains("theme-day") ||
         document.body.classList.contains("theme-morning");
       
-      console.log("Attempting to spawn event cloud...");
-      console.log("Theme check - isDayOrMorning:", isDayOrMorning);
-      console.log("isEventRunning:", isEventRunning);
-      console.log("Current body classes:", document.body.className);
-      
-      if (!isDayOrMorning) {
-        console.log("Not spawning: wrong theme");
-        return;
-      }
-      
-      if (isEventRunning) {
-        console.log("Not spawning: event already running");
-        return;
-      }
+      if (!isDayOrMorning || isEventRunning) return;
 
       // 既存の入道雲があれば削除
       if (eventCloudElement) {
         eventCloudElement.remove();
       }
 
-      console.log("Creating event cloud element...");
       // 新しい入道雲を作成
       eventCloudElement = document.createElement("div");
       eventCloudElement.className = "event-cloud";
       layer.appendChild(eventCloudElement);
-      console.log("Event cloud element added to layer");
 
       // アニメーション開始
       setTimeout(() => {
         eventCloudElement.classList.add("active");
         isEventRunning = true;
-        console.log("Event cloud animation started!");
       }, 100);
 
       // アニメーション終了後にクリーンアップ
@@ -669,26 +564,167 @@ function triggerSilver(times = 1) {
           eventCloudElement = null;
         }
         isEventRunning = false;
-        console.log("Event cloud animation completed and cleaned up");
       }, 46000); // 45秒のアニメーション + 1秒の余裕
     }
 
     function scheduleNextEvent() {
       // 30秒〜60秒のランダムな間隔
       const nextDelay = 30000 + Math.random() * 30000;
-      console.log(`Next event cloud scheduled in ${Math.round(nextDelay/1000)} seconds`);
       setTimeout(() => {
         spawnEventCloud();
         scheduleNextEvent();
       }, nextDelay);
     }
 
-    // 最初のイベントは10秒後に開始（デバッグ用に5秒に短縮）
-    console.log("First event cloud will spawn in 5 seconds");
+    // 最初のイベントは10秒後に開始
     setTimeout(() => {
       spawnEventCloud();
       scheduleNextEvent();
+    }, 10000);
+  }
+
+  // ---- 🌆 夕方の雲イベント（画面上部と中央） ----
+  function startEveningClouds() {
+    const layer = document.getElementById("cloudLayer");
+    if (!layer) {
+      console.error("cloudLayer not found for evening clouds!");
+      return;
+    }
+    
+    console.log("Evening cloud system initialized");
+
+    let cloud1Element = null;
+    let cloud2Element = null;
+    let isCloud1Running = false;
+    let isCloud2Running = false;
+
+    function spawnEveningCloud1() {
+      // 夕方のテーマのときのみ表示
+      const isEvening = document.body.classList.contains("theme-evening");
+      
+      console.log("Attempting to spawn evening cloud 1...");
+      console.log("Theme check - isEvening:", isEvening);
+      
+      if (!isEvening) {
+        console.log("Not spawning cloud 1: not evening theme");
+        return;
+      }
+      
+      if (isCloud1Running) {
+        console.log("Not spawning cloud 1: already running");
+        return;
+      }
+
+      // 既存の雲があれば削除
+      if (cloud1Element) {
+        cloud1Element.remove();
+      }
+
+      console.log("Creating evening cloud 1 element...");
+      // 新しい雲を作成
+      cloud1Element = document.createElement("div");
+      cloud1Element.className = "evening-cloud-1";
+      layer.appendChild(cloud1Element);
+      console.log("Evening cloud 1 element added to layer");
+
+      // アニメーション開始
+      setTimeout(() => {
+        cloud1Element.classList.add("active");
+        isCloud1Running = true;
+        console.log("Evening cloud 1 animation started!");
+      }, 100);
+
+      // アニメーション終了後にクリーンアップ
+      setTimeout(() => {
+        if (cloud1Element) {
+          cloud1Element.remove();
+          cloud1Element = null;
+        }
+        isCloud1Running = false;
+        console.log("Evening cloud 1 animation completed");
+      }, 61000); // 60秒のアニメーション + 1秒の余裕
+    }
+
+    function spawnEveningCloud2() {
+      // 夕方のテーマのときのみ表示
+      const isEvening = document.body.classList.contains("theme-evening");
+      
+      console.log("Attempting to spawn evening cloud 2...");
+      console.log("Theme check - isEvening:", isEvening);
+      
+      if (!isEvening) {
+        console.log("Not spawning cloud 2: not evening theme");
+        return;
+      }
+      
+      if (isCloud2Running) {
+        console.log("Not spawning cloud 2: already running");
+        return;
+      }
+
+      // 既存の雲があれば削除
+      if (cloud2Element) {
+        cloud2Element.remove();
+      }
+
+      console.log("Creating evening cloud 2 element...");
+      // 新しい雲を作成
+      cloud2Element = document.createElement("div");
+      cloud2Element.className = "evening-cloud-2";
+      layer.appendChild(cloud2Element);
+      console.log("Evening cloud 2 element added to layer");
+
+      // アニメーション開始
+      setTimeout(() => {
+        cloud2Element.classList.add("active");
+        isCloud2Running = true;
+        console.log("Evening cloud 2 animation started!");
+      }, 100);
+
+      // アニメーション終了後にクリーンアップ
+      setTimeout(() => {
+        if (cloud2Element) {
+          cloud2Element.remove();
+          cloud2Element = null;
+        }
+        isCloud2Running = false;
+        console.log("Evening cloud 2 animation completed");
+      }, 61000); // 60秒のアニメーション + 1秒の余裕
+    }
+
+    function scheduleNextCloud1() {
+      // 雲1は20秒後に再度スタート（時差を作るため）
+      const nextDelay = 20000;
+      console.log(`Next evening cloud 1 scheduled in ${nextDelay/1000} seconds`);
+      setTimeout(() => {
+        spawnEveningCloud1();
+        scheduleNextCloud1();
+      }, nextDelay);
+    }
+
+    function scheduleNextCloud2() {
+      // 雲2は40秒後に再度スタート（雲1と重ならないように）
+      const nextDelay = 40000;
+      console.log(`Next evening cloud 2 scheduled in ${nextDelay/1000} seconds`);
+      setTimeout(() => {
+        spawnEveningCloud2();
+        scheduleNextCloud2();
+      }, nextDelay);
+    }
+
+    // 最初の雲1は5秒後に開始
+    console.log("First evening cloud 1 will spawn in 5 seconds");
+    setTimeout(() => {
+      spawnEveningCloud1();
+      scheduleNextCloud1();
     }, 5000);
+
+    // 最初の雲2は15秒後に開始（雲1より10秒遅らせる）
+    console.log("First evening cloud 2 will spawn in 15 seconds");
+    setTimeout(() => {
+      spawnEveningCloud2();
+      scheduleNextCloud2();
+    }, 15000);
   }
 
   // ---- 🌆 夕方の雲イベント（画面上部と中央） ----

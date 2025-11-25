@@ -13,7 +13,6 @@
   --radius-pill: 999px;
   --danger: #f36b7f;
 
-  
   /* iPhone見やすさスケール */
   --ui-scale: 1.12;
 }
@@ -722,15 +721,14 @@ body.theme-morning .cloud-layer {
   background-image: url('images/cloud_event_transparent.png');
   background-repeat: no-repeat;
   background-size: contain;
-  background-position: center;
   pointer-events: none;
   opacity: 0;
   filter: blur(0.5px);
-  /* 画面の1/3を占める大きさ（アスペクト比を考慮して横幅も設定） */
-  width: 50vw;
+  /* 画面の1/3を占める大きさ（高さ基準） */
+  width: auto;
   height: 33vh;
   /* 画面左外からスタート */
-  left: -55vw;
+  left: -40vw;
   /* 画面中央やや上に配置 */
   top: 20vh;
   z-index: 1;
@@ -739,7 +737,7 @@ body.theme-morning .cloud-layer {
 /* 入道雲のアニメーション: 左から右へゆっくり移動しながら徐々に大きくなる */
 @keyframes eventCloudPass {
   0% {
-    left: -55vw;
+    left: -40vw;
     opacity: 0;
     transform: scale(0.7);
   }
@@ -913,154 +911,3 @@ body.theme-night .star-layer {
     opacity: 0;
   }
 }
-
-/* =========================
-   ✨ 余力スライダー UI
-   ========================= */
-
-.energy-card {
-  position: relative;
-  padding: 0.9rem 0.9rem 0.8rem;
-  border-radius: 16px;
-  background: rgba(255,255,255,0.75);
-  border: 1px solid rgba(180,200,230,0.7);
-  transition: background 300ms ease, box-shadow 300ms ease, border-color 300ms ease;
-  overflow: hidden;
-}
-
-.energy-labels {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  font-size: 0.8rem;
-  color: var(--text-sub);
-  margin-bottom: 0.55rem;
-  text-align: center;
-}
-.energy-labels .mid {
-  font-weight: 600;
-  color: var(--text-main);
-}
-
-#energySlider {
-  width: 100%;
-  -webkit-appearance: none;
-  appearance: none;
-  height: 10px;
-  border-radius: 999px;
-  background: linear-gradient(
-    90deg,
-    rgba(120,140,170,0.25),
-    rgba(120,140,170,0.12)
-  );
-  outline: none;
-  border: 1px solid rgba(175,190,215,0.8);
-  box-shadow: inset 0 1px 3px rgba(0,0,0,0.08);
-}
-
-/* つまみ */
-#energySlider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 30% 25%, #fff, #cfe6ff);
-  border: 1px solid rgba(120,150,200,0.9);
-  box-shadow: 0 6px 14px rgba(30,70,140,0.35);
-  cursor: pointer;
-  transition: transform 140ms ease, box-shadow 200ms ease, border-color 200ms ease;
-}
-#energySlider:active::-webkit-slider-thumb {
-  transform: scale(1.05);
-}
-
-/* Firefox */
-#energySlider::-moz-range-thumb {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 30% 25%, #fff, #cfe6ff);
-  border: 1px solid rgba(120,150,200,0.9);
-  box-shadow: 0 6px 14px rgba(30,70,140,0.35);
-  cursor: pointer;
-}
-
-/* 値ラベル */
-.energy-value {
-  margin-top: 0.55rem;
-  font-size: 0.95rem;
-  font-weight: 600;
-  text-align: center;
-  color: var(--text-main);
-  transition: color 250ms ease;
-}
-
-/* =========================
-   ⚔️ 元気側：銀色シャキン演出
-   ========================= */
-
-.energy-card.energy-up {
-  border-color: rgba(210,220,240,0.95);
-  box-shadow:
-    0 0 0 1px rgba(255,255,255,0.8),
-    0 0 24px rgba(200,220,255,0.9),
-    inset 0 1px 0 rgba(255,255,255,0.9);
-  background: rgba(240,248,255,0.9);
-}
-
-/* 銀の走り（シャキン！） */
-.energy-card.energy-up::after {
-  content: "";
-  position: absolute;
-  inset: -40% -20%;
-  background: linear-gradient(
-    120deg,
-    rgba(255,255,255,0) 30%,
-    rgba(220,230,255,0.9) 50%,
-    rgba(255,255,255,0) 70%
-  );
-  transform: translateX(-120%) rotate(6deg);
-  animation: silverSlash 600ms ease-out;
-  pointer-events: none;
-}
-
-@keyframes silverSlash {
-  0% { transform: translateX(-120%) rotate(6deg); opacity: 0; }
-  25% { opacity: 1; }
-  100% { transform: translateX(120%) rotate(6deg); opacity: 0; }
-}
-
-/* =========================
-   🫧 低め側：応援シャボン玉
-   ========================= */
-
-.energy-card.energy-down {
-  background: rgba(255,255,255,0.9);
-  box-shadow:
-    0 10px 26px rgba(150,170,210,0.25),
-    inset 0 1px 0 rgba(255,255,255,0.9);
-}
-
-/* 泡のクラス（JSで作ってbodyに撒く） */
-.cheer-bubble {
-  position: fixed;
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 30% 25%, rgba(255,255,255,0.95), rgba(255,255,255,0) 60%),
-    linear-gradient(135deg, rgba(170,220,255,0.9), rgba(255,190,230,0.85));
-  box-shadow: 0 10px 22px rgba(0,0,0,0.18);
-  opacity: 0;
-  animation: cheerFloat 2200ms ease-out forwards;
-  z-index: 2000;
-  pointer-events: none;
-}
-
-@keyframes cheerFloat {
-  0%   { transform: translateY(20px) scale(0.6); opacity: 0; }
-  20%  { opacity: 0.9; }
-  100% { transform: translateY(-140px) scale(1.1); opacity: 0; }
-}
-
-
