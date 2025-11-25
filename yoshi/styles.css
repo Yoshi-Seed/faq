@@ -466,29 +466,29 @@ body.theme-evening {
   animation: gradientMove 18s ease infinite;
 }
 
-/* 🌞 Day：色の変化をくっきりさせたバージョン */
+/* 🌞 Day：スカイブルー → 明るいグリーン → グリーンイエロー → スカイブルー */
 body.theme-day {
-  /* 指定の流れ:
-    1. スカイブルー (#3bb1ff)
-    2. 淡いブルー (#d4f4ff)
-    3. グリーンがかったブルー (#7affd6)
-    4. 朝焼けのような淡いイエロー (#fff5cc)
-    5. スカイブルーに戻る
+  /* 色の流れ:
+    1. スカイブルー (#3bb1ff) - 美しい青空
+    2. 明るいグリーン (#7affd6) - 爽やかな緑
+    3. グリーンイエロー (#c8ff8e) - 黄緑の明るさ
+    4. スカイブルーに戻る
   */
   background-image: linear-gradient(
     135deg,
-    #3bb1ff 0%,    /* ① くっきりしたスカイブルー */
-    #d4f4ff 25%,   /* ② 休憩のような淡いブルー */
-    #7affd6 50%,   /* ③ 爽やかなミントグリーンブルー */
-    #fff5cc 75%,   /* ④ 朝焼けの光（イエロー） */
-    #3bb1ff 100%   /* ⑤ 最初に戻る */
+    #3bb1ff 0%,    /* ① 美しいスカイブルー */
+    #3bb1ff 20%,   /* ② スカイブルーを保持 */
+    #7affd6 40%,   /* ③ 明るいグリーン */
+    #c8ff8e 60%,   /* ④ グリーンイエロー */
+    #7affd6 80%,   /* ⑤ 明るいグリーンに戻る */
+    #3bb1ff 100%   /* ⑥ スカイブルーに戻る */
   );
 
-  /* 色の変化を大きく見せるためサイズは400% */
-  background-size: 400% 400%;
+  /* 色の変化を大きく見せるためサイズは500% */
+  background-size: 500% 500%;
   
-  /* 28秒かけてゆっくり一周 */
-  animation: dayGradient 28s ease infinite;
+  /* 40秒かけてゆっくり一周 */
+  animation: dayGradient 40s ease-in-out infinite;
   
   /* スクロール時のガタつき防止 */
   background-attachment: fixed;
@@ -498,28 +498,6 @@ body.theme-day {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
-}
-  /* 2. 背景を画面の4倍の大きさに引き伸ばします */
-  background-size: 400% 400%;
-
-  /* 3. 位置だけを動かすアニメーションを指定 */
-  animation: dayGradient 30s ease infinite;
-  
-  /* 固定対策 */
-  background-attachment: fixed;
-}
-
-/* 以前の記述（background: linear-gradient...）は全て消して、これだけにします */
-@keyframes dayGradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
 }
 
 /* 🌙 Night：ダークセルリアン → 深い夜 → 朝焼け */
