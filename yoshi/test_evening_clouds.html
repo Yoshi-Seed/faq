@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>夕方の雲テスト</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: sans-serif;
+    }
+    .test-controls {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 20px;
+      border-radius: 8px;
+      z-index: 1000;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    .test-controls button {
+      margin: 5px;
+      padding: 10px 15px;
+      cursor: pointer;
+    }
+    .info {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #666;
+    }
+  </style>
+</head>
+<body class="theme-evening">
+  
+  <div class="test-controls">
+    <h2>🌆 夕方の雲テスト</h2>
+    <p>夕方テーマを強制的に適用しています</p>
+    <button onclick="forceSpawnCloud1()">雲1を強制表示</button>
+    <button onclick="forceSpawnCloud2()">雲2を強制表示</button>
+    <div class="info">
+      <p>✅ 雲1は画面上部を左から右へ60秒かけて移動</p>
+      <p>✅ 雲2は画面中央を左から右へ60秒かけて移動</p>
+      <p>⏱️ 自動では5秒後に雲1、15秒後に雲2が出現</p>
+      <p id="countdown"></p>
+      <p id="imageStatus" style="color: #999; font-size: 12px;"></p>
+    </div>
+  </div>
+
+  <div id="cloudLayer" class="cloud-layer"></div>
+
+  <script>
+    // Check if images load
+    const img1 = new Image();
+    img1.onload = () => {
+      document.getElementById('imageStatus').innerHTML += '✅ evening_cloud1_transparent.png loaded<br>';
+    };
+    img1.onerror = () => {
+      document.getElementById('imageStatus').innerHTML += '❌ evening_cloud1_transparent.png failed<br>';
+    };
+    img1.src = 'images/evening_cloud1_transparent.png';
+
+    const img2 = new Image();
+    img2.onload = () => {
+      document.getElementById('imageStatus').innerHTML += '✅ evening_cloud2_transparent.png loaded<br>';
+    };
+    img2.onerror = () => {
+      document.getElementById('imageStatus').innerHTML += '❌ evening_cloud2_transparent.png failed<br>';
+    };
+    img2.src = 'images/evening_cloud2_transparent.png';
+
+    // Simple countdown
+    let countdown = 5;
+    const countdownEl = document.getElementById('countdown');
+    const interval = setInterval(() => {
+      countdown--;
+      if (countdown > 0) {
+        countdownEl.textContent = `自動スポーン: ${countdown}秒後...`;
+      } else {
+        countdownEl.textContent = '雲が表示されるはずです！';
+        clearInterval(interval);
+      }
+    }, 1000);
+
+    function forceSpawnCloud1() {
+      const layer = document.getElementById('cloudLayer');
+      const existing = layer.querySelector('.evening-cloud-1');
+      if (existing) existing.remove();
+      
+      const cloud = document.createElement('div');
+      cloud.className = 'evening-cloud-1';
+      layer.appendChild(cloud);
+      
+      setTimeout(() => {
+        cloud.classList.add('active');
+        console.log('Evening cloud 1 forced spawn');
+      }, 100);
+      
+      setTimeout(() => {
+        cloud.remove();
+        console.log('Evening cloud 1 animation finished');
+      }, 61000);
+    }
+
+    function forceSpawnCloud2() {
+      const layer = document.getElementById('cloudLayer');
+      const existing = layer.querySelector('.evening-cloud-2');
+      if (existing) existing.remove();
+      
+      const cloud = document.createElement('div');
+      cloud.className = 'evening-cloud-2';
+      layer.appendChild(cloud);
+      
+      setTimeout(() => {
+        cloud.classList.add('active');
+        console.log('Evening cloud 2 forced spawn');
+      }, 100);
+      
+      setTimeout(() => {
+        cloud.remove();
+        console.log('Evening cloud 2 animation finished');
+      }, 61000);
+    }
+
+    // Auto-spawn for testing
+    setTimeout(forceSpawnCloud1, 5000);
+    setTimeout(forceSpawnCloud2, 15000);
+  </script>
+
+</body>
+</html>
