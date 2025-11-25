@@ -721,14 +721,15 @@ body.theme-morning .cloud-layer {
   background-image: url('images/cloud_event_transparent.png');
   background-repeat: no-repeat;
   background-size: contain;
+  background-position: center;
   pointer-events: none;
   opacity: 0;
   filter: blur(0.5px);
-  /* 画面の1/3を占める大きさ（高さ基準） */
-  width: auto;
+  /* 画面の1/3を占める大きさ（アスペクト比を考慮して横幅も設定） */
+  width: 50vw;
   height: 33vh;
   /* 画面左外からスタート */
-  left: -40vw;
+  left: -55vw;
   /* 画面中央やや上に配置 */
   top: 20vh;
   z-index: 1;
@@ -737,7 +738,7 @@ body.theme-morning .cloud-layer {
 /* 入道雲のアニメーション: 左から右へゆっくり移動しながら徐々に大きくなる */
 @keyframes eventCloudPass {
   0% {
-    left: -40vw;
+    left: -55vw;
     opacity: 0;
     transform: scale(0.7);
   }
