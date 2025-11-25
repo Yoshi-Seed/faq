@@ -727,6 +727,150 @@
     }, 15000);
   }
 
+  // ---- 🌆 夕方の雲イベント（画面上部と中央） ----
+  function startEveningClouds() {
+    const layer = document.getElementById("cloudLayer");
+    if (!layer) {
+      console.error("cloudLayer not found for evening clouds!");
+      return;
+    }
+    
+    console.log("Evening cloud system initialized");
+
+    let cloud1Element = null;
+    let cloud2Element = null;
+    let isCloud1Running = false;
+    let isCloud2Running = false;
+
+    function spawnEveningCloud1() {
+      // 夕方のテーマのときのみ表示
+      const isEvening = document.body.classList.contains("theme-evening");
+      
+      console.log("Attempting to spawn evening cloud 1...");
+      console.log("Theme check - isEvening:", isEvening);
+      
+      if (!isEvening) {
+        console.log("Not spawning cloud 1: not evening theme");
+        return;
+      }
+      
+      if (isCloud1Running) {
+        console.log("Not spawning cloud 1: already running");
+        return;
+      }
+
+      // 既存の雲があれば削除
+      if (cloud1Element) {
+        cloud1Element.remove();
+      }
+
+      console.log("Creating evening cloud 1 element...");
+      // 新しい雲を作成
+      cloud1Element = document.createElement("div");
+      cloud1Element.className = "evening-cloud-1";
+      layer.appendChild(cloud1Element);
+      console.log("Evening cloud 1 element added to layer");
+
+      // アニメーション開始
+      setTimeout(() => {
+        cloud1Element.classList.add("active");
+        isCloud1Running = true;
+        console.log("Evening cloud 1 animation started!");
+      }, 100);
+
+      // アニメーション終了後にクリーンアップ
+      setTimeout(() => {
+        if (cloud1Element) {
+          cloud1Element.remove();
+          cloud1Element = null;
+        }
+        isCloud1Running = false;
+        console.log("Evening cloud 1 animation completed");
+      }, 61000); // 60秒のアニメーション + 1秒の余裕
+    }
+
+    function spawnEveningCloud2() {
+      // 夕方のテーマのときのみ表示
+      const isEvening = document.body.classList.contains("theme-evening");
+      
+      console.log("Attempting to spawn evening cloud 2...");
+      console.log("Theme check - isEvening:", isEvening);
+      
+      if (!isEvening) {
+        console.log("Not spawning cloud 2: not evening theme");
+        return;
+      }
+      
+      if (isCloud2Running) {
+        console.log("Not spawning cloud 2: already running");
+        return;
+      }
+
+      // 既存の雲があれば削除
+      if (cloud2Element) {
+        cloud2Element.remove();
+      }
+
+      console.log("Creating evening cloud 2 element...");
+      // 新しい雲を作成
+      cloud2Element = document.createElement("div");
+      cloud2Element.className = "evening-cloud-2";
+      layer.appendChild(cloud2Element);
+      console.log("Evening cloud 2 element added to layer");
+
+      // アニメーション開始
+      setTimeout(() => {
+        cloud2Element.classList.add("active");
+        isCloud2Running = true;
+        console.log("Evening cloud 2 animation started!");
+      }, 100);
+
+      // アニメーション終了後にクリーンアップ
+      setTimeout(() => {
+        if (cloud2Element) {
+          cloud2Element.remove();
+          cloud2Element = null;
+        }
+        isCloud2Running = false;
+        console.log("Evening cloud 2 animation completed");
+      }, 61000); // 60秒のアニメーション + 1秒の余裕
+    }
+
+    function scheduleNextCloud1() {
+      // 雲1は20秒後に再度スタート（時差を作るため）
+      const nextDelay = 20000;
+      console.log(`Next evening cloud 1 scheduled in ${nextDelay/1000} seconds`);
+      setTimeout(() => {
+        spawnEveningCloud1();
+        scheduleNextCloud1();
+      }, nextDelay);
+    }
+
+    function scheduleNextCloud2() {
+      // 雲2は40秒後に再度スタート（雲1と重ならないように）
+      const nextDelay = 40000;
+      console.log(`Next evening cloud 2 scheduled in ${nextDelay/1000} seconds`);
+      setTimeout(() => {
+        spawnEveningCloud2();
+        scheduleNextCloud2();
+      }, nextDelay);
+    }
+
+    // 最初の雲1は5秒後に開始
+    console.log("First evening cloud 1 will spawn in 5 seconds");
+    setTimeout(() => {
+      spawnEveningCloud1();
+      scheduleNextCloud1();
+    }, 5000);
+
+    // 最初の雲2は15秒後に開始（雲1より10秒遅らせる）
+    console.log("First evening cloud 2 will spawn in 15 seconds");
+    setTimeout(() => {
+      spawnEveningCloud2();
+      scheduleNextCloud2();
+    }, 15000);
+  }
+
   // ---- 初期化 ----
 
   // 🔥 コンテンツ（カード）を最前面に出すための強制設定
