@@ -707,10 +707,59 @@ body.theme-morning .cloud-layer {
   filter: blur(1px); /* 輪郭を少しぼかすとさらにリアルになります */
 }
 
-/* アニメーションはそのまま */
+/* 通常の雲のアニメーション */
 @keyframes cloudFloat {
   0% { transform: translateX(-150px); }
   100% { transform: translateX(100vw); }
+}
+
+/* =========================
+   ☁️⚡ 入道雲イベント（夏の迫力ある雲）
+   ========================= */
+.event-cloud {
+  position: absolute;
+  background-image: url('images/cloud_event_transparent.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  pointer-events: none;
+  opacity: 0;
+  filter: blur(0.5px);
+  /* 画面の1/3を占める大きさ（高さ基準） */
+  width: auto;
+  height: 33vh;
+  /* 画面左外からスタート */
+  left: -40vw;
+  /* 画面中央やや上に配置 */
+  top: 20vh;
+  z-index: 1;
+}
+
+/* 入道雲のアニメーション: 左から右へゆっくり移動しながら徐々に大きくなる */
+@keyframes eventCloudPass {
+  0% {
+    left: -40vw;
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  5% {
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  95% {
+    opacity: 0.9;
+  }
+  100% {
+    left: 110vw;
+    opacity: 0;
+    transform: scale(1.2);
+  }
+}
+
+/* アニメーションクラスが追加されたときに実行 */
+.event-cloud.active {
+  animation: eventCloudPass 45s ease-in-out forwards;
 }
 
 /* =========================
