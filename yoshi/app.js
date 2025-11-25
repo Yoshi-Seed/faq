@@ -329,12 +329,16 @@
 
     // ✅ Sheetsへ送信
     try {
-      console.log("📤 Sending to Google Sheets:", entry);
-      console.log("📤 Energy value:", entry.energy);
+      const payload = JSON.stringify(entry);
+      console.log("📤 Sending to Google Sheets:");
+      console.log("📤 Full payload:", payload);
+      console.log("📤 Parsed payload:", JSON.parse(payload));
+      console.log("📤 Energy value in payload:", JSON.parse(payload).energy);
+      
       await fetch(GAS_URL, {
         method: "POST",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify(entry)
+        body: payload
       });
       console.log("✅ Successfully sent to Google Sheets");
     } catch (e) {
