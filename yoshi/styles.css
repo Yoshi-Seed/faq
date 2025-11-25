@@ -669,6 +669,92 @@ body.theme-night #messageSection .wayne-message {
   border: 1px solid rgba(255,255,255,0.14);
 }
 
+/* 🌙 夜モード時：エネルギースライダーをシルバープレート風に */
+body.theme-night .energy-card {
+  background: linear-gradient(
+    135deg,
+    rgba(180, 190, 200, 0.25) 0%,
+    rgba(220, 230, 240, 0.35) 25%,
+    rgba(240, 245, 250, 0.45) 50%,
+    rgba(220, 230, 240, 0.35) 75%,
+    rgba(180, 190, 200, 0.25) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    inset 0 2px 8px rgba(255, 255, 255, 0.3),
+    inset 0 -2px 8px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+body.theme-night .energy-labels {
+  color: rgba(255, 255, 255, 0.85);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+body.theme-night .energy-labels span.mid {
+  color: rgba(255, 255, 255, 1);
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+}
+
+body.theme-night #energySlider {
+  background: linear-gradient(
+    to right,
+    rgba(180, 200, 220, 0.4) 0%,
+    rgba(200, 220, 240, 0.5) 25%,
+    rgba(220, 235, 250, 0.6) 50%,
+    rgba(200, 220, 240, 0.5) 75%,
+    rgba(180, 200, 220, 0.4) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 
+    inset 0 2px 4px rgba(0, 0, 0, 0.3),
+    0 1px 2px rgba(255, 255, 255, 0.2);
+}
+
+body.theme-night #energySlider::-webkit-slider-thumb {
+  background: linear-gradient(
+    135deg,
+    rgba(200, 210, 220, 0.9) 0%,
+    rgba(240, 245, 250, 1) 50%,
+    rgba(200, 210, 220, 0.9) 100%
+  );
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 
+    0 0 12px rgba(255, 255, 255, 0.6),
+    0 4px 12px rgba(0, 0, 0, 0.4),
+    inset 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+body.theme-night #energySlider::-moz-range-thumb {
+  background: linear-gradient(
+    135deg,
+    rgba(200, 210, 220, 0.9) 0%,
+    rgba(240, 245, 250, 1) 50%,
+    rgba(200, 210, 220, 0.9) 100%
+  );
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 
+    0 0 12px rgba(255, 255, 255, 0.6),
+    0 4px 12px rgba(0, 0, 0, 0.4),
+    inset 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+body.theme-night .energy-value {
+  background: linear-gradient(
+    135deg,
+    rgba(180, 190, 200, 0.3) 0%,
+    rgba(220, 230, 240, 0.4) 50%,
+    rgba(180, 190, 200, 0.3) 100%
+  );
+  color: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 
+    0 4px 16px rgba(0, 0, 0, 0.3),
+    inset 0 1px 4px rgba(255, 255, 255, 0.4);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
 /* =========================
    🎉 祝福アニメ（星・紙吹雪）
    ========================= */
@@ -1001,4 +1087,118 @@ body.theme-night .star-layer {
     transform: translate(-400px, 400px) scale(0.8);
     opacity: 0;
   }
+}
+
+/* ✨ 左側でゆっくり点滅する星（3つ） */
+.twinkling-star {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: #fff;
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* 十字架の光（縦）- より強く */
+.twinkling-star::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 3px;
+  height: 32px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(255, 255, 255, 0.9),
+    #fff,
+    rgba(255, 255, 255, 0.9),
+    transparent
+  );
+  border-radius: 99px;
+  box-shadow: 
+    0 0 8px rgba(255, 255, 255, 0.8),
+    0 0 16px rgba(200, 220, 255, 0.6);
+}
+
+/* 十字架の光（横）- より強く */
+.twinkling-star::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 32px;
+  height: 3px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.9),
+    #fff,
+    rgba(255, 255, 255, 0.9),
+    transparent
+  );
+  border-radius: 99px;
+  box-shadow: 
+    0 0 8px rgba(255, 255, 255, 0.8),
+    0 0 16px rgba(200, 220, 255, 0.6);
+}
+
+/* ゆっくり点滅するアニメーション（パターン1: 6秒周期） */
+@keyframes twinkleStar1 {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0.8);
+    filter: brightness(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+    filter: brightness(1.5);
+  }
+}
+
+/* ゆっくり点滅するアニメーション（パターン2: 8秒周期） */
+@keyframes twinkleStar2 {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0.8);
+    filter: brightness(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+    filter: brightness(1.5);
+  }
+}
+
+/* ゆっくり点滅するアニメーション（パターン3: 10秒周期） */
+@keyframes twinkleStar3 {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0.8);
+    filter: brightness(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+    filter: brightness(1.5);
+  }
+}
+
+.twinkling-star-1 {
+  animation: twinkleStar1 6s ease-in-out infinite;
+  animation-delay: 0s;
+}
+
+.twinkling-star-2 {
+  animation: twinkleStar2 8s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+.twinkling-star-3 {
+  animation: twinkleStar3 10s ease-in-out infinite;
+  animation-delay: 4s;
 }

@@ -549,6 +549,32 @@
     loop();
   }
 
+  // ---- ✨ 左側でゆっくり点滅する星（3つ） ----
+  function startTwinklingStars() {
+    const layer = document.getElementById("starLayer");
+    if (!layer) return;
+
+    console.log("Twinkling stars system initialized");
+
+    // 3つの星の位置を定義（左側エリア）
+    const starPositions = [
+      { left: "8%", top: "15%" },   // 左上
+      { left: "12%", top: "40%" },  // 左中央
+      { left: "6%", top: "65%" }    // 左下
+    ];
+
+    // 3つの星を作成
+    starPositions.forEach((pos, index) => {
+      const star = document.createElement("div");
+      star.className = `twinkling-star twinkling-star-${index + 1}`;
+      star.style.left = pos.left;
+      star.style.top = pos.top;
+      
+      layer.appendChild(star);
+      console.log(`Twinkling star ${index + 1} created at ${pos.left}, ${pos.top}`);
+    });
+  }
+
   // ---- ☁️⚡ 入道雲イベント（30秒〜1分に1度） ----
   function startEventCloud() {
     const layer = document.getElementById("cloudLayer");
@@ -911,7 +937,8 @@
   applyThemeByTime();
 
   initClouds();          // ☁️ 雲を開始
-  startShootingStars();  // 🌠 星を開始
+  startShootingStars();  // 🌠 流れ星を開始
+  startTwinklingStars(); // ✨ 点滅する星を開始
   startEventCloud();     // ☁️⚡ 入道雲イベントを開始
   startEveningClouds();  // 🌆 夕方の雲を開始
 
