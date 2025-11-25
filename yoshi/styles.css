@@ -560,80 +560,29 @@ button:disabled {
 body.theme-morning {
   --bg-gradient: linear-gradient(
     135deg,
-    #0e214d 0%,   /* 夜が残る濃いブルー */
-    #1c3a67 22%,  /* ほんのり明るくなり始めるブルー */
-    #2e5681 38%,  /* 夜明け前の薄明るいブルー */
-    #efb181 60%,  /* 朝焼けのやさしいオレンジ */
-    #ffe4bf 72%,  /* 光が広がる柔らかなベージュオレンジ */
-    #d8f6ff 88%,  /* 朝の薄いブルー */
-    #b9efe7 100%  /* ブルーグリーンの朝空 */
+    #0e214d 0%,    /* 夜が残る濃いブルー */
+    #1c3a67 12%,   /* ほんのり明るくなり始めるブルー */
+    #2e5681 24%,   /* 夜明け前の薄明るいブルー */
+    #efb181 36%,   /* 朝焼けのやさしいオレンジ */
+    #ffe4bf 44%,   /* 光が広がる柔らかなベージュオレンジ */
+    #d8f6ff 56%,   /* 朝の薄いブルー */
+    #b9efe7 64%,   /* ブルーグリーンの朝空 */
+    #d9f7c3 72%,   /* 優しいライムグリーン */
+    #c3f2e8 80%,   /* ライムから淡いブルーへ */
+    #d7f4ff 88%,   /* 淡いブルー */
+    #1c3a67 100%   /* 初期のブルーに戻る（循環） */
   );
 
-  /* 朝焼け → ライムグリーン → 淡いブルーとゆっくり推移させる */
-  background-size: 420% 420%;
-  animation: morningDawn 42s ease-in-out infinite;
+  /* グラデーションの流れをゆっくり循環させる */
+  background-size: 520% 520%;
+  animation: morningDawnShift 52s ease-in-out infinite;
   background-attachment: fixed;
 }
 
-@keyframes morningDawn {
-  /* 夜明け前のブルーからやさしいオレンジへ */
-  0% {
-    background: linear-gradient(
-      135deg,
-      #0e214d 0%,
-      #1c3a67 22%,
-      #2e5681 38%,
-      #efb181 60%,
-      #ffe4bf 72%,
-      #d8f6ff 88%,
-      #b9efe7 100%
-    );
-  }
-
-  /* 朝焼けを強く見せたあと、ライムへ向かう準備 */
-  32% {
-    background: linear-gradient(
-      135deg,
-      #113567 0%,
-      #1f467b 24%,
-      #2f6794 44%,
-      #f0b78f 66%,
-      #ffe7c6 76%,
-      #f2f6e3 90%,
-      #d8f6ff 100%
-    );
-  }
-
-  /* 優しいライムグリーンで一面を満たす */
-  58% {
-    background: linear-gradient(
-      135deg,
-      #d9f7c3 0%,
-      #d9f7c3 50%,
-      #d9f7c3 100%
-    );
-  }
-
-  /* ライムから淡いブルーへゆっくり戻す */
-  82% {
-    background: linear-gradient(
-      135deg,
-      #c3f2e8 0%,
-      #d7f4ff 60%,
-      #bde6ff 100%
-    );
-  }
-
-  /* 初期の薄いブルーに帰還 */
-  100% {
-    background: linear-gradient(
-      135deg,
-      #1c3a67 0%,
-      #2e5681 28%,
-      #d8f6ff 78%,
-      #b9efe7 100%
-    );
-  }
+@keyframes morningDawnShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 /* Evening: 夕方のやわらかい温度 */
