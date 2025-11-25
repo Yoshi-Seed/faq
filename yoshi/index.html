@@ -62,7 +62,34 @@
   <input type="hidden" id="moodHidden" name="mood" />
 </div>
 
+<!-- 余力 / エネルギー（スライダー） -->
+<div class="field-group energy-field">
+  <label class="field-label">余力（エネルギー）</label>
 
+  <div class="energy-card" id="energyCard">
+    <div class="energy-labels">
+      <span>しんどい</span>
+      <span>低め</span>
+      <span class="mid">普通</span>
+      <span>まあまあ</span>
+      <span>元気</span>
+    </div>
+
+    <input
+      type="range"
+      id="energySlider"
+      min="0"
+      max="4"
+      step="1"
+      value="2"
+      aria-label="余力スライダー"
+    />
+
+    <div class="energy-value" id="energyValue">普通</div>
+  </div>
+
+  <input type="hidden" id="energyHidden" name="energy" value="普通" />
+</div>
 
           <!-- メモ -->
           <div class="field-group">
