@@ -558,7 +558,16 @@ button:disabled {
 
 /* Morning: 明るめやさしい固定グラデ */
 body.theme-morning {
-  --bg-gradient: linear-gradient(135deg, #fff6d8, #dff7ff 40%, #ffe7f5 85%);
+  --bg-gradient: linear-gradient(
+    135deg,
+    #0e214d 0%,   /* 夜が残る濃いブルー */
+    #1c3a67 22%,  /* ほんのり明るくなり始めるブルー */
+    #2e5681 38%,  /* 夜明け前の薄明るいブルー */
+    #efb181 60%,  /* 朝焼けのやさしいオレンジ */
+    #ffe4bf 72%,  /* 光が広がる柔らかなベージュオレンジ */
+    #d8f6ff 88%,  /* 朝の薄いブルー */
+    #b9efe7 100%  /* ブルーグリーンの朝空 */
+  );
   animation: gradientMove 18s ease infinite;
 }
 
