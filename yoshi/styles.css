@@ -81,6 +81,17 @@ body.theme-morning .cloud-layer {
   opacity: 1;
 }
 
+/* 夕方でも雲レイヤー表示 */
+body.theme-evening .cloud-layer {
+  opacity: 1;
+}
+
+/* 🌙 Night modeでは雲を完全に非表示 */
+body.theme-night .cloud-layer {
+  opacity: 0 !important;
+  display: none;
+}
+
 .cloud {
   position: absolute;
   background-repeat: no-repeat;
@@ -874,6 +885,17 @@ body.theme-morning .cloud-layer {
   opacity: 1;
 }
 
+/* 夕方でも雲レイヤー表示 */
+body.theme-evening .cloud-layer {
+  opacity: 1;
+}
+
+/* 🌙 Night modeでは雲を完全に非表示 */
+body.theme-night .cloud-layer {
+  opacity: 0 !important;
+  display: none;
+}
+
 .cloud {
   position: absolute;
   background-repeat: no-repeat;
@@ -942,10 +964,7 @@ body.theme-morning .cloud-layer {
 /* =========================
    🌆 夕方の癒し：ゆったり流れる雲
    ========================= */
-/* 夕方だけ雲レイヤーを表示 */
-body.theme-evening .cloud-layer {
-  opacity: 1;
-}
+/* 雲レイヤーの表示設定は上部で一括管理 */
 
 /* 夕方の雲1（画面上部） */
 .evening-cloud-1 {
