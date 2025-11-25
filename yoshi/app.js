@@ -525,6 +525,64 @@
     loop();
   }
 
+  // ---- ☁️⚡ 入道雲イベント（30秒〜1分に1度） ----
+  function startEventCloud() {
+    const layer = document.getElementById("cloudLayer");
+    if (!layer) return;
+
+    let eventCloudElement = null;
+    let isEventRunning = false;
+
+    function spawnEventCloud() {
+      // 昼または朝のテーマのときのみ表示
+      const isDayOrMorning = 
+        document.body.classList.contains("theme-day") ||
+        document.body.classList.contains("theme-morning");
+      
+      if (!isDayOrMorning || isEventRunning) return;
+
+      // 既存の入道雲があれば削除
+      if (eventCloudElement) {
+        eventCloudElement.remove();
+      }
+
+      // 新しい入道雲を作成
+      eventCloudElement = document.createElement("div");
+      eventCloudElement.className = "event-cloud";
+      layer.appendChild(eventCloudElement);
+
+      // アニメーション開始
+      setTimeout(() => {
+        eventCloudElement.classList.add("active");
+        isEventRunning = true;
+      }, 100);
+
+      // アニメーション終了後にクリーンアップ
+      setTimeout(() => {
+        if (eventCloudElement) {
+          eventCloudElement.remove();
+          eventCloudElement = null;
+        }
+        isEventRunning = false;
+      }, 46000); // 45秒のアニメーション + 1秒の余裕
+    }
+
+    function scheduleNextEvent() {
+      // 30秒〜60秒のランダムな間隔
+      const nextDelay = 30000 + Math.random() * 30000;
+      setTimeout(() => {
+        spawnEventCloud();
+        scheduleNextEvent();
+      }, nextDelay);
+    }
+
+    // 最初のイベントは10秒後に開始
+    setTimeout(() => {
+      spawnEventCloud();
+      scheduleNextEvent();
+    }, 10000);
+  }
+
   // ---- 初期化 ----
 
   // 🔥 コンテンツ（カード）を最前面に出すための強制設定
@@ -541,6 +599,7 @@
 
   initClouds();          // ☁️ 雲を開始
   startShootingStars();  // 🌠 星を開始
+  startEventCloud();     // ☁️⚡ 入道雲イベントを開始
 
   setInterval(updateNowTime, 30000);
   setInterval(applyThemeByTime, 5 * 60 * 1000);
