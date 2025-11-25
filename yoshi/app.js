@@ -3,7 +3,7 @@
   const STORAGE_KEY = "wayne_yoshi_memo_v1";
 
   // ✅ Google Sheets WebApp URL
-  const GAS_URL = "https://script.google.com/macros/s/AKfycbwBBYcJpLXbfiooN5M9XnzKrBQa-F07ICZ8xSzXvJmf0j8mz-Wztv0j9i63c1btAubw/exec";
+  const GAS_URL = "https://script.google.com/macros/s/AKfycbz2-7DBvMVCXa1sOgfWwJff6fwX06zabuCFMOie9dHlM8rJV2J8mO-SJRKdhIiKm3n3/exec";
 
   const entryForm = document.getElementById("entryForm");
   const categoryGroup = document.getElementById("categoryGroup");
