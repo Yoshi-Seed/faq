@@ -419,7 +419,7 @@
       document.body.classList.add("theme-morning");
     } else if (h >= 9 && h < 16) {
       document.body.classList.add("theme-day");
-    } else if (h >= 16 && h < 20) {
+    } else if (h >= 16 && h < 18) {
       document.body.classList.add("theme-evening");
     } else {
       document.body.classList.add("theme-night");
