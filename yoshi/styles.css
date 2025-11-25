@@ -766,6 +766,21 @@ body.theme-night .energy-value {
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
+/* メモ入力欄のテキストを黒に */
+body.theme-night textarea {
+  color: #1a1a1a;
+  background: rgba(255, 255, 255, 0.95);
+}
+
+body.theme-night textarea::placeholder {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+body.theme-night textarea:focus {
+  color: #000;
+  background: #fff;
+}
+
 /* =========================
    🎉 祝福アニメ（星・紙吹雪）
    ========================= */
