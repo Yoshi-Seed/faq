@@ -86,11 +86,9 @@ body.theme-morning .cloud-layer {
   background-repeat: no-repeat;
   background-size: contain;
   
-  /* 👇 ここが魔法！黒い背景を透明にして、雲だけを光らせます */
-  mix-blend-mode: screen; 
-  
-  opacity: 0.8; 
-  filter: blur(3px); /* 少しぼかすと馴染みます */
+  /* 透明背景画像なので通常表示 */
+  opacity: 0.85; 
+  filter: blur(1px); /* 軽くぼかして自然な印象に */
 }
 
 /* アニメーションはそのまま */
@@ -692,11 +690,9 @@ body.theme-morning .cloud-layer {
   background-repeat: no-repeat;
   background-size: contain;
   
-  /* 👇 この一行が超重要です！これを追加してください */
-  mix-blend-mode: screen; 
-  
-  opacity: 0.8;
-  filter: blur(2px); /* 輪郭を少しぼかすとさらにリアルになります */
+  /* 透明背景画像なので通常表示 */
+  opacity: 0.85;
+  filter: blur(1px); /* 輪郭を少しぼかすとさらにリアルになります */
 }
 
 /* アニメーションはそのまま */
