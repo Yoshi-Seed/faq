@@ -213,6 +213,30 @@
     attachPillBehavior(moodButtons, moodHidden, moodGroup);
   }
 
+  // ---- エネルギースライダーのセットアップ ----
+  function setupEnergySlider() {
+    const energySlider = document.getElementById("energySlider");
+    const energyValue = document.getElementById("energyValue");
+    const energyHidden = document.getElementById("energyHidden");
+    
+    if (!energySlider || !energyValue || !energyHidden) return;
+    
+    const energyLabels = ["しんどい", "低め", "普通", "まあまあ", "元気"];
+    
+    function updateEnergyDisplay() {
+      const value = parseInt(energySlider.value);
+      const label = energyLabels[value] || "普通";
+      energyValue.textContent = label;
+      energyHidden.value = label;
+    }
+    
+    energySlider.addEventListener("input", updateEnergyDisplay);
+    energySlider.addEventListener("change", updateEnergyDisplay);
+    
+    // 初期値を設定
+    updateEnergyDisplay();
+  }
+
   // ---- メモ一覧の描画 ----
   function renderEntries() {
     if (!entriesList) return;
@@ -880,6 +904,7 @@
   }
 
   setupPills();
+  setupEnergySlider();
   renderEntries();
   updateExportState();
   updateNowTime();
