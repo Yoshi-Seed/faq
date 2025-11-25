@@ -765,6 +765,72 @@ body.theme-morning .cloud-layer {
 }
 
 /* =========================
+   🌆 夕方の癒し：ゆったり流れる雲
+   ========================= */
+/* 夕方だけ雲レイヤーを表示 */
+body.theme-evening .cloud-layer {
+  opacity: 1;
+}
+
+/* 夕方の雲1（画面上部） */
+.evening-cloud-1 {
+  position: absolute;
+  background-image: url('images/evening_cloud1_transparent.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  pointer-events: none;
+  opacity: 0;
+  filter: blur(0.8px);
+  width: 60vw;  /* 大きめのサイズ */
+  height: 35vh;
+  left: -65vw;
+  top: 5vh;  /* 画面上部 */
+  z-index: 1;
+}
+
+/* 夕方の雲2（画面中央） */
+.evening-cloud-2 {
+  position: absolute;
+  background-image: url('images/evening_cloud2_transparent.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  pointer-events: none;
+  opacity: 0;
+  filter: blur(0.8px);
+  width: 60vw;  /* 大きめのサイズ */
+  height: 35vh;
+  left: -65vw;
+  top: 35vh;  /* 画面中央付近 */
+  z-index: 1;
+}
+
+/* 夕方の雲のアニメーション: ゆっくり60秒かけて左から右へ */
+@keyframes eveningCloudFloat {
+  0% {
+    left: -65vw;
+    opacity: 0;
+  }
+  5% {
+    opacity: 0.8;
+  }
+  95% {
+    opacity: 0.8;
+  }
+  100% {
+    left: 110vw;
+    opacity: 0;
+  }
+}
+
+/* アニメーションクラスが追加されたときに実行 */
+.evening-cloud-1.active,
+.evening-cloud-2.active {
+  animation: eveningCloudFloat 60s linear forwards;
+}
+
+/* =========================
    🌠 夜の癒し：十字架の流星
    ========================= */
 .star-layer {
