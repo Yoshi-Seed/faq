@@ -528,7 +528,12 @@
   // ---- ☁️⚡ 入道雲イベント（30秒〜1分に1度） ----
   function startEventCloud() {
     const layer = document.getElementById("cloudLayer");
-    if (!layer) return;
+    if (!layer) {
+      console.error("cloudLayer not found!");
+      return;
+    }
+    
+    console.log("Event cloud system initialized");
 
     let eventCloudElement = null;
     let isEventRunning = false;
@@ -539,22 +544,38 @@
         document.body.classList.contains("theme-day") ||
         document.body.classList.contains("theme-morning");
       
-      if (!isDayOrMorning || isEventRunning) return;
+      console.log("Attempting to spawn event cloud...");
+      console.log("Theme check - isDayOrMorning:", isDayOrMorning);
+      console.log("isEventRunning:", isEventRunning);
+      console.log("Current body classes:", document.body.className);
+      
+      if (!isDayOrMorning) {
+        console.log("Not spawning: wrong theme");
+        return;
+      }
+      
+      if (isEventRunning) {
+        console.log("Not spawning: event already running");
+        return;
+      }
 
       // 既存の入道雲があれば削除
       if (eventCloudElement) {
         eventCloudElement.remove();
       }
 
+      console.log("Creating event cloud element...");
       // 新しい入道雲を作成
       eventCloudElement = document.createElement("div");
       eventCloudElement.className = "event-cloud";
       layer.appendChild(eventCloudElement);
+      console.log("Event cloud element added to layer");
 
       // アニメーション開始
       setTimeout(() => {
         eventCloudElement.classList.add("active");
         isEventRunning = true;
+        console.log("Event cloud animation started!");
       }, 100);
 
       // アニメーション終了後にクリーンアップ
@@ -564,23 +585,26 @@
           eventCloudElement = null;
         }
         isEventRunning = false;
+        console.log("Event cloud animation completed and cleaned up");
       }, 46000); // 45秒のアニメーション + 1秒の余裕
     }
 
     function scheduleNextEvent() {
       // 30秒〜60秒のランダムな間隔
       const nextDelay = 30000 + Math.random() * 30000;
+      console.log(`Next event cloud scheduled in ${Math.round(nextDelay/1000)} seconds`);
       setTimeout(() => {
         spawnEventCloud();
         scheduleNextEvent();
       }, nextDelay);
     }
 
-    // 最初のイベントは10秒後に開始
+    // 最初のイベントは10秒後に開始（デバッグ用に5秒に短縮）
+    console.log("First event cloud will spawn in 5 seconds");
     setTimeout(() => {
       spawnEventCloud();
       scheduleNextEvent();
-    }, 10000);
+    }, 5000);
   }
 
   // ---- 初期化 ----

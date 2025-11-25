@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>入道雲テスト</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #3bb1ff, #7affd6);
+    }
+    .info {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      background: rgba(255,255,255,0.9);
+      padding: 15px;
+      border-radius: 8px;
+      z-index: 1000;
+      font-family: monospace;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body class="theme-day">
+  <div class="info">
+    <h3>入道雲テスト</h3>
+    <p>テーマ: <span id="theme">day</span></p>
+    <p>カウントダウン: <span id="countdown">5</span>秒</p>
+    <p>状態: <span id="status">待機中</span></p>
+    <button onclick="forceSpawn()">すぐに表示</button>
+  </div>
+
+  <!-- 雲レイヤー -->
+  <div id="cloudLayer" class="cloud-layer" style="opacity: 1;"></div>
+
+  <script>
+    let countdown = 5;
+    const countdownEl = document.getElementById('countdown');
+    const statusEl = document.getElementById('status');
+    
+    const timer = setInterval(() => {
+      countdown--;
+      countdownEl.textContent = countdown;
+      if (countdown <= 0) {
+        clearInterval(timer);
+      }
+    }, 1000);
+
+    function forceSpawn() {
+      console.log("Force spawning event cloud");
+      const layer = document.getElementById("cloudLayer");
+      const eventCloud = document.createElement("div");
+      eventCloud.className = "event-cloud";
+      layer.appendChild(eventCloud);
+      
+      setTimeout(() => {
+        eventCloud.classList.add("active");
+        statusEl.textContent = "表示中！";
+      }, 100);
+      
+      setTimeout(() => {
+        eventCloud.remove();
+        statusEl.textContent = "完了";
+      }, 46000);
+    }
+
+    // 自動起動
+    setTimeout(() => {
+      console.log("Auto-spawning event cloud");
+      statusEl.textContent = "自動表示開始";
+      forceSpawn();
+    }, 5000);
+  </script>
+</body>
+</html>
