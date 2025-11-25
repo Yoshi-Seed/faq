@@ -21,6 +21,10 @@
   const celebrateLayer = document.getElementById("celebrateLayer");
   const rippleLayer = document.getElementById("rippleLayer");
   const appShell = document.querySelector(".app-shell");
+  const energySlider = document.getElementById("energySlider");
+  const energyValueEl = document.getElementById("energyValue");
+  const energyHidden = document.getElementById("energyHidden");
+  const energyCard = document.getElementById("energyCard");
 
   if (!entryForm) {
     console.error("entryForm が見つかりません。HTML構造を確認してください。");
@@ -182,6 +186,72 @@
     wayneMessage.classList.add("pop");
   }
 
+  // ---- 余力スライダー ----
+  const energyLabels = ["しんどい", "低め", "普通", "まあまあ", "元気"];
+
+  function setEnergyUI(valueIndex, { animate = false } = {}) {
+    const label = energyLabels[valueIndex] || "普通";
+
+    if (energyHidden) energyHidden.value = label;
+    if (energyValueEl) energyValueEl.textContent = label;
+
+    if (energyCard) {
+      energyCard.classList.remove("energy-up", "energy-down");
+
+      // 高い側（まあまあ/元気）
+      if (valueIndex >= 3) {
+        energyCard.classList.add("energy-up");
+        if (animate) triggerSilver();
+      }
+
+      // 低い側（低め/しんどい）
+      if (valueIndex <= 1) {
+        energyCard.classList.add("energy-down");
+        if (animate) spawnCheerBubbles(valueIndex);
+      }
+    }
+  }
+
+  function triggerSilver() {
+    // energy-upの::afterが走るのでクラスをリスタート
+    if (!energyCard) return;
+    energyCard.classList.remove("energy-up");
+    void energyCard.offsetWidth;
+    energyCard.classList.add("energy-up");
+  }
+
+  function spawnCheerBubbles(level) {
+    // level 0=しんどい, 1=低め
+    const count = level === 0 ? 10 : 6;
+
+    for (let i = 0; i < count; i++) {
+      const b = document.createElement("div");
+      b.className = "cheer-bubble";
+
+      const x = Math.random() * window.innerWidth;
+      const y = window.innerHeight - 40 + Math.random() * 40;
+
+      b.style.left = `${x}px`;
+      b.style.top = `${y}px`;
+      b.style.animationDelay = `${Math.random() * 220}ms`;
+      b.style.transform = `translateY(${Math.random() * 30}px) scale(${0.7 + Math.random() * 0.7})`;
+
+      document.body.appendChild(b);
+      b.addEventListener("animationend", () => b.remove());
+    }
+  }
+
+  if (energySlider) {
+    // 初期値「普通」
+    setEnergyUI(Number(energySlider.value), { animate: false });
+
+    energySlider.addEventListener("input", () => {
+      setEnergyUI(Number(energySlider.value), { animate: true });
+    });
+  }
+
+
+  
   // ---- pillボタンのセットアップ ----
   function setupPills() {
     const categoryButtons = Array.from(
@@ -260,6 +330,8 @@
     const category = categoryHidden.value;
     const mood = moodHidden.value;
     const memo = memoText.value.trim();
+   const energy = energyHidden?.value || "普通";
+
 
     if (!category) {
       if (categoryGroup) {
@@ -278,6 +350,7 @@
       displayTime: formatDisplay(now),
       category,
       mood,
+      energy,   // ←追加
       memo
     };
 
@@ -312,13 +385,15 @@
 
   // ---- エクスポート ----
   function makeExportContent(list) {
-    const header = "iso_timestamp\t日時\tカテゴリ\t気分\tメモ";
-    const lines = list.map((e) => {
+        const header = "iso_timestamp\t日時\tカテゴリ\t気分\t余力\tメモ";
+        const lines = list.map((e) => {
       const memo = (e.memo || "")
         .replace(/\t/g, " ")
         .replace(/\r?\n/g, "\\n");
-      const mood = e.mood || "";
-      return `${e.timestamp}\t${e.displayTime}\t${e.category}\t${mood}\t${memo}`;
+          const mood = e.mood || "";
+      const energy = e.energy || "";
+      return `${e.timestamp}\t${e.displayTime}\t${e.category}\t${mood}\t${energy}\t${memo}`;
+
     });
     return [header, ...lines].join("\n");
   }
