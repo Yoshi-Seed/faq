@@ -199,10 +199,11 @@
       energyCard.classList.remove("energy-up", "energy-down");
 
       // 高い側（まあまあ/元気）
-      if (valueIndex >= 3) {
-        energyCard.classList.add("energy-up");
-        if (animate) triggerSilver();
-      }
+     if (valueIndex >= 3) {
+  energyCard.classList.add("energy-up");
+  if (animate) triggerSilver(valueIndex === 4 ? 3 : 1);
+}
+
 
       // 低い側（低め/しんどい）
       if (valueIndex <= 1) {
@@ -212,14 +213,22 @@
     }
   }
 
-  function triggerSilver() {
-    // energy-upの::afterが走るのでクラスをリスタート
-    if (!energyCard) return;
-    energyCard.classList.remove("energy-up");
-    void energyCard.offsetWidth;
-    energyCard.classList.add("energy-up");
-  }
+function triggerSilver(times = 1) {
+  if (!energyCard) return;
 
+  let count = 0;
+  const flashOnce = () => {
+    energyCard.classList.remove("energy-up");
+    void energyCard.offsetWidth; // リセット
+    energyCard.classList.add("energy-up");
+    count++;
+    if (count < times) {
+      setTimeout(flashOnce, 220); // フラッシュ間隔（好みで調整OK）
+    }
+  };
+
+  flashOnce();
+}
   function spawnCheerBubbles(level) {
     // level 0=しんどい, 1=低め
     const count = level === 0 ? 10 : 6;
