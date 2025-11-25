@@ -31,6 +31,7 @@
     <p>テーマ: <span id="theme">day</span></p>
     <p>カウントダウン: <span id="countdown">5</span>秒</p>
     <p>状態: <span id="status">待機中</span></p>
+    <p>画像: <span id="imageStatus">確認中...</span></p>
     <button onclick="forceSpawn()">すぐに表示</button>
   </div>
 
@@ -67,6 +68,18 @@
         statusEl.textContent = "完了";
       }, 46000);
     }
+
+    // 画像の存在確認
+    const img = new Image();
+    img.onload = () => {
+      document.getElementById('imageStatus').textContent = '✅ 読み込み成功';
+      document.getElementById('imageStatus').style.color = 'green';
+    };
+    img.onerror = () => {
+      document.getElementById('imageStatus').textContent = '❌ 読み込み失敗';
+      document.getElementById('imageStatus').style.color = 'red';
+    };
+    img.src = 'images/cloud_event_transparent.png';
 
     // 自動起動
     setTimeout(() => {
