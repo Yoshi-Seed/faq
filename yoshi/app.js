@@ -284,8 +284,12 @@
 
     const category = categoryHidden.value;
     const mood = moodHidden.value;
-    const energy = document.getElementById("energyHidden")?.value || "普通";
+    const energyHiddenElement = document.getElementById("energyHidden");
+    const energy = energyHiddenElement?.value || "普通";
     const memo = memoText.value.trim();
+    
+    console.log("🔍 Energy hidden element:", energyHiddenElement);
+    console.log("🔍 Energy value from element:", energy);
 
     if (!category) {
       if (categoryGroup) {
@@ -307,6 +311,8 @@
       energy,
       memo
     };
+    
+    console.log("📦 Entry object created:", JSON.stringify(entry, null, 2));
 
     // ✅ ローカル保存
     entries.unshift(entry);
