@@ -258,7 +258,8 @@
       const meta = document.createElement("div");
       meta.className = "entry-meta";
       const moodPart = entry.mood ? ` · ${entry.mood}` : "";
-      meta.textContent = `${entry.displayTime} · ${entry.category}${moodPart}`;
+      const energyPart = entry.energy ? ` · ${entry.energy}` : "";
+      meta.textContent = `${entry.displayTime} · ${entry.category}${moodPart}${energyPart}`;
 
       const text = document.createElement("p");
       text.className = "entry-text";
@@ -283,6 +284,7 @@
 
     const category = categoryHidden.value;
     const mood = moodHidden.value;
+    const energy = document.getElementById("energyHidden")?.value || "普通";
     const memo = memoText.value.trim();
 
     if (!category) {
@@ -302,6 +304,7 @@
       displayTime: formatDisplay(now),
       category,
       mood,
+      energy,
       memo
     };
 
@@ -336,13 +339,14 @@
 
   // ---- エクスポート ----
   function makeExportContent(list) {
-    const header = "iso_timestamp\t日時\tカテゴリ\t気分\tメモ";
+    const header = "iso_timestamp\t日時\tカテゴリ\t気分\t余力\tメモ";
     const lines = list.map((e) => {
       const memo = (e.memo || "")
         .replace(/\t/g, " ")
         .replace(/\r?\n/g, "\\n");
       const mood = e.mood || "";
-      return `${e.timestamp}\t${e.displayTime}\t${e.category}\t${mood}\t${memo}`;
+      const energy = e.energy || "";
+      return `${e.timestamp}\t${e.displayTime}\t${e.category}\t${mood}\t${energy}\t${memo}`;
     });
     return [header, ...lines].join("\n");
   }
