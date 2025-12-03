@@ -963,6 +963,9 @@ body.theme-night .cloud-layer {
   pointer-events: none;
   opacity: 0;
   filter: blur(0.5px);
+  --event-cloud-start-scale: 0.7;
+  --event-cloud-end-scale: 1.2;
+  --event-cloud-duration: 60s;
   /* 画面の1/3を占める大きさ（高さ基準） */
   width: auto;
   height: 33vh;
@@ -978,13 +981,13 @@ body.theme-night .cloud-layer {
   0% {
     left: -40vw;
     opacity: 0;
-    transform: scale(0.7);
+    transform: scale(var(--event-cloud-start-scale));
   }
   5% {
     opacity: 0.9;
   }
   50% {
-    transform: scale(1.1);
+    transform: scale(calc((var(--event-cloud-start-scale) + var(--event-cloud-end-scale)) / 2));
   }
   95% {
     opacity: 0.9;
@@ -992,13 +995,13 @@ body.theme-night .cloud-layer {
   100% {
     left: 110vw;
     opacity: 0;
-    transform: scale(1.2);
+    transform: scale(var(--event-cloud-end-scale));
   }
 }
 
 /* アニメーションクラスが追加されたときに実行 */
 .event-cloud.active {
-  animation: eventCloudPass 45s ease-in-out forwards;
+  animation: eventCloudPass var(--event-cloud-duration) ease-in-out forwards;
 }
 
 /* =========================
