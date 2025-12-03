@@ -592,20 +592,33 @@
     });
   }
 
-  // ---- ☁️⚡ 入道雲イベント（30秒〜1分に1度） ----
+  // ---- ☁️⚡ 入道雲イベント（1分に1度） ----
   function startEventCloud() {
     const layer = document.getElementById("cloudLayer");
     if (!layer) return;
 
     let eventCloudElement = null;
     let isEventRunning = false;
+    const eventDurationMs = 60000; // ゆっくり60秒かけて横切る
+
+    function applyEventCloudStyles(element) {
+      // 出現位置やスケールを少しずつ変えて、自然な動きに
+      const startScale = 0.7 + Math.random() * 0.8; // 0.7〜1.5
+      const endScale = Math.min(1.5, startScale + 0.2 + Math.random() * 0.4);
+      const topPosition = 12 + Math.random() * 28; // 12〜40vh
+
+      element.style.setProperty("--event-cloud-start-scale", startScale.toFixed(2));
+      element.style.setProperty("--event-cloud-end-scale", endScale.toFixed(2));
+      element.style.top = `${topPosition}vh`;
+      element.style.setProperty("--event-cloud-duration", `${eventDurationMs / 1000}s`);
+    }
 
     function spawnEventCloud() {
       // 昼または朝のテーマのときのみ表示
-      const isDayOrMorning = 
+      const isDayOrMorning =
         document.body.classList.contains("theme-day") ||
         document.body.classList.contains("theme-morning");
-      
+
       if (!isDayOrMorning || isEventRunning) return;
 
       // 既存の入道雲があれば削除
@@ -616,6 +629,7 @@
       // 新しい入道雲を作成
       eventCloudElement = document.createElement("div");
       eventCloudElement.className = "event-cloud";
+      applyEventCloudStyles(eventCloudElement);
       layer.appendChild(eventCloudElement);
 
       // アニメーション開始
@@ -631,23 +645,23 @@
           eventCloudElement = null;
         }
         isEventRunning = false;
-      }, 46000); // 45秒のアニメーション + 1秒の余裕
+      }, eventDurationMs + 1000); // 60秒のアニメーション + 1秒の余裕
     }
 
     function scheduleNextEvent() {
-      // 30秒〜60秒のランダムな間隔
-      const nextDelay = 30000 + Math.random() * 30000;
+      // 毎分1回のペースで発生
+      const nextDelay = eventDurationMs;
       setTimeout(() => {
         spawnEventCloud();
         scheduleNextEvent();
       }, nextDelay);
     }
 
-    // 最初のイベントは10秒後に開始
+    // 最初のイベントは5秒後に開始
     setTimeout(() => {
       spawnEventCloud();
       scheduleNextEvent();
-    }, 10000);
+    }, 5000);
   }
 
   // ---- 🌆 夕方の雲イベント（画面上部と中央） ----
