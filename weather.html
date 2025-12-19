@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>シード・プランニング | 天気予報ダッシュボード</title>
+    <link rel="icon" type="image/png" sizes="192x192" href="seedplanning_logo_192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="seedplanning_logo_192.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="seedplanning_logo_192.png">
+    <link rel="shortcut icon" href="seedplanning_logo_192.png">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #8B4513;
+            --secondary-color: #A0522D;
+            --accent-color: #D2691E;
+            --bg-color: #f7f4ef;
+            --text-color: #2f2f2f;
+            --border-color: rgba(0,0,0,0.05);
+            --card-shadow: 0 12px 30px rgba(0,0,0,0.08);
+            --glow: 0 10px 30px rgba(210, 169, 102, 0.35);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(145deg, #fdfbf8 0%, #f3eee7 100%);
+            color: var(--text-color);
+            min-height: 100vh;
+        }
+
+        .hero {
+            position: relative;
+            padding: 3.5rem 1.5rem 2.5rem;
+            color: white;
+            text-align: center;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(139, 69, 19, 0.92), rgba(210, 180, 140, 0.9)),
+                        url('network-background.jpg') center/cover;
+            box-shadow: var(--card-shadow);
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: -40%;
+            right: -20%;
+            width: 70%;
+            height: 180%;
+            background: radial-gradient(circle at center, rgba(255,255,255,0.2), transparent 55%);
+            filter: blur(12px);
+            transform: rotate(-12deg);
+        }
+
+        .hero .logo {
+            position: absolute;
+            top: 1.2rem;
+            left: 1.6rem;
+            height: 64px;
+            width: auto;
+            background: rgba(255,255,255,0.95);
+            padding: 10px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+            z-index: 2;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 880px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.2rem, 3vw, 3.1rem);
+            margin: 0 0 0.6rem;
+            letter-spacing: -0.02em;
+        }
+
+        .hero p {
+            margin: 0 0 1.2rem;
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        .hero-actions {
+            display: flex;
+            justify-content: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            margin-top: 1.1rem;
+        }
+
+        .hero-actions a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.9rem 1.3rem;
+            background: white;
+            color: var(--primary-color);
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 12px;
+            box-shadow: var(--glow);
+            transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+        }
+
+        .hero-actions a.secondary {
+            background: rgba(255,255,255,0.15);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.4);
+            box-shadow: none;
+        }
+
+        .hero-actions a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+        }
+
+        main {
+            max-width: 1200px;
+            margin: -2.5rem auto 2rem;
+            padding: 0 1.5rem 2rem;
+            position: relative;
+            z-index: 3;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.95);
+            border-radius: 16px;
+            padding: 1.4rem 1.6rem;
+            border: 1px solid rgba(255,255,255,0.7);
+            box-shadow: var(--card-shadow);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 1rem;
+            margin-bottom: 1.2rem;
+        }
+
+        @media (max-width: 960px) {
+            .controls {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .search-box form {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .search-box input {
+            flex: 1;
+            min-width: 220px;
+            padding: 0.95rem 1rem;
+            border-radius: 12px;
+            border: 1px solid #e6d8cf;
+            font-size: 1rem;
+            background: rgba(255,255,255,0.9);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.85rem 1rem;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            box-shadow: var(--glow);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn.secondary {
+            background: transparent;
+            color: var(--primary-color);
+            border: 1px solid #e4cbb9;
+            box-shadow: none;
+        }
+
+        .btn:hover { transform: translateY(-1px); box-shadow: 0 12px 24px rgba(0,0,0,0.12); }
+
+        .status {
+            margin-top: 0.75rem;
+            font-size: 0.95rem;
+            color: var(--primary-color);
+        }
+
+        .status.error { color: #b94a48; }
+        .status.success { color: #1b7f36; }
+
+        .results {
+            display: grid;
+            gap: 0.5rem;
+            margin-top: 0.8rem;
+        }
+
+        .result-item {
+            padding: 0.75rem 0.9rem;
+            border-radius: 10px;
+            border: 1px solid #e9ded5;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.6rem;
+            background: #fff8f2;
+        }
+
+        .result-title { font-weight: 700; }
+        .result-meta { color: #6b5c55; font-size: 0.9rem; }
+
+        .weather-layout {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 1rem;
+        }
+
+        @media (max-width: 960px) { .weather-layout { grid-template-columns: 1fr; } }
+
+        .current-weather {
+            display: grid;
+            gap: 0.8rem;
+            grid-template-columns: 1fr;
+        }
+
+        .current-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.6rem;
+        }
+
+        .temp-main {
+            font-size: clamp(2.8rem, 5vw, 3.6rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+        }
+
+        .condition {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 1.05rem;
+            color: #5b4b44;
+        }
+
+        .sub-info { color: #6e635e; }
+
+        .badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .badge {
+            padding: 0.4rem 0.7rem;
+            border-radius: 999px;
+            background: #f1e7de;
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .forecast {
+            margin-top: 1rem;
+        }
+
+        .forecast-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 0.9rem;
+        }
+
+        .forecast-card {
+            padding: 1rem;
+            border-radius: 14px;
+            background: #fffaf5;
+            border: 1px solid #e9ded5;
+            box-shadow: var(--card-shadow);
+        }
+
+        .forecast-card h4 { margin: 0 0 0.4rem; }
+        .forecast-meta { color: #6e635e; font-size: 0.9rem; }
+        .forecast-temp { font-size: 1.4rem; font-weight: 800; }
+
+        .hourly {
+            margin-top: 1rem;
+        }
+
+        .hourly-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 0.6rem;
+        }
+
+        .hourly-item {
+            padding: 0.8rem 0.9rem;
+            border-radius: 12px;
+            border: 1px solid #e9ded5;
+            background: white;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1.2rem;
+            color: #7a6b63;
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="hero">
+        <img src="seedplanning_logo_192.png" alt="Seed Planning" class="logo">
+        <div class="hero-content">
+            <h1><i class="fa-solid fa-cloud-sun"></i> 天気予報ダッシュボード</h1>
+            <p>主要都市や現在地の天気を、最新のオープンデータからシンプルに表示します。</p>
+            <div class="hero-actions">
+                <a href="index.html"><i class="fa-solid fa-arrow-left"></i> FAQトップへ戻る</a>
+                <a href="#forecast" class="secondary"><i class="fa-solid fa-location-dot"></i> 予報へ移動</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="controls">
+            <div class="card search-box">
+                <h2><i class="fa-solid fa-magnifying-glass-location"></i> 地域を検索</h2>
+                <form id="locationForm">
+                    <input id="locationInput" type="text" placeholder="例: 東京, Osaka, Yokohama" aria-label="地域名を入力">
+                    <button class="btn" type="submit"><i class="fa-solid fa-search"></i> 検索</button>
+                    <button class="btn secondary" type="button" id="geoButton"><i class="fa-solid fa-crosshairs"></i> 現在地から取得</button>
+                </form>
+                <div id="status" class="status">「東京」の予報を表示中</div>
+                <div id="results" class="results" aria-live="polite"></div>
+            </div>
+            <div class="card">
+                <h2><i class="fa-solid fa-circle-info"></i> 使い方</h2>
+                <ul>
+                    <li>都市名や空港名を入力すると、候補を取得して切り替えられます。</li>
+                    <li>「現在地から取得」で端末の位置情報を利用して予報を表示します。</li>
+                    <li>気象データは Open-Meteo（オープンデータ）を利用しています。</li>
+                    <li>ブラウザは直近に閲覧した地域を記憶します。</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="weather-layout" id="forecast">
+            <div class="card current-weather">
+                <div class="current-top">
+                    <div>
+                        <div class="condition" id="locationName"><i class="fa-solid fa-location-dot"></i> 東京</div>
+                        <div class="temp-main" id="currentTemp">--°C</div>
+                        <div class="condition" id="currentSummary">最新の状況を取得しています...</div>
+                    </div>
+                    <div class="badges" id="currentBadges"></div>
+                </div>
+                <div class="sub-info" id="updatedAt">更新: --</div>
+            </div>
+
+            <div class="card hourly">
+                <h3><i class="fa-solid fa-droplet"></i> 直近の降水確率</h3>
+                <div id="hourlyList" class="hourly-list"></div>
+            </div>
+        </section>
+
+        <section class="forecast card">
+            <h3><i class="fa-solid fa-calendar-week"></i> 5日間の予報</h3>
+            <div id="forecastGrid" class="forecast-grid"></div>
+        </section>
+    </main>
+
+    <footer>
+        気象データ提供: <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a> | Seed Planning Global
+    </footer>
+
+    <script src="weather.js"></script>
+</body>
+</html>
